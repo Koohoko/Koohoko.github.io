@@ -1,3 +1,3 @@
-title: Archive
+title: Archives
 layout: page-archive
 ---

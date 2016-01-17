@@ -1,9 +1,9 @@
 ---
-title: Some basic tools for spatial epidemiology research
+title: 4 basic tools for spatial epidemiology research
 date: 2016-01-17 17:45:45
 categories: Methodology
 tags: spatial epidemiology
-description: notes for zhongshan One Health workshop on 2016-1-16
+description: Notes of zhongshan One Health workshop on 2016-1-16
 ---
 
 Yesterday, a spatial epidemiology workshop was held in Zhongshan and I fortunately got a chance to join them. Professor Hu from Queensland Unioversity of Technology had brought us an oerview of traditional spatial methods for studying public health problems. 
