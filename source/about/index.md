@@ -9,4 +9,4 @@ I have been exploring the relationships between meteorological factors and the r
 
 Inspired by some novel studies in terms of utilizing big data to solve public health problems, e.g., [adapting social media as a sensor of air quality and public response](http://www.jmir.org/2015/1/e22/); [predicting dengue fever with mobile phone data](https://www.pnas.org/content/112/38/11887.full), recently I am particularly interested in trying something new. 
 
-For more details on me, please click and view my [CV](http://koohoko.github.io/about/CV.pdf), or you can reach me at koohoko@gmail.com
+For more details on me, please click and view my **[CV](http://koohoko.github.io/about/CV.pdf)**, or you can reach me at *<koohoko@gmail.com>*
