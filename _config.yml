@@ -4,15 +4,16 @@
 
 # Site
 title: Neverland
-subtitle:
-description:
+subtitle: The blog of Koohoko
+description: The blog of Koohoko 
 author: Koohoko
 language:
+email: koohoko@gmail.com
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: http://Koohoko.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -77,3 +78,5 @@ backup:
     type: git
     repository:
        github: git@github.com:Koohoko/Koohoko.github.io.git,hexo
+	   
+
