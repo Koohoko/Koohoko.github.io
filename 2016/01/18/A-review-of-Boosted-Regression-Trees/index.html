@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      激励回归树模型回顾 | Neverland 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="Koohoko">
+    
+    
+
+    <meta name="description" content="A Review of Boosted Regression Trees">
+<meta property="og:type" content="article">
+<meta property="og:title" content="激励回归树模型回顾 | Neverland">
+<meta property="og:url" content="http://Koohoko.github.io/2016/01/18/A-review-of-Boosted-Regression-Trees/index.html">
+<meta property="og:site_name" content="Neverland">
+<meta property="og:description" content="A Review of Boosted Regression Trees">
+<meta property="og:updated_time" content="2016-01-18T14:09:36.054Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="激励回归树模型回顾 | Neverland">
+<meta name="twitter:description" content="A Review of Boosted Regression Trees">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css" type="text/css">
+    <link rel="stylesheet" href="/css/highlight.css" type="text/css">
+    <link rel="stylesheet" href="/css/archive.css" type="text/css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">Neverland</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          The Blog of Haogao
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">Blog</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">About</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">Archives</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">激励回归树模型回顾</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2016-01-18" class="post-meta__date date">2016-01-18</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+            <font class="categories">
+            &#8226; Categories:
+            <a class="categories-link" href="/categories/Methodology/">Methodology</a>
+            </font>
+          
+
+          
+             &#8226; Tags:
+            <font class="tags">
+              <a class="tags-link" href="/tags/BRT/">BRT</a>, <a class="tags-link" href="/tags/Machine-learning/">Machine learning</a>, <a class="tags-link" href="/tags/激励回归树/">激励回归树</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <p>根据<del>基本法</del>本人之前的承诺，本来技术性文章是要用英文写的。但是现在我~excited~，还是决定决定先用中文好了。。</p>
+<h3 id="What_is_BRT_3F__u4EC0_u4E48_u662F_u6FC0_u52B1_u56DE_u5F52_u6811_uFF1F"><a href="#What_is_BRT_3F__u4EC0_u4E48_u662F_u6FC0_u52B1_u56DE_u5F52_u6811_uFF1F" class="headerlink" title="What is BRT? 什么是激励回归树？"></a>What is BRT? 什么是激励回归树？</h3><h4 id="u56DE_u5F52"><a href="#u56DE_u5F52" class="headerlink" title="回归"></a>回归</h4><p>我们探索多变量之间的关系的时候，经常会用到回归。从最简单的最小二乘回归，到对因变量作变换的广义线性回归（Generalized Linear Models），再到用样条函数（natrual splines）来拟合非线性关系的广义相加模型（Generalized Addictive Models），每个模型都有它自己的特点。</p>
+<h4 id="u6811_u6A21_u578B"><a href="#u6811_u6A21_u578B" class="headerlink" title="树模型"></a>树模型</h4><p>对于树模型，大家容易会想到决策树（Decision Trees）和随机森林（Random Forests）。决策树的想法很朴素，就像二叉树一样，一直作分类，它的优势就是简单快捷。随机森林可以理解为很多课决策树的集合，大家来共同预测，最后选出大家投票最多的作为结果。在随机森林的基础上，还有Gradient Boost Decision Tree，这些方法在很多Data Mining的Tutorial都会提到，都是传统的分类方法。</p>
+<h4 id="u6FC0_u52B1_u56DE_u5F52_u6811"><a href="#u6FC0_u52B1_u56DE_u5F52_u6811" class="headerlink" title="激励回归树"></a>激励回归树</h4><p>对于BRT简要的历史，以下引用几段我觉得写得很清晰的:</p>
+<blockquote>
+<p><a href="http://soilslab.cfr.washington.edu/Publications/Elith-etal-2008.pdf" target="_blank" rel="external">Elith J, Leathwick J R, Hastie T. A working guide to boosted regression trees[J]. Journal of Animal Ecology, 2008, 77(4): 802-813.</a></p>
+<p>The past 20 years have seen a growing sophistication in the types of statistical model applied in ecology, with impetus from substantial advances in both statistics and computing. Early linear regression models were attractively straightforward, but too simplistic for many real-life situations. In the 1980s and 1990s, generalized linear models (GLM; McCullagh &amp; Nelder 1989) and generalized additive models (GAM; Hastie &amp; Tibshirani 1990) increased our capacity to analyse data with non-normally distributed errors (presence–absence and count data), and to model nonlinear relationships. These models are now widely used in ecology, for example for analysis of morphological relationships (Clarke &amp; Johnston 1999) and population trends (Fewster et al. 2000), and for predicting the distributions of species (Buckland &amp; Elston 1993).<br>Over the same period, computer scientists developed a wide variety of algorithms particularly suited to prediction, including neural nets, ensembles of trees and support vector machines. These machine learning (ML) methods are used less frequently than regression methods in ecology, perhapspartly because they are considered less interpretable and therefore less open to scrutiny. It may also be that ecologists are less familiar with the modelling paradigm of ML, which differs from that of statistics. Statistical approaches to model fitting start by assuming an appropriate data model, and parameters for this model are then estimated from the data. By contrast, ML avoids starting with a data model and rather uses an algorithm to learn the relationship between the response and its predictors (Breiman 2001). The statistical approach focuses on questions such as what model will be postulated (e.g. are the effects additive, or are there interactions?), how the response is distributed, and whether observations are independent. By contrast, the ML approach assumes that the data-generating process (in the case of ecology, nature) is complex and unknown, and tries to learn the response by observing inputs and responses and finding dominant patterns. This places the emphasis on a model’s ability to predict well, and focuses on what is being predicted and how prediction success should be measured.<br>In this paper we discuss a relatively new technique, boosted regression trees (BRT), which draws on insights and techniques from both statistical and ML traditions. The BRT approach differs fundamentally from traditional regression methods that produce a single ‘best’ model, instead using the technique of boosting to combine large numbers of relatively simple tree models adaptively, to optimize predictive performance (e.g. Elith et al. 2006; Leathwick et al. 2006, 2008). The boosting approach used in BRT places its origins within ML (Schapire 2003), but subsequent developments in the statistical community reinterpret it as an advanced form of regression (Friedman, Hastie &amp; Tibshirani 2000).</p>
+</blockquote>
+<h3 id="Why_we_choose_this_model_3F__u4E3A_u4EC0_u4E48_u8981_u7528BRT_uFF1F"><a href="#Why_we_choose_this_model_3F__u4E3A_u4EC0_u4E48_u8981_u7528BRT_uFF1F" class="headerlink" title="Why we choose this model? 为什么要用BRT？"></a>Why we choose this model? 为什么要用BRT？</h3><p>回归树有很多吸引人的<em>优势</em>，包括：</p>
+<ol>
+<li>不管是因变量还是自变量，都可以是连续变量或者分类变量，非常普适；</li>
+<li>对拟合的单调变换很稳定；</li>
+<li>可以用简单的形式拟合复杂的变量间相互作用；</li>
+<li>对缺失值和outlier不敏感。</li>
+</ol>
+<p>同时回归树的两个<em>弱点</em>：</p>
+<ol>
+<li>预测形式过于简单；</li>
+<li>树模型太多就难以集中解释。</li>
+</ol>
+<p><strong>都被Boosting的方法解决了。</strong></p>
+<p>正因如此，BRT开始在生态学和传染病学领域被广泛应用。</p>
+<h3 id="How_to_build_a_BRT_model_3F__u5982_u4F55_u5EFA_u6A21_uFF1F"><a href="#How_to_build_a_BRT_model_3F__u5982_u4F55_u5EFA_u6A21_uFF1F" class="headerlink" title="How to build a BRT model? 如何建模？"></a>How to build a BRT model? 如何建模？</h3><p>推荐一份Tutorial，基于R，非常简单直观，跟着走一遍就会了。<br><a href="http://w.download.idg.pl/CRAN/web/packages/dismo/vignettes/brt.pdf" target="_blank" rel="external">Boosted Regression Trees for ecological modeling</a></p>
+<h3 id="What_the_results_mean_3F__u8BE5_u5982_u4F55_u89E3_u8BFB_u7ED3_u679C_uFF1F"><a href="#What_the_results_mean_3F__u8BE5_u5982_u4F55_u89E3_u8BFB_u7ED3_u679C_uFF1F" class="headerlink" title="What the results mean? 该如何解读结果？"></a>What the results mean? 该如何解读结果？</h3><p>结果的解读是BRT的重头戏，可以说的非常多。写文章的时候，先要把结果的意义都理解了，才能结合自己的专业知识给出建议和进行更深的讨论。基于以上的tutorial，他们有一篇发表了的<a href="http://soilslab.cfr.washington.edu/Publications/Elith-etal-2008.pdf" target="_blank" rel="external">paper：A working guide to boosted regression trees</a>结合着来看效果超好。</p>
+<p>同时给大家介绍一些<del>人生</del>经验：</p>
+<ul>
+<li>在建模之前不要太着急，要~闷声发大财~先对变量进行处理，如果因变量明显偏态，而且不易转换分布，可以考虑转为二分类变量。 </li>
+</ul>
+<ol>
+<li>为了实验的完整性，应该对tree complexity, learning rate等参数作sensitivity test；</li>
+<li>Relative importance可以导出，可以讨论；</li>
+<li>interaction effects 可以导出，可以讨论；</li>
+<li>Partial dependency plots 非常值得讨论，它们代表的是relationships between predictors and response variable；</li>
+<li>如果predictors很多，有function可以simplify model。</li>
+</ol>
+<h3 id="End__u5C3E_u8A00"><a href="#End__u5C3E_u8A00" class="headerlink" title="End 尾言"></a>End 尾言</h3><p>到这里应该差不多了，BRT的应用层面，有以上的应该差不多了。 Plos One上面有个海洋生态学的研究，做得非常完整全面，重点部分也是用BRT的，也可以参考一下。 <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0031374" target="_blank" rel="external">Environmental factors affecting large-bodied coral reef fish assemblages in the Mariana Archipelago</a></p>
+<p>今天就到这里。<br><del>只是一些微小的工作，谢谢大家</del></p>
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 1 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9496558415623971"
+     data-ad-slot="4339901241"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+  </section>
+
+  
+  
+</article>
+
+
+
+            <footer class="footer">
+
+    koohoko@gmail.com
+    
+</footer>
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-72552907-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>
