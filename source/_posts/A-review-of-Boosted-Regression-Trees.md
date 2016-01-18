@@ -6,14 +6,14 @@ categories: Methodology
 description: A Review of Boosted Regression Trees
 ---
 
-根据~~基本法~~本人之前的承诺，本来技术性文章是要用英文写的。但是现在我~excited~，还是决定决定先用中文好了。。
+根据~~基本法~~本人之前的承诺，本来技术性文章是要用英文写的。但是现在我后悔了。。还是决定先用中文好了。
 
 ### What is BRT? 什么是激励回归树？
 #### 回归
 我们探索多变量之间的关系的时候，经常会用到回归。从最简单的最小二乘回归，到对因变量作变换的广义线性回归（Generalized Linear Models），再到用样条函数（natrual splines）来拟合非线性关系的广义相加模型（Generalized Addictive Models），每个模型都有它自己的特点。
 
 #### 树模型
-对于树模型，大家容易会想到决策树（Decision Trees）和随机森林（Random Forests）。决策树的想法很朴素，就像二叉树一样，一直作分类，它的优势就是简单快捷。随机森林可以理解为很多课决策树的集合，大家来共同预测，最后选出大家投票最多的作为结果。在随机森林的基础上，还有Gradient Boost Decision Tree，这些方法在很多Data Mining的Tutorial都会提到，都是传统的分类方法。
+对于树模型，大家容易会想到决策树（Decision Trees）和随机森林（Random Forests）。决策树的想法很朴素，就像二叉树一样，一直作分类，它的优势就是简单快捷。随机森林可以理解为很多棵决策树的集合，大家来共同预测，最后选出大家投票最多的作为结果。在随机森林的基础上，还有Gradient Boost Decision Tree，这些方法在很多Data Mining的Tutorial都会提到，都是传统的分类方法。
 
 #### 激励回归树
 对于BRT简要的历史，以下引用几段我觉得写得很清晰的:
@@ -47,7 +47,7 @@ description: A Review of Boosted Regression Trees
 结果的解读是BRT的重头戏，可以说的非常多。写文章的时候，先要把结果的意义都理解了，才能结合自己的专业知识给出建议和进行更深的讨论。基于以上的tutorial，他们有一篇发表了的[paper：A working guide to boosted regression trees](http://soilslab.cfr.washington.edu/Publications/Elith-etal-2008.pdf)结合着来看效果超好。
 
 同时给大家介绍一些~~人生~~经验：
-- 在建模之前不要太着急，要~闷声发大财~先对变量进行处理，如果因变量明显偏态，而且不易转换分布，可以考虑转为二分类变量。 
+- 在建模之前不要太着急，要~~闷声发大财~~先对变量进行处理，如果因变量明显偏态，而且不易转换分布，可以考虑转为二分类变量。 
 1. 为了实验的完整性，应该对tree complexity, learning rate等参数作sensitivity test；
 2. Relative importance可以导出，可以讨论；
 3. interaction effects 可以导出，可以讨论；
@@ -55,7 +55,7 @@ description: A Review of Boosted Regression Trees
 5. 如果predictors很多，有function可以simplify model。
 
 ### End 尾言
-到这里应该差不多了，BRT的应用层面，有以上的应该差不多了。 Plos One上面有个海洋生态学的研究，做得非常完整全面，重点部分也是用BRT的，也可以参考一下。 [Environmental factors affecting large-bodied coral reef fish assemblages in the Mariana Archipelago](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0031374)
+到这里，BRT的应用层面，有以上的应该差不多了。Plos One上面有个海洋生态学的研究，做得非常完整全面，重点部分也是用BRT的，也可以参考一下。[Environmental factors affecting large-bodied coral reef fish assemblages in the Mariana Archipelago](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0031374)
 
 今天就到这里。
 ~~只是一些微小的工作，谢谢大家~~
