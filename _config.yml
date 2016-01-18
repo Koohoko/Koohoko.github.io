@@ -82,5 +82,4 @@ backup:
     type: git
     repository:
        github: git@github.com:Koohoko/Koohoko.github.io.git,hexo
-	   
 
