@@ -69,9 +69,13 @@ theme: huno
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: git
+- type: git
   repo: git@github.com:Koohoko/Koohoko.github.io.git
   branch: master
+- type: git
+  repo: git@gitcafe.com:Koohoko/Koohoko.git
+  branch: gitcafe-pages
+
 
 # Backup
 backup:

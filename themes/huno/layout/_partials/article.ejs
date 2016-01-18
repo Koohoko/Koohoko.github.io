@@ -17,7 +17,7 @@ var post = page;
 
           <% if (post.categories && post.categories.length > 0){ %>
             <font class="categories">
-            &#8226; 分类:
+            &#8226; Categories:
             <%- list_categories(post.categories, {
               show_count: false,
               class: 'categories',
@@ -27,7 +27,7 @@ var post = page;
           <% } %>
 
           <% if (post.tags && post.tags.length > 0){ %>
-             &#8226; 标签:
+             &#8226; Tags:
             <font class="tags">
               <%- list_tags(post.tags, {
                 show_count: false,
@@ -46,6 +46,16 @@ var post = page;
 
   <section id="post-content" class="article-content post">
     <%- post.content %>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 1 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9496558415623971"
+     data-ad-slot="4339901241"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
   </section>
 
   <%- partial('disqus') %>
