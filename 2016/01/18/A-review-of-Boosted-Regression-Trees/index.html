@@ -22,7 +22,7 @@
 <meta property="og:url" content="http://Koohoko.github.io/2016/01/18/A-review-of-Boosted-Regression-Trees/index.html">
 <meta property="og:site_name" content="Neverland">
 <meta property="og:description" content="A Review of Boosted Regression Trees">
-<meta property="og:updated_time" content="2016-01-18T14:45:19.032Z">
+<meta property="og:updated_time" content="2016-01-18T15:18:02.282Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="激励回归树模型回顾 | Neverland">
 <meta name="twitter:description" content="A Review of Boosted Regression Trees">
@@ -183,7 +183,7 @@ classes that you can use:
   </header>
 
   <section id="post-content" class="article-content post">
-    <p>根据<del>基本法</del>本人之前的承诺，本来技术性文章是要用英文写的。但是现在我<del>excited</del>后悔了，还是决定决定先用中文好了。。</p>
+    <p>根据<del>基本法</del>本人之前的承诺，本来技术性文章是要用英文写的。但是现在我后悔了。。还是决定先用中文好了。</p>
 <h3 id="What_is_BRT_3F__u4EC0_u4E48_u662F_u6FC0_u52B1_u56DE_u5F52_u6811_uFF1F"><a href="#What_is_BRT_3F__u4EC0_u4E48_u662F_u6FC0_u52B1_u56DE_u5F52_u6811_uFF1F" class="headerlink" title="What is BRT? 什么是激励回归树？"></a>What is BRT? 什么是激励回归树？</h3><h4 id="u56DE_u5F52"><a href="#u56DE_u5F52" class="headerlink" title="回归"></a>回归</h4><p>我们探索多变量之间的关系的时候，经常会用到回归。从最简单的最小二乘回归，到对因变量作变换的广义线性回归（Generalized Linear Models），再到用样条函数（natrual splines）来拟合非线性关系的广义相加模型（Generalized Addictive Models），每个模型都有它自己的特点。</p>
 <h4 id="u6811_u6A21_u578B"><a href="#u6811_u6A21_u578B" class="headerlink" title="树模型"></a>树模型</h4><p>对于树模型，大家容易会想到决策树（Decision Trees）和随机森林（Random Forests）。决策树的想法很朴素，就像二叉树一样，一直作分类，它的优势就是简单快捷。随机森林可以理解为很多课决策树的集合，大家来共同预测，最后选出大家投票最多的作为结果。在随机森林的基础上，还有Gradient Boost Decision Tree，这些方法在很多Data Mining的Tutorial都会提到，都是传统的分类方法。</p>
 <h4 id="u6FC0_u52B1_u56DE_u5F52_u6811"><a href="#u6FC0_u52B1_u56DE_u5F52_u6811" class="headerlink" title="激励回归树"></a>激励回归树</h4><p>对于BRT简要的历史，以下引用几段我觉得写得很清晰的:</p>
