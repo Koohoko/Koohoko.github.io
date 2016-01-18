@@ -74,12 +74,10 @@ deploy:
   branch: master
 - type: git
   repo: git@gitcafe.com:Koohoko/Koohoko.git
-  branch: gitcafe-pages
+  branch: gitcafe-pages  
 
-
-# Backup
 backup:
     type: git
     repository:
        github: git@github.com:Koohoko/Koohoko.github.io.git,hexo
-
+       gitcafe: git@gitcafe.com:Koohoko/Koohoko.git,hexo
