@@ -1098,7 +1098,7 @@ code {
 
 .footer {
   display: block;
-  padding: 2em 0 0 0;
+  padding: 1em 0 0 0;
   border-top: 2px solid #dddddd;
   font-size: .7em;
   color: #b3b3b3; }
@@ -1131,7 +1131,7 @@ hr {
 
 .post-comments {
   border-top: 1px solid #dddddd;
-  padding: 60px 0; }
+  padding: 0 0 1em 0; }
 
 .post-meta {
   margin: 0 0 1.4em 0;
