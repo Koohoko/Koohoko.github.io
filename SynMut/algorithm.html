@@ -10,7 +10,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="author" content="Haogao Gu" />
+<meta name="author" content="Haogao Gu, Leo L.M. Poon" />
+<meta name="author" content="School of Public Health, The University of Hong Kong" />
 
 
 <title>Strategies for codon_mimic and dinu_to</title>
@@ -107,7 +108,8 @@ code > span.ot { color: #007020; }
 <div class="inner">
 <header>
 <h1 class="title toc-ignore">Strategies for <code>codon_mimic</code> and <code>dinu_to</code></h1>
-<h3 class="author">Haogao Gu</h3>
+<h3 class="author">Haogao Gu, Leo L.M. Poon</h3>
+<h3 class="author">School of Public Health, The University of Hong Kong</h3>
 </header>
 
 <hr>
@@ -142,7 +144,7 @@ code > span.ot { color: #007020; }
 <a class="sourceLine" id="cb1-19" title="19">  <span class="kw">codon_dist</span>(mut.seq.tmp, target.seq)</a>
 <a class="sourceLine" id="cb1-20" title="20">})</a>
 <a class="sourceLine" id="cb1-21" title="21"></a>
-<a class="sourceLine" id="cb1-22" title="22"><span class="co">#Plot the distribution</span></a>
+<a class="sourceLine" id="cb1-22" title="22"><span class="co"># Plot the distribution</span></a>
 <a class="sourceLine" id="cb1-23" title="23"><span class="kw">library</span>(ggplot2)</a>
 <a class="sourceLine" id="cb1-24" title="24">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Original.sequences =</span> seq.dist, <span class="dt">mutant.sequences =</span> mut.mimic.dist)</a>
 <a class="sourceLine" id="cb1-25" title="25">df &lt;-<span class="st"> </span>tidyr<span class="op">::</span><span class="kw">gather</span>(df, <span class="st">&quot;type&quot;</span>, <span class="st">&quot;Distance&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)</a>
@@ -192,7 +194,7 @@ code > span.ot { color: #007020; }
 <a class="sourceLine" id="cb2-26" title="26">  <span class="kw">get_du</span>(mut.seq.tmp)[,dinu.index]</a>
 <a class="sourceLine" id="cb2-27" title="27">})</a>
 <a class="sourceLine" id="cb2-28" title="28"></a>
-<a class="sourceLine" id="cb2-29" title="29"><span class="co">#Plot the distribution</span></a>
+<a class="sourceLine" id="cb2-29" title="29"><span class="co"># Plot the distribution</span></a>
 <a class="sourceLine" id="cb2-30" title="30">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Original.dinu.usage =</span> seq.dinu, <span class="dt">Mutant.max.dinu.usage =</span> mut.max.dinu,</a>
 <a class="sourceLine" id="cb2-31" title="31">  <span class="dt">Mutant.min.dinu.usage =</span> mut.min.dinu)</a>
 <a class="sourceLine" id="cb2-32" title="32">df &lt;-<span class="st"> </span>tidyr<span class="op">::</span><span class="kw">gather</span>(df, <span class="st">&quot;type&quot;</span>, <span class="st">&quot;Dinuceltide_usage&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</a>
