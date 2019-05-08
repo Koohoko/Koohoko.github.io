@@ -238,17 +238,17 @@ code > span.ot { color: #007020; }
 <a class="sourceLine" id="cb7-3" title="3"><span class="co"># Compare the codon usage</span></a>
 <a class="sourceLine" id="cb7-4" title="4"><span class="kw">get_cu</span>(mut.seq) <span class="op">-</span><span class="st"> </span><span class="kw">get_cu</span>(rgd.seq)</a>
 <a class="sourceLine" id="cb7-5" title="5"><span class="co">#&gt;      AAA AAC AAG AAT ACA ACC ACG ACT AGA AGC AGG AGT ATA ATC ATG ATT CAA</span></a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="co">#&gt; [1,]   0   4   0  -4  -1  -1   2   0  -1   0  -1  -3  -4   3   0   1   2</span></a>
-<a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt; [2,]  -2   0   2   0   0  -1   1   0   0   0  -2  -1   0   2   0  -2  -1</span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="co">#&gt; [1,]   3   1  -3  -1  -1  -4   4   1  -1  -1  -2  -2  -2   3   0  -1   0</span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt; [2,]  -2   0   2   0   1   0   0  -1   0   2  -2   0   0   1   0  -1  -1</span></a>
 <a class="sourceLine" id="cb7-8" title="8"><span class="co">#&gt;      CAC CAG CAT CCA CCC CCG CCT CGA CGC CGG CGT CTA CTC CTG CTT GAA GAC</span></a>
-<a class="sourceLine" id="cb7-9" title="9"><span class="co">#&gt; [1,]   3  -2  -3  -3   1   3  -1   0   0   1   1  -1   0   1  -5   0  -1</span></a>
-<a class="sourceLine" id="cb7-10" title="10"><span class="co">#&gt; [2,]   0   1   0   1  -1   0   0   0   2   0   0  -1   0  -2   2  -1   0</span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="co">#&gt; [1,]   1   0  -1  -2   0   1   1  -1   0   0   4   2  -2   0  -4   2   0</span></a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="co">#&gt; [2,]   0   1   0   0   0   0   0   0   0   2   0  -1   1  -1   0  -1   0</span></a>
 <a class="sourceLine" id="cb7-11" title="11"><span class="co">#&gt;      GAG GAT GCA GCC GCG GCT GGA GGC GGG GGT GTA GTC GTG GTT TAA TAC TAG</span></a>
-<a class="sourceLine" id="cb7-12" title="12"><span class="co">#&gt; [1,]   0   1  -2  -4   5   1   2   0  -4   2   2   0   0  -2   0   2   0</span></a>
-<a class="sourceLine" id="cb7-13" title="13"><span class="co">#&gt; [2,]   1   0   0   1   0  -1   0   1   0  -1   0   0   0   0   0  -1   0</span></a>
+<a class="sourceLine" id="cb7-12" title="12"><span class="co">#&gt; [1,]  -2   0   3  -2   5  -6  -2   4  -4   2   2   0  -2   0   0   0   0</span></a>
+<a class="sourceLine" id="cb7-13" title="13"><span class="co">#&gt; [2,]   1   0  -1   1   1  -1  -1   0   0   1   0   0   0   0   0  -1   0</span></a>
 <a class="sourceLine" id="cb7-14" title="14"><span class="co">#&gt;      TAT TCA TCC TCG TCT TGA TGC TGG TGT TTA TTC TTG TTT</span></a>
-<a class="sourceLine" id="cb7-15" title="15"><span class="co">#&gt; [1,]  -2  -1   2   3  -1   0   2   0  -2   1   0   4   0</span></a>
-<a class="sourceLine" id="cb7-16" title="16"><span class="co">#&gt; [2,]   1   0   0   2  -1   0   0   0   0   0   0   1   0</span></a>
+<a class="sourceLine" id="cb7-15" title="15"><span class="co">#&gt; [1,]   0   2  -1   1   1   0   1   0  -1   2   0   2   0</span></a>
+<a class="sourceLine" id="cb7-16" title="16"><span class="co">#&gt; [2,]   1  -1   0   0  -1   0   0   0   0   0  -1   1   1</span></a>
 <a class="sourceLine" id="cb7-17" title="17"></a>
 <a class="sourceLine" id="cb7-18" title="18"><span class="co"># Keeping the original codon usage pattern</span></a>
 <a class="sourceLine" id="cb7-19" title="19">mut.seq &lt;-<span class="st"> </span><span class="kw">codon_random</span>(rgd.seq, <span class="dt">keep =</span> <span class="ot">TRUE</span>)</a>
@@ -272,17 +272,17 @@ code > span.ot { color: #007020; }
 <a class="sourceLine" id="cb8-3" title="3"><span class="co"># Compare the codon usage</span></a>
 <a class="sourceLine" id="cb8-4" title="4"><span class="kw">get_cu</span>(mut.seq) <span class="op">-</span><span class="st"> </span><span class="kw">get_cu</span>(rgd.seq)</a>
 <a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt;      AAA AAC AAG AAT ACA ACC ACG ACT AGA AGC AGG AGT ATA ATC ATG ATT CAA</span></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt; [1,]  -1   1   1  -1  -3   1   3  -1  -1   1  -1   1   0   0   0   0   0</span></a>
-<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; [2,]   0   0   0   0   0  -1   1   0   1   0  -1  -1   0   0   0   0   1</span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt; [1,]   1   2  -1  -2  -2   0   2   0  -2  -1  -2  -2  -2   0   0   2   0</span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; [2,]  -1   0   1   0   0  -1   1   0   0   0  -1   0   0   1   0  -1   1</span></a>
 <a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt;      CAC CAG CAT CCA CCC CCG CCT CGA CGC CGG CGT CTA CTC CTG CTT GAA GAC</span></a>
-<a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt; [1,]   2   0  -2  -2   1   1   0   0   0   0   2  -1   4  -1  -3  -1  -2</span></a>
-<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt; [2,]   0  -1   0   0   0   1  -1   0   0   0   0   1   0  -2   0  -1  -1</span></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt; [1,]   1   0  -1   0   0   0   0   1   0   2   1   1   0  -2  -1  -1   0</span></a>
+<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt; [2,]   0  -1   0   0  -1   0   1   0   0   1   0   2   1  -1  -2   0   0</span></a>
 <a class="sourceLine" id="cb8-11" title="11"><span class="co">#&gt;      GAG GAT GCA GCC GCG GCT GGA GGC GGG GGT GTA GTC GTG GTT TAA TAC TAG</span></a>
-<a class="sourceLine" id="cb8-12" title="12"><span class="co">#&gt; [1,]   1   2   1  -2   2  -1   1   1  -3   1  -1   1   1  -1   0   0   0</span></a>
-<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt; [2,]   1   1  -1   2  -1   0   0   0   0   0   0   0   0   0   0   0   0</span></a>
+<a class="sourceLine" id="cb8-12" title="12"><span class="co">#&gt; [1,]   1   0  -2   0   5  -3  -2   1   0   1  -1  -1  -1   3   0   1   0</span></a>
+<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt; [2,]   0   0   0   0   1  -1  -1   2   0  -1   0   0   0   0   0   0   0</span></a>
 <a class="sourceLine" id="cb8-14" title="14"><span class="co">#&gt;      TAT TCA TCC TCG TCT TGA TGC TGG TGT TTA TTC TTG TTT</span></a>
-<a class="sourceLine" id="cb8-15" title="15"><span class="co">#&gt; [1,]   0   0  -1   0  -1   0   1   0  -1  -1   1   2  -1</span></a>
-<a class="sourceLine" id="cb8-16" title="16"><span class="co">#&gt; [2,]   0   1  -1   0   1   0   0   0   0   0  -1   1   1</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-15" title="15"><span class="co">#&gt; [1,]  -1   3  -1   1   0   0   0   0   0   1  -1   1   1</span></a>
+<a class="sourceLine" id="cb8-16" title="16"><span class="co">#&gt; [2,]   0  -1   1   0   0   0   0   0   0   0   0   0   0</span></a></code></pre></div>
 </div>
 <div id="synonymous-mutants-with-maximalminimal-usage-of-specific-codon" class="section level3">
 <h3>Synonymous mutants with maximal/minimal usage of specific codon</h3>
@@ -330,22 +330,22 @@ code > span.ot { color: #007020; }
 <a class="sourceLine" id="cb10-3" title="3"><span class="co"># Check the dinucelotide usage difference between the mutant and the original</span></a>
 <a class="sourceLine" id="cb10-4" title="4"><span class="kw">get_du</span>(mut.seq) <span class="op">-</span><span class="st"> </span><span class="kw">get_du</span>(rgd.seq)</a>
 <a class="sourceLine" id="cb10-5" title="5"><span class="co">#&gt;      AA AC  AG  AT  CA CC CG CT GA GC GG GT  TA TC  TG  TT</span></a>
-<a class="sourceLine" id="cb10-6" title="6"><span class="co">#&gt; [1,]  7 15 -33 -19 -10  3 78 -7 -6 24 -9  1 -21 22 -26 -19</span></a>
-<a class="sourceLine" id="cb10-7" title="7"><span class="co">#&gt; [2,] -3  1  -4  -1   1 -1 15 -1 -2  6 -2  2  -3  8  -5 -11</span></a>
+<a class="sourceLine" id="cb10-6" title="6"><span class="co">#&gt; [1,] -6 12 -25 -21 -10  3 78 -7 -3 27 -7  3 -21 22 -26 -19</span></a>
+<a class="sourceLine" id="cb10-7" title="7"><span class="co">#&gt; [2,] -7  1  -2  -2   1 -1 15 -1 -1  6 -1  3  -3  8  -5 -11</span></a>
 <a class="sourceLine" id="cb10-8" title="8"></a>
 <a class="sourceLine" id="cb10-9" title="9"><span class="co"># Minimize the usage of &quot;CA&quot;, and compare the dinucleotide usage.</span></a>
 <a class="sourceLine" id="cb10-10" title="10">mut.seq &lt;-<span class="st"> </span><span class="kw">dinu_to</span>(rgd.seq, <span class="dt">min.dinu =</span> <span class="st">&quot;CA&quot;</span>)</a>
 <a class="sourceLine" id="cb10-11" title="11"><span class="kw">get_du</span>(mut.seq) <span class="op">-</span><span class="st"> </span><span class="kw">get_du</span>(rgd.seq)</a>
-<a class="sourceLine" id="cb10-12" title="12"><span class="co">#&gt;      AA AC  AG AT  CA  CC CG CT GA GC GG GT TA TC TG TT</span></a>
-<a class="sourceLine" id="cb10-13" title="13"><span class="co">#&gt; [1,] -8 -9 -18  3 -33 -19 37  0  2  5  9 13  7  8  1  2</span></a>
-<a class="sourceLine" id="cb10-14" title="14"><span class="co">#&gt; [2,] -3 -1  -3  3  -6  -6  5  2 -1  1  4  2  6  1  0 -4</span></a>
+<a class="sourceLine" id="cb10-12" title="12"><span class="co">#&gt;       AA AC  AG AT  CA  CC CG CT GA GC GG GT TA TC TG TT</span></a>
+<a class="sourceLine" id="cb10-13" title="13"><span class="co">#&gt; [1,] -12 -8 -16 -1 -33 -19 28 -6  8 -4 -6 19  0  1 11 38</span></a>
+<a class="sourceLine" id="cb10-14" title="14"><span class="co">#&gt; [2,]  -9 -5   0  4  -6  -6  5 -5  2  0  1  7  3 -1  4  6</span></a>
 <a class="sourceLine" id="cb10-15" title="15"></a>
 <a class="sourceLine" id="cb10-16" title="16"><span class="co"># Maximize the usage of &quot;CG&quot; while keeping the original codon usage</span></a>
 <a class="sourceLine" id="cb10-17" title="17">mut.seq &lt;-<span class="st"> </span><span class="kw">dinu_to</span>(rgd.seq, <span class="dt">max.dinu =</span> <span class="st">&quot;cg&quot;</span>, <span class="dt">keep =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb10-18" title="18"><span class="co"># Compare the dinucleotide usage</span></a>
 <a class="sourceLine" id="cb10-19" title="19"><span class="kw">get_du</span>(mut.seq) <span class="op">-</span><span class="st"> </span><span class="kw">get_du</span>(rgd.seq)</a>
 <a class="sourceLine" id="cb10-20" title="20"><span class="co">#&gt;      AA AC AG AT  CA CC CG CT GA GC GG GT TA TC  TG TT</span></a>
-<a class="sourceLine" id="cb10-21" title="21"><span class="co">#&gt; [1,]  5  0 -5  0 -13 -5 20 -2 -1  2 -2  1  9  3 -13  1</span></a>
+<a class="sourceLine" id="cb10-21" title="21"><span class="co">#&gt; [1,]  5 -2 -5  2 -15 -4 21 -2  0  2 -2  0 10  4 -14  0</span></a>
 <a class="sourceLine" id="cb10-22" title="22"><span class="co">#&gt; [2,]  0  1 -1  0   0 -1  1  0  0  0  0  0  0  0   0  0</span></a>
 <a class="sourceLine" id="cb10-23" title="23"><span class="co"># Compare the codon usage</span></a>
 <a class="sourceLine" id="cb10-24" title="24"><span class="kw">get_cu</span>(mut.seq) <span class="op">-</span><span class="st"> </span><span class="kw">get_cu</span>(rgd.seq)</a>
@@ -462,7 +462,7 @@ code > span.ot { color: #007020; }
 <a class="sourceLine" id="cb13-16" title="16"><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></a>
 <a class="sourceLine" id="cb13-17" title="17"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb13-18" title="18"><span class="co">#&gt; other attached packages:</span></a>
-<a class="sourceLine" id="cb13-19" title="19"><span class="co">#&gt; [1] SynMut_1.1.2</span></a>
+<a class="sourceLine" id="cb13-19" title="19"><span class="co">#&gt; [1] SynMut_1.1.3</span></a>
 <a class="sourceLine" id="cb13-20" title="20"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb13-21" title="21"><span class="co">#&gt; loaded via a namespace (and not attached):</span></a>
 <a class="sourceLine" id="cb13-22" title="22"><span class="co">#&gt;  [1] Rcpp_1.0.1          IRanges_2.18.0      Biostrings_2.52.0  </span></a>
