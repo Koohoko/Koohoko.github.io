@@ -34,7 +34,7 @@ I enjoy solving biological problems with computational methods, I have developed
 
 # CV
 [Download](../files/CV/CV_2022_08_19.pdf)
-<object data="../files/CV/CV_2022_08_19.pdf" width="1000" height="1618" type='application/pdf'></object>
+<object data="../files/CV/CV_2022_08_19.pdf" width="1000" height="1294" type='application/pdf'></object>
 
 # News
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">We investigated within-host evolution of SARS-CoV-2 using HK deep sequencing data from 2020 to 2022 in this study. Potential lineage-specific and vaccination-specific effects were discussed. <a href="https://t.co/PUamvKKqrR">https://t.co/PUamvKKqrR</a> <a href="https://t.co/DZIHjbz0MT">https://t.co/DZIHjbz0MT</a></p>&mdash; Haogao Gu (@GuHaogao) <a href="https://twitter.com/GuHaogao/status/1559896855705632768?ref_src=twsrc%5Etfw">August 17, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
