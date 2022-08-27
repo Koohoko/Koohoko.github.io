@@ -22,6 +22,8 @@ I work at School of Public Health, the University of Hong Kong as a postdoctoral
 # News
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">We investigated within-host evolution of SARS-CoV-2 using HK deep sequencing data from 2020 to 2022 in this study. Potential lineage-specific and vaccination-specific effects were discussed. <a href="https://t.co/PUamvKKqrR">https://t.co/PUamvKKqrR</a> <a href="https://t.co/DZIHjbz0MT">https://t.co/DZIHjbz0MT</a></p>&mdash; Haogao Gu (@GuHaogao) <a href="https://twitter.com/GuHaogao/status/1559896855705632768?ref_src=twsrc%5Etfw">August 17, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Glad to learn that our NGS paper for <a href="https://twitter.com/hashtag/COVID19?src=hash&amp;ref_src=twsrc%5Etfw">#COVID19</a> is selected as a featured article for public health. We indeed have learnt a lot from AUGC！<a href="https://t.co/OvCexcMywY">https://t.co/OvCexcMywY</a> <a href="https://t.co/PWyZEjdOQt">pic.twitter.com/PWyZEjdOQt</a></p>&mdash; Leo Poon (@world_epidemic) <a href="https://twitter.com/world_epidemic/status/1497195122127032334?ref_src=twsrc%5Etfw">February 25, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 # CV
-<object data="../files/CV/CV_2022_08_19.pdf" width="1000" height="1000" type='application/pdf'></object>
+<object data="../files/CV/CV_2022_08_19.pdf" width="1000" height="618" type='application/pdf'></object>
 
