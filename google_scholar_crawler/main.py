@@ -24,7 +24,7 @@ with open(f'results/gs_data_shieldsio.json', 'w') as outfile:
 
 hindex_data = {
   "schemaVersion": 1,
-  "label": "hindex",
+  "label": "h-index",
   "message": f"{author['hindex']}",
 }
 
