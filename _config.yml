@@ -29,7 +29,7 @@ author:
   pubmed           : 
   googlescholar    : "https://scholar.google.com/citations?user=sie-ZJkAAAAJ"
   email            : "koohoko@gmail.com"
-  researchgate     : "https://www.researchgate.net/profile/Haogao-Gu"
+  researchgate     :
   uri              :
   bitbucket        :
   codepen          :
@@ -43,7 +43,7 @@ author:
   instagram        :
   impactstory      : # e.g., "https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
   lastfm           :
-  linkedin         : "haogao-gu"
+  linkedin         :
   dblp             : # e.g., "https://dblp.org/pid/xx/xxxx.html"
   orcid            : "https://orcid.org/0000-0002-7541-4262"
   soundcloud       :
