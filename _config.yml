@@ -9,7 +9,7 @@
 title                    : "Haogao Gu (顾豪高)"
 description              : "Postdoc fellow at The University of Hong Kong. Focusing on virus evolution and virus / host interactions."
 repository               : "Koohoko/Koohoko.github.io"
-google_scholar_stats_use_cdn : true
+google_scholar_stats_use_cdn : false
 
 # google analytics
 google_analytics_id      :  G-89609PW7W1
