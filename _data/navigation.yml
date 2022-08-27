@@ -4,10 +4,10 @@ main:
     url: "/#about-me"
 
   - title: "News"
-    url: "/#-news"
+    url: "/#news"
 
   - title: "CV"
-    url: "/#-CV"
+    url: "/#CV"
 
   # - title: "Honors and Awards"
   #   url: "/#-honors-and-awards"
