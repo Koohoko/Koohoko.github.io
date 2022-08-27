@@ -7,7 +7,7 @@ main:
     url: "/#news"
 
   - title: "CV"
-    url: "/#CV"
+    url: "/#cv"
 
   # - title: "Honors and Awards"
   #   url: "/#-honors-and-awards"
