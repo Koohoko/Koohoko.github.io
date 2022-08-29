@@ -18,7 +18,7 @@ redirect_from:
 
 <span class='anchor' id='about-me'></span>
 
-My name is Haogao Gu, now a postdoctoral fellow at [School of Public Health](https://sph.hku.hk/), the University of Hong Kong. I graduated from [Sun Yat-sen University](https://www.sysu.edu.cn/sysuen/) with a Bachelor degrees of preventive medicine. I obtained my PhD in infectious diseases in 2020 from [The University of Hong Kong](https://www.hku.hk/) under the supervision of [Leo Poon](https://sph.hku.hk/en/Biography/Poon-Lit-Man-Leo). 
+My name is Haogao Gu, now a postdoctoral fellow at [School of Public Health](https://sph.hku.hk/), the University of Hong Kong. I graduated from [Sun Yat-sen University](https://www.sysu.edu.cn/sysuen/) with a bachelor degree of preventive medicine. I obtained my PhD in infectious diseases in 2020 from [The University of Hong Kong](https://www.hku.hk/) under the supervision of [Prof. Leo Poon](https://sph.hku.hk/en/Biography/Poon-Lit-Man-Leo). 
 
 I study the evolution and epidemiology of virus infections, viral sequence features and virus-host interactions. I am good at bioinformatic and statistical analysis of viral sequencing data, and my research has provided novel insights on both basic virology and applied science on controlling virus transmission. My contribution to this field is reflected in my publication record of <a href='https://scholar.google.com/citations?user=sie-ZJkAAAAJ'><img src="https://img.shields.io/endpoint?url={{ url | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=citations"></a> and <a href='https://scholar.google.com/citations?user=sie-ZJkAAAAJ'><img src="https://img.shields.io/endpoint?url={{ url_hindex | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=h-index"></a>. 
 
@@ -33,7 +33,7 @@ I enjoy solving biological problems with computational methods, I have developed
 
 
 # CV
-[Download](../files/CV/CV_2022_08_19.pdf)
+[Download full PDF](../files/CV/CV_2022_08_19.pdf)
 <object data="../files/CV/CV_2022_08_19.pdf" width="1000" height="1294" type='application/pdf'></object>
 
 # News
