@@ -8,6 +8,8 @@
 # Site Settings
 title                    : "Haogao Gu (顾豪高)"
 description              : "Postdoc fellow at The University of Hong Kong. Focusing on virus evolution and virus / host interactions."
+url                      : https://koohoko.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "Koohoko/Koohoko.github.io"
 google_scholar_stats_use_cdn : false
 
@@ -22,7 +24,7 @@ baidu_site_verification  :  # get baidu_site_verification from https://ziyuan.ba
 # Site Author
 author:
   name             : "Haogao Gu"
-  avatar           : "images/android-chrome-512x512.png"
+  avatar           : "/images/android-chrome-512x512.png"
   bio              : "The University of Hong Kong"
   location         : 
   employer         :
@@ -118,14 +120,25 @@ kramdown:
 
 # Defaults
 defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: # true
+      share: true
+      related: true
   # _pages
   - scope:
       path: ""
       type: pages
     values:
-      layout: default
+      layout: single
       author_profile: true
-
+  # _teaching
 
 # Sass/SCSS
 sass:
@@ -136,7 +149,6 @@ sass:
 # Outputting
 permalink: /:categories/:title/
 timezone: Asia/Shanghai # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-
 
 # Plugins
 plugins:
@@ -160,3 +172,31 @@ compress_html:
   clippings: all
   ignore:
     envs: development
+
+# Archives
+#  Type
+#  - GitHub Pages compatible archive pages built with Liquid ~> type: liquid (default)
+#  - Jekyll Archives plugin archive pages ~> type: jekyll-archives
+#  Path (examples)
+#  - Archive page should exist at path when using Liquid method or you can
+#    expect broken links (especially with breadcrumbs enabled)
+#  - <base_path>/tags/my-awesome-tag/index.html ~> path: /tags/
+#  - <base_path>/categories/my-awesome-category/index.html ~> path: /categories/
+#  - <base_path>/my-awesome-category/index.html ~> path: /
+category_archive:
+  type: liquid
+  path: /categories/
+tag_archive:
+  type: liquid
+  path: /tags/
+# https://github.com/jekyll/jekyll-archives
+# jekyll-archives:
+#   enabled:
+#     - categories
+#     - tags
+#   layouts:
+#     category: archive-taxonomy
+#     tag: archive-taxonomy
+#   permalinks:
+#     category: /categories/:name/
+#     tag: /tags/:name/

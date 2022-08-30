@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://koohoko.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://koohoko.github.io/" rel="alternate" type="text/html" /><updated>2022-08-30T22:28:49+08:00</updated><id>https://koohoko.github.io/feed.xml</id><title type="html">Haogao Gu (顾豪高)</title><subtitle>Postdoc fellow at The University of Hong Kong. Focusing on virus evolution and virus / host interactions.</subtitle><author><name>Haogao Gu</name><email>koohoko@gmail.com</email></author><entry><title type="html">First blog: A new start</title><link href="https://koohoko.github.io/misc/first-blog/" rel="alternate" type="text/html" title="First blog: A new start" /><published>2022-08-30T00:00:00+08:00</published><updated>2022-08-30T00:00:00+08:00</updated><id>https://koohoko.github.io/misc/first-blog</id><content type="html" xml:base="https://koohoko.github.io/misc/first-blog/">&lt;p&gt;This is the first blog of this website.&lt;/p&gt;
+
+&lt;p&gt;The page is hosed on Github pages and was powered by &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;jerkll&lt;/a&gt;.
+When building a this website, some reference pages were essential and were list below:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;https://rayeren.github.io/&lt;/li&gt;
+  &lt;li&gt;https://mmistakes.github.io/minimal-mistakes/about/&lt;/li&gt;
+  &lt;li&gt;https://academicpages.github.io&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Haogao Gu</name><email>koohoko@gmail.com</email></author><category term="Misc" /><category term="front-end" /><summary type="html">This is the first blog of this website.</summary></entry></feed>
