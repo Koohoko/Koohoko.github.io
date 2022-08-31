@@ -26,8 +26,11 @@ I study the evolution and epidemiology of virus infections, viral sequence featu
 I enjoy solving biological problems with computational methods, I have developed some tools (e.g. [SynMut](https://github.com/Koohoko/SynMut), [GEII](https://leo-poon-lab-geii-scriptsweb-app-pk8r5m.streamlitapp.com/), [fasta_filter](https://github.com/Koohoko/fasta_filter)) for studying virus evolution. I like playing basketball and fishing during my leisure times. 
 
 # CV
-[Download full PDF](../files/CV/CV_2022_08_19.pdf)
-<!-- <object data="../files/CV/CV_2022_08_19.pdf" width="1000" height="1294" type='application/pdf'></object> -->
+[Download full PDF]("../files/CV/CV_latest.pdf")
+<iframe src="../files/CV/CV_latest.pdf" width="100%" height="800"> 
+  <p>It appears you don't have a PDF plugin for this browser. Please download the file from the above link.</p>  
+</iframe>
+
 
 # Selected Publications
 - Haogao Gu, Ahmed Abdul Quadeer, Pavithra Krishnan, Lydia Chang, Gigi Liu, Daisy Ng, Samuel Cheng, Tommy Lam, Malik Peiris, Matthew McKay, Leo Poon. [Within-host diversity of SARS-CoV-2 lineages and effect of vaccination.](https://www.researchsquare.com/article/rs-1927944/v1) Under Review (2022) 
