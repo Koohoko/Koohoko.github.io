@@ -1,68 +1,18 @@
 ---
-title: "Edge Case: Nested and Mixed Lists"
+title: "First blog: A new start"
+date: 2022-08-30
 categories:
-  - Edge Case
+  - Misc
 tags:
-  - content
-  - css
-  - edge case
-  - lists
-  - markup
+  - front-end
 ---
 
-Nested and mixed lists are an interesting beast. It's a corner case to make sure that
+This is the first blog of this website. 
 
-* Lists within lists do not break the ordered list numbering order
-* Your list styles go deep enough.
+The page is hosed on Github pages and was powered by [jerkll](https://jekyllrb.com/).
+When building a this website, some reference pages were essential and were list below:
+  - https://rayeren.github.io/
+  - https://mmistakes.github.io/minimal-mistakes/about/
+  - https://academicpages.github.io
 
-### Ordered -- Unordered -- Ordered
 
-1. ordered item
-2. ordered item 
-  * **unordered**
-  * **unordered** 
-    1. ordered item
-    2. ordered item
-3. ordered item
-4. ordered item
-
-### Ordered -- Unordered -- Unordered
-
-1. ordered item
-2. ordered item 
-  * **unordered**
-  * **unordered** 
-    * unordered item
-    * unordered item
-3. ordered item
-4. ordered item
-
-### Unordered -- Ordered -- Unordered
-
-* unordered item
-* unordered item 
-  1. ordered
-  2. ordered 
-    * unordered item
-    * unordered item
-* unordered item
-* unordered item
-
-### Unordered -- Unordered -- Ordered
-
-* unordered item
-* unordered item 
-  * unordered
-  * unordered 
-    1. **ordered item**
-    2. **ordered item**
-* unordered item
-* unordered item
-
-### Task Lists
-
-- [x] Finish my changes
-- [ ] Push my commits to GitHub
-- [ ] Open a pull request
-  - [ ] Follow discussions
-  - [x] Push new commits
