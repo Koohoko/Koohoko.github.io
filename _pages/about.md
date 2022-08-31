@@ -33,8 +33,7 @@ I enjoy solving biological problems with computational methods, I have developed
 - _Haogao Gu_, Rebecca Fan, Di Wang, Leo Poon. [Dinucleotide evolutionary dynamics in influenza A virus.](https://pubmed.ncbi.nlm.nih.gov/31737288/) **VIRUS EVOLUTION** 5, no. 2: vez038. (2019) <i><span class='show_paper_citations' data='sie-ZJkAAAAJ:u-x6o8ySG0sC'></span></i>
 
 
-# CV
-[Download full PDF]("../files/CV/CV_haogao.pdf")
+# [CV](("/files/CV/CV_haogao.pdf"))
 <iframe src="/web/viewer.html?file=/files/CV/CV_haogao.pdf#pagemode=none" width="100%" height="800"></iframe>
 
 # News
