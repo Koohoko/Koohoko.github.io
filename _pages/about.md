@@ -27,8 +27,8 @@ I enjoy solving biological problems with computational methods, I have developed
 
 # CV
 [Download full PDF]("../files/CV/CV_latest.pdf")
-<iframe src="../files/CV/CV_latest.pdf" width="100%" height="800"> 
-  <p>It appears you don't have a PDF plugin for this browser. Please download the file from the above link.</p>  
+<iframe src="/web/viewer.html?file=/files/CV/CV_latest.pdf#pagemode=none" width="100%" height="800"> 
+It appears you don't have a PDF plugin for this browser. Please download the file from the above link.
 </iframe>
 
 
