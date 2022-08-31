@@ -37,7 +37,7 @@ I enjoy solving biological problems with computational methods, I have developed
 <iframe src="/web/viewer.html?file=/files/CV/CV_haogao.pdf#pagemode=none" width="100%" height="800"></iframe>
 
 # News
-- **2022-08-17**: Chekc our new preprint on within-host evolution of SARS-CoV-2.
+- **2022-08-17**: Check our new preprint on within-host evolution of SARS-CoV-2.
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">We investigated within-host evolution of SARS-CoV-2 using HK deep sequencing data from 2020 to 2022 in this study. Potential lineage-specific and vaccination-specific effects were discussed. <a href="https://t.co/PUamvKKqrR">https://t.co/PUamvKKqrR</a> <a href="https://t.co/DZIHjbz0MT">https://t.co/DZIHjbz0MT</a></p>&mdash; Haogao Gu (@GuHaogao) <a href="https://twitter.com/GuHaogao/status/1559896855705632768?ref_src=twsrc%5Etfw">August 17, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 - **2022-02**: Our paper on molecular epidemiology of the first to the fourth COVID-19 waves in Hong Kong published on NC.
