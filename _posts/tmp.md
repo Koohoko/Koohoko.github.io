@@ -4,7 +4,7 @@ date: 2022-08-30
 categories:
   - Misc
 tags:
-  - front-end
+  - Unassigned
 ---
 
 This is the first blog of this website. 

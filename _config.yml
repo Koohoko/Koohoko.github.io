@@ -12,6 +12,7 @@ url                      : https://koohoko.github.io # the base hostname & proto
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "Koohoko/Koohoko.github.io"
 google_scholar_stats_use_cdn : false
+read_more: "enable"
 
 # google analytics
 google_analytics_id      : G-89609PW7W1
@@ -131,6 +132,7 @@ defaults:
       comments: # true
       share: true
       related: true
+
   # _pages
   - scope:
       path: ""
