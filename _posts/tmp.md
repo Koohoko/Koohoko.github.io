@@ -1,6 +1,7 @@
 ---
 title: "First blog: A new start"
 date: 2022-08-30
+permalink: /posts/2022-08-30/new-blog
 categories:
   - Misc
 tags:
