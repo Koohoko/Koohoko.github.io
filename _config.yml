@@ -6,7 +6,7 @@
 # `jekyll serve`. If you change this file, please restart the server process.
 
 # Site Settings
-title                    : "Haogao Gu (顾豪高)"
+title                    : "Haogao Gu"
 description              : "Postdoc fellow at The University of Hong Kong. Focusing on virus evolution and virus / host interactions."
 url                      : https://koohoko.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
