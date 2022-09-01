@@ -54,7 +54,7 @@ author:
   github           : "Koohoko"
   google_plus      :
   keybase          :
-  instagram        : "koohoko"
+  instagram        : # "koohoko"
   impactstory      : # e.g., "https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
   lastfm           :
   linkedin         :
@@ -66,11 +66,11 @@ author:
   tumblr           :
   twitter          : "GuHaogao"
   vine             :
-  weibo            : "alan412"
+  weibo            : # "alan412"
   xing             :
   youtube          :
   wikipedia        :
-  zhihu            : "gu-hao-gao"
+  zhihu            : # "gu-hao-gao"
 
 
 # Reading Files
