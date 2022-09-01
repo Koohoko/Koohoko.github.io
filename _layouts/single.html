@@ -34,7 +34,7 @@ layout: default
           {% include page__meta.html %}
           {% assign words_per_minute = document.words_per_minute | default: site.words_per_minute | default: 200 %}
           {% assign words = document.content | strip_html | number_of_words %}
-          <span class="page__meta-readtime">
+          <span class="page__meta-readtime" style="color:#777777">
             <i class="fas fa-fw fa-clock" aria-hidden="true"></i>
             {% if words < words_per_minute %}
               {{ site.data.ui-text[site.locale].less_than | default: "less than" }} 1 {{ site.data.ui-text[site.locale].minute_read | default: "minute read," }}
@@ -45,6 +45,11 @@ layout: default
             {% endif %}
               with {{words}} words.
           </span>
+          
+          <span id="busuanzi_container_page_pv" style="color:#777777">
+            <i class="fas fa-fw fa-eye" aria-hidden="true"></i>  Post views: <span id="busuanzi_value_page_pv"></span>
+          </span>
+
           <hr />
         </header>
       {% endunless %}

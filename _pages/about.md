@@ -41,3 +41,8 @@ I enjoy solving biological problems with computational methods, I have developed
 
 # [CV](("/files/CV/CV_haogao.pdf"))
 <iframe src="/web/viewer.html?file=/files/CV/CV_haogao.pdf#pagemode=none" width="100%" height="860"></iframe>
+
+<hr />
+<span id="busuanzi_container_site_pv">
+  Site views: <span id="busuanzi_value_site_pv"></span>
+</span>
