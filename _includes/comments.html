@@ -1,0 +1,10 @@
+<div class="page__comments">
+  {% capture comments_label %}{{ site.data.ui-text[site.locale].comments_label | default: "Comments" }}{% endcapture %}
+  {% case site.comments.provider %}
+    {% when "giscus" %}
+      <h4 class="page__comments-title">{{ comments_label }}</h4>
+      <section id="giscus-comments"> {% include /comments-providers/giscus.html %} </section>
+    {% when "custom" %}
+      {% include /comments-providers/custom.html %}
+  {% endcase %}
+</div>

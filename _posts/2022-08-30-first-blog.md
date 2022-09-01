@@ -5,7 +5,7 @@ categories:
   - Misc
 tags:
   - Front-end
-  - Skills
+  - Github pages
 ---
 
 This is the first blog of this website. The page is hosted on [Github pages](https://pages.github.com) and was powered by [Jerkll](https://jekyllrb.com/). About 6 years ago, I also developed a github pages blog using [Hexo](https://hexo.io/zh-tw/). I think Hexo is generally simpler than Jerkll in terms of blogging, but Jerkll can be more versatile. 

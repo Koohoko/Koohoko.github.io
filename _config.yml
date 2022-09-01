@@ -14,6 +14,17 @@ repository               : "Koohoko/Koohoko.github.io"
 google_scholar_stats_use_cdn : false
 read_more: "enable"
 
+# comments
+comments:
+  provider               : "giscus"
+  giscus:
+    repo_id              : "MDEwOlJlcG9zaXRvcnkzNDMyNDkzMw=="
+    category_name        : "Announcements"
+    category_id          : "DIC_kwDOAgvBxc4CRKa3"
+    discussion_term      : "pathname"
+    reactions_enabled    : "1"
+    theme                : "light"
+
 # google analytics
 google_analytics_id      : G-89609PW7W1
 
@@ -128,8 +139,8 @@ defaults:
     values:
       layout: single
       author_profile: true
-      read_time: true
-      comments: # true
+      read_time: false
+      comments: true
       share: true
       related: true
 
