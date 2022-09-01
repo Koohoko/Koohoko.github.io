@@ -16,4 +16,5 @@ Just like the comment function, to have view counts on a static page require ext
   1. Add a js script to every page, like [this](https://github.com/Koohoko/Koohoko.github.io/blob/ec2f88c3d2248744d67f3d535b8a1cd81455f2c7/_includes/analytics.html#L13).
   2. Add a span element to the html to show page counts, like [this](https://github.com/Koohoko/Koohoko.github.io/blob/ec2f88c3d2248744d67f3d535b8a1cd81455f2c7/_layouts/single.html#L57-L59).
 
-Easy.
+
+Please note that some browsers will prohibit cross-site tracking (e.g. Safari on iPad) which will cause inaccurate page view counts. This can't be fixed at the website side. Some related discussions are available [here](https://jdhao.github.io/2020/10/31/busuanzi_pv_count_error/).
