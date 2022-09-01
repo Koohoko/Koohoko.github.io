@@ -32,14 +32,12 @@ I enjoy solving biological problems with computational methods, I have developed
 - _Haogao Gu_, Daniel KW Chu, Malik Peiris, Leo LM Poon. [Multivariate analyses of codon usage of SARS-CoV-2 and other betacoronaviruses.](https://pubmed.ncbi.nlm.nih.gov/32431949/) **VIRUS EVOLUTION** 6, no. 1: veaa032. (2020) <i><span class='show_paper_citations' data='sie-ZJkAAAAJ:Tyk-4Ss8FVUC'></span></i>
 - _Haogao Gu_, Rebecca Fan, Di Wang, Leo Poon. [Dinucleotide evolutionary dynamics in influenza A virus.](https://pubmed.ncbi.nlm.nih.gov/31737288/) **VIRUS EVOLUTION** 5, no. 2: vez038. (2019) <i><span class='show_paper_citations' data='sie-ZJkAAAAJ:u-x6o8ySG0sC'></span></i>
 
+# News
+- **2022-08-17**: Check our [preprint](https://www.researchsquare.com/article/rs-1927944/v1) on within-host evolution of SARS-CoV-2. Potential lineage-specific and vaccination-specific effects were discussed. 
+
+- **2022-02-08**: [Our paper](https://www.nature.com/articles/s41467-022-28420-7) on molecular epidemiology of the first to the fourth COVID-19 waves in Hong Kong published on Nature Communications.
+
+- **2021-11-23** As a team member, I got [Outstanding Project Team on COVID-19 Research Awards](https://www.info.gov.hk/gia/general/202111/23/P2021112300465.htm) from the Hong Kong government!
 
 # [CV](("/files/CV/CV_haogao.pdf"))
-<iframe src="/web/viewer.html?file=/files/CV/CV_haogao.pdf#pagemode=none" width="100%" height="800"></iframe>
-
-# News
-- **2022-08-17**: Check our new preprint on within-host evolution of SARS-CoV-2.
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">We investigated within-host evolution of SARS-CoV-2 using HK deep sequencing data from 2020 to 2022 in this study. Potential lineage-specific and vaccination-specific effects were discussed. <a href="https://t.co/PUamvKKqrR">https://t.co/PUamvKKqrR</a> <a href="https://t.co/DZIHjbz0MT">https://t.co/DZIHjbz0MT</a></p>&mdash; Haogao Gu (@GuHaogao) <a href="https://twitter.com/GuHaogao/status/1559896855705632768?ref_src=twsrc%5Etfw">August 17, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-- **2022-02-08**: Our paper on molecular epidemiology of the first to the fourth COVID-19 waves in Hong Kong published on NC.
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Glad to learn that our NGS paper for <a href="https://twitter.com/hashtag/COVID19?src=hash&amp;ref_src=twsrc%5Etfw">#COVID19</a> is selected as a featured article for public health. We indeed have learnt a lot from AUGC！<a href="https://t.co/OvCexcMywY">https://t.co/OvCexcMywY</a> <a href="https://t.co/PWyZEjdOQt">pic.twitter.com/PWyZEjdOQt</a></p>&mdash; Leo Poon (@world_epidemic) <a href="https://twitter.com/world_epidemic/status/1497195122127032334?ref_src=twsrc%5Etfw">February 25, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
+<iframe src="/web/viewer.html?file=/files/CV/CV_haogao.pdf#pagemode=none" width="100%" height="860"></iframe>
