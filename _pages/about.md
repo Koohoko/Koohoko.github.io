@@ -43,6 +43,8 @@ I enjoy solving biological problems with computational methods, I have developed
 <iframe src="/web/viewer.html?file=/files/CV/CV_haogao.pdf#pagemode=none" width="100%" height="860"></iframe>
 
 <hr />
-<span id="busuanzi_container_site_uv" style="font-size:12px;color:#777777;float:right">
-  Total Site viewers: <span id="busuanzi_value_site_uv"></span>
-</span>
+<span id="busuanzi_container_site_pv" style="font-size:12px;color:#777777;float:right">
+    Total site views: <span id="busuanzi_value_site_pv"></span><br>
+    Total site viewers: <span id="busuanzi_value_site_uv"></span>
+  </span>
+  
