@@ -131,7 +131,7 @@
     font-weight: bold;
     text-align: center;
     text-decoration: none;
-    color: mix(#fff, $gray, 50%);
+    color: mix(#fff, $gray, 90%);
     border: 1px solid $light-gray;
     border-radius: $border-radius;
 
@@ -162,7 +162,7 @@
 .page__meta + .pagination,
 .page__share + .pagination,
 .page__comments + .pagination {
-  margin-top: 0em;
+  margin-top: 2em;
   padding-top: 2em;
   border-top: 1px solid $border-color;
 }
