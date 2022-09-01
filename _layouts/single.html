@@ -34,7 +34,15 @@ layout: default
           {% include page__meta.html %}
           {% assign words_per_minute = document.words_per_minute | default: site.words_per_minute | default: 200 %}
           {% assign words = document.content | strip_html | number_of_words %}
-          <span class="page__meta-readtime" style="color:#777777">
+
+          {% assign date_format = site.date_format | default: "%B %-d, %Y" %}
+          {% if page.last_modified_at %}
+            <span style="font-size:12px;color:#777777" align="right"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Last modified:" }}</strong> <time class="dt-published" datetime="{{ page.last_modified_at | date: "%Y-%m-%d" }}">{{ page.last_modified_at | date: date_format }}</time></span>
+          {% elsif page.date %}
+            <span style="font-size:12px;color:#777777" align="right"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Published:" }}</strong> <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: date_format }}</time></span>
+          {% endif %}
+          
+          <span class="page__meta-readtime" style="font-size:12px;color:#777777">
             <i class="fas fa-fw fa-clock" aria-hidden="true"></i>
             {% if words < words_per_minute %}
               {{ site.data.ui-text[site.locale].less_than | default: "less than" }} 1 {{ site.data.ui-text[site.locale].minute_read | default: "minute read," }}
@@ -46,7 +54,7 @@ layout: default
               with {{words}} words.
           </span>
           
-          <span id="busuanzi_container_page_pv" style="color:#777777">
+          <span id="busuanzi_container_page_pv" style="font-size:12px;color:#777777">
             <i class="fas fa-fw fa-eye" aria-hidden="true"></i>  Post views: <span id="busuanzi_value_page_pv"></span>
           </span>
 
@@ -65,18 +73,11 @@ layout: default
         {% endif %}
         {{ content }}
         {% if page.link %}<div><a href="{{ page.link }}" class="btn btn--primary">{{ site.data.ui-text[site.locale].ext_link_label | default: "Direct Link" }}</a></div>{% endif %}
+        <hr />
       </section>
-
-      <footer class="page__meta">
-        {% if site.data.ui-text[site.locale].meta_label %}
-          <h4 class="page__meta-title">{{ site.data.ui-text[site.locale].meta_label }}</h4>
-        {% endif %}
-        {% include page__taxonomy.html %}
-        {% include page__date.html %}
-      </footer>
-
+      
+      {% include page__taxonomy.html %}
       {% if page.share %}{% include social-share.html %}{% endif %}
-
       {% include post_pagination.html %}
     </div>
 
@@ -91,7 +92,7 @@ layout: default
       <h2 class="page__related-title">{{ site.data.ui-text[site.locale].related_label | default: "Recent posts" }}</h2>
       <div class="grid__wrapper">
         {% for post in site.related_posts limit:4 %}
-          {% include archive-single.html type="grid" %}
+          {% include archive-single-excerpt.html type="grid" %}
         {% endfor %}
       </div>
     </div>
@@ -104,7 +105,7 @@ layout: default
           {% if post.id == page.id %}
             {% continue %}
           {% endif %}
-          {% include archive-single.html type="grid" %}
+          {% include archive-single-excerpt.html type="grid" %}
         {% endfor %}
       </div>
     </div>
