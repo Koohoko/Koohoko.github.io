@@ -54,10 +54,10 @@ author:
   github           : "Koohoko"
   google_plus      :
   keybase          :
-  instagram        : "koohoko"
+  instagram        : # "koohoko"
   impactstory      : # e.g., "https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
   lastfm           :
-  linkedin         :
+  linkedin         : "haogao-gu"
   dblp             : # e.g., "https://dblp.org/pid/xx/xxxx.html"
   orcid            : "https://orcid.org/0000-0002-7541-4262"
   soundcloud       :
@@ -66,11 +66,11 @@ author:
   tumblr           :
   twitter          : "GuHaogao"
   vine             :
-  weibo            : "alan412"
+  weibo            : # "alan412"
   xing             :
   youtube          :
   wikipedia        :
-  zhihu            : "gu-hao-gao"
+  zhihu            : # "gu-hao-gao"
 
 
 # Reading Files
@@ -214,3 +214,5 @@ tag_archive:
 #   permalinks:
 #     category: /categories/:name/
 #     tag: /tags/:name/
+
+future: true
