@@ -23,7 +23,7 @@ brew install mingw-w64
 
 ### Add config
 add to `~/.cargo/config`
-```
+```shell
 [target.x86_64-unknown-linux-musl]
 linker = "x86_64-linux-musl-gcc"
 [target.x86_64-pc-windows-gnu]
@@ -32,8 +32,7 @@ ar = "x86_64-w64-mingw32-gcc-ar"
 ```
 
 ### Compiling
-
-```
+```shell
 # Linux
 CROSS_COMPILE=x86_64-linux-musl- cargo build --release --target x86_64-unknown-linux-musl
 # Windows
