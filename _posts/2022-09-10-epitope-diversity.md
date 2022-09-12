@@ -1,6 +1,6 @@
 ---
-title: "Estimating the haplotype diversity within a genomic region (e.g. epitope) "
-date: 2022-09-12
+title: "Estimating the mutation diversity within a genomic region (e.g. epitope) "
+date: 2022-09-10
 permalink: /posts/2022-09-10/epitope-diversity
 categories:
   - Bioinformatics
@@ -9,7 +9,7 @@ tags:
   - Sequence analysis
   - Nucleotide diversity
   - Shannon entropy
-# last_modified_at: 2022-09-01
+last_modified_at: 2022-09-12
 ---
 
 ## Introduction
@@ -21,11 +21,11 @@ In the below section, I will briefly describe methods used for estimating mutati
 
 ## Methods
 There are two levels of methods for calculating mutation diversity:
-  1. Nucleotide/Locus level
+  1. **Nucleotide/Locus level**\\
      Useful when haplotypes are not available. For example when you only have the vcf files (mutations for discrete genomic sites), or when you want to calculate the whole-genome genomic diversity, but you only have short-read sequencing data so you don't know the full-length haplotypes.
-  2. Haplotype level
+  2. **Haplotype level**\\
      Good to use when haplotypes are available.
-![](/files/diversity_measurement/diversity_measurement_SFLU.003.jpeg)
+<!-- ![](/files/diversity_measurement/diversity_measurement_SFLU.003.jpeg) -->
 
 ### Nucleotide/Locus level
 Basically we calculate the diversity for every nucleotide position (locus), then take average over the whole epitope region. For details please refer to [this paper](https://academic.oup.com/ve/article/5/1/vey041/5304643).
@@ -38,7 +38,8 @@ Basically we calculate the diversity for every nucleotide position (locus), then
 We first tried to count the frequencies of different haplotypes, then we calculate the metrics like Shannon entropy or nucleotide diversity. Details please see [this paper](https://www.sciencedirect.com/science/article/pii/S004268221630037X).
 ![](/files/diversity_measurement/diversity_measurement_SFLU.006.jpeg)
 
-I also summarize and illustrate the essential six steps into the below slides:
+#### Detail steps (Haplotype level)
+The below slides show the essential six steps in measuring mutation diversity using [epitope_diversity](https://github.com/Koohoko/epitope_diversity):
 1. NGS reads mapped to the reference genome covering specific region of interest.
 ![](/files/diversity_measurement/diversity_measurement_SFLU.008.jpeg)
 2. Focus on a specific genomic region (e.g. epitope region)
@@ -53,5 +54,3 @@ I also summarize and illustrate the essential six steps into the below slides:
 ![](/files/diversity_measurement/diversity_measurement_SFLU.013.jpeg)
 
 Please feel free to contribute to the project and raise issues [here](https://github.com/Koohoko/epitope_diversity).
-
----
