@@ -26,6 +26,11 @@ layout: default
         {{ content }}
       </section>
     </div>
+    <span id="busuanzi_container_site_pv" style="font-size:12px;color:#777777;float:right">
+      Total words: {{ wordCount_all }}<br>
+      Total site views: <span id="busuanzi_value_site_pv"></span><br>
+      Total site viewers: <span id="busuanzi_value_site_uv"></span>
+    </span>
   </article>
 
   {% assign entries_layout = page.entries_layout | default: 'list' %}
@@ -37,11 +42,6 @@ layout: default
       {% assign wordCount_all = wordCount_all | plus: wordCount_post %}
     {% endfor %}
 
-    <span id="busuanzi_container_site_pv" style="font-size:12px;color:#777777;float:right">
-      Total words: {{ wordCount_all }}<br>
-      Total site views: <span id="busuanzi_value_site_pv"></span><br>
-      Total site viewers: <span id="busuanzi_value_site_uv"></span>
-    </span>
     
   {% endfor %}
 
