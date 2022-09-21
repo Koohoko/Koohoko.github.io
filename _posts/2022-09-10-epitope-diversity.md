@@ -3,13 +3,14 @@ title: "Estimating the mutation diversity within a genomic region (e.g. epitope)
 date: 2022-09-10
 permalink: /posts/2022-09-10/epitope-diversity
 categories:
-  - Bioinformatics
+  - My tools
 tags:
   - Rust
   - Sequence analysis
   - Nucleotide diversity
   - Shannon entropy
 last_modified_at: 2022-09-12
+toc: true
 ---
 
 ## Introduction
