@@ -19,9 +19,17 @@ Protective humoral immune responses to influenza virus are usually associated wi
 3. HA-stalk-reactive antibodies;
 4. antibodies that confer protection in vivo without showing neutralizing activity in vitro.
 
-  "Here we analyzed the titers and breadth of antibodies to the influenza virus surface glycoproteins HA and NA induced by infection in three animal models and in humans, as well as the prevalence of cross-reactive antibodies in the general human population"
+> "Here we analyzed the titers and breadth of antibodies to the influenza virus surface glycoproteins HA and NA induced by infection in three animal models and in humans, as well as the prevalence of cross-reactive antibodies in the general human population"
 
 ## Results
+In **Figure 1 and Figure 2**, the authors use a heat-map-tree combination to show the cross-reactive profiles in animal models.
+
+In **Figure 3**, they suggest amino acid differences can be representative of antigenic distances. They also found Guinea pigs exhibited a very broad plateau of cross-reactivity.
+
+In **Figure 4 and 5**, they showed the human antibody responses in a 3-D manner:
+> We thus plotted reactivity (presented as endpoint titers) against the percent difference in amino acids of the HAs compared with the sequence of the infection strain's HA. The resulting plots showed two-dimensional reactivity profiles that allowed visual comparison of the magnitude and breadth of responses in various animal models.
+![Fig_4](https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fni.3684/MediaObjects/41590_2017_Article_BFni3684_Fig4_HTML.jpg)
+
 
 ## Useful methods
 
