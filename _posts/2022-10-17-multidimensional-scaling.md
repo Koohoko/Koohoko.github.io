@@ -38,7 +38,7 @@ In Figure 6, they studied
 2. *in vivo* potency of serum (protection mediated by Fc and its receptor FcR?) by serum-transfer-challenge experiments using mouse model.
 
 ## Useful methods
-![](../files/2022-10-18-multidimensional-scaling/Screenshot%202022-10-17%20at%206.11.55%20PM.png)
+![](/files/2022-10-18-multidimensional-scaling/Screenshot%202022-10-17%20at%206.11.55%20PM.png)
 
 ## Other notes
 I am not sure whether this paper is among the earliest to study "original antigenic sin" in flu infections in humans, but it is very interesting. I heard for SARS-CoV-2, there is also some evidence supporting similar effects.
