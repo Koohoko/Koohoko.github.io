@@ -33,8 +33,7 @@ The overall number of cases is $e^{αt}$, so the above formula can also be inter
 > At time $t$ after the emergence of the variant, the number of mutations in the population is expected to be Poisson distributed with mean $ut$.
 
 
-
 ## Other notes
-> Evolutionary rates and divergence times are typically estimated using phylogenetic approaches (Drummond et al., 2006). These methods, *however, cannot handle the volume of SARS-CoV-2 data available and data have to be dramatically down-sampled*. Furthermore, phy- logenetic methods impose an hierarchical structure on the data and are thus very sensitive to problematic sequences or metadata.
+> Evolutionary rates and divergence times are typically estimated using phylogenetic approaches (Drummond et al., 2006). These methods, *however, cannot handle the volume of SARS-CoV-2 data available and data have to be dramatically down-sampled*. Furthermore, phylogenetic methods impose an hierarchical structure on the data and are thus very sensitive to problematic sequences or metadata.
 
-
+In my mind, a shortcoming of this simple branching process model is it can not deal with reverse mutations, and it treated every mutation with the same weights, which may be overly simplified.
