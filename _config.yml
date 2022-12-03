@@ -8,7 +8,7 @@
 # Site Settings
 title                    : "Haogao Gu"
 description              : "Postdoc fellow at The University of Hong Kong. Focusing on virus evolution and virus / host interactions."
-url                      : https://koohoko.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+url                      : https://guhaogao.com # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "Koohoko/Koohoko.github.io"
 google_scholar_stats_use_cdn : false
