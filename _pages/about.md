@@ -41,7 +41,7 @@ I enjoy solving biological problems with computational methods, I have developed
 
 - **2021-11-23** As a team member, I got [Outstanding Project Team on COVID-19 Research Awards](https://www.info.gov.hk/gia/general/202111/23/P2021112300465.htm) from the Hong Kong government!
 
-# [CV](("/files/CV/CV_haogao.pdf"))
+# [CV]("/files/CV/CV_haogao.pdf")
 <iframe src="/web/viewer.html?file=/files/CV/CV_haogao.pdf#pagemode=none" width="100%" height="860"></iframe>
 
 <hr />
