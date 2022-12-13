@@ -14,10 +14,6 @@ last_modified_at: 2022-12-13
 This post records the notes when I read [*Introduction to Probability*](https://www.amazon.com/Introduction-Probability-2nd-Dimitri-Bertsekas/dp/188652923X) by Dimitri P. Bertsekas and John N. Tsitsiklis. 
 
 ## Sample Space and Probability
-### Sets
-- De Morgan's laws
-![](/files/2022-09-21-introduction-to-probability/IMG_6FB930A919BE-1.jpeg)
-
 ### Probabilistic models
 - Sample space must be *collectively exhaustive*, i.e., different elements of the sample space should be distinct and mutually exclusive. The sample space is usually denoted Ω.
 
@@ -32,9 +28,7 @@ This post records the notes when I read [*Introduction to Probability*](https://
   - Posteriro and prior probability: Given that the effect $B$ has been observed, we wish to evaluate the probability $P(A_i|B)$ that the cause $A_i$ is present. We refer to $P(A_i|B)$ as the **posterior probability** of event $A_i$ given the information, to be distinguished from $P(A_i)$, which we call the **prior probability**.
 
 ### Independence and counting
-- ![](/files/2022-09-21-introduction-to-probability/Screenshot%202022-12-13%20at%2014.45.53.png)
-
-- A very important point here is that we usually test the independence numerically, rather than logically, see below:
+- A very important point here is that we usually test the independence **numerically**, rather than logically, see below:
 ![](/files/2022-09-21-introduction-to-probability/Screenshot%202022-12-13%20at%2015.09.32.png)
 
 - Independent Bernoulli trials form Binomial model. Note that the binomial probabilities add to 1, thus showing the binomial formula: $\sum_{k=0}^n{n \choose k}p^k(1-p)^{n-k}=1$. In the special case where $p=0.5$, this formula becomes $\sum_{k=0}^n{n \choose k}=2^n$. This equal to the number of all subsets of an n-element set. which is $2^n$ (全子集问题：针对每一个元素，都有取或不取两个选择，因此总共的不同的子集数量为$2^n$).
