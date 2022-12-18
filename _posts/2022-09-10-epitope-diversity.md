@@ -1,5 +1,5 @@
 ---
-title: "Estimating the mutation diversity within a genomic region (e.g. epitope) "
+title: "epitope_diversity: Estimating the mutation diversity within a genomic region (e.g. epitope) "
 date: 2022-09-10
 permalink: /posts/2022-09-10/epitope-diversity
 categories:
