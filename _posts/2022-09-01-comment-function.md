@@ -3,7 +3,7 @@ title: "Comments are now functional in blog posts"
 date: 2022-09-01
 permalink: /posts/2022-09-01/comments
 categories:
-  - Programming
+  - Misc
 tags:
   - Front-end
   - Github pages
