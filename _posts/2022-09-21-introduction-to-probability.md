@@ -1,5 +1,5 @@
 ---
-title: "Book notes: Introduction to Probability"
+title: "Book notes: Introduction to Probability (Dimitri P. Bertsekas and John N. Tsitsiklis, 2008)"
 date: 2022-09-21
 permalink: /posts/2022-09-21/introduction-to-probability
 categories:

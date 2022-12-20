@@ -1,5 +1,5 @@
 ---
-title: "Paper digest: Adaption and Selection in SARS-CoV-2 evolution"
+title: "Paper digest: Adaption and Selection in SARS-CoV-2 evolution (Preprint, 2022)"
 date: 2022-10-30
 permalink: /posts/2022-10-29/2022-10-29-adaption-and-selection-SARS-CoV-2-evolution
 categories:

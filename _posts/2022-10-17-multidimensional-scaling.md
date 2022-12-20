@@ -1,5 +1,5 @@
 ---
-title: "Paper digest: Antidbody cross-reactome against flu surface glycoproteins"
+title: "Paper digest: Antidbody cross-reactome against flu surface glycoproteins (Nat Immunol, 2017)"
 date: 2022-10-17
 permalink: /posts/2022-10-17/multidimensional-scaling
 categories:

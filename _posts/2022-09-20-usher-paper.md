@@ -1,5 +1,5 @@
 ---
-title: "Paper digest: UShER - placing new genomes onto a existing phylogenetic tree"
+title: "Paper digest: UShER - placing new genomes onto a existing phylogenetic tree (Nat Genet, 2021)"
 date: 2022-09-20
 permalink: /posts/2022-09-20/usher-paper
 categories:
