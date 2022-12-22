@@ -3,12 +3,6 @@ main:
   - title: "About Me"
     url: "/#about-me"
 
-  - title: "Selected Publications"
-    url: "/#selected-publications"
-
-  - title: "News"
-    url: "/#news"
-
   - title: "CV"
     url: "/#cv"
 
