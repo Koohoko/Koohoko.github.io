@@ -64,3 +64,4 @@ A convenient alternative formula: $var(X) = -(E[X])^2 + E[X^2]$
   $E[X] = p$,
   $E[X^2] = 1^2*p+0^2*(1-p)=p$,
   $var(X) = (1-p)^2p+p^2(1-p)=p(1-p)(1-p+p)=p(1-p)$.
+- 
