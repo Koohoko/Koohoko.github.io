@@ -51,6 +51,16 @@ s
 
 ### Probability mass functions
 - The **binomial random variable** is the number of heads X in the n-toss sequence : $P(X=k)={n \choose k}p_k(1-p)^{n-k},k=0,1,...,n.$
-- The **geometric random variable** is the number X of tosses needed for a head to come up for the first time: $P(X=k)=(1-p)^{k-1}p, k=1,2,...$ 
-- Also note that the *sum of geometric sequence* $S_n=\sum_{k=0}^{\infty}p^k=\frac{1-p^{n+1}}{1-p}$ (using $pS_n - S_n$ to derive this), so when $n \to \infty$ it becomes $\frac{1}{1-p}$. Thus, sum of the PMF: $\sum_{k=1}^{\infty}(1-p)^{k-1}p=p\sum_{k=0}^{\infty}(1-p)^k=p\frac{1}{1-(1-p)}=1.$
-- The **Poisson random variable** is the number X of success (small $p$) in (large $n$) total events. The idea is similar to the binomial random variable. The PMF: $P(X=k)=e^{-\lambda}\frac{\lambda^k}{k!}, k=0,1,2,...$ where $\lambda$ is a positive parameter, I tend to think $\lambda$ as the expected number of success for each individual ($np$).
+- The **geometric random variable** is the number X of tosses needed for a head to come up for the first time: $P(X=k)=(1-p)^{k-1}p, k=1,2,...$. Also note that the *sum of geometric sequence* $S_n=\sum_{k=0}^{\infty}p^k=\frac{1-p^{n+1}}{1-p}$ (using $pS_n - S_n$ to derive this), so when $n \to \infty$ it becomes $\frac{1}{1-p}$. Thus, sum of the PMF: $\sum_{k=1}^{\infty}(1-p)^{k-1}p=p\sum_{k=0}^{\infty}(1-p)^k=p\frac{1}{1-(1-p)}=1.$
+- The **Poisson random variable** is the number X of success (small $p$) in (large $n$) total events. The PMF: $P(X=k)=e^{-\lambda}\frac{\lambda^k}{k!}, k=0,1,2,...$ where $\lambda$ is a positive parameter, I tend to think $\lambda$ as the expected number of success for each individual ($np$). The Poisson PMF can approximate the binomial PMF when $n$ is large and $p$ is small. Using Poisson PMF may result in simpler model and calculation.
+
+### Expectance and variance
+Expectance: $E[g(X)] = \sum_xg(x)p_X(x)$ 
+Variance: $var(X) = \sum_x(E[X]-x)^2p_X(x)$
+A convenient alternative formula: $var(X) = -(E[X])^2 + E[X^2]$
+
+### Mean and variance of some common random variables
+- Bernoulli: 
+  $E[X] = p$,
+  $E[X^2] = 1^2*p+0^2*(1-p)=p$,
+  $var(X) = (1-p)^2p+p^2(1-p)=p(1-p)(1-p+p)=p(1-p)$.
