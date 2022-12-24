@@ -25,7 +25,8 @@ This post records the notes when I read [*Introduction to Probability*](https://
 <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202022-09-27%20at%2015.54.42.png" width="500"/>
 - Bayes' Rule
 <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202022-09-28%20at%2016.55.07.png" width="500"/>
-  - Posteriro and prior probability: Given that the effect $B$ has been observed, we wish to evaluate the probability $P(A_i|B)$ that the cause $A_i$ is present. We refer to $P(A_i|B)$ as the **posterior probability** of event $A_i$ given the information, to be distinguished from $P(A_i)$, which we call the **prior probability**.
+  
+  Posterior and prior probability: Given that the effect $B$ has been observed, we wish to evaluate the probability $P(A_i|B)$ that the cause $A_i$ is present. We refer to $P(A_i|B)$ as the **posterior probability** of event $A_i$ given the information, to be distinguished from $P(A_i)$, which we call the **prior probability**.
 
 ### Independence and counting
 - A very important point here is that we usually test the independence **numerically**, rather than logically, see below:
@@ -60,8 +61,43 @@ Variance: $var(X) = \sum_x(E[X]-x)^2p_X(x)$
 A convenient alternative formula: $var(X) = -(E[X])^2 + E[X^2]$
 
 ### Mean and variance of some common random variables
-- Bernoulli: 
+- **Bernoulli**: 
   $E[X] = p$,
+
   $E[X^2] = 1^2*p+0^2*(1-p)=p$,
+
   $var(X) = (1-p)^2p+p^2(1-p)=p(1-p)(1-p+p)=p(1-p)$.
-- 
+
+- **Poisson**:
+<img src="/files/2022-09-21-introduction-to-probability/Screenshot%202022-12-23%20at%2023.27.27.webp" width="500"/>
+
+- **Geometric**:
+  $E[X]=\sum_{k=1}^{\infty}k(1-p)^{k-1}p$
+  $var(X)=\sum_{k=1}^{\infty}(k-E[X])^2(1-p)^{k-1}p$
+  This can be calculated by applying the the total expectation theorem:
+  $$
+  \begin{align}
+  E[X]&=P(X=1)E[X|X=1]+P(X>1)E[X|X>1]\\
+  &=p+(1-p)(1+E[X])\\
+  \end{align}\\
+  \Rightarrow E[X]=\frac{1}{p}
+  $$
+  and 
+  $$
+  \begin{align}
+  E[X^2]&=P(X=1)E[X^2|X=1]+P(X>1)E[X^2|X>1]\\
+  &=p+(1-p)(E[(1+X)^2])\\
+  &=p+(1-p)(1+2E[X]+E[X^2])\\
+  \end{align}\\
+  \Rightarrow E[X^2]=\frac{2}{p^2}-\frac{1}{p}\\
+  \Rightarrow var(X)=E[X^2]-(E[X])^2=\frac{1-p}{p^2}
+  $$
+
+
+### Joint PMFs and conditional PMFs
+The marginal PMFs can be obtained from the joint PMF, using the formulas:
+  $p_X(x)=\sum_yp_{X,Y}(x,y)$,
+   $p_Y(y)=\sum_xp_{X,Y}(x,y)$.
+
+The conditional PMF of X given Y can be calculated through:
+  $p_X(x)=\sum_yp_{Y}(y)p_{X|Y}(x|y)$.
