@@ -124,13 +124,20 @@ A convenient alternative formula: $var(X) = -(E[X])^2 + E[X^2]$
 ### Joint PMFs and conditional PMFs
 The marginal PMFs can be obtained from the joint PMF, using the formulas:
   $p_X(x)=\sum_yp_{X,Y}(x,y)$,
-   $p_Y(y)=\sum_xp_{X,Y}(x,y)$.
+  $p_Y(y)=\sum_xp_{X,Y}(x,y)$.
 
 The conditional PMF of X given Y can be calculated through:
   $p_X(x)=\sum_yp_{Y}(y)p_{X|Y}(x|y)$.
 
 ## General random variables
 ### Continuous Random Variables, PDFs and CDFs
+- **Continuous Uniform random variable**:
+  $$
+  f_X(x)= \begin{cases}
+  \frac{1}{b-a} & \text{if } a\le x \le b, \\
+  0 & Otherwise, \\
+  \end{cases} 
+  $$
 
 ### Normal random variables
 
