@@ -51,6 +51,15 @@ s
 - A discrete random variable has an associated probability mass function (PMF). which gives the probability of each numerical value that the random variable can take.
 
 ### Probability mass functions
+- **Discrete uniform over $[a,b]$**: 
+  $$
+  p_X(k)= 
+  \begin{cases}
+  & \frac{1}{b-a+1}, & \text{if } k = {a, a+1, ..., b},\\
+  & 0, & Otherwise,\\
+  \end{cases}
+  $$.
+
 - The **binomial random variable** is the number of heads X in the n-toss sequence : $P(X=k)={n \choose k}p_k(1-p)^{n-k},k=0,1,...,n.$
 - The **geometric random variable** is the number X of tosses needed for a head to come up for the first time: $P(X=k)=(1-p)^{k-1}p, k=1,2,...$. Also note that the *sum of geometric sequence* $S_n=\sum_{k=0}^{\infty}p^k=\frac{1-p^{n+1}}{1-p}$ (using $pS_n - S_n$ to derive this), so when $n \to \infty$ it becomes $\frac{1}{1-p}$. Thus, sum of the PMF: $\sum_{k=1}^{\infty}(1-p)^{k-1}p=p\sum_{k=0}^{\infty}(1-p)^k=p\frac{1}{1-(1-p)}=1.$
 - The **Poisson random variable** is the number X of success (small $p$) in (large $n$) total events. The PMF: $P(X=k)=e^{-\lambda}\frac{\lambda^k}{k!}, k=0,1,2,...$ where $\lambda$ is a positive parameter, I tend to think $\lambda$ as the expected number of success for each individual ($np$). The Poisson PMF can approximate the binomial PMF when $n$ is large and $p$ is small. Using Poisson PMF may result in simpler model and calculation.
@@ -61,15 +70,27 @@ Variance: $var(X) = \sum_x(E[X]-x)^2p_X(x)$
 A convenient alternative formula: $var(X) = -(E[X])^2 + E[X^2]$
 
 ### Mean and variance of some common random variables
+- **Discrete uniform over $[a,b]$**:
+  $E(X)=\frac{a+b}{2}$,
+  $var(X)=\frac{(b-a)(b-a+2)}{12}$.
+
 - **Bernoulli**: 
   $E[X] = p$,
 
-  $E[X^2] = 1^2*p+0^2*(1-p)=p$,
+  $E[X^2] = 1^2 \times p+0^2 \times (1-p)=p$,
 
   $var(X) = (1-p)^2p+p^2(1-p)=p(1-p)(1-p+p)=p(1-p)$.
 
+- **Binomial**:
+  Since Binomial random variable is the sum of $n$ independent Bernoulli random variables, the $E(X) = np$ and $var(X) = np(1-p)$.
+
 - **Poisson**:
-<img src="/files/2022-09-21-introduction-to-probability/Screenshot%202022-12-23%20at%2023.27.27.webp" width="500"/>
+  Since a Poisson random variable can be viewed as the "limit" of the binomial random variable as $n \to \infty$ and $p \to 0$, we can informally obtain the mean and variance of the Poisson via Binomial: $E(X)=var(X)=\lambda$. We can also verify this by: 
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202022-12-23%20at%2023.27.27.webp" width="500"/> 
+  
+  and
+
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202022-12-28%20at%2012.25.33.webp" width="500"/>
 
 - **Geometric**:
   $E[X]=\sum_{k=1}^{\infty}k(1-p)^{k-1}p$
@@ -93,6 +114,12 @@ A convenient alternative formula: $var(X) = -(E[X])^2 + E[X^2]$
   \Rightarrow var(X)=E[X^2]-(E[X])^2=\frac{1-p}{p^2}
   $$
 
+- **Sample mean**:
+  Consider a random variable $S_n$ which represents sample mean of independent random variables $X_i$ (e.g. Bernoulli). 
+  $S_n = \frac{X_1 + X_2+...+X_n}{n}$
+  $E(S_n)=p$
+  $var(S_n)=\frac{n\times var(X)}{n^2}=\frac{p(1-p)}{n}$
+
 
 ### Joint PMFs and conditional PMFs
 The marginal PMFs can be obtained from the joint PMF, using the formulas:
@@ -101,3 +128,12 @@ The marginal PMFs can be obtained from the joint PMF, using the formulas:
 
 The conditional PMF of X given Y can be calculated through:
   $p_X(x)=\sum_yp_{Y}(y)p_{X|Y}(x|y)$.
+
+## General random variables
+### Continuous Random Variables, PDFs and CDFs
+
+### Normal random variables
+
+### joint PDFs and conditional PDFs
+
+### The continuous Bayes's Rule
