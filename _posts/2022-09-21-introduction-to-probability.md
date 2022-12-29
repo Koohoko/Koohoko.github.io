@@ -134,9 +134,19 @@ The conditional PMF of X given Y can be calculated through:
 - **Continuous Uniform random variable**:
   $$
   f_X(x)= \begin{cases}
-  \frac{1}{b-a} & \text{if } a\le x \le b, \\
-  0 & Otherwise, \\
-  \end{cases} 
+  \frac{1}{b-a}, & \text{if } a\le x \le b, \\
+  0, & Otherwise, \\
+  \end{cases}, \\
+  E[X] = \int_{-\infty}^{\infty}xf_X(x)dx=\int_a^bx\cdot\frac{1}{b-a}dx=\frac{a+b}{2},\\
+  E[X^2] = \int_a^b \frac{x^2}{b-a}dx=\frac{a^2+ab+b^2}{3},\\
+  var(X) = E[X^2]-(E[X])^2 = \frac{(b-a)^2}{12}.
+  $$
+- **Exponential random variable** (the amount of time until an incident of interest takes place):
+  $$
+  f_X(x)= \begin{cases}
+  \lambda e^{-\lambda x}, & \text{if } x\ge0, \\
+  0, & Otherwise, \\
+  \end{cases}, \\
   $$
 
 ### Normal random variables
