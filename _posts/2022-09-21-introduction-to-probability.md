@@ -33,11 +33,11 @@ This post records the notes when I read [*Introduction to Probability*](https://
 <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202022-12-13%20at%2015.09.32.png" width="500"/>
 
 - Independent Bernoulli trials form Binomial model. Note that the binomial probabilities add to 1, thus showing the binomial formula: $\sum_{k=0}^n{n \choose k}p^k(1-p)^{n-k}=1$. In the special case where $p=0.5$, this formula becomes $\sum_{k=0}^n{n \choose k}=2^n$. This equal to the number of all subsets of an n-element set. which is $2^n$ (全子集问题：针对每一个元素，都有取或不取两个选择，因此总共的不同的子集数量为$2^n$).
-s
+
 - If the order of selection matters, the selection is called a permutation, and otherwise, it is called a combination.
 
 - **Partitions**: 
-- <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202022-12-13%20at%2015.37.03.png" width="500"/>
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202022-12-13%20at%2015.37.03.png" width="500"/>
 
 - A very useful example: How many different words (letter sequences) can be obtained by rearranging the letters in the word TATTOO? 
 <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202022-12-13%20at%2015.44.41.png" width="500"/>
@@ -71,15 +71,15 @@ A convenient alternative formula: $var(X) = -(E[X])^2 + E[X^2]$
 
 ### Mean and variance of some common random variables
 - **Discrete uniform over $[a,b]$**:
-  $E(X)=\frac{a+b}{2}$,
-  $var(X)=\frac{(b-a)(b-a+2)}{12}$.
+  $$
+  E(X)=\frac{a+b}{2},\\
+  var(X)=\frac{(b-a)(b-a+2)}{12}.
+  $$
 
 - **Bernoulli**: 
-  $E[X] = p$,
-
-  $E[X^2] = 1^2 \times p+0^2 \times (1-p)=p$,
-
-  $var(X) = (1-p)^2p+p^2(1-p)=p(1-p)(1-p+p)=p(1-p)$.
+  $$E[X] = p,\\
+  E[X^2] = 1^2 \times p+0^2 \times (1-p)=p,\\
+  var(X) = (1-p)^2p+p^2(1-p)=p(1-p)(1-p+p)=p(1-p).$$
 
 - **Binomial**:
   Since Binomial random variable is the sum of $n$ independent Bernoulli random variables, the $E(X) = np$ and $var(X) = np(1-p)$.
@@ -93,8 +93,8 @@ A convenient alternative formula: $var(X) = -(E[X])^2 + E[X^2]$
   <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202022-12-28%20at%2012.25.33.webp" width="500"/>
 
 - **Geometric**:
-  $E[X]=\sum_{k=1}^{\infty}k(1-p)^{k-1}p$
-  $var(X)=\sum_{k=1}^{\infty}(k-E[X])^2(1-p)^{k-1}p$
+  $$E[X]=\sum_{k=1}^{\infty}k(1-p)^{k-1}p\\
+  var(X)=\sum_{k=1}^{\infty}(k-E[X])^2(1-p)^{k-1}p$$
   This can be calculated by applying the the total expectation theorem:
   $$
   \begin{align}
@@ -116,9 +116,9 @@ A convenient alternative formula: $var(X) = -(E[X])^2 + E[X^2]$
 
 - **Sample mean**:
   Consider a random variable $S_n$ which represents sample mean of independent random variables $X_i$ (e.g. Bernoulli). 
-  $S_n = \frac{X_1 + X_2+...+X_n}{n}$
-  $E(S_n)=p$
-  $var(S_n)=\frac{n\times var(X)}{n^2}=\frac{p(1-p)}{n}$
+  $$S_n = \frac{X_1 + X_2+...+X_n}{n}\\
+  E(S_n)=p\\
+  var(S_n)=\frac{n\times var(X)}{n^2}=\frac{p(1-p)}{n}$$
 
 
 ### Joint PMFs and conditional PMFs
@@ -147,9 +147,40 @@ The conditional PMF of X given Y can be calculated through:
   \lambda e^{-\lambda x}, & \text{if } x\ge0, \\
   0, & Otherwise, \\
   \end{cases}, \\
+  P(x\ge 0)=\int_0^{\infty}\lambda e^{-\lambda x}dx = -e^{-\lambda x}\bigg|_0^{\infty}=1, \\
+  P(x\ge a)=e^{-\lambda a}, \\
+  E[X] = \frac{1}{\lambda},\\
+  var(X)=\frac{1}{\lambda^2}.
   $$
+  The CDF between geometric and exponential random variables are similar:
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202022-12-30%20at%2015.08.14.webp" width="500"/>
 
-### Normal random variables
+
+### Normal (Gaussian) random variables
+A continuous random variable $X$ is said to be ***normal*** or *Gaussian* if it had the following PDF:
+$$
+f_X(x)=\frac{1}{\sqrt{2\pi}\sigma}e^{-(x-\mu)^2/2\sigma^2},\\
+E[X]=1,\\
+var(X)=\sigma^2.
+$$
+  
+The normality is preserved by linear transformation:
+$$
+Y=aX+b\\
+E[Y]=aE[X]+b\\
+var(Y)=a^2var(X)
+$$
+A **standard normal random variable** is a normal random variable with zero mean and unit variance, with the CDF:
+$$
+\Phi(y) = P(Y\le y)=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{y}e^{-t^2/2}dt
+$$
+A normal random variable $X$ with mean $\mu$ and variance $\sigma^2$ can be "standardized" by linear transformation:
+$$
+Y=\frac{X-\mu}{\sigma}\\
+E[Y]=\frac{E[X]-\mu}{\sigma}=0,\\
+var(Y)=\frac{var(X)}{\sigma^2}=1,\\
+$$
+Normal random variables play an important role in a broad range of proba­bilistic models, becasue the sum of a large number of independent and identically distributed (not necessarily normal) ran dom variables has an approximately normal CDF (the *central limit theorem*).
 
 ### joint PDFs and conditional PDFs
 
