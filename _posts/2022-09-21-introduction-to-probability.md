@@ -183,5 +183,21 @@ $$
 Normal random variables play an important role in a broad range of proba­bilistic models, becasue the sum of a large number of independent and identically distributed (not necessarily normal) ran dom variables has an approximately normal CDF (the *central limit theorem*).
 
 ### joint PDFs and conditional PDFs
+[Buffon's Needle](https://zh.m.wikipedia.org/zh-hk/布豐投針問題) is a famous example of joint uniform PDFs.
+
+The Exponential Random Variable is **Memoryless**, 例如你抛了十次硬币都是反面, 前面十次的结果不影响你下一次正面出现的等待时间.
 
 ### The continuous Bayes's Rule
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-01-03%20at%2018.03.52.webp" width="500"/>
+
+## Further topics on random variables
+
+### Derived distributions
+
+### Covariance and correlation
+
+### Conditional expectation and variance revisited
+
+### Transforms
+
+### Sum of random number of independent random variables
