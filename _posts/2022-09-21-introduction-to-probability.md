@@ -8,7 +8,7 @@ tags:
   - Mathematics
   - Probability
 toc: true
-last_modified_at: 2022-12-13
+last_modified_at: 2023-01-31
 ---
 
 This post records the notes when I read [*Introduction to Probability*](https://www.amazon.com/Introduction-Probability-2nd-Dimitri-Bertsekas/dp/188652923X) by Dimitri P. Bertsekas and John N. Tsitsiklis. 
@@ -193,11 +193,35 @@ The Exponential Random Variable is **Memoryless**, 例如你抛了十次硬币�
 ## Further topics on random variables
 
 ### Derived distributions
+The principal method for calculating a derived distribution is the following two-step approach.
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-01-05%20at%2014.54.44.webp" width="500"/>
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-01-05%20at%2015.01.42.webp" width="500"/>
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-01-05%20at%2015.01.49.webp" width="500"/>
+
+For two Random Variables, such as for two exponential random variables $X$ and $Y$, and we want to find the PDF of $Z = X-Y$. This is known as a two-sided exponential PDF, also called the Laplace PDF.
+
+Sums of Independent Random Variables - **Convolution**: $Z=X+Y$.
+
+The sum of two independent uniform random variables has a triangular shape.
+
+The sum of two independent normal random variables is normal (with mean $\mu_x+\mu_y$ and variance $\sigma_x^2+\sigma_y^2$).
 
 ### Covariance and correlation
+$$
+Cov(X, Y)=E[(X-E[X])(Y-E[Y])]\\
+Cov(X,Y)=E[XY]-E[X]E[Y]\\
+$$
+The sign of the correlation coefficient $\rho(X, Y)=\frac{Cov(X,Y)}{\sqrt{var(X)var(Y)}}$ is determined by $Cov(X,Y)$, suggesting a positive or negative correlation, the size of $|\rho|$ provides a normalized measure of the extent to which this is true.
+
+$var(X_1 + X_2) = var(X_1) + var(X_2) + 2cov(X_1, X_2)$
 
 ### Conditional expectation and variance revisited
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-03%20at%2017.16.09.webp" width="500"/>
 
 ### Transforms
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-03%20at%2017.27.11.webp" width="500"/>
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-03%20at%2017.27.29.webp" width="500"/>
 
 ### Sum of random number of independent random variables
+
+
