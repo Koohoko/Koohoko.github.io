@@ -223,5 +223,6 @@ $var(X_1 + X_2) = var(X_1) + var(X_2) + 2cov(X_1, X_2)$
   <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-03%20at%2017.27.29.webp" width="500"/>
 
 ### Sum of random number of independent random variables
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-06%20at%2010.49.08.webp" width="500"/>
 
 
