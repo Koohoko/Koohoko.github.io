@@ -226,4 +226,13 @@ $var(X_1 + X_2) = var(X_1) + var(X_2) + 2cov(X_1, X_2)$
   <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-06%20at%2010.49.08.webp" width="500"/>
 
 ## Limit Theorems
+### Markov and Chebyshev Inequalities
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-09%20at%2014.16.17.webp" width="500"/>
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-09%20at%2014.16.08.webp" width="500"/>
+  
+### THE WEAK LAW OF LARGE NUMBERS
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-09%20at%2018.24.41.webp" width="500"/>
+
+### 
+
 
