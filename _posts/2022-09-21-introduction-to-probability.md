@@ -233,6 +233,28 @@ $var(X_1 + X_2) = var(X_1) + var(X_2) + 2cov(X_1, X_2)$
 ### THE WEAK LAW OF LARGE NUMBERS
   <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-09%20at%2018.24.41.webp" width="500"/>
 
-### 
+### CONVERGENCE IN PROBABILITY
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-10%20at%2011.47.52.webp" width="500"/>
+
+### THE CENTRAL LIMIT THEOREM
+It indicates that the sum of a large number of independent random variables is approximately normal. The central limit theorem finds many applications: it is one of the principal tools of statistical analysis and also justifies the use of normal random variables in modeling a wide array of situations
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-10%20at%2011.50.38.webp" width="500"/>
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-10%20at%2011.54.51.webp" width="500"/>
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-10%20at%2011.58.19.webp" width="500"/>
 
 
+### THE STRONG LAW OF LARGE NUMBERS
+
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-10%20at%2013.45.09.webp" width="500"/>
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-10%20at%2013.45.56.webp" width="500"/>
+
+## The Bernoulli and Poisson Processes
+A stochastic process is a mathematical model of a probabilistic experiment that evolves in time and generates a sequence of numerical values. 
+
+In Section 6.1, we consider the case where arrivals occur in discrete time and the interarrival times are geometrically distributed - this is the *Bernoulli process*. In Section 6.2, we consider the case where arrivals occur in continuous time and the interarrival times are exponentially distributed - this is the *Poisson process*.
+### The Bernoulli Process 
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-10%20at%2016.35.16.webp" width="500"/>
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-10%20at%2017.05.26.webp" width="500"/>
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-10%20at%2017.07.20.webp" width="500"/>
+
+### The Poisson Process
