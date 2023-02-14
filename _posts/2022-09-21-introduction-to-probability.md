@@ -258,3 +258,30 @@ In Section 6.1, we consider the case where arrivals occur in discrete time and t
   <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-10%20at%2017.07.20.webp" width="500"/>
 
 ### The Poisson Process
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-11%20at%2015.02.59.webp" width="500"/>
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-11%20at%2015.03.21.webp" width="500"/>
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-11%20at%2015.28.46.webp" width="500"/>
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-11%20at%2015.28.30.webp" width="500"/>
+
+## Markov Chains
+### Discrete-Time Markov Chains
+
+### Classification of States
+
+### Steady-State Behavior
+
+### Absorption Probabilities and Expected Time to Absorption
+
+### Continuous-Time Markov Chains
+
+## Bayesian Statistical Inference
+### Bayesian Inference and the Posterior Distribution
+### Point Estimation, Hypothesis Testing, and the MAP Rule
+### Bayesian Least Mean Squares Estimation
+### Bayesian Linear Least Mean Squares Estimation
+
+## Classical Statistical Inference
+### Classical Parameter Estimation
+### Linear Regression
+### Binary Hypothesis Testing
+### Significance Testing
