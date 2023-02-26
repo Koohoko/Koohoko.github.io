@@ -265,10 +265,19 @@ In Section 6.1, we consider the case where arrivals occur in discrete time and t
 
 ## Markov Chains
 ### Discrete-Time Markov Chains
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-13%20at%2011.14.06.webp" width="500"/>
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-13%20at%2014.13.02.webp" width="500"/>
 
 ### Classification of States
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-14%20at%2010.58.54.webp" width="500"/>
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-14%20at%2011.05.40.webp" width="500"/>
 
 ### Steady-State Behavior
+ <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-14%20at%2011.10.41.webp" width="500"/>
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-14%20at%2011.11.02.webp" width="500"/>
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-25%20at%2014.48.15.webp" width="500"/>
+  Queueing:
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-25%20at%2015.32.55.webp" width="500"/>
 
 ### Absorption Probabilities and Expected Time to Absorption
 
