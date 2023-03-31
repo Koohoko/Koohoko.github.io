@@ -8,7 +8,7 @@ tags:
   - Mathematics
   - Probability
 toc: true
-last_modified_at: 2023-01-31
+last_modified_at: 2023-03-30
 ---
 
 This post records the notes when I read [*Introduction to Probability*](https://www.amazon.com/Introduction-Probability-2nd-Dimitri-Bertsekas/dp/188652923X) by Dimitri P. Bertsekas and John N. Tsitsiklis. 
@@ -280,11 +280,18 @@ In Section 6.1, we consider the case where arrivals occur in discrete time and t
   <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-25%20at%2015.32.55.webp" width="500"/>
 
 ### Absorption Probabilities and Expected Time to Absorption
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-02-25%20at%2015.32.55.webp" width="500"/>
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-03-01%20at%2014.34.26.webp" width="500"/>
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-03-01%20at%2014.54.58.webp" width="500"/>
 
 ### Continuous-Time Markov Chains
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-03-01%20at%2015.48.28.webp" width="500"/>
+
 
 ## Bayesian Statistical Inference
 ### Bayesian Inference and the Posterior Distribution
+  <img src="/files/2022-09-21-introduction-to-probability/Screenshot%202023-03-30%20at%2017.25.51.webp" width="500"/>
+
 ### Point Estimation, Hypothesis Testing, and the MAP Rule
 ### Bayesian Least Mean Squares Estimation
 ### Bayesian Linear Least Mean Squares Estimation
