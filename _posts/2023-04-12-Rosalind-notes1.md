@@ -1,7 +1,7 @@
 ---
 title: "Rosalind notes: Bioinformatics stronghold"
-date: 2023-04-12
-permalink: /posts/2023-04-12/Rosalind-notes1
+date: 2023-06-12
+permalink: /posts/2023-06-12/Rosalind-notes1
 categories:
   - Programming
 tags:
