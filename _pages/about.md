@@ -35,10 +35,6 @@ I enjoy solving biological problems with computational methods, I have developed
 - Hui-Ling Yen, Thomas HC Sit, Christopher J Brackman, Shirley SY Chuk, _**Haogao Gu**_, Karina WS Tam, Pierra YT Law, Gabriel M Leung, Malik Peiris, Leo LM Poon, Samuel MS Cheng, Lydia DJ Chang, Pavithra Krishnan, Daisy YM Ng, Gigi YZ Liu, Mani MY Hui, Sin Ying Ho, Wen Su, Sin Fun Sia, Ka-Tim Choy, Sammi SY Cheuk, Sylvia PN Lau, Amy WY Tang, Joe CT Koo, Louise Yung. [Transmission of SARS-CoV-2 delta variant (AY. 127) from pet hamsters to humans, leading to onward human-to-human transmission: a case study.](https://pubmed.ncbi.nlm.nih.gov/35104836/) **Lancet**, 399 (10329), 1070-1078. (2022) <i><span class='show_paper_citations' data='sie-ZJkAAAAJ:4DMP91E08xMC'></span></i>
 
 # News
-- **2022-08-17**: Check our [preprint](https://www.researchsquare.com/article/rs-1927944/v1) on within-host evolution of SARS-CoV-2. Potential lineage-specific and vaccination-specific effects were discussed. 
-
-- **2022-02-08**: [Our paper](https://www.nature.com/articles/s41467-022-28420-7) on molecular epidemiology of the first to the fourth COVID-19 waves in Hong Kong published on Nature Communications.
-
 - **2021-11-23** As a team member, I got [Outstanding Project Team on COVID-19 Research Awards](https://www.info.gov.hk/gia/general/202111/23/P2021112300465.htm) from the Hong Kong government!
 
 # [CV](/files/CV/CV_haogao.pdf)
