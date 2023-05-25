@@ -6,6 +6,7 @@ categories:
   - Course notes
 tags:
   - Infectious Disease Modelling
+  - Mathematics
 toc: true
 # last_modified_at: 2023-04-14
 ---
@@ -19,5 +20,13 @@ I just randomly come across to this course by searching for "particle filters" o
 
 
 ## Lecture 1 - Introduction to Probability and Statistics
-
+- Discrete random variables
+- Joint probability
+- Baye's theorem
+- Conditional independence
   <!-- <img src="/files/2023-04-11-IDM/2880px-Diagram_of_SIR_epidemic_model_states_and_transition_rates.svg.png" width="500"/> -->
+## Lecture 2 - Introduction to Probability and Statistics (continued)
+- Random variables, CDF, mean and variance
+- Uniform distribution, Gaussian, the binomial and bernoulli distributions
+- The multinomial, nultinoulli distributions, Poisson distribution
+- Emprical distribution
