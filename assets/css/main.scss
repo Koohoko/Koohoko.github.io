@@ -112,7 +112,7 @@ h1:before, .anchor:before {
     list-style: none;
     color: #151515; /* Change the color */
     font-weight: bold; /* If you want it to be bold */
-    display: inline-block; /* Needed to add space between the bullet and the text */
-    width: 1em; /* Also needed for space (tweak if needed) */
-    margin-left: -3em; /* Also needed for space (tweak if needed) */
+    // display: inline-block; /* Needed to add space between the bullet and the text */
+    // width: 1em; /* Also needed for space (tweak if needed) */
+    // margin-left: -3em; /* Also needed for space (tweak if needed) */
 }
