@@ -8,7 +8,7 @@ tags:
   - Infectious Disease Modelling
   - Mathematics
 toc: true
-# last_modified_at: 2023-04-14
+last_modified_at: 2023-05-18
 ---
 
 This post records the notes when I learnt the [Computational Statistics and Machine Learning](https://www.youtube.com/playlist?list=PLZBswPA7UFR8pUkCNPgoaT0diXyX6b_e9) by Nimalan Arinaminpathy. 
@@ -19,13 +19,13 @@ I just randomly come across to this course by searching for "particle filters" o
 > The course covers selective topics on Bayesian scientific computing relevant to high-dimensional data-driven engineering and scientific applications. An overview of Bayesian computational statistics methods will be provided including Monte Carlo methods, exploration of posterior distributions, model selection and validation, MCMC and Sequential MC methods and inference in probabilistic graphical models. Bayesian techniques for building surrogate models of expensive computer codes will be introduced including regression methods for uncertainty quantification, Gaussian process modeling and others. The course will demonstrate these techniques with a variety of scientific and engineering applications including among others inverse problems, dynamical system identification, tracking and control, uncertainty quantification of complex multiscale systems, physical modeling in random media, and optimization/design in the presence of uncertainties.
 
 
-## Lecture 1 - Introduction to Probability and Statistics
+## [Lecture 1 - Introduction to Probability and Statistics](https://www.youtube.com/watch?v=a7FjKBYBc3o&list=PLZBswPA7UFR8pUkCNPgoaT0diXyX6b_e9&index=1)
 - Discrete random variables
 - Joint probability
 - Baye's theorem
 - Conditional independence
   <!-- <img src="/files/2023-04-11-IDM/2880px-Diagram_of_SIR_epidemic_model_states_and_transition_rates.svg.png" width="500"/> -->
-## Lecture 2 - Introduction to Probability and Statistics (continued)
+## [Lecture 2 - Introduction to Probability and Statistics (continued)](https://www.youtube.com/watch?v=Fkrw_KQTt38)
 - Random variables, CDF, mean and variance
 - Uniform distribution, Gaussian, the binomial and bernoulli distributions
 - The multinomial, nultinoulli distributions, Poisson distribution
