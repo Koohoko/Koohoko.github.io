@@ -2,24 +2,6 @@
 layout: archive
 ---
 
-<!-- https://www.w3schools.com/howto/howto_css_bullet_color.asp -->
-<style>
-  ul.task-list {
-    list-style: none; /* Remove default bullets */
-  }
-  ul.task-list li::before {
-    content: "\2022";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
-    color: #151515; /* Change the color */
-    font-weight: bold; /* If you want it to be bold */
-    display: inline-block; /* Needed to add space between the bullet and the text */
-    width: 1em; /* Also needed for space (tweak if needed) */
-    margin-left: -3em; /* Also needed for space (tweak if needed) */
-  }
-  li.task-list-item {
-    list-style-image: url("{{ '/assets/images/black-dot.png' | relative_url }}");
-  }
-</style>
-
 {{ content }}
 
 <ul class="taxonomy__index">
