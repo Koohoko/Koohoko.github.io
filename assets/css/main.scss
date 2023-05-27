@@ -116,3 +116,11 @@ h1:before, .anchor:before {
 .task-list-item {
     list-style-type: none
 }
+
+.task-list-item-checkbox {
+    border: #013b04;
+    top: 2px;
+    width: 18px;
+    height: 18px;
+    box-shadow: 0 0 0.1em #1867c0; 
+  }
