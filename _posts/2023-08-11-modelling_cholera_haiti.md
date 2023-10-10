@@ -7,7 +7,7 @@ categories:
 tags:
   - Infectious Disease Modelling
 toc: true
-# last_modified_at: 2022-09-01
+last_modified_at: 2022-10-10
 ---
 
 [This paper](https://doi.org/10.48550/arXiv.2301.08979) is from Edward L. Ionides et al. It considers the 2010-2019 cholera epidemic in Haiti, and studies three dynamic models developed by expert teams to advise on vaccination policies. Importantly, the paper demonstrates the basic usage of the SpatPOMP model. The [code](https://github.com/jeswheel/haiti_article) and [software](https://github.com/jeswheel/haitipkg) are also provided.
@@ -64,7 +64,7 @@ Each of the three models considered in this study describes cholera dynamics as 
 
 #### Calibrating Model 3 Parameters
 - Model 3 describes cholera dynamics in Haiti using a metapopulation model, where the hidden states in each administrative department has an effect on the dynamics in other departments. The decision to address metapopulation dynamics using a spatially explicit model, rather than to aggregate over space, is double-edged.
-- We calibrate the parameters of the spatially coupled version of Model 3 using the iterated block particle filter (IBPF) algorithm of Ionides, Ning and Wheeler (2022).
+- We calibrate the parameters of the spatially coupled version of Model 3 using the **iterated block particle filter (IBPF)** algorithm of Ionides, Ning and Wheeler (2022).
 
 ### Model Diagnostics
 - Parameter calibration (whether Bayesian or frequentist) aims to find the best description of the observed data under the assumptions of the model. Obtaining the best fitting set of parameters for a given model does not, however, guarantee that the model provides an accurate representation of the system in question. Model misspecification, which may be thought of as the omission of a mechanism in the model that is an important feature of the dynamic system, is inevitable at all levels of model complexity. 
