@@ -23,7 +23,7 @@ Questions of interest include:
 Three models from different expert groups were considered:
 - **Model 1** is stochastic and describes cholera at the national level; 
 - **Model 2** is deterministic with spatial structure, and includes transmission via contaminated water;
-- **Model 3** is stochastic with spatial structure, and accounts for measured rainfall. 
+- **Model 3** is stochastic with spatial structure, and accounts for **measured** rainfall. 
 
 The groups largely adhered to existing guidelines on creating models to inform policy ([Behrend et al., 2020](https://journals.plos.org/plosntds/article?id=10.1371/journal.pntd.0008033); [Saltelli et al., 2020](https://www.nature.com/articles/d41586-020-01812-9))
 
