@@ -7,7 +7,7 @@ categories:
 tags:
   - Infectious Disease Modelling
 toc: true
-last_modified_at: 2022-10-10
+last_modified_at: 2023-10-10
 ---
 
 [This paper](https://doi.org/10.48550/arXiv.2301.08979) is from Edward L. Ionides et al. It considers the 2010-2019 cholera epidemic in Haiti, and studies three dynamic models developed by expert teams to advise on vaccination policies. Importantly, the paper demonstrates the basic usage of the SpatPOMP model. The [code](https://github.com/jeswheel/haiti_article) and [software](https://github.com/jeswheel/haitipkg) are also provided.
