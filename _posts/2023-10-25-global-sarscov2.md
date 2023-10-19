@@ -1,11 +1,11 @@
 ---
 title: "Paper digest: "
-date: 2024-00-00
-permalink: /posts/2024-00-00/new-blog
+date: 2023-10-25
+permalink: /posts/2023-10-25/2023-10-25-global-sarscov2
 categories:
-  - Misc
+  - Paper digest
 tags:
-  - Unassigned
+  - Phylogenetics
 # last_modified_at: 2024-09-01
 ---
 
