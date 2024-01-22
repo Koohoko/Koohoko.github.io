@@ -43,5 +43,3 @@ $$
 - Matrix multiplication does not have the commutative property. This means that for matrices A and B: $A * B ≠ B * A$
 - Matrix multiplication does have associativity, i.e., for matrices A, B, and C: $(A * B) * C = A * (B * C)$
 
-
-
