@@ -1,5 +1,5 @@
 ---
-title: "Course notes: Essence of linear algebra ()"
+title: "Course notes: Essence of linear algebra (3b1b)"
 date: 2023-10-22
 permalink: /posts/2022-10-22/2023-10-22-linear_algebra_3b1b
 categories:
