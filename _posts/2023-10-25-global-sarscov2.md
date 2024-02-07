@@ -1,7 +1,7 @@
 ---
 title: "Paper digest: "
-date: 2023-10-25
-permalink: /posts/2023-10-25/2023-10-25-global-sarscov2
+date: 2024-02-25
+permalink: /posts/2024-02-25/2024-02-25-global-sarscov2
 categories:
   - Paper digest
 tags:
