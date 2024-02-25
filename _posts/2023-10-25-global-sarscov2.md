@@ -12,11 +12,50 @@ tags:
 Today I will be discussing three papers: 1. [Dispersal patterns and influence
 of air travel during the global expansion of SARS-CoV-2 variants of concern](https://doi.org/10.1016/j.cell.2023.06.001) published on Cell; 2. [Genomic assessment of invasion dynamics of SARS-CoV-2 Omicron BA.1](https://doi.org/10.1126/science.adg6605) published on Science; and 3. [Establishment and lineage dynamics of the SARS-CoV-2 epidemic in the UK](https://www.science.org/doi/10.1126/science.abf2946). All use phylogenetic methods to understand the global spread locally introduction events of SARS-CoV-2. I wanted to know how they modelled the importation events using tree model, and this info will facilitate my modelling study on a metapopulation compartmental model.
 
+# Establishment and lineage dynamics of the SARS-CoV-2 epidemic in the UK
+
+This paper is the earliest one among the three selected papers, published on Jan 2021. Using large-scale phylogenetic analyses (on 50,887 sequences) combined with epidemiological and travel data, the authors quantified the size, *spatiotemporal origins*, and persistence of genetically distinct UK transmission lineages. 
+
+## Introduction
+
+Regional epidemics can be highly dynamic at the genetic level, with recurrent importation and extinction of transmission chains within a given location.
+
+UK experienced one of the largest epidemics worldwide during the first half of 2020.
+
+The data represent genomes from 9.29% of confirmed UK COVID-19 cases by 26 June. Further, using an estimate of the actual size of the UK epidemic, we infer that virus genomes were generated for 0.66% [95% confidence interval (CI), 0.46 to 0.95%] of all UK infections by 5 May.
+
+## Results
+### Genetic structure and lineage dynamics of the UK epidemic from January to June
+
+We first sought to identify and enumerate all independently introduced, genetically distinct chains of infection within the UK. We de- veloped a large-scale molecular clock phyloge- netic pipeline to identify “UK transmission lineages” that (i) contain two or more UK genomes and (ii) descend from an ancestral lineage inferred to exist outside of the UK (Fig. 2, A and B).
+
+Figure 2
+![Figure 2](https://www.science.org/cms/10.1126/science.abf2946/asset/15edf88f-f0ec-4fc3-a4a4-f13debc23812/assets/graphic/371_708_f2.jpeg)
+
+### Transmission lineage diversity and geographic range
+
+UK lineages detected in each region (UK counties) correlates with the number of genomes sequenced and the number of reported cases in each region. 
+
+### Dynamics of international introduction of transmission lineages
+
+They compare TMRCAs with estimated importation intensity (EII). As TMRCAs and importation dates are two different things (Fig. 2B).
+
+They use the model to impute an importation date for each UK transmission lineage (Fig. 5D).
+
+## Useful methods
+
+They developed a new Bayesian molecular clock phylogenetic analysis pipeline in order to reconstruct a posterior set of time-scaled phylogenetic trees for our exceptionally large virus genome dataset.
+
+1. we estimated an approximately maximum-likelihood tree using the Jukes-Cantor model in FastTree v2.1.10, then collapsed branch lengths shorter than 5*10^-6 substitutions per site, which corresponded to distances smaller than one substitution across the whole virus genome, and likely result from nucleotide ambiguity codes in the genome sequences.
+2. Next, we applied a commonly used approach, recently implemented in BEAST 1.10, to convert branches of the large-scale phylogenetic trees from units of substitutions per site to time. This model takes the place of the nucleotide substitution model in a traditional Bayesian molecular clock dating analysis.
+3. Trees were sampled using MCMC under the model described above with a Skygrid coalescent tree prior using the same grid-points as in the preliminary analysis. A randomly resolved time-calibrated tree estimated in TreeTime was used as the starting tree. To maintain a mapping between the topology in the estimated time-calibrated tree and the input genetic distance tree, we constrained the topologies such that any tree-move that broke a clade present in the input tree was rejected. The resulting MCMC chain, therefore, only samples different polytomy resolutions and branch durations. This approach allowed us to incorporate uncertainty in the polytomy resolutions and branch durations into our molecular clock analysis.
+
 # Dispersal patterns and influence of air travel during the global expansion of SARS-CoV-2 variants of concern
 
 The Alpha, Beta, and Gamma SARS-CoV-2 variants of concern (VOCs) co-circulated globally during 2020 and 2021, fueling waves of infections. They were displaced by Delta during a third wave worldwide in 2021, which, in turn, was displaced by Omicron in late 2021. In this study, we use phylogenetic and phylogeographic methods to reconstruct the dispersal patterns of VOCs worldwide. We find that source-sink dynamics varied substantially by VOC and identify countries that acted as global and regional hubs of dissemination. 
 
 ## Introduction
+
 The logic of the introduction section is as follows:
 - Different VOCs was associated initially with increasing SARS-CoV-2 incidence in their presumed countries of origin, then being displaced by other VOCs.
 - Global transmission continued despite PHSMs and vaccination efforts.
@@ -59,9 +98,9 @@ The phylogenetic methods used in this study are highly relevant to my study. Imp
 
 They used datasets of approximately 20,000 sequences for each VOC, and repeated the analysis for ten times (ten subsampled datasets).
 
-## Other notes
-
 # Genomic assessment of invasion dynamics of SARS-CoV-2 Omicron BA.1
+
+
 
 ## Background
 
