@@ -6,6 +6,7 @@ categories:
   - Paper digest
 tags:
   - Phylogenetics
+toc: true
 # last_modified_at: 2024-09-01
 ---
 
