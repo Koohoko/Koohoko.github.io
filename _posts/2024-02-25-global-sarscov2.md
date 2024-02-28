@@ -27,7 +27,7 @@ The data represent genomes from 9.29% of confirmed UK COVID-19 cases by 26 June.
 ## Results
 ### Genetic structure and lineage dynamics of the UK epidemic from January to June
 
-We first sought to identify and enumerate all independently introduced, genetically distinct chains of infection within the UK. We de- veloped a large-scale molecular clock phyloge- netic pipeline to identify “UK transmission lineages” that (i) contain two or more UK genomes and (ii) descend from an ancestral lineage inferred to exist outside of the UK (Fig. 2, A and B).
+We first sought to identify and enumerate all independently introduced, genetically distinct chains of infection within the UK. We developed a large-scale molecular clock phylogenetic pipeline to identify “UK transmission lineages” that (i) contain two or more UK genomes and (ii) descend from an ancestral lineage inferred to exist outside of the UK (Fig. 2, A and B).
 
 Figure 2
 ![Figure 2](https://www.science.org/cms/10.1126/science.abf2946/asset/15edf88f-f0ec-4fc3-a4a4-f13debc23812/assets/graphic/371_708_f2.jpeg)
@@ -100,13 +100,56 @@ They used datasets of approximately 20,000 sequences for each VOC, and repeated 
 
 # Genomic assessment of invasion dynamics of SARS-CoV-2 Omicron BA.1
 
-
+Through a large-scale phylodynamic analysis of 115,622 Omicron BA.1 genomes, we identified >6,000 *introductions* of the antigenically distinct VOC into England and analyzed their local transmission and dispersal history.
 
 ## Background
 
+Omicron emergence and Omicron influence on the HK context.
+
 ## Results
+
+### International importation and Omicron BA.1 lineage dynamics
+
+we undertook a large-scale phylodynamic analysis of 115,622 SARS-CoV-2 Omicron genomes, sampled globally between 8 November 2021 and 31 January 2022, with ~42% (n = 48,748) were sampled from England.
+
+All available genomes [from COG-UK and the GISAID on 12 and 9 April 2022, respectively] sampled before 28 November 2021 were included; later genomes were subsampled randomly in proportion to weekly Omicron case incidence while maintaining a ~1:1 ratio between English and non-English samples.
+
+We identified at least 6455 [95% highest posterior density (HPD): 6184 to 6722] independent importation events. Most imports from outside of England [69.9% (95% HPD: 69.0 to 70.7)] led to singletons (i.e., a single genome sampled in England associated with an importation event, which did not lead to observable local transmission in our dataset).
+
+Estimated importation intensity (EII) is again utilized here. The weekly importation intensity is an estimate of the number of Omicron BA.1 cases arriving in England during a given week from a specified source location, calculated by multiplying together the estimated weekly prevalence of Omicron BA.1 at the source location and the number of air passengers arriving in any England airport from the source location.
+
+### Human mobility drives spatial expansion and heterogeneity in Omicron BA.1 growth
+
+we reconstructed the dispersal history of all identified transmission lineages (with >4 genomes) using spatially explicit phylogeographic techniques.
 
 ## Useful methods
 
-## Other notes
+### Estimated importation intensity of Omicron BA.1 from potential exporters
+
+To validate the robustness of EII, they did a sensitivity test. Basically, they estimated EIIs calculated EIIs for Spain and the United States at the autonomous
+community- and state-level, respectively, to account for any local (within-country) heterogeneities in Omicron BA.1 prevalence and air traffic volume. And they found that the total EIIs for Spain and the US (after aggregating over all autonomous communities and states, respectively) are consistent with those calculated using national average positivity rates.
+
+### Aggregated and anonymised human mobility data
+
+Google map and machine learning.
+
+### Phylogenetic analysis and importation analysis
+
+First, the study period was divided into two phases: 
+  1. from 21 November 2021 (sample date of the earliest known genome of the Omicron variant in England, sequenced retrospectively) to 28 November 2021. With the relatively few genomes available from the first phase and to account for an increased risk of importations prior to the travel restrictions, all 874 available sequences (from both England and non-England locations) were included.
+  2. from 29 November 2021 to 31 January 2022. Owing to the large number of genome samples collected during the second phase, a downsampling strategy was applied to ensure that the analysis was computationally tractable. 
+
+Then subsampled datasets. This downsampling procedure resulted in a dataset of 59,647 global (non-English) sequences. To generate a dataset of English genomes of roughly the same size, 60,000 sequences were randomly sampled from the COG-UK master alignment.
+
+we first estimated a maximum likelihood (ML) tree for the 874 sequences collected during the first phase of the study period using IQTREE with the GTR+G substitution model, rooted with reference genome Wuhan-Hu-1 (GenBank accession MN908947.3) as an outgroup. Five molecular clock outliers were identified and subsequently removed, after examining the root-to-tip regression plot from TreeTime. The resulting tree was then used as a starting tree from which a parsimony tree was estimated by inserting individual sequences sequentially and in chronological order according to sample dates, using the recently developed **UShER** placement tool. During each step in the iterative process, all sequences sampled on a given date were considered for placement whilst excluding sequences with 5 or more equally parsimonious placements. Sequences excluded in a previous step were appended to the next
+batch for reconsideration. The resulting tree was then optimised through 6 iterations of **matOptimize** with SPR radius of 40 and 100 for the first 5 and final iteration respectively. This iterative tree building process resulted in a phylogeny of 115,634 sequences (with 25,921 (18.3%) sequences excluded due to uncertainty in sample placement). Next we used **Chronumental** (a recently
+developed time-tree estimation tool for handling large phylogenies) to estimate a randomly resolved time-calibrated tree, with inferred tip dates that maximise the evidence lower bound under a probabilistic model. By comparing the inferred tip dates with sample dates and examining a root-to-tip plot, 12 molecular clock outliers were further removed, resulting in a final phylogeny of 115,622
+sequences.
+
+To reconstruct the importation dynamics of Omicron BA.1, we then used a two-state asymmetric **discrete trait analysis (DTA) model implemented in BEAST** v1.10, using the posterior tree samples estimated above as the empirical tree distributions. For each tree partition, we ran two MCMC chains of 5 million iterations each, resampled every 9,000 states and with the first 10% discarded as burn-in. TreeAnnotator 1.10 (66) was used to generate a maximum clade credibility (MCC) tree for each subtree, in which each internal node is assigned a posterior probability of representing a transmission event in England. Nodes with a posterior probability of >0.5 were identified as introductions; a small number of nodes with ambiguous location assignment (posterior probability = 0.5) were ignored in downstream analyses. To identify the local transmission lineage resulting from each of the introductions, a depth-first search was performed following the same procedure as in du Plessis et al. (2021), where a path starting from e`ach internal node that corresponds to an introduction is traversed forwards in time until a non-England node is encountered or there are no more nodes to be explored. By convention, introductions that led to only a single sampled English sequence were labelled as singletons; only introductions that led to more than one observed local transmission event were labelled as transmission lineages. The time of importation of each transmission lineage was estimated by taking the mid-point between the internal node corresponding to the introduction and its parent.
+
+<img src="/files/2024-02-25-global-sarscov2/Screenshot 2024-02-28 at 22.08.57.png" alt="Fig S1" style="width: 600px;"/>
+
+
+---
 
