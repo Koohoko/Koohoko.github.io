@@ -6,6 +6,7 @@ categories:
   - Course notes
 tags:
   - Mathematics
+toc: true
 # last_modified_at: 2023-09-01
 ---
 
