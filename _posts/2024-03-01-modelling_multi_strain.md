@@ -6,13 +6,13 @@ categories:
   - Paper digest
 tags:
   - Infectious Disease Modelling
-# last_modified_at: 2024-09-01
+toc: true
+last_modified_at: 2024-03-05
 ---
 
-How to model pathogens with many strains? Particularly what are the appropriate model settings. Here I revisit a few papers on this topic. They include:
+How to model pathogens with many strains? Particularly what are the appropriate model settings. Here I revisit two papers on this topic. They are:
   1. [Makau, Dennis N., et al. "Ecological and evolutionary dynamics of multi-strain RNA viruses." Nature Ecology & Evolution 6.10 (2022): 1414-1422.](https://www.nature.com/articles/s41559-022-01860-6)
   2. [Kucharski, Adam J., Viggo Andreasen, and Julia R. Gog. "Capturing the dynamics of pathogens with many strains." Journal of mathematical biology 72 (2016): 1-24.](https://link.springer.com/article/10.1007/s00285-015-0873-4)
-  3. [Gog, Julia R., and Bryan T. Grenfell. "Dynamics and selection of many-strain pathogens." Proceedings of the National Academy of Sciences 99.26 (2002): 17209-17214.](https://www.pnas.org/doi/abs/10.1073/pnas.252512799)
 
 ## Ecological and evolutionary dynamics of multi-strain RNA viruses
 
@@ -76,3 +76,76 @@ Many human pathogens can be categorized into distinct strains, each defined by i
 
 ### Multiple-strain models
 
+One of the most detailed—and computationally intensive — of these frameworks is the individual-based model, which tracks the infection history of every host, updating individuals’ immune status as the disease spreads and evolves during a simulation. Alternatively, population models, in which individuals are grouped into compartments, provide a way of exploring disease dynamics that is analytically tractable as well as easier to implement numerically. 
+
+#### History-based models
+
+##### Two strain model
+
+The history-based model is an extension of the SIR model. It has one compartment for each possible combination of prior infection, with cross-immunity dependent on an individual’s infection history.
+
+<img src="/files/2024-03-01-modelling_multi_strain/Screenshot 2024-03-05 at 11.36.13.png" alt="Fig 1" style="width: 600px;"/>
+
+Cross-immunity can be assumed to act in one of — **at least — two ways**: either the host is either less likely to be infected by the second strain (‘reduced susceptibility’), or the host will be less likely to transmit the second strain (‘reduced transmission’).
+
+Let $\tau$ denote reduced susceptibility, specifically the relative susceptibility of individuals that have already been infected with one strain. This means the rate at which individuals leave the $S_1$ compartment owing to infection with strain 2 is $\Lambda_2\tau S_1$, where $\Lambda_2$ is the force of infection for strain 2. Next, let $\sigma$ be the relative infectiousness of hosts who have previously been infected with the other strain. We define $\beta_i$ to be the rate of transmission for a primary infection with strain i. Therefore $\Lambda_2 = \beta_2(I_2+\sigma J_2)$.
+
+As additional strains are added, the complexity of this model increases substantially. For n strains, the model has $(n + 2)^{2n−1}$ variables. To simplify the model, we can assume that individuals obtain an updated infection history immediately upon infection (i.e. $μ/γ$ is small).
+
+In Fig 1b, Note that we do not need to keep track of individuals who have left $\hat{I_{i}}$, as they are already included in one of the $S_i$ compartments. 
+
+##### Extension to multiple strains
+
+For $n$ disease strains, we define
+$\mathcal{N} = \{1,...,n\}$ to be the set of all strains, and let $X$ be some subset of $\mathcal{N}$. There are $2^n$ subsets of $\mathcal{N}$, each representing a different infection history (including the empty set $\empty$ for totally naive individuals). The possible subsets for a three strain model are shown in Fig. 2.
+
+As specified before in Fig. 1b, we obtain the following set of equations (Ferguson and Andreasen 2002):
+
+<img src="/files/2024-03-01-modelling_multi_strain/Screenshot 2024-03-05 at 13.29.05.png" alt="Fig 2" style="width: 600px;"/>
+
+#### Model dimension
+
+The drawback with history-based models is the sheer number of possible variables that the system generates: given n strains, there are $2^n$ combinations of infection an individual could have seen.
+
+#### Model reduction via symmetry
+
+We assume cross-immunity between strains — as measured by antigenic similarity — is consistent with a space in which a given set of strains can be organized into antigenic ‘neighbourhoods’ (Ferguson and Andreasen 2002).
+
+<img src="/files/2024-03-01-modelling_multi_strain/Screenshot 2024-03-05 at 15.13.14.png" alt="Fig 3" style="width: 600px;"/>
+
+#### Model reduction via age structure
+
+Another way to group strains into overlapping sets, but the the system will become intractable, one solution is to introduce an age structure into the model. 
+
+If immunity acts only to reduce transmission, one might naively expect the probability of having been infected with any two particular strains to be independent: infection with the first strain will not change the rate at which hosts become infected with the second, just the rate at which they transmit. Hence in a two-strain model, might expect $S_{12} = S_1 S_2$. However, if we know a randomly chosen host has previously been infected with the first strain some point in their life, it means they are more likely to be old than young. Hence they are more likely to have also experienced another specific event in the past, such as infection with the second strain. This means $S_{12} ≥ S_1S_2$. The problem can be resolved using the same age-structured logic; if we focus on a specific age group, independence is maintained. 
+
+The introduction of age dependency increases model complexity, requiring a system of PDEs rather than ODEs, making it challenging to obtain analytic results, and the requirement that infection with each strain is independent for a specific age group also limits the type of population structure that can be imposed.
+
+#### Status-based models
+
+The full individual-based model records both the **infection history** and **current immune status** of each host. However, there may not be a straightforward relationship between the two: for influenza, infections may not always produce an immune response, and immunity to a certain strain could potentially be generated by one of several past infections (Potter 1979). In principle, it should be possible to develop a compartmental model that accounted for both infection history and immune status. However, in practice the number of possible combinations of infection history and immune status — and hence compartments required — would likely result a model more complex than even a full individual-based framework. To ensure analytical and computational tractability, **history-based models** therefore capture the individual infection histories in a population, but not the immune statuses; **status-based models** (Gog and Swinton 2002) do the opposite, recording the current immune status of individuals in the population, but not the combination of past infections that generated that immunity.
+
+The status-based model allows a assumption that upon infection some individuals become completely immune, while the rest remain susceptible. As opposed to the assumption in the history-based model, that individuals with the same infection history will respond to subsequent infection in an identical way: if the set of strains $Y$ have been previously seen, they will transmit strain i with probability $σ (Y, i)$.
+
+Important definitions in a status-based model:
+Define $C(Y, X, j)$ to be the probability an individual who previously had immunity to a set of strains $Y$ gains immunity against the set of strains $X$ upon infection with strain $j$.
+
+#### Comparison of models
+
+##### Model structure
+
+The main compartmental models currently available for exploring multiple strain dynamics are summarised in Table 1. Many of the models with few variables require that cross-immunity between strains acts to reduce transmission. The assumption of reduced **transmission** is mathematically convenient because it means immunity to one strain does not influence susceptibility to another. Hence immunity will only change the rate at which individual passes the infection on, and not their probability of being infected. If cross-immunity leads to a reduction in susceptibility, the crucial simplifications in Eqs. 19, 23 and 33 are no longer possible.
+
+From a biological point of view the assumption of reduced transmission can be **awkward** (Ballesteros et al. 2009; Kryazhimskiy et al. 2007). This is because upon infection we expect two events: the host becoming ill and transmitting the disease, and the production of antibodies by host’s immune system. If the host already has immunity to that strain, their current antibodies might block infection without transmission or production of new antibodies occurring. Under the reduced infectivity assumption, immunity prevents an infected host from transmitting the virus, but does not prevent additional gain of immunity. This could lead to an **overestimate** of population immunity (Ballesteros et al. 2009). Despite this potential caveat, however, the dynamics of the history-based model appear to relatively insensitive to whether immunity is assumed to reduce transmission or susceptibility (Ferguson and Andreasen 2002).
+
+<img src="/files/2024-03-01-modelling_multi_strain/Screenshot 2024-03-05 at 15.34.41.png" alt="Fig 4" style="width: 600px;"/>
+
+Biologically plausible assumptions do not necessarily generate biologically plausible dynamics, and vice versa. Moreover, choosing between two biologically distinct assumptions—such as reduced susceptibility and transmission—can sometimes have a negligible effect on model dynamics. Strain models inevitably have to balance realism with tractability; it is therefore important to know how different simplifications and assumptions influence model predictions.
+
+### Incorporating pathogen evolution
+
+#### Evolutionary dynamics
+
+Statistical inference for seasonally-forced SIR models can be performed using disease case data and sequence data ([Rasmussen et al. 2011](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002136)).
+
+---
