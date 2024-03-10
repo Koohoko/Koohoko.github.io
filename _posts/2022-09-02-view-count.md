@@ -7,8 +7,13 @@ categories:
 tags:
   - Front-end
   - Github pages
-# last_modified_at: 2022-09-01
+last_modified_at: 2022-03-10
 ---
+
+## Update on 2024-03-101
+I changed to [this server](https://github.com/soxft/busuanzi/wiki/usage#快捷使用).
+
+## Original post
 
 As you can see in the subtitle of this post, as well as the bottom-right corner of the [homepage](https://koohoko.github.io/#busuanzi_container_site_uv), view counts for this site and for individual posts are now available.
 

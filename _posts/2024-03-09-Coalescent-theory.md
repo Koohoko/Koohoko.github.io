@@ -1,5 +1,5 @@
 ---
-title: "Book notes: "
+title: "Book notes: Coalescent theory: An introduction"
 date: 2024-03-09
 permalink: /posts/2024-03-09/Coalescent-theory
 categories:
@@ -43,3 +43,11 @@ Mutation is the bridge from genealogies to genetic data because the structure of
 
 ### 1.3 Measures of DNA sequence polymorphism
 
+There are some *summary statistics* that can be used to quantify levels of genetic variation in DNA sequences.
+
+Three historical important summary statistics are: the number of segregating sites, the average number of pairwise differences, and the *site frequencies* or *site-frequency spectrum*.
+
+- The number of segregating sites ($S$, Watterson, 1975) is the number of sites in the sample that are polymorphic. It can be affected by the length of the sequence, the mutation rate, and the sample size.
+- The average number of pairwise differences ($\pi$, Tajima, 1983) is the average number of differences between pairs of sequences in the sample. It is should be less affected by sample size.
+- Site frequencies ($\eta_i$) provide an intermediate measure, one between the total data and the extreme summaries $S$ and $\pi$.
+- 
