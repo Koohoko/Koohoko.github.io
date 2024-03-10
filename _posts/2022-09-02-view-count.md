@@ -11,7 +11,7 @@ last_modified_at: 2022-03-10
 ---
 
 ## Update on 2024-03-101
-I changed to [this server](https://github.com/soxft/busuanzi/wiki/usage#快捷使用).
+I changed to [this service](https://vercount.one).
 
 ## Original post
 
