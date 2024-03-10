@@ -11,7 +11,9 @@ toc: true
 last_modified_at: 2024-03-10
 ---
 
-The book *Coalescent theory: An introduction* by John Wakeley stays in my bookshelf for more than 3 years. I have tried started reading it several times, but I always got stuck in the first two chapters. This time I decided to read it for preparing my attendance to the workshop on coalescent theory at the University of Warwick in the next month. Here let us start.
+The book *Coalescent theory: An introduction* by John Wakeley stays in my bookshelf for more than 3 years. I have tried started reading it several times, but I always got stuck in the first two chapters. This time I decided to read it for preparing my attendance to the workshop on coalescent theory at the University of Warwick in the next month. Now let us start.
+
+For reference, [here](https://wakeleylab.oeb.harvard.edu/sites/hwpi.harvard.edu/files/wakeleylab/files/correctionsjan2016.pdf?m=1457398929) is the list of corrections to the book.
 
 ## 1. Gene genealogies
 
@@ -50,4 +52,35 @@ Three historical important summary statistics are: the number of segregating sit
 - The number of segregating sites ($S$, Watterson, 1975) is the number of sites in the sample that are polymorphic. It can be affected by the length of the sequence, the mutation rate, and the sample size.
 - The average number of pairwise differences ($\pi$, Tajima, 1983) is the average number of differences between pairs of sequences in the sample. It is should be less affected by sample size.
 - Site frequencies ($\eta_i$) provide an intermediate measure, one between the total data and the extreme summaries $S$ and $\pi$.
-- 
+- $S$ and $\eta_i$ count each mutation exactly once, whereas $\pi$ weights sites depending on how the branch where the mutation occurred, or the site itself, divides the sample. $\pi$ is largest when the mutation frequency is in the middle ($i=n/2$), and smallest when it is at the ends ($i=1$), so the middle-frequency sites contribute disproportionately to $\pi$.
+- The distribution of the polymorphism among chromosomes, or haplotypes, is sacrificed in the summary statistics. 
+
+## 2. Probability theory
+
+### 2.1 Fundamentals
+We skipped some basic concepts, and only recorded some important concepts.
+
+- $Var[X] = E[X^2] - E[X]^2$
+- $Cov[X,Y] = E[XY] - E[X]E[Y]$
+- $Var[X+Y] = Var[X] + Var[Y] + 2Cov[X,Y]$
+
+Considering sums of two random variables $Y=X_1+X_2$, in the case where the $X_i$ are independent, the distribution of the sum is the **convolution** of the distributions of the $X_i$. In the discrete case, we have $P(Y=y) = \sum_i P(X=x)P(Y=y-i)$.
+
+If we have $Y=X_1 + X_2 + \cdots + X_K$ where $K$ is a random variable. If $X_1, X_2, \cdots, X_K$ are independent and identically distributed, then $E[Y] = E[X]E[K]$ and $Var[Y] = E[X^2]Var[K] + Var[X]E[K]^2$.
+
+- The binomial distribution: How many successes in $n$ trials. (number of successes)
+- The geometric distribution: How many trials until the first success. (waiting time)
+- The Poisson distribution: How many events in a fixed interval of time. (number of events)
+- The exponential distribution: How long until the next event. (waiting time)
+- The gamma distribution: How long until the $k$-th event. (waiting time)
+
+### 2.2 Poisson processes
+
+- The sum of independent Poisson random variables is another Poisson process whose rate is equal to the sum of the individual rates.
+- The probability that the first event in a Poisson process is of a particular type is the relative rate of that event.
+- The time to first event in a Poisson process is exponentially distributed with rate equal to the sum of the rates of the individual events.
+- The number of events required to see a particular event type is geometrically distributed with success probability equal to the relative rate of that event.
+- Convolutions of exponential distributions are gamma distributions. If $\lambda_i \neq \lambda_j$, then it is necessary to take a series of convolutions. $f_{T_1+T_2}$ will be a weighted sum of the distributions $f_{T_1}$ and $f_{T_2}$.
+
+## 3. The coalescent
+
