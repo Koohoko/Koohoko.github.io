@@ -8,7 +8,7 @@ tags:
   - Coalescent theory
   - Phylogenetics
 toc: true
-last_modified_at: 2024-03-10
+last_modified_at: 2024-03-21
 ---
 
 The book *Coalescent theory: An introduction* by John Wakeley stays in my bookshelf for more than 3 years. I have tried started reading it several times, but I always got stuck in the first two chapters. This time I decided to read it for preparing my attendance to the workshop on coalescent theory at the University of Warwick in the next month. Now let us start.
@@ -84,3 +84,89 @@ If we have $Y=X_1 + X_2 + \cdots + X_K$ where $K$ is a random variable. If $X_1,
 
 ## 3. The coalescent
 
+### 3.1 Population genetic models
+
+#### 3.1.1 The Wright-Fisher model
+
+The Wright-Fisher model is a discrete-time model of genetic drift. It is a model of a single, isolated, randomly mating population of constant size. The population is diploid (no males and females), and the number of offspring produced in each generation is fixed. The model is a Markov chain, and the state space is the set of all possible allele frequencies. $K_t$ is the number of copies of allele $A_1$ in the population at time $t$.
+
+$$
+P(X_{t+1} = j | X_t = i) = \binom{N}{j}p^j(1-p)^{N-j},\\
+E[K_1] = Np,\\
+Var[K_1] = Np(1-p),\\
+$$
+
+- The probability that a gene with $i$ copies in the current generation being found in $j$ copies in the next generation is given by the binomial distribution.
+- The heterozygosity of the population $H$ is the probability that two randomly chosen genes are different. $H_0 = 2p_0(1-P_0)$ is the heterozygosity at generation 0. The expected heterozygosity is $E[H_t] = H_0(1-\frac{1}{N})^t\approx H_0e^{-t/N}$. We see that the heterozygosity decays exponentially with time. The decrease of heterozygosity is a common measure of genetic drift, and we say that the drift occurs at a rate of $1/N$ per generation.
+
+#### 3.1.2 The Moran model
+
+The Moran model is important for two reasons: 1. it applies to organisms in which generations are overlapping, and 2. mathematically, many results can be derived exactly under the Moran model that are available only approximately under the Wright-Fisher model.
+
+In the Moran model, one of just three things must happen in one time unit: allele $A_1$ increases by one, allele $A_2$ increases by one, or the counts stay the same.
+
+$$
+P(X_{t+1} = j | X_t = i) = 
+  \begin{cases} 
+    p(1-p) & \text{if } j = i+1 \\
+    (1-p)p & \text{if } j = i-1 \\
+    p^2 + (1-p)^2 & \text{if } j = i\\
+    0 & \text{otherwise}
+  \end{cases},\\
+E[K_1] = Np,\\
+Var[K_1] = 2p(1-p)\\
+$$
+
+As in the Wright-Fisher model, random genetic drift leads to variation in the number of copies of an allele in the population. 
+
+The expected heterozygosity is $E[H_t] = H_0(1-\frac{2}{N^2})^t\approx H_0e^{-2t/N^2}$. The rate of genetic drift per time is $2/N^2$ per generation. If we assume the life span of an individual has mean $N$ generation, the rate for per generation is $2/N$, which is twice as fast as the Wright-Fisher model. This is interesting from a biological perspective, because it means that differences in breeding structure (overlapping generations or not) can have effects on the rate of genetic drift.
+
+### 3.2 The standard coalescent model
+
+This whole section is way too technical for me and I should probably read it again some time later. 
+
+Basically it first introduce Kingman's coalescent, which is a model of the genealogy of a sample of genes from a population of constant size. In the model, as $N$ goes to infinity, the coalescence times $T_i$ are independent and exponentially distributed with rate $\binom{i}{2}$ (a Poisson process in which each of the $\binom{i}{2}$ pairs of lineages has the same rate $\lambda = 1$ of coalescence). The probability that $k$ lineages coalesce in a time interval of length $t$ is given by the Poisson distribution with mean $\binom{k}{2}t$.
+
+In Sections 3.2.1 and 3.2.2, the author showed the Wright-Fisher model and the Moran model can be approximated by the Kingman's coalescent model. The Wright-Fisher model is approximated by the Kingman's coalescent model when $N$ is large and the Moran model is approximated by the Kingman's coalescent model when $N$ is large and the number of generations is large.
+
+In Section 3.2.3, the author discussed breeding structure and exchangeability. Exchangeability means identically distributed but not independent. Here in a exchangeable-type population model, the number of offspring of individuals in the population is exchangeable, but not independent, as they must sum to $N$. From a biological standpoint, exchangeability means that there can be no transmission of reproductive potential from parents to offspring, nor can there be any correlations in reproductive potential due to other factors, such as geographic location or social status.
+
+### 3.3 Some properties of the coalescent genealogies
+
+#### 3.3.1 Two measures of the size of a genealogy
+
+The coalescence times $T_i$ are (1) independent of one another and (2) independent of the branching structure of the genealogy.
+
+$$
+T_{MRCA} = \sum_{i=2}^{n}T_i,\\
+T_{total} = \sum_{i=2}^{n}iT_i.
+$$
+
+$E[T_{MRCA}]$ is close to its asymptotic value of 2 even for moderate $n$. The mean of 2 corresponds to a period of $2N$ generations under the haploid Wright-Fisher model. $E[T_{total}]$ increase without bound as $n$ increases, but it dose so more slowly for larger $n$.
+
+As shown in the below figure, the asymmetry of $f_{T_{MRCA}}(t)$ (e.g., that the mode is less than the mean) reflects the strong influence of the most ancient coalescence time, $T_2$, which makes up a significant fraction of $T_{MRCA}$ even when $n$ is large.
+
+<img src="/files/2024-03-09-Coalescent-theory/IMG_3921.webp" style="width: 600px;"/>
+
+#### 3.3.2 The branching structure of genealogies
+
+The number of possible tree structures (genealogies) can be obtained by considering the number of possible coalescent events at each step toward the MRCA. Beginning with the present-day sample of $n$ items, whenever there are $i$ lineages present there are $\binom{i}{2}$ possible pairs of lineages to coalesce. The total number of these random-joining trees is given by
+$$
+\prod_{i=2}^{n}\binom{i}{2} = \frac{n!(n-1)!}{2^{n-1}}.
+$$
+
+For a unrooted tree, the number of possible tree topologies is $(2n-5)!!$, or the product of all odd numbers from $2n-5$ down to 1.
+
+<img src="/files/2024-03-09-Coalescent-theory/IMG_3922.webp" style="width: 600px;"/>
+
+### 3.4 Human-neanderthal couples?
+
+This example and its probability inference is **super interesting**. It is also very hard to follow. I should read it again later.
+
+## 4. Neutral genetic variation
+
+Time for coalescent process is measured in $N_e = N/\sigma^2$ generations, and mutation rates are measured on a timescale proportional to this. For historical reasons, population geneticists introduce an extra factor of 2, and use the mutation parameter $\theta = 2N_e\mu$, in which $\mu$ is the mutation rate per site per generation. In the Writh-Fisher model, where $N_e = N$, mutations occur with rate $\theta/2$ per generation. Given that the length of a genealogy is equal to $t$, the number $K$ of mutations, is itself Poisson distributed with mean $\theta t/2$:
+$$
+P(K=k|t) = \frac{(\theta t/2)^k}{k!}e^{-\theta t/2}.
+$$
+and the expected number of mutations is $E[K] = \theta t/2$.

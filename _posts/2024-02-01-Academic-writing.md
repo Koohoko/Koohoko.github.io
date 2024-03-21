@@ -7,10 +7,10 @@ categories:
 tags:
   - Academic writing
 toc: true
-# last_modified_at: 2024-09-01
+last_modified_at: 2024-03-06
 ---
 
-The Scientist's Guide to Writing by Stephen B. Heard.
+*The Scientist's Guide to Writing* by Stephen B. Heard.
 
 # Preface
 A good scientist has to be a professional writer.

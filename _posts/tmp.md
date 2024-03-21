@@ -3,6 +3,11 @@ title: "Paper digest: "
 date: 2024-00-00
 permalink: /posts/2024-00-00/new-blog
 categories:
+  - Course notes
+  - Book notes
+  - Paper digest
+  - Programming
+  - My tools
   - Misc
 tags:
   - Unassigned
