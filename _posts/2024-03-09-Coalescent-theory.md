@@ -170,3 +170,10 @@ $$
 P(K=k|t) = \frac{(\theta t/2)^k}{k!}e^{-\theta t/2}.
 $$
 and the expected number of mutations is $E[K] = \theta t/2$.
+
+Neutral mutations, which do not affect fitness, do not affect the shape of the genealogy.
+
+### 4.1 The infinite-sites model and measures of DNA sequence polymorphism
+
+#### 4.1.1 The number of segregating sites
+
