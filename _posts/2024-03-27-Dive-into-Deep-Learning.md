@@ -12,7 +12,10 @@ last_modified_at: 2024-03-27
 
 I decide to take this course by myself. It will likely last for a few months. I hope I will finishing it by September 2024. I like it at the first glance because it is fully open-sourced and I heard that it is quite popular.
 
+**Content and Structure**
+![Content and Structure](https://d2l.ai/_images/book-org.svg)
 
+## 1. Introduction
 
 
 
