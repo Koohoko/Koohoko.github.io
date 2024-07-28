@@ -17,5 +17,33 @@ I decide to take this course by myself. It will likely last for a few months. I 
 
 ## 1. Introduction
 
+*Machine learning* is the study of algorithms that can learn from experience. In this book, we will teach you the fundamentals of machine learning, focusing in particular on deep learning, a powerful set of techniques driving innovations in areas as diverse as computer vision, natural language processing, healthcare, and genomics.
 
+### Key components of machine learning
 
+1. The *data* that we can learn from.
+2. A *model* of how to transform the data.
+3. An *objective function* (loss function) that quantifies how well (or badly) the model is doing.
+4. An algorithm to adjust the model’s parameters to *optimize* the objective function.
+
+### Kinds of Machine Learning Problems
+
+1. *Supervised learning*: the model is trained on a labeled dataset.
+     1. *Regression*: the model predicts a continuous value. (How much? How many?) (square error loss)
+     2. *Classification*: the model predicts a discrete label. (Which one?) (cross-entropy loss)
+     3. *Tagging*: multi-label classification.
+     4. *Search*: Impose a ranking on a set of items.
+     5. *Recommendation*: Predict the preference of a user for an item.
+     6. *Sequence learning*: Predict the next element in a sequence (or sequence-to-sequence learning).
+
+2. Unsupervised and self-supervised learning: the model is trained on an unlabeled dataset.
+     1. *Clustering*: Group similar data points together.
+     2. *Dimensionality reduction (subspace estimation)*: Simplify the data without losing too much information.
+     3. *Symbolic reasoning*: Discover patterns in data.
+     4. *Causal discovery (e.g., probabilistic graphical models)*: Infer cause-and-effect relationships.
+     5. *Deep generative modeling*: Generate new data samples. These models estimate the density of the data, either explicitly or implicitly. Once trained, we can use a generative model either to score examples according to how likely they are, or to sample synthetic examples from the learned distribution. Early deep learning breakthroughs in generative modeling came with the invention of variational autoencoders (Kingma and Welling, 2014, Rezende et al., 2014) and continued with the development of generative adversarial networks (Goodfellow et al., 2014). More recent advances include normalizing flows (Dinh et al., 2014, Dinh et al., 2017) and diffusion models (Ho et al., 2020, Sohl-Dickstein et al., 2015, Song and Ermon, 2019, Song et al., 2021).
+
+3. Interacting with an Environment
+We want to think about intelligent agents, not just predictive models. This means that we need to think about choosing actions, not just making predictions. In contrast to mere predictions, actions actually impact the environment. If we want to train an intelligent agent, we must account for the way its actions might impact the future observations of the agent, and so offline learning is inappropriate. This is the realm of reinforcement learning.
+
+4. Reinforcement Learning
