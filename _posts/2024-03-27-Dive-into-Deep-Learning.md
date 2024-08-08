@@ -47,3 +47,14 @@ I decide to take this course by myself. It will likely last for a few months. I 
 We want to think about intelligent agents, not just predictive models. This means that we need to think about choosing actions, not just making predictions. In contrast to mere predictions, actions actually impact the environment. If we want to train an intelligent agent, we must account for the way its actions might impact the future observations of the agent, and so offline learning is inappropriate. This is the realm of reinforcement learning.
 
 4. Reinforcement Learning
+In reinforcement learning, an agent interacts with an environment, learning how to behave by receiving feedback in the form of rewards or punishments. 
+
+Reinforcement learning have to deal with many interesting challenges that do not arise in supervised learning. For instance, the agent must balance exploration (trying out new things) and exploitation (doing what has worked well in the past). It must also consider the fact that rewards might be delayed in time, and that actions might have long-lasting consequences. Also, reinforcement learners must deal with the credit assignment problem: determining which actions to credit or blame for an outcome. Reinforcement learners may also have to deal with the problem of partial observability. That is, the current observation might not tell you everything about your current state.
+
+When the environment is fully observed, we call the reinforcement learning problem a *Markov decision process*. When the state does not depend on the previous actions, we call it a *contextual bandit problem*. When there is no state, just a set of available actions with initially unknown rewards, we have the classic *multi-armed bandit problem*.
+
+## 2. Preliminaries
+
+### Data Manipulation
+
+
