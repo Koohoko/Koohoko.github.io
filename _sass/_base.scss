@@ -133,12 +133,11 @@ a {
 
 tt, code, kbd, samp, pre {
   font-family: $monospace;
-  font-size: $type-size-6;
+  font-size: 1em;
 }
 
 pre {
   overflow-x: auto; /* add scrollbars to wide code blocks*/
-  font-size: $type-size-6; /* Set this to your desired font size */
 }
 
 p > code,
@@ -148,7 +147,7 @@ figcaption > code,
 td > code {
   padding-top: 0.1rem;
   padding-bottom: 0.1rem;
-  font-size: $type-size-6;
+  font-size: 100%;
   background: $code-background-color;
   border: 1px solid $lighter-gray;
   border-radius: $border-radius;
