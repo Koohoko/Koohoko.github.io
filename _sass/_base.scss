@@ -138,6 +138,7 @@ tt, code, kbd, samp, pre {
 
 pre {
   overflow-x: auto; /* add scrollbars to wide code blocks*/
+  font-size: $type-size-6; /* Set this to your desired font size */
 }
 
 p > code,
