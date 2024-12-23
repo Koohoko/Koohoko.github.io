@@ -17,15 +17,18 @@ This a short seminar gave by Sebastian Duchene and John Tay. On the basics of Ba
 The overall goal is to calculate the likelihood multiplying the priors, such that we can get the posterior distribution of all parameters given the data. This is done by MCMC.
 
 $P(Tree, \theta, M, \sigma, \alpha, \vec{r}|D) \propto P(D|Tree, \vec{r}, \alpha)P(Tree|\theta)P(\vec{r}|M,\sigma)P(\theta)P(\alpha)P(M)P(\sigma)$
-****
 
-$D$: data
-$\theta$: a parameter in coalescent model
+---
 
+\(D\): data
 
-$P(D|Tree, \vec{r}, \alpha)$: phylogenetic tree likelihood
-$P(Tree|\theta)$: tree prior (or coalescent likelihood) with $\theta$ being a parameter related to the tree branching or coalescent process.
-$P(\vec{r}|M,\sigma)$: clock prior, specifying branch rates, can be calculated using `dlognorm` etc.
+\(\theta\): a parameter in coalescent model
+
+\(P(D|Tree, \vec{r}, \alpha)\): phylogenetic tree likelihood
+
+\(P(Tree|\theta\): tree prior (or coalescent likelihood) with $\theta$ being a parameter related to the tree branching or coalescent process.
+
+\(P(\vec{r}|M,\sigma)\): clock prior, specifying branch rates, can be calculated using `dlognorm` etc.
 
 ## Example
 
@@ -40,9 +43,13 @@ If we only have the genetic distance tree (the only thing we can get from data),
 $Q$ is the matrix of transition rates between nucleotides, exampled with JC69 model.
 
 log-likelihood of a coalescent tree under the Kingman’s coalescent model with a constant population size parameter, $\theta$:
+
 $t=\{0,1,2\}$
+
 $n=3$
+
 $\theta=1$ # genetic diversity, "effective population size"
+
 $ln(P(Tree|\theta))=\sum_{i=1}^{n-1}{ln({n-i+1\choose2})-ln(\theta)-{n-i+1\choose2}\frac{t_{i+1}-t_i}{\theta}}$
 
 ---
