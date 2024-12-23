@@ -16,7 +16,7 @@ This a short seminar gave by Sebastian Duchene and John Tay. On the basics of Ba
 ## Main
 The overall goal is to calculate the likelihood multiplying the priors, such that we can get the posterior distribution of all parameters given the data. This is done by MCMC.
 
-$P(Tree, \theta, M, \sigma, \alpha, \vec{r}|D) \propto P(D|Tree, \vec{r}, \alpha)P(Tree|\theta)P(\vec{r}|M,\sigma)P(\theta)P(\alpha)P(M)P(\sigma)$
+$P(Tree, \theta, M, \sigma, \alpha, \vec{r}\vert  D) \propto P(D\vert  Tree, \vec{r}, \alpha)P(Tree\vert  \theta)P(\vec{r}\vert  M,\sigma)P(\theta)P(\alpha)P(M)P(\sigma)$
 
 ---
 
@@ -24,11 +24,11 @@ $P(Tree, \theta, M, \sigma, \alpha, \vec{r}|D) \propto P(D|Tree, \vec{r}, \alpha
 
 \(\theta\): a parameter in coalescent model
 
-\(P(D|Tree, \vec{r}, \alpha)\): phylogenetic tree likelihood
+\(P(D\vert  Tree, \vec{r}, \alpha)\): phylogenetic tree likelihood
 
-\(P(Tree|\theta\): tree prior (or coalescent likelihood) with $\theta$ being a parameter related to the tree branching or coalescent process.
+\(P(Tree\vert  \theta\): tree prior (or coalescent likelihood) with $\theta$ being a parameter related to the tree branching or coalescent process.
 
-\(P(\vec{r}|M,\sigma)\): clock prior, specifying branch rates, can be calculated using `dlognorm` etc.
+\(P(\vec{r}\vert  M,\sigma)\): clock prior, specifying branch rates, can be calculated using `dlognorm` etc.
 
 ## Example
 
@@ -50,6 +50,6 @@ $n=3$
 
 $\theta=1$ # genetic diversity, "effective population size"
 
-$ln(P(Tree|\theta))=\sum_{i=1}^{n-1}{ln({n-i+1\choose2})-ln(\theta)-{n-i+1\choose2}\frac{t_{i+1}-t_i}{\theta}}$
+$ln(P(Tree\vert  \theta))=\sum_{i=1}^{n-1}{ln({n-i+1\choose2})-ln(\theta)-{n-i+1\choose2}\frac{t_{i+1}-t_i}{\theta}}$
 
 ---
