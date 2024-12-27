@@ -16,7 +16,7 @@ This a short seminar gave by Sebastian Duchene and John Tay. On the basics of Ba
 ## Main
 The overall goal is to calculate the likelihood multiplying the priors, such that we can get the posterior distribution of all parameters given the data. This is done by MCMC.
 
-$P(Tree, \theta, M, \sigma, \alpha, \vec{r}\vert  D) \propto P(D\vert  Tree, \vec{r}, \alpha)P(Tree\vert  \theta)P(\vec{r}\vert  M,\sigma)P(\theta)P(\alpha)P(M)P(\sigma)$
+$P(\mathcal{T}, \theta, M, \sigma, \alpha, \vec{r}\vert  D) \propto P(D\vert  \mathcal{T}, \vec{r}, \alpha)P(\mathcal{T}\vert  \theta)P(\vec{r}\vert  M,\sigma)P(\theta)P(\alpha)P(M)P(\sigma)$
 
 ---
 
@@ -24,9 +24,9 @@ $P(Tree, \theta, M, \sigma, \alpha, \vec{r}\vert  D) \propto P(D\vert  Tree, \ve
 
 \(\theta\): a parameter in coalescent model
 
-\(P(D\vert  Tree, \vec{r}, \alpha)\): phylogenetic tree likelihood
+\(P(D\vert  \mathcal{T}, \vec{r}, \alpha)\): phylogenetic tree likelihood
 
-\(P(Tree\vert  \theta\): tree prior (or coalescent likelihood) with $\theta$ being a parameter related to the tree branching or coalescent process.
+\(P(\mathcal{T}\vert  \theta\): tree prior (or coalescent likelihood) with $\theta$ being a parameter related to the tree branching or coalescent process.
 
 \(P(\vec{r}\vert  M,\sigma)\): clock prior, specifying branch rates, can be calculated using `dlognorm` etc.
 
@@ -34,7 +34,7 @@ $P(Tree, \theta, M, \sigma, \alpha, \vec{r}\vert  D) \propto P(D\vert  Tree, \ve
 
 Example in a ultrametric time tree.
 
-$Tree$ is in time unit (time tree), but final tree is in genetic distance, so we need to multiply the time tree by the substitution rate tree (in nucleotide/site/time).
+$\mathcal{T}$ is in time unit (time tree), but final tree is in genetic distance, so we need to multiply the time tree by the substitution rate tree (in nucleotide/site/time).
 
 $LNORM(M,\sigma)$ for branch rates, specifying a relaxed clock model.
 
@@ -50,6 +50,6 @@ $n=3$
 
 $\theta=1$ # genetic diversity, "effective population size"
 
-$ln(P(Tree\vert  \theta))=\sum_{i=1}^{n-1}{ln({n-i+1\choose2})-ln(\theta)-{n-i+1\choose2}\frac{t_{i+1}-t_i}{\theta}}$
+$ln(P(\mathcal{T}\vert  \theta))=\sum_{i=1}^{n-1}{ln({n-i+1\choose2})-ln(\theta)-{n-i+1\choose2}\frac{t_{i+1}-t_i}{\theta}}$
 
 ---
