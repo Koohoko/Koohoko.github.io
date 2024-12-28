@@ -20,15 +20,15 @@ $P(\mathcal{T}, \theta, M, \sigma, \alpha, \vec{r}\vert  D) \propto P(D\vert  \m
 
 ---
 
-\(D\): data
+$D$: data
 
-\(\theta\): a parameter in coalescent model
+$\theta$: a parameter in coalescent model
 
-\(P(D\vert  \mathcal{T}, \vec{r}, \alpha)\): phylogenetic tree likelihood
+$P(D\vert  \mathcal{T}, \vec{r}, \alpha)$: phylogenetic tree likelihood
 
-\(P(\mathcal{T}\vert  \theta\): tree prior (or coalescent likelihood) with $\theta$ being a parameter related to the tree branching or coalescent process.
+$P(\mathcal{T}\vert  \theta)$: tree prior (or coalescent likelihood) with $\theta$ being a parameter related to the tree branching or coalescent process.
 
-\(P(\vec{r}\vert  M,\sigma)\): clock prior, specifying branch rates, can be calculated using `dlognorm` etc.
+$P(\vec{r}\vert  M,\sigma)$: clock prior, specifying branch rates, can be calculated using `dlognorm` etc.
 
 ## Example
 
@@ -48,7 +48,7 @@ $t=\{0,1,2\}$
 
 $n=3$
 
-$\theta=1$ # genetic diversity, "effective population size"
+$\theta=1$ is the genetic diversity, "effective population size"
 
 $ln(P(\mathcal{T}\vert  \theta))=\sum_{i=1}^{n-1}{ln({n-i+1\choose2})-ln(\theta)-{n-i+1\choose2}\frac{t_{i+1}-t_i}{\theta}}$
 
