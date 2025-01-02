@@ -8,7 +8,7 @@ tags:
   - Structured coalescent
   - Phylogenetics
 toc: true
-last_modified_at: 2025-01-01
+last_modified_at: 2025-01-02
 ---
 
 I wanted to get in more details about the structured coalescent model, here I record some notes when I read related papers/tutorials, and watch videos.
@@ -156,3 +156,54 @@ This is a quite old series of lectures, but should be relevant.
   - ![](/files/2024-12-28-structured-coalescent/Screenshot%202025-01-01%20at%2000.34.56.webp)
 
 ## [Structured coalescent](https://www.youtube.com/watch?v=avSea13o5Gs&t=16s)
+- Non-exchangeability of lineages in structured populations:
+  - In structured populations, lineages are not exchangeable because they are more likely to coalesce with lineages from the same subpopulation.
+  - This non-exchangeability affects the coalescent process and the genealogies of sequences. 
+- He revisit the Markov chain model, specified with a *transition probability matrix*.
+  - This matrix describes the probability of transitioning between states (generations) in the Markov chain, with each $P$ representing the probability of transitioning from one state (generation with $i$ lineages) to another state (generation $i-1$ lineages).
+- Recall that, based on Wright–Fisher (discrete‐generation) model, $P(i \to i-1) = \frac{\binom{i}{2}}{2N} \prod_{k=2}^{i-1} \left(1 - \frac{k}{2N}\right)$ is the probability that, in the next generation, exactly one pair of the $i$ current lineages coalesces (merges), resulting in $i−1$ distinct ancestral lineages (all the others do not coalesce).
+  - If we multiply this by $2N \to\infty$, we get $i\choose2$, this result in the coalescent rate in the time scale of $2N$ generations.
+- Wright's Island Model:
+  - Notations:
+    - $D$: demes (subpopulations).
+    - $N$: deme size
+    - $m$: migration probability (equally likely to every other deme).
+  - When $n=2$, the instantaneous transition matrix (for how long does it take to coalesce) can be derived:
+    - State 1: both lineages are in the same deme.
+    - State 2: lineages are in different demes.
+    - State 3: lineage coalesced. 
+    - ![](/files/2024-12-28-structured-coalescent/image.webp)
+  - If $m\to0$ in this matrix, we can ignore the $m^2$ terms, then we have:
+    - ![](/files/2024-12-28-structured-coalescent/Screenshot%202025-01-01%20at%2017.52.01.webp) 
+  - It can be further simplified to the below matrix, if multiplied by $2N$:
+  $$ 
+    Q =
+    \begin{bmatrix}
+    -M - 1 & M & 1 \\
+    \frac{M}{D - 1} & -\frac{M}{D - 1} & 0 \\
+    0 & 0 & 0
+    \end{bmatrix}
+  $$
+  - The waiting time in state 1 is $f_1(t)=(m+1)e^{-(M+1)t}$
+  - The waiting time in state 2 is $f_1(t)=(\frac{M}{D - 1})e^{-(\frac{M}{D - 1})t}$
+  - $T_w$: Coalescent time (within) for state 1: 
+    - $$ 
+      \begin{align*}
+      E[T_w]&=\frac{1}{M+1}+\frac{M}{M+1}\cdot E[T_b]+ \frac{M}{M+1}\cdot 0 \\
+      &=D
+      \end{align*}
+      $$
+  - $T_b$: Coalescent time (between) for state 2:
+    - $$ 
+      \begin{align*}
+      E[T_b]&=\frac{D-1}{M}+ E[T_w] \\
+      &=D(1+\frac{D-1}{MD})
+      \end{align*}
+      $$
+- A more relaxed model:
+  - Notations:
+    - $N_i$: size for deme $i$.
+    - $q_{ij}$: migration rate from deme $i$ to deme $j$.
+  - The $N_i$ can changed, something similar to the traveler matrix in the metapopulation model is happening.
+  - Conservative migration: forwards and backwards migration rates are equal. 
+
