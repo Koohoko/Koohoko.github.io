@@ -25,32 +25,41 @@ P(t)=(\frac{N-1}{N})^{t-1}\frac{1}{N}\\
 E(t)=\frac{1}{\frac{1}{N}}=N
 $$
 - Expected waiting time for coalescence (discrete): 
-$$
-\begin{align*}
-E[t] &= 1p+2p(1-p)+3p(1-p)^2+... \\
-&=\sum_{i=0}^{\infty}{(i+1)p(1-p)^i} =\sum_{i=1}^{\infty}{ip(1-p)^i} =\sum_{i=0}^{\infty}{ip(1-p)^i}\\
-&=\sum_{i=0}^{\infty}{ip(1-p)^i} + \sum_{i=0}^{\infty}{1p(1-p)^i}\\
-&=(1-p)\sum_{i=0}^{\infty}{ip(1-p)^{i-1}}+p\sum_{i=0}^{\infty}{(1-p)^i}\\
-&=(1-p)E[t]+p\frac{1}{p}\\
-&=\frac{1}{p}
-\end{align*}
-$$
+
+  $$
+  \begin{align*}
+  E[t] &= 1p+2p(1-p)+3p(1-p)^2+... \\
+  &=\sum_{i=0}^{\infty}{(i+1)p(1-p)^i} =\sum_{i=1}^{\infty}{ip(1-p)^i} =\sum_{i=0}^{\infty}{ip(1-p)^i}\\
+  &=\sum_{i=0}^{\infty}{ip(1-p)^i} + \sum_{i=0}^{\infty}{1p(1-p)^i}\\
+  &=(1-p)\sum_{i=0}^{\infty}{ip(1-p)^{i-1}}+p\sum_{i=0}^{\infty}{(1-p)^i}\\
+  &=(1-p)E[t]+p\frac{1}{p}\\
+  &=\frac{1}{p}
+  \end{align*}
+  $$
+
 - Time for $n>2$ individuals to coalescence: 
   - First coalescence:
+  
   $$
   E(t)=\frac{1}{\frac{n\choose2}{N}}=\frac{N}{n\choose2}
   $$
+  
   - Second coalescence:
+  
   $$
   E(t)=\frac{N}{n-1\choose2}
   $$
+  
   - Third coalescence:
+  
   $$
   E(t)=\frac{N}{n-2\choose2}
   $$
+  
   - ...
   - Such that the coalescence time is getting longer for deep branches.
 - To jointly model mutation process and coalescent process, we need to consider the mutation rate $\mu$ and coalescent rate $\lambda$. The expected number of mutations before the first coalescence is: 
+  
   $$
   \begin{align*}
   E(mut)&=\frac{\mu}{\lambda}\\
@@ -71,6 +80,7 @@ This is a quite old series of lectures, but should be relevant.
 ## [Basic Probability theory](https://www.youtube.com/watch?v=lMegBoAG2zM&list=PL04QVxpjcnji2WV8QIB63JfpzJP_1zecC&index=6)
 
 - Using an example from a Nature paper on 2001: [A map of human genome sequence variation containing 1.42 million single nucleotide polymorphisms](https://www.nature.com/articles/35057149), where they sampled 12027 loci, with each loci spanning ~500bp. They get a summarized table of the number of SNPs in different frequency classes. The data can be used to infer the demographic history of human populations. One need to use a random model to explain the observed data.
+
   | #SNPs | #loci | Proportion of loci |
   |-------|-------|--------------------|
   | 0     | 8796  | 0.731              |
@@ -112,22 +122,28 @@ This is a quite old series of lectures, but should be relevant.
 
   - Conditional Probability of Mutations Given $T_2$:
     - $K_2$ (number of mutations) follows a Poisson distribution conditioned on $T_2$, with mean $\frac{\theta t}{2}\times 2$:
+      
       $$
       P(K_2 = k \mid T_2 = t) = \frac{\left(\theta t\right)^k e^{-\theta t}}{k!}.
       $$
-      - Describes the probability of observing $k$ mutations, given coalescent time $T_2 = t$.
+      
+    - Describes the probability of observing $k$ mutations, given coalescent time $T_2 = t$.
 
   - Unconditional Probability of Mutations:
     - Marginalizing over all possible $T_2$ values, the probability of $K_2 = k$ is:
+    
       $$
       P(K_2 = k) = \int_0^\infty f_{T_2}(t) \cdot P(K_2 = k \mid T_2 = t) \, dt.
       $$
-      - Combines the exponential distribution of $T_2$ with the Poisson mutation process.
+    
+    - Combines the exponential distribution of $T_2$ with the Poisson mutation process.
 
   - Resulting Probability:
-  $$
-  P(K_2 = k) = \left(\frac{\theta}{\theta + 1}\right)^{k} \cdot \frac{1}{\theta + 1}
-  $$
+  
+    $$
+    P(K_2 = k) = \left(\frac{\theta}{\theta + 1}\right)^{k} \cdot \frac{1}{\theta + 1}
+    $$
+  
   - $\theta$: Scaled mutation rate ($4N_e\mu$).
   - Can be viewed as a geometric distribution with parameter $\frac{1}{\theta + 1}$ (waiting problem for multiple mutations and a final coalescent).
 
@@ -140,9 +156,11 @@ This is a quite old series of lectures, but should be relevant.
 - Recombination complicates coalescent theory because it causes different parts of the genome to have different genealogies, breaking the simple tree-like structure of the standard coalescent process.
   - ![](/files/2024-12-28-structured-coalescent/Screenshot%202024-12-31%20at%2021.53.07.webp)
 - Covariance Between Coalescent Times ($T_1, T_2$):
+
   $$
   \text{Cov}[T_1, T_2] = \frac{\rho + 18}{\rho^2 + 13\rho + 18}
   $$
+
   - $T_1, T_2$: Coalescent times for two loci.
   - $\rho = 4N_e r$: Scaled recombination rate.
 - **Sequential Markov Coalescent (SMC)**, is a computationally efficient approximation to the full **Ancestral Recombination Graph (ARG)**. The SMC framework models the genealogy of sequences along a genome, incorporating recombination to simulate how local genealogies change sequentially along the genome.
@@ -176,30 +194,36 @@ This is a quite old series of lectures, but should be relevant.
   - If $m\to0$ in this matrix, we can ignore the $m^2$ terms, then we have:
     - ![](/files/2024-12-28-structured-coalescent/Screenshot%202025-01-01%20at%2017.52.01.webp) 
   - It can be further simplified to the below matrix, if multiplied by $2N$:
-  $$ 
+    
+    $$ 
     Q =
     \begin{bmatrix}
     -M - 1 & M & 1 \\
     \frac{M}{D - 1} & -\frac{M}{D - 1} & 0 \\
     0 & 0 & 0
     \end{bmatrix}
-  $$
+    $$
+  
   - The waiting time in state 1 is $f_1(t)=(m+1)e^{-(M+1)t}$
   - The waiting time in state 2 is $f_1(t)=(\frac{M}{D - 1})e^{-(\frac{M}{D - 1})t}$
   - $T_w$: Coalescent time (within) for state 1: 
-    - $$ 
+      
+      $$ 
       \begin{align*}
       E[T_w]&=\frac{1}{M+1}+\frac{M}{M+1}\cdot E[T_b]+ \frac{M}{M+1}\cdot 0 \\
       &=D
       \end{align*}
       $$
+  
   - $T_b$: Coalescent time (between) for state 2:
-    - $$ 
+      
+      $$ 
       \begin{align*}
       E[T_b]&=\frac{D-1}{M}+ E[T_w] \\
       &=D(1+\frac{D-1}{MD})
       \end{align*}
       $$
+
 - A more relaxed model:
   - Notations:
     - $N_i$: size for deme $i$.
@@ -207,3 +231,8 @@ This is a quite old series of lectures, but should be relevant.
   - The $N_i$ can changed, something similar to the traveler matrix in the metapopulation model is happening.
   - Conservative migration: forwards and backwards migration rates are equal. 
 
+# Coalescent theory by Aneil Agrawal on a workshop (Fourth Bangalore School on Population Genetics and Evolution)
+
+## [Coalescence I: basic theory and connection to mol pop gen statistics](https://www.youtube.com/watch?v=8DlZ2tPZ0tU)
+
+## [Coalescence II: structured coalescent including pop structure, selfing, and background/balancing selection](https://www.youtube.com/watch?v=W5jwoH4cUkY)
