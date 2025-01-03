@@ -1,5 +1,5 @@
 ---
-title: "Notes: coalescent theory and structured coalescent basics"
+title: "Course notes: coalescent theory and structured coalescent basics"
 date: 2024-12-28
 permalink: /posts/2024-12-28/Structured_coalescent
 categories:
