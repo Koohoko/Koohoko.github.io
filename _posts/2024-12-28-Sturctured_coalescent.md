@@ -1,9 +1,9 @@
 ---
-title: "Notes: coalescent theory and structured coalescent"
+title: "Notes: coalescent theory and structured coalescent basics"
 date: 2024-12-28
 permalink: /posts/2024-12-28/Structured_coalescent
 categories:
-  - Paper digest
+  - Course notes
 tags:
   - Coalescent theory
   - Structured coalescent
@@ -12,7 +12,7 @@ toc: true
 last_modified_at: 2025-01-02
 ---
 
-I wanted to get in more details about the structured coalescent model, here I record some notes when I read related papers/tutorials, and watch videos.
+I wanted to get in more details about the structured coalescent model, here I record some notes when I watch introductory videos.
 
 # Coalescent quick recap
 
@@ -288,7 +288,7 @@ This is a quite old series of lectures, but should be relevant.
   &=\frac{E(T_{*})-E(T_1)}{E(T_{*})} \\
   &= \frac{(d - 1)^2}{1 - 2d + d^2 \left(1 + 4mn\right)}\\\\
   \lim_{d\to \infty} F_{ST} &= \frac{1}{1 + 4mn}
-    
   \end{aligned}
   $$ 
+
   Note that  $mn$ is like the number of migrants per generation. Be careful that there are many assumptions in this model, which are usually not met in real data.
