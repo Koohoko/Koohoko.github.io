@@ -27,13 +27,13 @@ Vaughan, T. G., et al. (2014). Efficient Bayesian inference under the structured
 ### Definitions
 
 - A structured tree $\mathcal{T}$ of n leaves is a fully resolved, rooted and timed phylogenetic tree. $\mathcal{T}=(V, E, \mathbf{t}, M)$. $V$ is the set of nodes, $E$ is the set of edges, $\mathbf{t}$ is the vector of node times, and $M$ is the set of migration events. The demes are represented by a set $D$.
-- The final element in $\mathcal{T}$ is the one that is unique to structured trees and is defined by $M = \{\varphi_{\langle i,j \rangle} \mid \langle i,j \rangle \in E\}$, where each function $\varphi_{\langle i,j \rangle} : [t_i, t_j] \to D$ is piecewise constant and defined such that $\varphi_{\langle i,j \rangle}(t)$ is the type associated with the time $t$ on edge $\langle i,j \rangle \in E$. Such a tree is illustrated in Figure 1.
+- The final element in $\mathcal{T}$ is the one that is unique to structured trees and is defined by $M = \lbrace\varphi_{\langle i,j \rangle} \mid \langle i,j \rangle \in E\rbrace$, where each function $\varphi_{\langle i,j \rangle} : [t_i, t_j] \to D$ is piecewise constant and defined such that $\varphi_{\langle i,j \rangle}(t)$ is the type associated with the time $t$ on edge $\langle i,j \rangle \in E$. Such a tree is illustrated in Figure 1.
   - ![](https://cdn.ncbi.nlm.nih.gov/pmc/blobs/8f32/4207426/97b8727277f5/btu201f1p.jpg)
 
 
 ### Bayseian inference framework
 
-- Sampled individuals are represented by the set $I$, the aligned sequences by the set $S = \{s_i \vert i \in I\}$, the sampling dates by the set $\mathbf{t}_I = \{\mathbf{t}_i \vert i \in I\}$, $\mathbf{t}_{Y}$ is the vector of internal node times, and the sampling locations by the set $L = \{l_i \vert i \in I\}$. In addition to the parameters of primary interest, $m$ and $\theta$, $\mu$ the nucleotide substitution rate matrix, and $M$ the migration history of lineages in the tree, i.e., the timing, source, sink, and lineage involved in each migration event.
+- Sampled individuals are represented by the set $I$, the aligned sequences by the set $S = \lbrace s_i \vert i \in I\rbrace$, the sampling dates by the set $\mathbf{t}_I = \lbrace\mathcal{t}_i \vert i \in I\rbrace$, $\mathbf{t}_{Y}$ is the vector of internal node times, and the sampling locations by the set $L = \lbrace l_i \vert i \in I\rbrace$. In addition to the parameters of primary interest, $m$ and $\theta$, $\mu$ the nucleotide substitution rate matrix, and $M$ the migration history of lineages in the tree, i.e., the timing, source, sink, and lineage involved in each migration event.
   - Formally, the target of inference is the posterior distribution of the parameters given the data:
     
     $$
@@ -54,7 +54,7 @@ Vaughan, T. G., et al. (2014). Efficient Bayesian inference under the structured
   \left(
   \binom{k_{\alpha,d}}{2} \frac{1}{\theta_d} 
   + k_{\alpha,d} 
-  \sum_{d' \in D \setminus \{d\}} m_{dd'}
+  \sum_{d' \in D \setminus \lbrace d \rbrace} m_{dd'}
   \right)
   \right]
   \times 
