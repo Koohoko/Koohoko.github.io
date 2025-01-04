@@ -167,3 +167,137 @@ Structured coalescent papers are mainly from two authors:
     $$
 
 #### Discrete Trait Analysis
+
+- **Key Idea**:  
+ - Treats a lineage’s “location” as a **discrete trait** (analogous to nucleotides) evolving along an unstructured coalescent tree.  
+ - Uses **Felsenstein’s pruning algorithm** to integrate over all trait histories (migration paths) very efficiently.  
+- **Model**:  
+ - The prior on the tree often assumes a **single, unstructured** population.  
+ - “Migration” is just a constant‐rate Markov chain, unrelated to actual subpopulation sizes.  
+ - **Sampling fraction $\propto$ subpopulation size is assumed**.  
+- **Pros**:  
+ - Fast and straightforward to implement (common in BEAST’s “discrete phylogeography”).  
+- **Cons**:  
+ - Can produce **biased** results if real subpopulation sizes or migration strongly influence tree shape, or if sampling intensity does not match relative deme size.  
+   - Allows “loss” or “resurrection” of demes in unrealistic ways.
+- Comparison to MTT:
+  - In **Discrete Trait Analysis (DTA)**, the *migration rates* do **not** shape the branching times or topology of the genealogy; instead, the genealogical prior is (for the most part) an **unstructured coalescent** (or some other simple tree prior), and “migration” is just treated as a **discrete‐character substitution** process on that fixed genealogy.
+  - Hence, in DTA:
+    $$
+    P(T,\mu,f,\theta \;\big|\; S,t_I,L)
+    \;\;\propto\;\;
+    \underbrace{P(L \mid T, t_I, f)}_{\substack{\text{location-likelihood via discrete}\\\text{trait (migration) “substitutions”}}}
+    \;
+    \times
+    \underbrace{P(S \mid T, t_I, \mu)}_{\substack{\text{sequence-likelihood via}\\\text{molecular substitutions}}}
+    \;
+    \times
+    \underbrace{P(T \mid t_I,\theta)}_{\substack{\text{unstructured coalescent}\\\text{prior on the tree}}}
+    \;
+    \times
+    P(\mu,f,\theta),
+    $$
+    
+    the “tree prior” $\smash{P(T\mid t_I,\theta)}$ **does not** depend on the migration parameters $f$.
+
+  - By contrast, in a **MultiTypeTree (MTT)** or **structured coalescent** model, migration **does** directly affect the genealogy: if lineages in the same deme coalesce faster, or if migration rates are low, that changes how quickly lineages coalesce and thus reshapes the branching pattern and times of the tree.
+
+  - So in MTT (structured coalescent):
+    
+    $$
+    P(T, M, \mu, m, \theta \;\big|\; S,t_I,L)
+    \;\;\propto\;\;
+    \underbrace{P(S \mid T, t_I, \mu)}_{\text{sequence-likelihood}}
+    \;
+    \times
+    \underbrace{P(T, M \mid t_I,L,m,\theta)}_{\substack{\text{structured coalescent prior}\\\text{(tree \textit{and} migration events)}}}
+    \;
+    \times
+    P(\mu)\,P(m)\,P(\theta),
+    $$
+    the genealogical prior $\smash{P(T,M\mid t_I,L,m,\theta)}$ **does** depend on $m$ (migration rates) and $\theta$, because migration directly changes how/when lineages coalesce and how the tree is shaped.
+- Again, for DTA, 
+  - one concern is that the assumption that sampling intensity is proportional to subpopulation size leads to biased estimates of migration rates when this assumption is not met (PMID: [22190015](http://www.ncbi.nlm.nih.gov/pubmed/22190015), PMID: [24586153](http://www.ncbi.nlm.nih.gov/pubmed/24586153)).
+  - Second, ignoring the population structure when calculating the probability of the coalescent tree could lead to bias or lost power. For example, when migration rates are very low, one expects very long branches close to the root. This interdependency between the shape and branch lengths of the genealogy and the migration process is ignored by DTA, which could reduce accuracy.
+
+#### BASTA
+
+- Overall: 
+  1. BASTA integrates over migration histories in a simpler way (treating lineages’ locations as partially independent and discretizing time in sub-intervals).
+  2. BASTA still allows coalescence rates to depend on whether lineages are in the same deme (unlike DTA).
+  3. Because it approximates the exact (and complex) structured‐coalescent integral, it is computationally cheaper than MTT while retaining more accuracy than DTA.
+
+- BASTA Posterior
+
+  $$
+  P(T, \mu, m, \theta \mid S, t_I, L)
+  \;\;\propto\;\;
+  \underbrace{P(S \mid T, t_I, \mu)}_{\text{sequence likelihood}}
+  \;\times\;
+  \underbrace{P(T \mid t_I, L, m, \theta)}_{\substack{\text{structured coalescent} \\ \text{(approx.)}}}
+  \;\times\;
+  P(\mu, m, \theta).
+  $$
+
+  - $S$: sequence data  
+  - $T$: the genealogy (topology + branch lengths)  
+  - $\mu$: mutation/substitution parameters  
+  - $m$: migration rates  
+  - $\theta$: set of effective population sizes for each deme  
+  - $L$: tip locations  
+  - $t_I$: sampling times (if heterochronous)
+
+- In **MTT**, the genealogy $T$ and the *explicit* migration events $M$ appear:
+
+  $$
+  P(T, M, \mu, m, \theta \;\mid\; S, t_I, L)
+  \;\;\propto\;\;
+  P(S \mid T, t_I, \mu)
+  \;\times\;
+  \underbrace{P(T, M \mid t_I, L, m, \theta)}_{\text{structured coalescent prior (exact)}}
+  \;\times\;
+  P(\mu)\,P(m)\,P(\theta).
+  $$
+
+  - MTT attempts to **fully** sample each lineage’s migration path in the genealogy, which becomes computationally expensive for large datasets or many demes.
+
+
+- BASTA’s Approximation 
+
+  1. **Independent Migration**: By writing
+
+    $$
+    P(d_l = d, d_{l'} = d \mid t) \approx P(d_l = d \mid t) P(d_{l'} = d \mid t),
+    $$
+
+    we ignore any correlation among lineages' locations (e.g., limited carrying capacity, correlated environment, etc.).
+
+  2. **Discrete Subintervals**: Instead of integrating exactly over time, evaluations are performed at only two points (start/end) per interval, assuming probabilities are constant across each half-interval.
+
+  3. **Matrix Exponential**: The update 
+
+   $$
+   P_{l, \alpha_i} = P_{l, \alpha_{i-1}} e^{\tau_i \mathbf{m}}
+   $$
+
+    is standard for a continuous-time Markov chain, but applying it only at interval boundaries omits any subtle interactions that might occur mid-interval.
+
+- Why It Makes BASTA Faster
+
+  - **Exact MTT**: Must consider **every** possible lineage location at every moment — this grows combinatorially with number of lineages/demes.  
+  - **BASTA**:
+    1. Uses **matrix exponentials** to update each lineage’s location probabilities over sub-intervals.  
+    2. Approximates that lineages migrate independently within those sub-intervals.  
+    3. **Only** updates location probabilities at discrete time points (start/end of sub-intervals), skipping continuous integration.
+  - Skipping a full enumeration of migration paths drastically reduces computation. BASTA still incorporates subpopulation structure into coalescent rates (unlike DTA, which ignores it altogether).
+
+### Simulation and results
+
+- DTA overestimates migration rates when sampling intensity does not match subpopulation size.
+- DTA Under-represents Uncertainty.
+- DTA have lowest accuracy in estimating root locations.
+
+## [SCOTTI:Efficient Reconstruction of Transmission within Outbreaks with the Structured Coalescent](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005130) by *Nicola De Maio et al.* on PLOS Computational Biology, 2016.
+
+### Abstract
+- This study demonstrates SCOTTI (Structured COalescent Transmission Tree Inference), for modelling each host as a distinct population, and transmissions between hosts as migration events.

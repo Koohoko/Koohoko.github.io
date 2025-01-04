@@ -33,7 +33,7 @@ Vaughan, T. G., et al. (2014). Efficient Bayesian inference under the structured
 
 ### Bayseian inference framework
 
-- Sampled individuals are represented by the set $I$, the aligned sequences by the set $S = \lbrace s_i \vert i \in I\rbrace$, the sampling dates by the set $\mathbf{t}_I = \lbrace\mathcal{t}_i \vert i \in I\rbrace$, $\mathbf{t}_{Y}$ is the vector of internal node times, and the sampling locations by the set $L = \lbrace l_i \vert i \in I\rbrace$. In addition to the parameters of primary interest, $m$ and $\theta$, $\mu$ the nucleotide substitution rate matrix, and $M$ the migration history of lineages in the tree, i.e., the timing, source, sink, and lineage involved in each migration event.
+- Sampled individuals are represented by the set $I$, the aligned sequences by the set $S = \lbrace s_i \vert i \in I\rbrace$, the sampling dates by the set $\mathbf{t}_I = \lbrace\mathbf{t}_i \vert i \in I\rbrace$, $\mathbf{t}_Y$ is the vector of internal node times, and the sampling locations by the set $L = \lbrace l_i \vert i \in I\rbrace$. In addition to the parameters of primary interest, $m$ and $\theta$, $\mu$ the nucleotide substitution rate matrix, and $M$ the migration history of lineages in the tree, i.e., the timing, source, sink, and lineage involved in each migration event.
   - Formally, the target of inference is the posterior distribution of the parameters given the data:
     
     $$
