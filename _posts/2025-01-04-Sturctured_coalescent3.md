@@ -301,3 +301,120 @@ Structured coalescent papers are mainly from two authors:
 
 ### Abstract
 - This study demonstrates SCOTTI (Structured COalescent Transmission Tree Inference), for modelling each host as a distinct population, and transmissions between hosts as migration events.
+- Some example scenario for transmission: ![](/files/2024-12-28-structured-coalescent/Screenshot%202025-01-04%20at%2020.45.01.webp)
+
+### Introduction
+- A very good section, particularly the second and third paragraph, revisiting how others reconstruct transmission events and limitation. Should re-read sometime later.
+- Outbreaker ([PMID: 24465202](https://pubmed.ncbi.nlm.nih.gov/24465202/)) was compared to SCOTTI. Outbreaker did not model within-host diversity.
+- One **limitation** of SCOTTI: do not model transmission bottlenecks.
+- I found may references of this paper can be quite useful, e.g.,
+  - About misleading inference if **NOT** modeling within-host diversity:
+    - Worby CJ, Lipsitch M, Hanage WP. Within-host bacterial diversity hinders accurate reconstruction of transmission networks from genomic distance data. PLoS Comput Biol. 2014; 10:e1003549. doi: 10. 1371/journal.pcbi.1003549 PMID: 24675511
+    - Romero-Severson E, Skar H, Bulla I, Albert J, Leitner T. Timing and order of transmission events is not directly reflected in a pathogen phylogeny. Molecular biology and evolution. 2014; 31(9):2472–2482. doi: 10.1093/molbev/msu179 PMID: 24874208
+  - Other works considering within-host diversity, but did not considered unsampled infections:
+    - Ypma RJ, van Ballegooijen WM, Wallinga J. Relating phylogenetic trees to transmission trees of infectious disease outbreaks. Genetics. 2013; 195(3):1055–1062. doi: 10.1534/genetics.113.154856 PMID: 24037268
+    - Didelot X, Gardy J, Colijn C. Bayesian inference of infectious disease transmission from whole-genome sequence data. Molecular biology and evolution. 2014; 31(7):1869–1879. doi: 10.1093/molbev/msu121 PMID: 24714079
+    - Hall M, Woolhouse M, Rambaut A. Epidemic reconstruction in a phylogenetics framework: transmission trees as partitions of the node set. PLoS Comput Biol. 2015; 11(12):e1004613. doi: 10.1371/journal.pcbi.1004613 PMID: 26717515
+- ![](/files/2024-12-28-structured-coalescent/Screenshot%202025-01-05%20at%2017.01.04.webp)
+
+### Methods
+
+- SCOTTI aims to reconstruct who infected whom and when in a scenario with multiple potential hosts (populations). This is done by:
+
+  - Inferring a phylogeny $T$ (the genealogy of the sampled pathogen sequences). 
+  - Tracing how lineages “migrate” (or “transmit”) between different hosts over time. 
+  - Estimating parameters like:
+    - Mutation/substitution parameters $\mu$ for the pathogen.
+    - Migration (transmission) rate $m$ among hosts.
+    - Within‐host population sizes $N_e$.
+  ​
+- The approximate structured coalescent model is based on BASTA.
+  - To include the epidemiological data (host exposure time), introduction time ($d_i$) and removal time ($d_r$) were considered for each host. $[d_r, d_i]$ is the time interval when the host can host any lineage. The model assumes that $d_i$ and $d_r$ are provided for each host.
+  - $\vec{E}$ is the collection of exposure times.
+  - The number of hosts/populations $n_D$ is not fixed, but estimated within a specified range.
+  - Migration rate $m$ is assumed the same between each pair of hosts for the time that they are both exposed to.
+  - All demes have the same and constant effective population size $N_e$.
+  - This means that we assume that transmission is a *priori* equally likely between any pair of exposed hosts, and that all hosts have equal, and constant, within-host pathogen evolution dynamics.
+  - Equal population sizes and migration rates can be relaxed for known contact networks.
+
+- Note that every sample have only one representative sequence, rather than a set of sequences representing the within-host haplotype diversity. **Deep sequencing data is not utilized in this example study**.
+- A bit about $P_{l,\alpha_{i},d}$, the probability that lineage $l$ is in host (deme) $d$ at time $\alpha_{i}$:
+
+  $$
+  P_{l, \alpha_i, d} = P_{l, \alpha_{i-1}, d} \underbrace{\left( \frac{1}{D_i} + \frac{D_i - 1}{D_i} e^{-\tau_i m} \right)}_{\text{Case 1: was in } d} + \left(1 - P_{l, \alpha_{i-1}, d}\right) \underbrace{\left( \frac{1}{D_i} - \frac{1}{D_i} e^{-\tau_i m} \right)}_{\text{Case 2: was not in } d},
+
+  $$
+
+  simply adds these two scenarios:
+
+  1. If it was **already in** $d$ at $\alpha_{i-1}$, the chance it stays or "effectively returns" to $d$ by $\alpha_i$.
+  2. If it was **not in** $d$, the chance it migrates (at least once) into $d$ by $\alpha_i$.
+
+  Notice:
+
+  - $\frac{1}{D_i} + \frac{D_i - 1}{D_i} e^{-\tau_i m} = e^{-\tau_i m} \times 1+(1-e^{-\tau_i m})\times \frac{1}{D_i}$ = Probability of "remain in host $d$" over $\tau_i$.
+  - $\frac{1}{D_i} - \frac{1}{D_i} e^{-\tau_i m} = \frac{1}{D_i}\left(1 - e^{-\tau_i m}\right)$ = Probability of "migrate from a different host into $d$" at least once.
+
+- Simulation Setup
+
+  1. **Two Fixed Transmission Histories**
+     - **Transmission History 1**: 20 UK farms infected with FMDV in 2001 (from [15]).  
+     - **Transmission History 2**: HIV outbreak (1980–1983) involving one male index case and multiple partners (from [8]).
+
+  2. **Within-Host Coalescent Model**
+     - Each infected host is modeled with a **constant effective population size** $N_e$.  
+     - Lineages within a host coalesce according to a standard coalescent at rate $\tfrac{1}{N_e}$.  
+
+  3. **Transmission Bottlenecks (Simulated, Not Modeled by SCOTTI/Outbreaker)**
+     - **Weak Bottleneck** ($\sim N_e$ generations of drift):  
+       - Two lineages have $\approx 63\%$ chance of coalescing; effectively **larger** fraction of the donor population survives in the recipient.  
+     - **Strong Bottleneck** ($\sim 100N_e$ generations of drift):  
+       - Two lineages almost surely coalesce; effectively **smaller** fraction of the donor population passes on.
+
+  4. **Simulation Settings**
+     - Factors varied:  
+       1. **Weak vs Strong Bottleneck**  
+       2. **Transmission History 1 vs 2**  
+       3. **One vs Two Samples per Host**  
+       4. **First vs Second Transmission History** (the authors label them “history 1” or “history 2”; they also mention “first vs second” might relate to repeated usage).
+     - Each factor has **two** levels, giving $2 \times 2 \times 2 \times 2 = 8$ **groups of scenarios**.  
+
+  5. **Further Variants per Scenario**
+     - For each of these 8 scenarios (“base”), they also define **eight** sub-scenarios (the base + 7 variants), leading to **64 distinct** simulation settings:
+       - **Long infection**: 5× longer intervals than usual ($\approx 10N_e$ generations).  
+       - **Abundant genetic**: Alignment length = 15,000 bp (instead of 1,500 bp).  
+       - **Early sampling**: Samples at 5% of the infection interval.  
+       - **Late sampling**: Samples at the end of infection.  
+       - **Few missing**: One unobserved host.  
+       - **Many missing**: Three unobserved hosts.  
+       - **Inaccurate epi**: SCOTTI is given a broader exposure interval than the true one.  
+
+  6. **Number of Datasets**
+     - Each of the **64** scenario/variant combinations is replicated **100 times**, resulting in **6,400 total simulated datasets** (64 × 100).
+
+  7. **HKY Substitution Model**
+     - All simulations use an **HKY** nucleotide substitution model with:
+       - $\kappa = 3 \times 10^{-3}$ substitution rate per base **per $N_e$ generations** (unless otherwise stated).
+       - **Uniform** nucleotide frequencies.
+     - SCOTTI and Outbreaker are both run **using the HKY model** for inferring the phylogeny from the simulated alignments.
+
+  8. **Methods Used for Inference**
+     - **SCOTTI**:
+       - Approximates structured coalescent with possible nonsampled hosts (0–2) and runs up to $10^6$ MCMC iterations.
+     - **Outbreaker**:
+       - Also uses HKY, but typically can only handle **one sample per host**.
+
+### Results
+
+- The accuracy of SCOTTI remains consistently high,with the noticeable exception 
+of the case in which sampling occurs very early in infection.
+- As we increase the within-host genetic variability, we achieve this by reducing the effect of the transmission bottleneck and increasing the within-host effective population size. We notice that the accuracy of the point estimate of SCOTTI goes remarkably down. However, calibration remains at acceptable levels.
+- However, providing two samples per host increases the accuracy. This supports the idea that, if available, many sequences from each host could provide sufficient information. Deep sequencing from each host could also provide sufficient information. 
+- SCOTTI can investigate a dataset of 50 hosts and 2 samples per host in 1-2 hours using a single processor.
+
+## [The Structured Coalescent and Its Approximations](https://academic.oup.com/mbe/article/34/11/2970/3896419) by Nicola F. Müller *et al.* on Molecular Biology and Evolution, 2017.
+
+### Abstract
+- We present **an exact numerical solution** to the structured coalescent that does not require the inference of migration histories. Although this solution is computationally unfeasible for large data sets, it clarifies the assumptions of previously developed approximate methods and allows us to provide an improved approximation to the structured coalescent. 
+
+### Introduction
