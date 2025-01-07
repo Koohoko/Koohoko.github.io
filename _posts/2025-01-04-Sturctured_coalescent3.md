@@ -17,13 +17,16 @@ I wanted to get in more details about the structured coalescent model, here I re
 # Overview
 Firstly there is a review paper on phylogeographic inference on 2010, then I will go through some papers on structured coalescent models.
 
-Structured coalescent papers are mainly from two authors:
+Structured coalescent papers we studied here are mainly from three authors:
+- [Eric M. Volz](https://scholar.google.com/citations?user=cp2B1yUAAAAJ&hl=en).
 - [Nicola F. Muller](https://muellerlab.io), who developed [MASCOT](https://taming-the-beast.org/tutorials/Mascot-Tutorial/).
 - [Nicola De Maio](https://scholar.google.at/citations?user=5qarsrQAAAAJ&hl=en), who developed [SCOTTI](https://taming-the-beast.org/tutorials/SCOTTI-Tutorial/).
 
 # Papers
 
 ## [Three roads diverged? Routes to phylogeographic inference](https://www.sciencedirect.com/science/article/pii/S0169534710001965?via%3Dihub) by *Erik W. Bloomquist* et al. on Trends in Ecology & Evolution, 2010.
+
+This is a summative review paper on phylogeographic inference methods.
 
 ### Nested clade phylogeographic analysis (NCPA), a comparative approach
 
@@ -98,6 +101,44 @@ Structured coalescent papers are mainly from two authors:
   | **Migration**                      | A simple CTMC of jumps between states along a single phylogeny.                                                                       | Migration/transmission events between demes/hosts are part of the *structured coalescent process* that generates genealogies.                                                    |
   | **Inferred quantities**            | - Location states at ancestral nodes<br>- Rate matrix of location changes                                                             | - Demic or host‐level coalescent parameters (population sizes)<br>- Migration/transmission rates<br>- Full distribution of genealogies with demic assignment for each lineage. |
   | **Typical usage**                  | Reconstructing **discrete phylogeography**: “Where did the lineages come from and how often did they move among locations?”           | Understanding **population structure**, **host–pathogen** dynamics, or **transmission chains** with explicit coalescent modeling.                                                |
+
+
+## [Complex Population Dynamics and the Coalescent Under Neutrality](https://academic.oup.com/genetics/article/190/1/187/6063310) by *Eric M. Volz* on Genetics, 2012.
+
+## Summary
+
+- In this paper, Erik showed how to derive the rate of coalescence, as well as the likelihood of a gene genealogy with heterochronous sampling and labeled taxa, and how to simulate a coalescent tree conditional on a complex demographic history.
+
+1. **A New Coalescent Framework:** The paper develops a coalescent model for populations with complex, non-linear dynamics described by deterministic systems of arbitrary dimensions. It handles:
+   *   **Varying Birth and Death Rates:** Unlike standard coalescent models, it doesn't assume constant rates. Birth and death rates can be any differentiable function of time and the state of the system.
+   *   **Structured Populations:** It accounts for population structure (multiple "demes") where gene copies can reproduce within and across demes, and migration can occur.
+   *   **Large Sample Fractions:** The model can handle scenarios where a significant portion of the population is sampled, which is often the case in epidemiological studies.
+2. **Derivation of Coalescent Rate Under Birth-death Process:** 
+   - The rate of coalescence (λ<sub>2</sub>) for two lineages is $\frac{1}{Y({s})}$ under Kingman coalescent.
+   - Under a birth–death process with varying rates. It shows that λ<sub>2</sub> is not simply the inverse of the population size (1/Y), but rather a function of both population size and the time-varying birth rate: $λ_2(s) = 2f(s)/Y^2(s)$.
+   - The birth rate $f(t)=\beta X(t)Y(t)$ correspond to $\beta SI$ in the SIR model.
+   - In traditional Birth-Death model, $f(t)=cY(t)$, where $c$ is a constant, such as exponential growth.
+   - The birth rate of a singe copy is $f(t, Y)/Y(t)$, it is both time ($f(t, Y)$) and state ($Y(t)$) dependent.
+   - Classical solutions, such as $\lambda_2(s) \propto 1/Y(s)$, appear as special cases when births are strictly proportional to population size. 
+   - The coalescent rate is under BD model, in Moran's style:
+    
+    $$  
+    F(s) = \int_0^s f(\tau) \, d\tau,\\
+    \Lambda_2(s) = \sum_{j=1}^{\lfloor F(s) \rfloor} \frac{\sigma^2_M(j)}{\overline{Y}(j)}.
+    $$
+   - After some steps we reached:
+    
+    $$
+    \lambda_A(s) = \left( \frac{A(s)}{2} \right) \frac{2f(s)}{Y^2(s)}.
+    $$
+
+3. **Bias in Skyline Estimators:** It demonstrates that non-parametric estimators of N<sub>e</sub>, such as the skyline plot, can be biased when birth rates are not proportional to population size. This is particularly relevant in scenarios like "Faster Than Exponential" (FTE) or "Slower Than Exponential" (STE) growth, which can occur during epidemics.
+4. **Number of Lineages Through Time (NLFT):** The paper explores the relationship between the NLFT and population dynamics. It shows that the NLFT is sensitive to the history of birth rates, not just population size, leading to potentially counterintuitive interpretations of tree shapes.
+5. **Structured Populations:** It extends the coalescent to structured populations with concurrent birth, death, and migration processes. It derives a master equation for the rate of coalescence in such scenarios.
+   - Note that in the structured coalescent model in this paper, Gene copies may reproduce both **within and across** demes. Consequently, two gene copies in different demes may coalesce without being preceded by a migration event (which may be too simplistic for some scenarios).
+   - TOO many formulas, I will skip them here.
+6. **Simulation and Likelihood:** The paper presents methods for simulating coalescent trees and calculating the likelihood of a gene genealogy conditional on a complex demographic history, including structured populations.
+
 
 
 
@@ -418,3 +459,18 @@ of the case in which sampling occurs very early in infection.
 - We present **an exact numerical solution** to the structured coalescent that does not require the inference of migration histories. Although this solution is computationally unfeasible for large data sets, it clarifies the assumptions of previously developed approximate methods and allows us to provide an improved approximation to the structured coalescent. 
 
 ### Introduction
+- *Mugration* assumes the migration process to be independent of the tree generating process. In other words, it is assumed that the shape of a phylogeny is not in any way influenced by the migration process.
+- Structured coalescent requires the state (or location) of any ancestral lineage in the phylogeny at any time to be inferred.
+- Marginialization approaches (seek to marginalize over all possible migration histories by treating lineage states probabilistically instead of using MCMC based sampling) allows for the analysis of larger data sets.
+  - SISCO ([Volz 2012](https://academic.oup.com/genetics/article/190/1/187/6063310))
+  - BASTA ([De Maio 2015](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1005421))
+- ESCO is the exact structured coalescent.
+  - It requires solving a number of differential equations that is proportional to the “number of different states” to the power of the “number of coexisting lineages”, $m^n$.
+- MASCO is the marginal lineage states approximation of the structured coalescent.
+  - Reduce the number of differential equations that have to be solved between events to the “number of states” times “number of lineages”, but ignores any correlations between lineages.
+- SISCO (state independence approximation of the structured coalescent) requires the additional assumption (compared to MASCO) that the state of a lineage evolves independently of the coalescent process between events. 
+  - This means that changes in the probabilities of lineages being in a certain state are only dependent on the migration rates, and are completely independent of other lineages in the phylogeny.
+
+### Methods
+
+The methods part is **phenomenal**, I don't know it is because I have read so many papers on structured coalescent, or it is just well written. It clearly demonstrated how the interval probability, colaescence probability, and sampling probability are calculated, for ESCO, MASCO, and SISCO.
