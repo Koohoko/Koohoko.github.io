@@ -1,5 +1,5 @@
 ---
-title: "Paper digest: More structured coalescent papers"
+title: "Paper digest: More structured coalescent papers: on Nicola F. Muller and Nicola De Maio"
 date: 2025-01-04
 permalink: /posts/2025-01-04/structured-coalescent3
 categories:
@@ -9,7 +9,7 @@ tags:
   - Structured coalescent
   - Phylogenetics
 toc: true
-# last_modified_at: 2025-01-05
+last_modified_at: 2025-01-09
 ---
 
 I wanted to get in more details about the structured coalescent model, here I record some notes when I read related papers.
@@ -17,8 +17,7 @@ I wanted to get in more details about the structured coalescent model, here I re
 # Overview
 Firstly there is a review paper on phylogeographic inference on 2010, then I will go through some papers on structured coalescent models.
 
-Structured coalescent papers we studied here are mainly from three authors:
-- [Eric M. Volz](https://scholar.google.com/citations?user=cp2B1yUAAAAJ&hl=en).
+Structured coalescent papers we studied here are mainly from two authors:
 - [Nicola F. Muller](https://muellerlab.io), who developed [MASCOT](https://taming-the-beast.org/tutorials/Mascot-Tutorial/).
 - [Nicola De Maio](https://scholar.google.at/citations?user=5qarsrQAAAAJ&hl=en), who developed [SCOTTI](https://taming-the-beast.org/tutorials/SCOTTI-Tutorial/).
 
@@ -101,46 +100,6 @@ This is a summative review paper on phylogeographic inference methods.
   | **Migration**                      | A simple CTMC of jumps between states along a single phylogeny.                                                                       | Migration/transmission events between demes/hosts are part of the *structured coalescent process* that generates genealogies.                                                    |
   | **Inferred quantities**            | - Location states at ancestral nodes<br>- Rate matrix of location changes                                                             | - Demic or host‐level coalescent parameters (population sizes)<br>- Migration/transmission rates<br>- Full distribution of genealogies with demic assignment for each lineage. |
   | **Typical usage**                  | Reconstructing **discrete phylogeography**: “Where did the lineages come from and how often did they move among locations?”           | Understanding **population structure**, **host–pathogen** dynamics, or **transmission chains** with explicit coalescent modeling.                                                |
-
-
-## [Complex Population Dynamics and the Coalescent Under Neutrality](https://academic.oup.com/genetics/article/190/1/187/6063310) by *Eric M. Volz* on Genetics, 2012.
-
-## Summary
-
-- In this paper, Erik showed how to derive the rate of coalescence, as well as the likelihood of a gene genealogy with heterochronous sampling and labeled taxa, and how to simulate a coalescent tree conditional on a complex demographic history.
-
-1. **A New Coalescent Framework:** The paper develops a coalescent model for populations with complex, non-linear dynamics described by deterministic systems of arbitrary dimensions. It handles:
-   *   **Varying Birth and Death Rates:** Unlike standard coalescent models, it doesn't assume constant rates. Birth and death rates can be any differentiable function of time and the state of the system.
-   *   **Structured Populations:** It accounts for population structure (multiple "demes") where gene copies can reproduce within and across demes, and migration can occur.
-   *   **Large Sample Fractions:** The model can handle scenarios where a significant portion of the population is sampled, which is often the case in epidemiological studies.
-2. **Derivation of Coalescent Rate Under Birth-death Process:** 
-   - The rate of coalescence (λ<sub>2</sub>) for two lineages is $\frac{1}{Y({s})}$ under Kingman coalescent.
-   - Under a birth–death process with varying rates. It shows that λ<sub>2</sub> is not simply the inverse of the population size (1/Y), but rather a function of both population size and the time-varying birth rate: $λ_2(s) = 2f(s)/Y^2(s)$.
-   - The birth rate $f(t)=\beta X(t)Y(t)$ correspond to $\beta SI$ in the SIR model.
-   - In traditional Birth-Death model, $f(t)=cY(t)$, where $c$ is a constant, such as exponential growth.
-   - The birth rate of a singe copy is $f(t, Y)/Y(t)$, it is both time ($f(t, Y)$) and state ($Y(t)$) dependent.
-   - Classical solutions, such as $\lambda_2(s) \propto 1/Y(s)$, appear as special cases when births are strictly proportional to population size. 
-   - The coalescent rate is under BD model, in Moran's style:
-    
-    $$  
-    F(s) = \int_0^s f(\tau) \, d\tau,\\
-    \Lambda_2(s) = \sum_{j=1}^{\lfloor F(s) \rfloor} \frac{\sigma^2_M(j)}{\overline{Y}(j)}.
-    $$
-   - After some steps we reached:
-    
-    $$
-    \lambda_A(s) = \left( \frac{A(s)}{2} \right) \frac{2f(s)}{Y^2(s)}.
-    $$
-
-3. **Bias in Skyline Estimators:** It demonstrates that non-parametric estimators of N<sub>e</sub>, such as the skyline plot, can be biased when birth rates are not proportional to population size. This is particularly relevant in scenarios like "Faster Than Exponential" (FTE) or "Slower Than Exponential" (STE) growth, which can occur during epidemics.
-4. **Number of Lineages Through Time (NLFT):** The paper explores the relationship between the NLFT and population dynamics. It shows that the NLFT is sensitive to the history of birth rates, not just population size, leading to potentially counterintuitive interpretations of tree shapes.
-5. **Structured Populations:** It extends the coalescent to structured populations with concurrent birth, death, and migration processes. It derives a master equation for the rate of coalescence in such scenarios.
-   - Note that in the structured coalescent model in this paper, Gene copies may reproduce both **within and across** demes. Consequently, two gene copies in different demes may coalesce without being preceded by a migration event (which may be too simplistic for some scenarios).
-   - TOO many formulas, I will skip them here.
-6. **Simulation and Likelihood:** The paper presents methods for simulating coalescent trees and calculating the likelihood of a gene genealogy conditional on a complex demographic history, including structured populations.
-
-
-
 
 ## [New Routes to Phylogeography: A Bayesian Structured Coalescent Approximation](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1005421) by *Nicola De Maio et al.* on PLOS Genetics, 2015.
 
@@ -474,3 +433,40 @@ of the case in which sampling occurs very early in infection.
 ### Methods
 
 The methods part is **phenomenal**, I don't know it is because I have read so many papers on structured coalescent, or it is just well written. It clearly demonstrated how the interval probability, colaescence probability, and sampling probability are calculated, for ESCO, MASCO, and SISCO.
+
+You shold refer back to the original paper, and the associated supplementary material, for the details.
+
+## [MASCOT: parameter and state inference under the marginal structured coalescent approximation](https://academic.oup.com/bioinformatics/article/34/22/3843/5001387) by *Nicola De Maio et al.* on Bioinformatics, 2018.
+
+### Abstract
+
+This study extended the previous work by calculating the probability of the state of the internal nodes of the phylogenetic tree, and now the method can handle larger datasets, including 433 H3N2 sequences from five locations.
+
+### Methods
+
+- They used the backwards/forwards algorithm to calculate the probability of the state of the internal nodes. First going backwards in time, reaching the root, then going forwards, comparing and scaling the backwards probability for internal nodes then we get the full probability of the state of the internal nodes.
+- ![](/files/2024-12-28-structured-coalescent/Screenshot%202025-01-09%20at%2018.58.52.png)
+
+### Results
+
+- With backward/forward algorithm, accuracy for internal node state probability is improved.
+
+### Discussion
+
+- Insights for Future Studies:
+  - Incorporating Explicit Sampling:
+    - Future methods could explicitly incorporate sampling of migration histories or the number of state changes, using algorithms like those of Minin and Suchard (2007, 2008).
+    - This would ensure probabilistic consistency with forward state probability equations.
+  - Parameter Reduction:
+    - Inferring all migration rates and population sizes for large datasets is computationally intensive. Strategies include:
+      - Bayesian Search Variable Selection (Lemey et al., 2009): To select influential variables.
+      - Generalized Linear Models (GLMs) (Lemey et al., 2014): To model migration rates based on covariates, reducing the need to infer all migration rate parameters.
+  - Large datasets pose computational challenges.
+    - A suggested approximation:
+      $$
+      \sum_{k=1, k\ne i}^n \approx \sum_{k=1}^m,
+      $$
+      where lineages share the same transition probabilities. 
+    - This approach reduces the number of ordinary differential equations (ODEs) that need to be solved.
+
+## [Inferring time-dependent migration and coalescence patterns from genetic sequence and predictor data in structured populations]

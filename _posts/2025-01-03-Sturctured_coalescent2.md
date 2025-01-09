@@ -12,6 +12,8 @@ toc: true
 # last_modified_at: 2025-01-03
 ---
 
+This is the paper for MultiTypeTree.
+
 > In this article, we present a new MCMC sampler capable of sampling from posterior distributions over structured trees: timed phylogenetic trees in which lineages are associated with the distinct subpopulation in which they lie. The sampler includes a set of MCMC proposal functions that offer significant mixing improvements over a previously published method.
 
 Vaughan, T. G., et al. (2014). Efficient Bayesian inference under the structured coalescent. *Bioinformatics*. [Link](https://pmc.ncbi.nlm.nih.gov/articles/PMC4207426/)

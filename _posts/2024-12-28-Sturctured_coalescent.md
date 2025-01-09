@@ -291,4 +291,4 @@ This is a quite old series of lectures, but should be relevant.
   \end{aligned}
   $$ 
 
-  Note that  $mn$ is like the number of migrants per generation. Be careful that there are many assumptions in this model, which are usually not met in real data.
+  Note that $mn$ is like the number of migrants per generation. Be careful that there are many assumptions in this model, which are usually not met in real data.
