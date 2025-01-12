@@ -9,7 +9,7 @@ tags:
   - Structured coalescent
   - Phylogenetics
 toc: true
-last_modified_at: 2025-01-09
+last_modified_at: 2025-01-11
 ---
 
 I wanted to get in more details about the structured coalescent model, here I record some notes when I read related papers.
@@ -469,4 +469,55 @@ This study extended the previous work by calculating the probability of the stat
       where lineages share the same transition probabilities. 
     - This approach reduces the number of ordinary differential equations (ODEs) that need to be solved.
 
-## [Inferring time-dependent migration and coalescence patterns from genetic sequence and predictor data in structured populations]
+## [Inferring time-dependent migration and coalescence patterns from genetic sequence and predictor data in structured populations](https://academic.oup.com/ve/article/5/2/vez030/5549805)
+
+- MSCOT-GLM: This paper further extends the MASCOT with GLM to infer the predictors for time-varying migration rates and effective population sizes, using predictor data (like travel pattern, weekly cases).
+- Similar to DTA-GLM ([Lemey et al. 2014](https://journals.plos.org/plospathogens/article?id=10.1371/journal.ppat.1003932)). In DTA (mugration), since the migration process is independently modelled with the coalescent process, thus the transmission dynamics in different sub-populations cannot be quantified.
+- Similar to DTA-GLM, MSCOT-GLM define the migration rates, and effective population size, as log-linear combinations of coefficients, indicators and time varying predictors.
+
+### Methods
+
+- Instead of inferring the effective population size $N_e(t)$ of state $a$ at time $t$ directly, we define it as a linear combination of $c$ different predictors $p_{N_e}(t)$, coefficients $\beta_{N_e}$, and indicators $\sigma_{N_e}$:
+
+  $$
+  N_e^a(t) = \beta_{N_e} \exp \left( \sum_{i=1}^c \beta_{N_e}^i \sigma_{N_e}^i p_{N_e^a}^i(t) \right). 
+  $$
+
+- The coefficients $\beta^{i}_{N_e}$ use normal priors. 
+- The indicators $\sigma_{N_e}^i$ can be 0 or 1, indicating whether the predictor is used in the model. 
+- The number of cases when $\sigma_{N_e}^i =1$ is distributed as a given prior distribution. Typically, the prior favors a smaller number of active predictors.
+- The outside $\beta_{N_e}$ is the overall scaling factor, if every indicator is $0$, then the effective population size is $\beta_{N_e}$.
+- Similar for migration rates.
+
+### Results
+- Seems can correctly infer the coefficients for the predictors, under simulation.
+- Seems that for indicators are poorer.
+- They did not showed the inffered time-varying effective population size in Figure 3, instead they only show the weekly new cases. I am curious.
+- I thought that before this paper, the $N_e$ is assumed constant in MASCOT?
+
+### Discussion
+
+- Similar GLM approaches as presented here could be applied to inform birth, death, migration, and sampling rates through time for structured birth-death models ([Stadler and Bonhoeffer 2013](https://royalsocietypublishing.org/doi/10.1098/rstb.2012.0198); [Kuhnert et al. 2016](https://academic.oup.com/mbe/article/33/8/2102/2578541)).
+
+
+## [MASCOT-Skyline integrates population and migration dynamics to enhance phylogeographic reconstructions](https://www.biorxiv.org/content/10.1101/2024.03.06.583734v2) by Nicola F. Muller et al. on bioRxiv, 2024.
+
+- The **spatial** and **temporal** transmission dynamics should be inferred simultaneously.
+- **MASCOT-Skyline** allows us to jointly infer spatial and temporal transmission dynamics of infectious diseases using Markov chain Monte Carlo inference.
+- Skyline and skygrid methods are non-parametric methods to estimate the effective population size through time.
+
+### Methods
+
+- TODO
+
+### Results
+
+- Nonparametric population dynamics and migration patterns can be recovered from phylogenetic trees
+- Assumptions about the population dynamics drive ancestral state reconstruction in structured coalescent models
+- Population structure biases population dynamic inference
+- Sampling bias impacts ancestral state reconstructions
+- Modeling population size dynamics is necessary to reconstruct migration rates
+  - Although migration rates can be predicted using GLM ([previous paper](#inferring-time-dependent-migration-and-coalescence-patterns-from-genetic-sequence-and-predictor-data-in-structured-populations)), this still relies on the models’ ability to quantify migration rates accurately.
+
+
+---
