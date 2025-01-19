@@ -1,14 +1,14 @@
 ---
 title: "Book notes: Molecular Evolution: A Statistical Approach by Ziheng Yang"
-date: 2025-00-00
-permalink: /posts/2024-00-00/new-blog
+date: 2025-01-18
+permalink: /posts/2024-01-18/mol_evo_stat_appr
 categories:
   - Book notes
 tags:
   - Molecular evolution
   - Statistical methods
 toc: true
-# last_modified_at: 2025-09-01
+last_modified_at: 2025-01-19
 ---
 
 We decide to read the book [*Molecular Evolution: A Statistical Approach*](http://abacus.gene.ucl.ac.uk/MESA/) by Ziheng Yang, to gether on a weekly basis. 
