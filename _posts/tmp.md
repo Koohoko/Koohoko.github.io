@@ -1,6 +1,6 @@
 ---
 title: "Paper digest: "
-date: 2024-00-00
+date: 2025-00-00
 permalink: /posts/2024-00-00/new-blog
 categories:
   - Course notes
@@ -12,7 +12,7 @@ categories:
 tags:
   - Unassigned
 toc: true
-# last_modified_at: 2024-09-01
+# last_modified_at: 2025-09-01
 ---
 
 The paper titled []() introduced.
