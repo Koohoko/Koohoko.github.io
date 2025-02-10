@@ -1,7 +1,7 @@
 ---
 title: "Book notes: Molecular Evolution: A Statistical Approach by Ziheng Yang"
 date: 2025-01-18
-permalink: /posts/2024-01-18/mol_evo_stat_appr
+permalink: /posts/2024-01-18/mol_evo_stat_appr # this was a typo, should be 2025, but I will keep it for consistency as I already shared it.
 categories:
   - Book notes
 tags:
@@ -109,3 +109,112 @@ We decide to read the book [*Molecular Evolution: A Statistical Approach*](http:
 - Similarly, one can derive a gamma distance under virtually every model for which a one-rate distance formula is available.
 - It is well known that ignoring rate variation among sites leads to underestimation of both the sequence distance and the transition/transversion rate ratio.
 
+## Maximum likelihood estimation of distance
+
+- The likelihood function is $L(\theta; X) = f(X|\theta)$.
+- MLE is the value of $\theta$ that maximizes the likelihood function.
+- Probability vs. Likelihood:
+  - Likelihood $\ne$ Probability: Likelihood does not sum to 1, unlike probability.
+  - Interpretation: Probability is understood by area under the curve, while likelihood is compared at specific points.
+  - Reparametrization: Likelihood is invariant under monotonic transformations, so MLEs remain unchanged.
+  - Nonlinear Effects: Nonlinear transformations alter probability density shapes, potentially changing modality.
+
+### The JC69 model
+
+- The single parameter is the distance $d = 3\lambda t$. The data are two aligned sequences, each $n$ sites long, with $x$ differences.
+- $p = 3p_1(t) = \frac{3}{4} - \frac{3}{4} e^{-4d/3}$.
+- The likelihood function is $L(d; X) = {n\choose x}p^x(1-p)^{n-x}$.
+- After reparametrization: $L(d; X) = (\frac{1}{4}p_1)^x (\frac{1}{4}p_0)^{n-x}$. (I think $\frac{1}{4}$ can be further dropped.)
+- Two approaches to estimate confidence intervals:
+  - Normal approximation: $\hat{d} \pm 1.96 \sqrt{var({d})}$.
+  - Likelihood interval, based on likelihood ratio test: $\frac{1}{2}\chi^2_{1, 5\%} = 3.841/2 = 1.921$.
+
+### The K80 model
+
+- $L(d, \kappa; n_S, n_V) = \left( \frac{p_0}{4} \right)^{(n - n_S - n_V)} \times \left( \frac{p_1}{4} \right)^{n_S}  \times \left( \frac{p_2}{4} \right)^{n_V}.$
+- $\frac{1}{2}\chi^2_{2, 5\%} = 5.991/2 = 2.995$.
+
+### Likelihood ratio test of substitution models
+
+- For model comparison, if two models are **nested**, then the likelihood ratio test can be used.
+
+### Profile and integrated likelihood
+
+- The above approaches, estimating one parameter while ignoring the other, are called *relative likelihood*, *pseudo likelihood* or *estimated likelihood*.
+- A more respective approach is *profile likelihood*.
+  - $\ell(d) = \ell(d, \hat{\kappa}_d)$, where $\hat{\kappa}_d$ is the MLE of $\kappa$ for the given $d$.
+  - This is a pragmatic approach that most often leads to reasonable answers.
+- *Integrated likelihood* or *marginal likelihood* is the likelihood of the data given the model, averaged over the parameter space.
+  - It is possible to use a improper prior, such as a uniform distribution, to calculate the marginal likelihood.
+  - Integrated likelihood is always smaller than the profile likelihood.
+
+## Markov chains and distance estimation under general models
+
+### Distance under the unrestricted (UNREST) model
+
+- Unlike the **GTR model**, UNREST does not assume time-reversibility.
+- Here we consider a strand-symmetry model, where $q_{TC} = q_{AG}$.
+- Equilibrium nucleotide frequencies $\{\pi_T, \pi_C, \pi_A, \pi_G\}$ perhaps by coincidence, can be estimated analytically.
+
+1. **Identifiability Issues and Distance Calculation**
+   - The **model can, in theory, identify the root** of a two-sequence tree.
+   - However, **estimating both $t_1$ and $t_2$ separately** leads to **high correlation** between estimates.
+   - The model has **13 parameters**:  
+     - **11 rate parameters** in $Q$.
+     - **2 branch lengths** $t_1, t_2$.
+   - **Challenges:**
+     - No analytical solution for MLEs.
+     - Complex eigenvalues make numerical estimation difficult.
+     - Many datasets do not provide enough information to estimate so many parameters.
+   - **Conclusion:**  
+     - Although $t_1$ and $t_2$ are **identifiable**, their estimates are **highly correlated**.
+     - The UNREST model **is not recommended for distance calculations**.
+
+### Distance under the general time-reversible model
+1. **Time-Reversibility in Markov Chains**
+   - A Markov chain is **time-reversible** if:
+     $$
+     \pi_i q_{ij} = \pi_j q_{ji}, \quad \text{for all } i \neq j.
+     $$
+     This condition is known as **detailed balance**.
+   - **Reversibility is a mathematical convenience**, not necessarily a biological property.
+   - Models such as **JC69, K80, F84, HKY85, and TN93** are all **time-reversible**.
+
+2. **Rate Matrix for GTR Model**
+   - The **GTR (General Time-Reversible) model** is defined using the rate matrix:
+     $$
+     Q = 
+     \begin{bmatrix}
+     \cdot & a\pi_C & b\pi_A & c\pi_G \\
+     a\pi_T & \cdot & d\pi_A & e\pi_G \\
+     b\pi_T & d\pi_C & \cdot & f\pi_G \\
+     c\pi_T & e\pi_C & f\pi_A & \cdot
+     \end{bmatrix}
+     $$
+     - It has **nine free parameters** (six substitution rates + three equilibrium frequencies).
+
+3. **Simplification of Likelihood Computation**
+   - Reversibility simplifies likelihood computation:
+     $$
+     f_{ij}(t_1, t_2) = \sum_k \pi_k p_{ki}(t_1) p_{kj}(t_2) = \pi_i p_{ij}(t_1 + t_2).
+     $$
+     - The second equality follows from **reversibility**.
+     - The third equality follows from the **Chapman-Kolmogorov theorem**.
+     - This allows estimation of **total branch length** instead of individual times.
+
+4. **Log-Likelihood Formulation**
+   - The log-likelihood function is:
+     $$
+     \ell(t, a, b, c, d, e, f, \pi_T, \pi_C, \pi_A) = \sum_i \sum_j n_{ij} \log(\pi_i p_{ij}(t)).
+     $$
+   - After scaling, the **distance** is defined as:
+     $$
+     d = -t \sum_i \pi_i q_{ii} = t.
+     $$
+
+- Note that distance formulae are not MLEs.
+  - Observed base frequencies are not MLEs of the base frequency parameters.
+  - All 16 site patterns have distinct probabilities in the likelihood function but are collapsed in distance formulae (e.g., TT, CC, AA, GG).
+  - Despite this simplification, distance formulae still approximate MLEs well.
+- Pairwise comparisons **sum up branch lengths** but may **overestimate distances**.
+- Likelihood-based methods (**ML, Bayesian**) provide **better phylogenetic estimates**.
