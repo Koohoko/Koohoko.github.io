@@ -111,7 +111,7 @@ We decide to read the book [*Molecular Evolution: A Statistical Approach*](http:
 
 ## Maximum likelihood estimation of distance
 
-- The likelihood function is $L(\theta; X) = f(X|\theta)$.
+- The likelihood function is $L(\theta; X) = f(X\vert\theta)$.
 - MLE is the value of $\theta$ that maximizes the likelihood function.
 - Probability vs. Likelihood:
   - Likelihood $\ne$ Probability: Likelihood does not sum to 1, unlike probability.
