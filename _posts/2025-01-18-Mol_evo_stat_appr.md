@@ -33,7 +33,7 @@ We decide to read the book [*Molecular Evolution: A Statistical Approach*](http:
   \lambda & \lambda & \lambda & -3\lambda
   \end{pmatrix}
   $$
-- The matrix of transition probability: $P(t) = e^{Qt}$. This is using Kolmogorov forward equation, where $\frac{dP(t)}{dt} = QP(t)$.
+- The matrix of transition probability: $P(t) = e^{Qt}$. This is using Kolmogorov forward/backward? equation, where $\frac{dP(t)}{dt} = QP(t)$.
 - We then use Taylor expansion to get $P(t) = I + Qt + \frac{Q^2t^2}{2!} + \cdots$.
   - [Essense of calculus](https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr) by 3Blue1Brown.
     - [Taylor polynomial](https://www.youtube.com/watch?v=3d6DsjIBzJ4)
@@ -212,9 +212,92 @@ We decide to read the book [*Molecular Evolution: A Statistical Approach*](http:
      d = -t \sum_i \pi_i q_{ii} = t.
      $$
 
-- Note that distance formulae are not MLEs.
+- Note that **distance formulae are not MLEs**.
   - Observed base frequencies are not MLEs of the base frequency parameters.
   - All 16 site patterns have distinct probabilities in the likelihood function but are collapsed in distance formulae (e.g., TT, CC, AA, GG).
   - Despite this simplification, distance formulae still approximate MLEs well.
 - Pairwise comparisons **sum up branch lengths** but may **overestimate distances**.
 - Likelihood-based methods (**ML, Bayesian**) provide **better phylogenetic estimates**.
+
+# Models of amino acid substitution and codon substitution
+
+## Models of amino acid replacement
+
+### Empirical models
+
+- Empirical models: 
+  - The rates of substitution are estimated directly from observed sequence variations, without explicitly considering the biological processes that drive these substitutions.
+  - They are statistical and data-driven, without needing detailed knowledge of the underlying biological mechanisms.
+- Mechanistic models:
+  - They are based on the underlying biological processes that drive sequence evolution.
+  - They offer more interpretative power, helping to understand the biological mechanisms and evolutionary forces that shape protein sequences.
+- Empirical models of amino acid substitution are all constructed by estimating the relative substitution rates between amino acids under the GTR model.
+- Under GTR, $\pi_i q_{ij} = \pi_j q_{ji}$ and $\pi_i p_{ij}(t) = \pi_j p_{ji}(t)$, with $i,j \in \{1,2,\ldots,20\}$.
+- $q_{ij}$ or $s_{ij}$ are the amino acid *exchangeabilities*.
+- Dayhoff (1978) and JTT (1992): fixed estimates.
+- Dayhoff+F, JTT+F, add 19 free parameters by replacing the $\pi_i$
+in the empirical matrices by the frequencies estimated from the data.
+- WAG (2001), LG (2008) etc. use maximum likelihood to estimate the exchangeabilities.
+- BLOSUM (1992) focus on more conserved regions in protein families.
+- BLOSUM62 is often considered roughly equivalent to PAM250.
+- Some features in the estimated exchangeabilities are in fact as expected from the physico-chemical properties of amino acids. Also the larger number of substitution events needed to change between two amino acids, the lower the exchangeability. Evidence by comparing the exchangeabilities in normal proteins and mitochondrial proteins (codon table is different).
+
+### Mechanistic models
+
+- Yang et al. (1998) implemented a few mechanistic models, taking account of e.g. different mutation rates between nucleotides, translation of the codon triplet into amino acid, and acceptance or rejection of the amino acid due to selective pressure on the protein.
+- The improvement was not extraordinary, perhaps reflecting our poor understanding of which of the many chemical properties are most important and how they affect amino acid substitution rates
+
+### Among-site heterogeneity
+
+- Dayhoff+$\Gamma$, JTT+$\Gamma$, etc. are similar to the nucleotide models with among-site rate variation. $rQ$ is the rate matrix for a site.
+- Recall that in the Gamma model, we delibrately set $\alpha = \beta$ so that the mean is 1. The higher the $\alpha$, the more concentrated the distribution is around the mean.
+- Site-specific amino acid frequency parameters is also possible. For each (group of) site, this reflects how likely different amino acids are to appear (different patterns). However, this approach adds many parameters, making it challenging for maximum likelihood (ML) analysis.
+
+## Estimation of distance between two protein sequences
+
+### The Poisson model
+
+- The number of substitutions over time $t$ can be a Poisson-disributed random variable under rate $\lambda$.
+- Similar to JC69 model, the expected number of substitutions is $d = 19\lambda t$.
+- Similarly, the expected distance is $\hat{d} = -\frac{19}{20}\log(1-\frac{20}{19}\hat{p})$. If $p > \frac{19}{20}$, then $\hat{d} = \infty$.
+
+### Empirical models
+
+- We deliberately set $-\sum_i \pi_i q_{ii} = 1$ so that $d = 1 \times t$, the mean distance is 1.
+- Under GTR, the log-likelihood function is $\ell(t) = \sum_i \sum_j n_{ij} \log(\pi_i p_{ij}(t))$.
+- We can also use $p$ distance, $p = 1 - \sum_i \pi_i p_{ii}(t)$, but this will lose information, nevertheless, should approximate the MLE well.
+
+### Gamma distance
+
+- Under something similar to JC69, adding a gamma distribution to the rate of substitution, we have $\hat{d} = \frac{19}{20} \alpha [(1 - \frac{20}{19}\hat{p})^{-\frac{1}{\alpha}} - 1]$. This is obtained by integration of the gamma distribution over the formula for $p$ distance (see formula 1.35).
+- For empirical models, use ML to estimate the distance.
+
+## Models of codon substitution
+
+### The basic model
+
+- The instantaneous rate matrix $Q$ is a $61 \times 61$ matrix.
+- 
+  $$
+  q_{IJ} = \begin{cases}
+  0, & \text{if I and J differ at two or three codon positions,} \\
+  \pi_J, & \text{if I and J differ by a synonymous transversion,} \\
+  \kappa\pi_J, & \text{if I and J differ by a synonymous transition,} \\
+  \omega\pi_J, & \text{if I and J differ by a nonsynonymous transversion,} \\
+  \omega\kappa\pi_J, & \text{if I and J differ by a nonsynonymous transition.}
+  \end{cases}
+  $$
+- $\omega$ is the nonsynonymous/synonymous rate ratio. If $\omega > 1$, it indicates positive selection, if $\omega < 1$, it indicates purifying selection.
+- Fequal model: $\pi_i = 1/61$.
+- F1x4 model, F3x4 model, and F61 model: $\pi_i$ are estimated from the data.
+- The rate matrix $Q$ time-reversible as it meets the detailed balance condition.
+
+### Variations and extensions
+
+- The Muse-Gaut model (1994) is a generalization of the basic model.
+  - Simialr to F3x4 with omega?
+- The mutation-selection (FMutSel) model.
+  - mutation bias: $\mu_{ij} = a_{ij} \pi^*_j$.
+  - selection: $S_{IJ} = f_J - f_I$.
+
+TODO
