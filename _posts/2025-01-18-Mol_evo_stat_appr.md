@@ -8,7 +8,7 @@ tags:
   - Molecular evolution
   - Statistical methods
 toc: true
-last_modified_at: 2025-01-19
+last_modified_at: 2025-02-19
 ---
 
 We decide to read the book [*Molecular Evolution: A Statistical Approach*](http://abacus.gene.ucl.ac.uk/MESA/) by Ziheng Yang, to gether on a weekly basis. 
@@ -299,5 +299,37 @@ in the empirical matrices by the frequencies estimated from the data.
 - The mutation-selection (FMutSel) model.
   - mutation bias: $\mu_{ij} = a_{ij} \pi^*_j$.
   - selection: $S_{IJ} = f_J - f_I$.
+  - The probability of fixation of the mutation is $P_{IJ} = \frac{2S_{IJ}}{1 - e^{-2NS_{IJ}}}$.
+- The $\omega$ ratio does not have to be a single parameter, it can be modelled by physico-chemical properties, e.g. $\omega_{IJ} = ae^{-bd_{IJ}}$, where $d_{IJ}$ is the chemical distance between amino acids.
+- Or you can model $\omega$ by a few pre-specified categories of nonsynonymous substitutions.
+- Allowing double or triple mutations should be more realistic. It is common to observe ‘synonymous’ differences between the two sets of serine codons (TCN and AGY) which cannot exchange by a single nucleotide mutation. Some people argue this is because separate lines of descent rather than multiple mutations.
 
-TODO
+## Estimation of $d_S$ and $d_N$
+
+- Definitions: The number of synonymous/nonsynonymous substitutions per synonymous/nonsynonymous site.
+- Methods: Counting and ML.
+
+### Counting methods
+
+- Three steps:
+  1. Count the number of synonymous and nonsynonymous sites.
+  2. Count the number of synonymous and nonsynonymous differences.
+  3. Calculate the proportions of differences and correct for multiple hits.
+- A basic model is Nei and Gojobori (1986) (NG86), which used equal weights for all codon positions.
+
+#### Counting sites ($S$ and $N$)
+
+- There are three sites in a codon, and nine immediate neighbors.
+- To calculate the synonymous and nonsynonymous sites, we need to multiply the synonymous/nonsynonymous probabilities (from the nine neighbors) by 3 sites.
+
+#### Counting differences ($S_d$ and $N_d$)
+
+- If two codons only differ by one nucleotide, then it is trivial to count the synonymous and nonsynonymous differences.
+- If two codons differ by two or three nucleotides, there exist two or six possible paths to reach the codon, respectively.
+- Weighting the paths needs knowledge.
+
+### Correcting for multiple hits
+
+- We now have the p distance, $p_S = S_d/S$ and $p_N = N_d/N$.
+- The Jukes-Cantor correction is $d_S = -\frac{3}{4}\log(1 - \frac{4}{3}p_S)$ and $d_N = -\frac{3}{4}\log(1 - \frac{4}{3}p_N)$.
+- This is logically flawed (Lewontin 1989), as JC69 assumes equal rates of substitution for all three other nucleotides, but when focusing on synonymous/nonsynonymous sites only, each nucleotide does not have *three* other nucleotides to change into.
