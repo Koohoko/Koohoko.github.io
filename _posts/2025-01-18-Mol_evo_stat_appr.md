@@ -328,8 +328,53 @@ in the empirical matrices by the frequencies estimated from the data.
 - If two codons differ by two or three nucleotides, there exist two or six possible paths to reach the codon, respectively.
 - Weighting the paths needs knowledge.
 
-### Correcting for multiple hits
+#### Correcting for multiple hits
 
 - We now have the p distance, $p_S = S_d/S$ and $p_N = N_d/N$.
 - The Jukes-Cantor correction is $d_S = -\frac{3}{4}\log(1 - \frac{4}{3}p_S)$ and $d_N = -\frac{3}{4}\log(1 - \frac{4}{3}p_N)$.
 - This is logically flawed (Lewontin 1989), as JC69 assumes equal rates of substitution for all three other nucleotides, but when focusing on synonymous/nonsynonymous sites only, each nucleotide does not have *three* other nucleotides to change into.
+
+# phylogenetic reconstruction: overview
+
+# Maximum likelihood methods
+
+# Comparison of phylogenetic methods and tests on trees
+
+# Bayesian theory
+
+# Bayesian computation (MCMC)
+
+# Bayesian phylogenetics
+
+# Coalescent theory and species trees
+
+- Statistical analysis of sequence data from a few closely related species (statistical phylogeography, Knowles 2009) lies at the interface between population genetics and phylogenetics. 
+- Trends in theoretical population genetics:
+  - In the time of R.A. Fisher, J.B.S. Haldane, and S. Wright (1920–1930s), or of G. Malecot and M. Kimura (1950–1970s), there was much theory but little data, and the work was mostly concerned with probabilistic predictions of the model behaviour, i.e. how allele frequencies change over generations when the parameters in the model take certain values.
+  - Nowadays there is more data than we can analyse, and the focus of the field has shifted to statistical inference, i.e. parameter estimation and hypothesis testing using genomic sequence data. 
+  - Coalescent approach became central.
+  - More computation for modern inference methods.
+
+## The coalescent model for a single species
+
+### The backward time machine
+
+- The coalescent theory, also known as Kingman’s coalescent, was developed in the early 1980s.
+- Classical population genetics models are forward in time, making predictions about allele frequencies changes over generations under the influence of mutation, genetic drift, population sub-division, and selection.
+- Coalescent approaches are backward, tracing the genealogical relationships of the samples until MRCA is reached.
+- Advantages:
+  - Usually easier to model the genealogy, as we can ignore the rest of the population and simply focus on the lineages that are ancestral to the sample.
+  - Separating genealogy from neutral mutations allows us to derive the tree likelihood under many population genetic models. We can 'drop' the mutations onto the tree afterwards.
+- Molecular phylogenetics focuses on reconstructing the species tree, showing how species or genes diverged.
+- Coalescent theory uses genetic variation data, reconstructing the unobserved genealogies backward in time to infer population dynamics and evolutionary forces.
+
+### Fisher–Wright model and the neutral coalescent
+
+- Idealized population: constant population size ($N$), non-overlapping generations, random mating (panmixia), and neutral evolution.
+- Number of genes $2N$ in diploid, no recombination.
+- The coalescent waiting time is shorter when the population size is smaller.
+- If the population size is changing over generations, $N_e$ is given by the harmonic mean, which is dominated by small values (population bottlenecks) and is much smaller than the arithmetic mean.
+- The probability that two genes coalesce in the $i$ generation is $(1 - \frac{1}{2N})^i \times \frac{1}{2N} \approx \frac{1}{2N}e^{-\frac{i}{2N}}$. 
+  - If viewing under that time unit of $2N$ generations ($T = \frac{i}{2N}$), with mean and variance 1 (in $2N$ generations), the probability density is $e^{-T}$.
+  - If using a time scale with mean and variance $2N\mu$, the probability density is $\frac{1}{2N\mu}e^{-\frac{1}{2N\mu}T}$.
+- Population size parameter $\theta = 4N\mu$. It is the expected number of mutations per site between two genes.
