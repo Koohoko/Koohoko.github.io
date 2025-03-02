@@ -319,20 +319,28 @@ in the empirical matrices by the frequencies estimated from the data.
 
 #### Counting sites ($S$ and $N$)
 
+- Introducing NG86 model, then relax the model with unequal transition and transversion rates and
+unequal codon usage. Different methods often produce very different estimates.
 - There are three sites in a codon, and nine immediate neighbors.
-- To calculate the synonymous and nonsynonymous sites, we need to multiply the synonymous/nonsynonymous probabilities (from the nine neighbors) by 3 sites.
+- To calculate the synonymous and nonsynonymous sites, we need to multiply the synonymous/nonsynonymous probabilities (from the nine neighbors) by 3 sites. (Check Table 2.5)
 
 #### Counting differences ($S_d$ and $N_d$)
 
-- If two codons only differ by one nucleotide, then it is trivial to count the synonymous and nonsynonymous differences.
+- If two codons only differ by one nucleotide, then it is trivial to count the synonymous and nonsynonymous differences. (Check Table 2.6)
 - If two codons differ by two or three nucleotides, there exist two or six possible paths to reach the codon, respectively.
 - Weighting the paths needs knowledge.
 
 #### Correcting for multiple hits
 
-- We now have the p distance, $p_S = S_d/S$ and $p_N = N_d/N$.
+- We now have the $p$ distance, $p_S = S_d/S$ and $p_N = N_d/N$.
 - The Jukes-Cantor correction is $d_S = -\frac{3}{4}\log(1 - \frac{4}{3}p_S)$ and $d_N = -\frac{3}{4}\log(1 - \frac{4}{3}p_N)$.
 - This is logically flawed (Lewontin 1989), as JC69 assumes equal rates of substitution for all three other nucleotides, but when focusing on synonymous/nonsynonymous sites only, each nucleotide does not have *three* other nucleotides to change into.
+
+#### Transition–transversion rate difference and codon usage
+
+- From codon table, we see transitions at the third codon positions are more likely to be synonymous than transversions are. Therefore, a higher transition/transversion rate can lead to more synonymous substitutions, not necessarily due to selection. Ignoring this can lead to underestimation of $d_N$ and overestimation of $d_S$.
+- 
+
 
 # phylogenetic reconstruction: overview
 
@@ -378,3 +386,6 @@ in the empirical matrices by the frequencies estimated from the data.
   - If viewing under that time unit of $2N$ generations ($T = \frac{i}{2N}$), with mean and variance 1 (in $2N$ generations), the probability density is $e^{-T}$.
   - If using a time scale with mean and variance $2N\mu$, the probability density is $\frac{1}{2N\mu}e^{-\frac{1}{2N\mu}T}$.
 - Population size parameter $\theta = 4N\mu$. It is the expected number of mutations per site between two genes.
+
+### A sample of $n$ genes
+
