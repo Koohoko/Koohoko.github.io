@@ -231,7 +231,7 @@ We decide to read the book [*Molecular Evolution: A Statistical Approach*](http:
 - Mechanistic models:
   - They are based on the underlying biological processes that drive sequence evolution.
   - They offer more interpretative power, helping to understand the biological mechanisms and evolutionary forces that shape protein sequences.
-- Empirical models of amino acid substitution are all constructed by estimating the relative substitution rates between amino acids under the GTR model.
+- Empirical models of amino acid substitution are ***all*** constructed by estimating the relative substitution rates between amino acids under the GTR model.
 - Under GTR, $\pi_i q_{ij} = \pi_j q_{ji}$ and $\pi_i p_{ij}(t) = \pi_j p_{ji}(t)$, with $i,j \in \{1,2,\ldots,20\}$.
 - $q_{ij}$ or $s_{ij}$ are the amino acid *exchangeabilities*.
 - Dayhoff (1978) and JTT (1992): fixed estimates.
@@ -306,6 +306,7 @@ in the empirical matrices by the frequencies estimated from the data.
 
 ## Estimation of $d_S$ and $d_N$
 
+- Recall that the evolutionary distance $d$ focuses on the entire sequence, now we want to separate the distance by synonymous and nonsynonymous mutations, then we get $d_S$ and $d_N$.
 - Definitions: The number of synonymous/nonsynonymous substitutions per synonymous/nonsynonymous site.
 - Methods: Counting and ML.
 
@@ -338,9 +339,83 @@ unequal codon usage. Different methods often produce very different estimates.
 
 #### Transition–transversion rate difference and codon usage
 
-- From codon table, we see transitions at the third codon positions are more likely to be synonymous than transversions are. Therefore, a higher transition/transversion rate can lead to more synonymous substitutions, not necessarily due to selection. Ignoring this can lead to underestimation of $d_N$ and overestimation of $d_S$.
-- 
+- From codon table, we see transitions at the third codon positions are more likely to be synonymous than transversions are. Therefore, a higher transition/transversion rate can lead to more synonymous substitutions, not necessarily due to selection. Ignoring this can lead to underestimation of $S$ (not $S_d$) and overestimation of $N$, and overestimation of $d_S$ and underestimation of $d_N$.
+- The below methods classified codon positions into *nondegenerate, two-fold degenerate, and four-fold degenerate sites*, based on the number of synonymous substitutions possible. Note that some of the codons in fact do not fall into these categories, different methods may have different ways to deal with them.
+- LWL85 Method (Li, Wu, and Luo, 1985):
+  - Counts two-fold degenerate sites as 1/3 synonymous and 2/3 nonsynonymous under the assumption of equal mutation rates.
+  - The distances are calculated using the total numbers of sites in different degeneracy classes and the estimated transition and transversion counts.
+- LPB93 Method (Li, Pamilo, and Bianchi, 1993):
+  - Adjusts for transition–transversion rate bias (which was ignored by 1/3 and 2/3 approximation in LWL85). 
+  - Uses the transition distance at four-fold sites to estimate $d_S$​ and an averaged transversion distance at nondegenerate sites for $d_N$.
+  - Assuming that the transition rate is the same at the two-fold and four-fold sites; the transversion rate is the same at the nondegenerate and two-fold sites.
+- LWL85m Method:
+  - A refinement of LWL85 that replaces the 1/3 assumption with an estimated proportion ($\rho$) of two-fold degenerate sites that are synonymous.
+  - Uses the ratio of transition and transversion distances at four-fold sites to estimate $\kappa$ (transition/transversion rate ratio).
+- Alternative Approaches:
+  - Ina (1995) proposed not partitioning sites by codon degeneracy but instead weighting transitions and transversions based on neighboring codons (See Table 2.5).
+  - Consideration of *unequal codon frequencies* was introduced by Yang and Nielsen (2000), as previous models assumed equal codon frequencies, which is unrealistic.
+- Example 2.2 is useful for understanding the above calculations.
+- In Table 2.8, we see S are larger in LWL85m and Ina95, as they accounted for underestimation of S by considering ts/tv ratio, but **ironically**, they led to even more biased results, because they did not consider codon usage bias at the same time.
 
+### Maximum likelihood methods
+
+- Under the [basic model for codon substitution](#the-basic-model), which is a GTR again.
+- Parameters estimated:
+  - $t$ (sequence divergence time or distance),
+  - $\kappa$ (transition/transversion rate ratio),
+  - $\omega$ (nonsynonymous/synonymous rate ratio),
+  - Codon frequencies (either fixed or estimated from the data), can be Fequal, F1x4, F3x4, or F61.
+- $d_S$ and $d_N$ are then computed based on these ML estimates.
+- Refer to Table 2.8, the Fequal with $\kappa=1$ is similar to NG86, and Fequal with $\kappa$ estimated is similar to LWL85, LPB93 and Ina95.
+- Note that incorporating the transition–transversion rate difference has had much greater effect on the numbers of sites ($S$ and $N$) than on the numbers of substitutions ($S_d$ and $N_d$).
+
+### Comparing methods
+
+- Estimation Bias and Model Effects:
+  1. Ignoring Transition–Transversion Rate Differences: 
+     - Leads to underestimation of synonymous sites ($S$) and overestimation of nonsynonymous sites ($N$).
+     - Results in overestimation of $d_S$ and underestimation of $\omega = d_N/d_S$.
+  2. Ignoring Unequal Codon Usage:
+     - Has the opposite effect compared to ignoring transition–transversion rates.
+     - Leads to overestimation of $S$ and underestimation of $d_S$, which in turn overestimates $ω$.
+     - Codon frequency biases can sometimes override the effects of transition–transversion biases.
+     - The NG86 method, which ignores both transition–transversion differences and codon usage, sometimes produces more reliable estimates than models that only accommodate transition–transversion biases but ignore codon usage.
+  3. Effect of Model Assumptions on Similar Sequences:
+     - When sequences are highly similar, different methods can produce very different estimates.
+     - Unlike nucleotide models, where distance estimates converge at low sequence divergences, codon-based models remain highly sensitive to assumptions.
+  4. Importance of Model Assumptions:
+     - At low or moderate sequence divergences, different (counting or ML) methods produce similar results if they share the same assumptions.
+     - However, different counting/likelihood methods produce highly variable results because of differnt assumptions (e.g., $\kappa = 1?$ and codon bias).
+- Advantages of the Likelihood Method Over Counting Methods:
+  1. Conceptual simplicity
+     - Counting methods struggle with different transition/transversion rates and **unequal codon frequencies**.
+     - Some counting methods **attempt to estimate $\kappa$**, but this is challenging.
+     - Counting methods rely on **nucleotide-based corrections for multiple hits**, which can be logically flawed (mentioned under formula 2.15).
+     - Likelihood methods **incorporate these complexities naturally** without requiring correction formulas.
+     - No need for **manual classification of synonymous vs. nonsynonymous substitutions**, as these are **inferred probabilistically**.
+  2. Easier to Incorporate Realistic Codon Models
+     - Likelihood methods can **incorporate sophisticated codon substitution models**.
+     - Example: **GTR-style mutation models** or **HKY85-type models** can be used in likelihood calculations.
+
+### More distances and interpretation of the dN/dS ratio
+
+#### More distances based on the codon model
+- Additional Distance Measures in the Codon Model
+  - Since we can get the expected number of substitutions from **codon $i$ to codon $j$** over time $t$ is given by $\pi_i q_{ij} t$.
+  - We can calculate many other distances, not limited to $d_N$ and $d_S$, based on:
+    - Transition vs. transversion substitutions.
+    - Codon position-specific changes (first, second, third codon positions).
+    - Conservative or radical amino acid changes, etc.
+- Distances at Different Codon Positions
+  - Distances at the first, second, and third codon positions can be calculated separately:
+    - $d_{1A}, d_{2A}, d_{3A}$ → **After** selection on the protein.
+    - $d_{1B}, d_{2B}, d_{3B}$ → **Before** selection on the protein (fixing $\omega = 1$).
+- Distance $d_4$ (Four-Fold Degenerate Sites)
+  - **$d_4$** represents substitutions at **four-fold degenerate sites** in the third codon position.
+  - Used as an **approximation of the neutral mutation rate**.
+
+
+### Estimation of dS and dN in comparative genomics
 
 # phylogenetic reconstruction: overview
 
