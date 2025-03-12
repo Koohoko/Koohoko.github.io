@@ -1,14 +1,14 @@
 ---
 title: "Book notes: Molecular Evolution: A Statistical Approach by Ziheng Yang"
 date: 2025-01-18
-permalink: /posts/2024-01-18/mol_evo_stat_appr # this was a typo, should be 2025, but I will keep it for consistency as I already shared it.
+permalink: /posts/2025-01-18/mol_evo_stat_appr 
 categories:
   - Book notes
 tags:
   - Molecular evolution
   - Statistical methods
 toc: true
-last_modified_at: 2025-02-19
+last_modified_at: 2025-03-12
 ---
 
 We decide to read the book [*Molecular Evolution: A Statistical Approach*](http://abacus.gene.ucl.ac.uk/MESA/) by Ziheng Yang, to gether on a weekly basis. 
@@ -397,7 +397,7 @@ unequal codon usage. Different methods often produce very different estimates.
      - Likelihood methods can **incorporate sophisticated codon substitution models**.
      - Example: **GTR-style mutation models** or **HKY85-type models** can be used in likelihood calculations.
 
-### More distances and interpretation of the dN/dS ratio
+### More distances and interpretation of the $d_N/d_S$ ratio
 
 #### More distances based on the codon model
 - Additional Distance Measures in the Codon Model
@@ -414,10 +414,60 @@ unequal codon usage. Different methods often produce very different estimates.
   - **$d_4$** represents substitutions at **four-fold degenerate sites** in the third codon position.
   - Used as an **approximation of the neutral mutation rate**.
 
+### Estimation of $d_S$ and $d_N$ in comparative genomics
 
-### Estimation of dS and dN in comparative genomics
+- Time Scale Matters
+  - Estimating $d_S$ and $d_N$ requires a balance—sequences should be **neither too similar nor too divergent**.
+  - If species are **too distantly related**, **synonymous substitutions may reach saturation**, making $d_S$ unreliable.
+  - Estimates of $d_S > 3$ should be treated with caution, as high divergence leads to indistinguishable evolutionary distances.
+
+- Solutions for High Divergence
+  - A **phylogenetic approach** can break long evolutionary distances into **shorter branches** by including multiple species.
+
+- Issues with Low Divergence
+  - When sequences are **too similar** (e.g., within the same species or bacterial strains), **$d_N/d_S$ estimates become unreliable**.
+  - **Observed bias:** $d_N/d_S$ tends to **decrease with increasing divergence**, possibly due to **MLE biases** and **correlations between parameter estimates**.
+  - In **within-population comparisons**, **deleterious nonsynonymous mutations** may persist longer before being removed by selection, inflating $d_N/d_S$ at short timescales.
 
 # phylogenetic reconstruction: overview
+
+## Tree concepts
+
+### Terminology
+
+- Nodes (vertices) and branches (edges).
+- Molecular clock: the rate of evolution is constant over time; Midpoint rooting: the root is placed at the midpoint of the longest path between two tips.
+- Newick format: (A:0.1,B:0.2,(C:0.3,D:0.4):0.5); Nexus format: #NEXUS; BEGIN TREES; TREE tree1 = (A:0.1,B:0.2,(C:0.3,D:0.4):0.5); END;
+- Bifurcating and multifurcating trees; fully resolved and polytomous trees.
+- The total number of possible topologies of a n-tip rooted tree: $\frac{(2n-3)!}{2^{n-2}(n-2)!}$ (this is not hard to derive).
+- *Labelled histories* (ranked trees): also considering the order of parallel internal nodes. We use coalescent process to calculate the total number of possible labelled histories for a n-tip tree: $\frac{n!(n-1)!}{2^{n-1}}$.
+- *Partition distance*, also called *Robinson-Foulds distance*, is the number of bipartitions that are present in one tree but not in the other. It is a measure of the **topological difference** between two trees.
+- The *Kuhner-Felsenstein distance* (1994) is a generalization of the Robinson-Foulds distance that considers branch lengths, by summing the absolute differences in branch lengths for each bipartition.
+- Strict-consensus tree and majority-rule consensus tree.
+- Monophyly and two types of non-monophyly: paraphyly (contains an ancestor but only some of its descendants) and polyphyly (contains various organisms with no recent common ancestor).
+- Gene tree and species tree can mismatch under a **relaxed** molecular clock, if the evolutionary rate varies among lineages. As the distance does not reflect the **relatedness** of the species.
+- The mismatch can also happen even under a **fixed** molecular clock, if the ancestral polymorphism is high and cause incomplete lineage sorting; and if with gene duplication and loss, or lateral (horizontal) gene transfer (LGT).
+
+### Classification of tree reconstruction methods
+- *Distance-based* methods (e.g., Neighbor-Joining) convert sequences into a matrix of pairwise distances, then cluster the taxa to form a tree. 
+- *Character-based* methods (e.g., Maximum Parsimony, Maximum Likelihood, Bayesian) work directly with the alignment, examining each nucleotide or amino acid position.
+- **Model-based** methods (like Maximum Likelihood and Bayesian approaches) explicitly use substitution models to account for how sequences evolve. **Parsimony** methods do not specify a detailed evolutionary model but instead look for the tree requiring the fewest changes. **Distance-based** methods often assume simpler models to correct raw pairwise distances.
+
+## Exhaustive and heuristic tree search
+
+- Exhaustive tree search is unfeasible for large datasets (e.g., $n > 10$).
+
+### Heuristic tree search
+
+### Branch swapping
+
+### Stochastic tree search
+
+## Distance matrix methods
+
+
+
+
 
 # Maximum likelihood methods
 
