@@ -555,15 +555,15 @@ Two main applications of ML in phylogenetics:
 *   **Tree:** (e.g., Fig 4.1 for 5 species). Tips are observed sequences. Internal nodes are ancestral. Branch lengths ($t_i$) are expected number of substitutions per site.
 *   **Parameters ($\theta$):** Collectively, all branch lengths and substitution model parameters (e.g., $\kappa$ for K80).
 *   **Likelihood of Alignment:** Due to site independence,
-    $L(\theta) = f(X|\theta) = \prod_{h=1}^{n} f(x_h|\theta)$ (Eq 4.1)
+    $L(\theta) = f(X\vert \theta) = \prod_{h=1}^{n} f(x_h\vert \theta)$ (Eq 4.1)
 *   **Log-Likelihood:**
-    $l(\theta) = \log\{L(\theta)\} = \sum_{h=1}^{n} \log\{f(x_h|\theta)\}$ (Eq 4.2)
-*   **Likelihood for a Single Site ($f(x_h|\theta)$):** Sum over all possible states ($x_0, x_6, x_7, x_8$ for internal nodes 0, 6, 7, 8 in Fig 4.1) of extinct ancestors.
-    $f(x_h|\theta) = \sum_{x_0} \sum_{x_6} \sum_{x_7} \sum_{x_8} \left[ \pi_{x_0} P_{x_0x_6}(t_6) P_{x_6x_7}(t_7) P_{x_7T}(t_1) P_{x_7C}(t_2) P_{x_6A}(t_3) P_{x_0x_8}(t_8) P_{x_8C}(t_4) P_{x_8C}(t_5) \right]$ (Eq 4.3)
+    $l(\theta) = \log\{L(\theta)\} = \sum_{h=1}^{n} \log\{f(x_h\vert \theta)\}$ (Eq 4.2)
+*   **Likelihood for a Single Site ($f(x_h\vert \theta)$):** Sum over all possible states ($x_0, x_6, x_7, x_8$ for internal nodes 0, 6, 7, 8 in Fig 4.1) of extinct ancestors.
+    $f(x_h\vert \theta) = \sum_{x_0} \sum_{x_6} \sum_{x_7} \sum_{x_8} \left[ \pi_{x_0} P_{x_0x_6}(t_6) P_{x_6x_7}(t_7) P_{x_7T}(t_1) P_{x_7C}(t_2) P_{x_6A}(t_3) P_{x_0x_8}(t_8) P_{x_8C}(t_4) P_{x_8C}(t_5) \right]$ (Eq 4.3)
     where $\pi_{x_0}$ is the prior probability of state $x_0$ at the root (e.g., $1/4$), and $P_{uv}(t)$ is the transition probability from state $u$ to $v$ along a branch of length $t$.
 
 ### 4.2.2 The Pruning Algorithm (Felsenstein, 1973b, 1981)
-Efficiently calculates $f(x_h|\theta)$ by avoiding redundant computations (variant of dynamic programming).
+Efficiently calculates $f(x_h\vert \theta)$ by avoiding redundant computations (variant of dynamic programming).
 *   **Horner's Rule Principle:** Factor out common terms to reduce computations (e.g., sum over $x_7$ before $x_6$, and sum over $x_6, x_8$ before $x_0$ in Eq 4.4).
 *   **Conditional Probability $L_i(x_i)$:** Probability of observing data at tips descendant from node $i$, *given* nucleotide $x_i$ at node $i$.
     *   **If node $i$ is a tip:** $L_i(x_i) = 1$ if $x_i$ is the observed nucleotide at that tip, $0$ otherwise.
@@ -572,7 +572,7 @@ Efficiently calculates $f(x_h|\theta)$ by avoiding redundant computations (varia
         This calculates the probability of descendant data given $x_i$ by summing over all possible states at daughters $j$ and $k$.
 *   **Traversal:** Calculation proceeds from tips towards the root (post-order traversal). Each node is visited only after its descendants.
 *   **Final Likelihood at Root (node 0):**
-    $f(x_h|\theta) = \sum_{x_0} \pi_{x_0} L_0(x_0)$ (Eq 4.6)
+    $f(x_h\vert \theta) = \sum_{x_0} \pi_{x_0} L_0(x_0)$ (Eq 4.6)
 *   **Example 4.1 (Fig 4.2):** Numerical illustration using K80, fixed branch lengths, and $\kappa=2$. Shows calculation of $L_i(x_i)$ vectors up the tree.
 *   **Savings on Computation (4.2.2.2):**
     *   Algorithm scales linearly with number of species (nodes).
@@ -589,11 +589,6 @@ Efficiently calculates $f(x_h|\theta)$ by avoiding redundant computations (varia
     *   If assumed (single rate, tips equidistant from root), the root *can* be identified.
     *   Parameters are ages of ancestral nodes (Fig 4.4a).
     *   Pulley principle can still simplify calculations (Fig 4.4b, Eq 4.8).
-### 4.2.4 Numerical Example: Phylogeny of Apes
-*   Analysis of 7 ape mitochondrial protein sequences (3,331 aa) using MTMAM model.
-*   All 945 binary unrooted trees evaluated.
-*   ML, Max Parsimony, and Min Evolution (ML branch lengths) select the same best tree (Fig 4.5).
-*   Shows correlation between log-likelihood, parsimony length, and likelihood tree length (Fig 4.6).
 
 ### 4.2.5 Amino Acid, Codon, and RNA Models
 *   Pruning algorithm applies directly.
@@ -605,18 +600,18 @@ Efficiently calculates $f(x_h|\theta)$ by avoiding redundant computations (varia
 *   **General Theory (4.2.6.1):**
     *   $X$: observed data (with ambiguities, errors).
     *   $Y$: unknown true alignment (fully determined).
-    *   $L(\theta, \gamma) = f(X|\theta, \gamma) = \sum_Y f(Y|\theta) f(X|Y, \gamma)$ (Eq 4.9)
-    *   where $\gamma$ are parameters of the error model $f(X|Y, \gamma)$.
+    *   $L(\theta, \gamma) = f(X\vert\theta, \gamma) = \sum_Y f(Y\vert\theta) f(X\vert Y, \gamma)$ (Eq 4.9)
+    *   where $\gamma$ are parameters of the error model $f(X\vert Y, \gamma)$.
     *   Assuming site independence for errors:
-        $L(\theta, \gamma) = \prod_h \left[ \sum_{y_h} f(y_h|\theta) f(x_h|y_h, \gamma) \right]$ (Eq 4.10)
-    *   Modified Pruning: Set tip vector $L_i(y)$ at tip $i$ with observed state $x_i$ to $f(x_i|y_i, \gamma)$ for each true state $y$. In NC-IUB notation, $L_i(y) = \epsilon^{(i)}_{yx_i}$. (Eq 4.11)
+        $L(\theta, \gamma) = \prod_h \left[ \sum_{y_h} f(y_h\vert\theta) f(x_h\vert y_h, \gamma) \right]$ (Eq 4.10)
+    *   Modified Pruning: Set tip vector $L_i(y)$ at tip $i$ with observed state $x_i$ to $f(x_i\vert y_i, \gamma)$ for each true state $y$. In NC-IUB notation, $L_i(y) = \epsilon^{(i)}_{yx_i}$. (Eq 4.11)
 *   **Ambiguities and Missing Data (4.2.6.2):** Assuming no sequence errors.
     *   If $x_i$ is an ambiguous code (e.g., Y for T or C), set $L_i(y)=1$ if $y$ is compatible with $x_i$, and 0 otherwise. (e.g., for Y, $L_i = (1,1,0,0)$). This is the common practice.
     *   This approach implicitly assumes the probability of observing an ambiguity (e.g., Y) is the same whether the true base was T or C. If not, it's incorrect.
-*   **Sequence Errors (4.2.6.3):** Model error as a $4 \times 4$ transition matrix $E = \{\epsilon_{yx}\}$ where $\epsilon_{yx}$ is $P(\text{observe } x | \text{true } y)$. The tip vector $L_i$ becomes the relevant column of $E$.
+*   **Sequence Errors (4.2.6.3):** Model error as a $4 \times 4$ transition matrix $E = \{\epsilon_{yx}\}$ where $\epsilon_{yx}$ is $P(\text{observe } x \vert \text{true } y)$. The tip vector $L_i$ becomes the relevant column of $E$.
 *   **Alignment Gaps (4.2.6.4):** Most difficult.
     *   Models of indels are complex and computationally intensive.
-    *   **Ad hoc treatments (for $f(Y|\theta)$, ignoring $f(X|Y, \gamma)$):**
+    *   **Ad hoc treatments (for $f(Y\vert\theta)$, ignoring $f(X\vert Y, \gamma)$):**
         1.  Treat gap as 5th state: Problematic (treats multi-site indel as multiple events).
         2.  Delete columns with any gaps: Information loss.
         3.  Treat gaps as missing data (N or ?): Problematic (gap means nucleotide doesn't exist, not that it's unknown).
@@ -631,14 +626,14 @@ Models assuming all sites evolve at the same rate with the same pattern are unre
     *   Sites fall into $K$ classes, class $k$ has rate $r_k$ with probability $p_k$.
     *   Constraints: $\sum p_k = 1$, average rate $\sum p_k r_k = 1$.
     *   $2(K-1)$ free parameters. Substitution matrix at site is $r_k Q$.
-    *   Likelihood at a site: $f(x_h|\theta) = \sum_{k=1}^K p_k \times f(x_h|r=r_k; \theta)$ (Eq 4.15)
+    *   Likelihood at a site: $f(x_h\vert\theta) = \sum_{k=1}^K p_k \times f(x_h\vert r=r_k; \theta)$ (Eq 4.15)
         (Calculate likelihood $K$ times, once for each rate category, then average).
     *   $K$ should not exceed 3 or 4 in practice; parameters hard to interpret.
     *   **Invariant-Site Model (+I):** Special case, $K=2$. Rate $r_0=0$ (invariable) with prob $p_0$, rate $r_1=1/(1-p_0)$ with prob $1-p_0$. One parameter $p_0$. (Eq 4.17)
 *   **4.3.1.2 Gamma-Rate Model (+$\Gamma$):**
     *   Rates drawn from a continuous gamma distribution $g(r; \alpha, \beta)$.
     *   Set mean $\alpha/\beta = 1$ (so $\alpha=\beta$). One shape parameter $\alpha$.
-    *   Likelihood at a site: $f(x_h|\theta) = \int_0^\infty g(r) f(x_h|r; \theta) dr$ (Eq 4.19)
+    *   Likelihood at a site: $f(x_h\vert \theta) = \int_0^\infty g(r) f(x_h\vert r; \theta) dr$ (Eq 4.19)
 *   **4.3.1.3 Discrete Gamma Model:**
     *   Approximates continuous gamma with $K$ discrete categories.
     *   Each category has probability $p_k=1/K$.
@@ -652,7 +647,7 @@ Models assuming all sites evolve at the same rate with the same pattern are unre
 *   **Gamma Mixture Model:** Rates from a mixture of two gamma distributions. More stable than I+$\Gamma$.
 *   **Empirical Bayes (EB) Estimation of Site Rates (4.3.1.5):**
     *   After estimating model parameters $\hat{\theta}$ (including $\alpha$ or $p_k, r_k$), estimate rate for a specific site $h$ using its posterior distribution:
-        $f(r|x_h; \hat{\theta}) = \frac{f(r|\hat{\theta}) f(x_h|r; \hat{\theta})}{f(x_h|\hat{\theta})}$ (Eq 4.21)
+        $f(r\vert x_h; \hat{\theta}) = \frac{f(r\vert \hat{\theta}) f(x_h\vert r; \hat{\theta})}{f(x_h\vert \hat{\theta})}$ (Eq 4.21)
     *   Posterior mean can be used as the rate estimate.
 *   **Correlated Rates at Adjacent Sites (4.3.1.6):** Hidden Markov Models (HMMs) where rate class transition depends on previous site's class. Rates are correlated. More complex.
 *   **Covarion Models (4.3.1.7):**
@@ -668,7 +663,7 @@ Models assuming all sites evolve at the same rate with the same pattern are unre
 *   If *a priori* knowledge exists about site heterogeneity (e.g., codon positions, different genes).
 *   Assign different parameters (rates $r_k$, $\kappa_k$, $\pi_k$, even topology $\tau_k$) to different partitions.
 *   Log-likelihood is sum over sites, using parameters specific to the partition $I(h)$ of site $h$:
-    $l(\theta, r_1, ..., r_K; X) = \sum_h \log\{f(x_h|r_{I(h)}; \theta)\}$ (Eq 4.22)
+    $l(\theta, r_1, ..., r_K; X) = \sum_h \log\{f(x_h\vert r_{I(h)}; \theta)\}$ (Eq 4.22)
 *   Useful for multi-gene datasets, accommodating different evolutionary dynamics per gene/partition.
 *   Distinction from mixture models: in partition models, site assignment to a partition is known.
 *   Debate: Combined analysis (supermatrix, with partitions) vs. separate analysis (then supertree). Partitioned likelihood is a form of combined analysis that accounts for heterogeneity.
@@ -692,12 +687,12 @@ Inferring character states at internal nodes of a tree.
 
 #### 4.4.2 Empirical and Hierarchical Bayesian Reconstruction
 *   **Marginal Reconstruction:** Posterior probability of state $x_a$ at a single ancestral node $a$.
-    *   To find $P(x_a | X, \theta)$: Reroot tree at node $a$. Then $P(x_a | X, \theta) = \frac{\pi_{x_a} L_a(x_a)}{\sum_{x'_a} \pi_{x'_a} L_a(x'_a)}$ (Eq 4.23, where $L_a(x_a)$ is likelihood of data given $x_a$ at new root $a$).
-    *   Example (Fig 4.2): Root at node 0. $P(X_0=C|data) = 0.901$.
+    *   To find $P(x_a \vert  X, \theta)$: Reroot tree at node $a$. Then $P(x_a \vert  X, \theta) = \frac{\pi_{x_a} L_a(x_a)}{\sum_{x'_a} \pi_{x'_a} L_a(x'_a)}$ (Eq 4.23, where $L_a(x_a)$ is likelihood of data given $x_a$ at new root $a$).
+    *   Example (Fig 4.2): Root at node 0. $P(X_0=C\vert data) = 0.901$.
 *   **Joint Reconstruction:** Posterior probability of a *set* of states for *all* ancestral nodes simultaneously.
-    *   $P(y_A | X, \theta) = \frac{P(X, y_A | \theta)}{P(X|\theta)}$, where $y_A=(x_0, x_6, ...)$ is a specific combination of ancestral states.
-    *   Numerator is $\pi_{x_0} \times \prod P(\text{daughter state} | \text{parent state})$ (Eq 4.24).
-    *   Denominator is overall site likelihood $f(X|\theta)$.
+    *   $P(y_A \vert  X, \theta) = \frac{P(X, y_A \vert  \theta)}{P(X\vert \theta)}$, where $y_A=(x_0, x_6, ...)$ is a specific combination of ancestral states.
+    *   Numerator is $\pi_{x_0} \times \prod P(\text{daughter state} \vert  \text{parent state})$ (Eq 4.24).
+    *   Denominator is overall site likelihood $f(X\vert \theta)$.
     *   Finding the best joint reconstruction often uses dynamic programming (similar to Sankoff's).
     *   Marginal probabilities should not be multiplied to get joint probabilities (states at different nodes are not independent).
 *   **Comparison with Parsimony (4.4.2.3):** EB and parsimony similar under JC69 + equal branches. Differ with complex models/unequal branches. EB provides probabilities.
@@ -788,7 +783,7 @@ Finding MLEs $\hat{\theta}$ by maximizing $l(\theta)$ or minimizing $f(\theta) =
 *   **Optimize One Branch Length at a Time:**
     *   Keep other branches and $\psi$ fixed.
     *   For branch $b$ connecting nodes $a$ and $b'$ (with length $t_b$), the likelihood can be written (by temporarily rooting at $a$):
-        $f(x_h|\theta) = \sum_{x_a} \sum_{x_{b'}} \pi_{x_a} P_{x_a x_{b'}}(t_b) L_a(x_a) L_{b'}(x_{b'})$ (Eq 4.35, adapted from notation)
+        $f(x_h\vert \theta) = \sum_{x_a} \sum_{x_{b'}} \pi_{x_a} P_{x_a x_{b'}}(t_b) L_a(x_a) L_{b'}(x_{b'})$ (Eq 4.35, adapted from notation)
     *   First and second derivatives of $l$ w.r.t $t_b$ can be calculated analytically.
     *   $t_b$ can be optimized efficiently using **Newton's method**.
     *   Iterate through all branches.
@@ -816,14 +811,14 @@ Finding MLEs $\hat{\theta}$ by maximizing $l(\theta)$ or minimizing $f(\theta) =
 #### 4.6.3 Search in the Tree Space
 *   If tree topology ($\tau$) is unknown, this is a much harder problem.
 *   **Two Levels of Optimization:**
-    1.  Inner: Optimize parameters (branch lengths, $\psi$) for a *fixed* $\tau$ to get $l(\hat{\theta}_\tau | X)$.
-    2.  Outer: Search tree space for $\tau$ that maximizes $l(\hat{\theta}_\tau | X)$.
+    1.  Inner: Optimize parameters (branch lengths, $\psi$) for a *fixed* $\tau$ to get $l(\hat{\theta}_\tau \vert  X)$.
+    2.  Outer: Search tree space for $\tau$ that maximizes $l(\hat{\theta}_\tau \vert  X)$.
 *   **Example (3 taxa, binary characters, clock - Fig 4.14, 4.15):**
     *   Data: counts $(n_0, n_1, n_2, n_3)$ or frequencies $(f_0, f_1, f_2, f_3)$ of site patterns (xxx, xxy, yxx, xyx).
-    *   Probabilities of site patterns $p_0, p_1, p_2$ (Eq 4.37, note $p_2=p_3$). $P(\text{data}|\tau, t_0, t_1)$ is multinomial (Eq 4.36).
+    *   Probabilities of site patterns $p_0, p_1, p_2$ (Eq 4.37, note $p_2=p_3$). $P(\text{data}\vert \tau, t_0, t_1)$ is multinomial (Eq 4.36).
     *   Parameter space for each tree $\tau_i$ forms a triangle within the sample space (tetrahedron).
     *   MLE for a fixed tree $\tau_i$ corresponds to finding point in its parameter space closest to observed $f_i$ by Kullback-Leibler divergence:
-        $D_{KL}(f || p) = \sum_i f_i \log (f_i/p_i)$ (Eq 4.38)
+        $D_{KL}(f \vert \vert  p) = \sum_i f_i \log (f_i/p_i)$ (Eq 4.38)
         Minimizing $D_{KL}$ is equivalent to maximizing $\sum n_i \log p_i$.
     *   The ML tree is the one whose parameter space is closest to the data.
 *   **Practical Tree Search:**
@@ -922,17 +917,17 @@ When comparing phylogenetic methods, two types of error are distinguished:
 Criteria for judging methods include:
 *   **Computational Speed:** Distance methods are generally fastest, followed by parsimony, then likelihood/Bayesian methods.
 *   **Statistical Properties:**
-    *   **5.1.1.1 Identifiability:** A model is unidentifiable if two different parameter sets ($\theta_1, \theta_2$) produce the exact same probability of the data ($f(X|\theta_1) = f(X|\theta_2)$) for all possible data $X$. In such cases, the parameters cannot be distinguished.
+    *   **5.1.1.1 Identifiability:** A model is unidentifiable if two different parameter sets ($\theta_1, \theta_2$) produce the exact same probability of the data ($f(X\vert \theta_1) = f(X\vert \theta_2)$) for all possible data $X$. In such cases, the parameters cannot be distinguished.
         *   Example: For a pair of sequences under a time-reversible model like JC69, one cannot separately estimate divergence time $t$ and substitution rate $r$; only their product, the distance $d = t \cdot r$, is identifiable.
         *   Unidentifiable models should be avoided as they usually indicate flaws in model formulation.
     *   **5.1.1.2 Consistency:** An estimator $\hat{\theta}$ is consistent if it converges to the true parameter value $\theta$ as the sample size $n \to \infty$.
-        *   Formally: $\lim_{n\to\infty} P(|\hat{\theta} - \theta| < \epsilon) = 1$ for any small $\epsilon > 0$. (Eq 5.1)
+        *   Formally: $\lim_{n\to\infty} P(\vert \hat{\theta} - \theta\vert  < \epsilon) = 1$ for any small $\epsilon > 0$. (Eq 5.1)
         *   **Strong Consistency:** $\lim_{n\to\infty} P(\hat{\theta} = \theta) = 1$. (Eq 5.2)
         *   For phylogenetic trees (not regular parameters), a method is consistent if the probability of estimating the true tree approaches 1 as $n \to \infty$. This assumes the correctness of the model for model-based methods.
         *   Parsimony can be inconsistent (Felsenstein 1978b).
         *   Consistency is considered a fundamental property for any sensible estimator.
     *   **5.1.1.3 Efficiency:** A consistent estimator is efficient if it has the asymptotically smallest variance.
-        *   The variance of a consistent, unbiased estimator $\hat{\theta}$ is bounded by the Cramér-Rao lower bound: $\text{var}(\hat{\theta}) \ge 1/I$, where $I = -E\left[\frac{d^2\log f(X|\theta)}{d\theta^2}\right]$ is the Fisher information. (Eq 5.3)
+        *   The variance of a consistent, unbiased estimator $\hat{\theta}$ is bounded by the Cramér-Rao lower bound: $\text{var}(\hat{\theta}) \ge 1/I$, where $I = -E\left[\frac{d^2\log f(X\vert \theta)}{d\theta^2}\right]$ is the Fisher information. (Eq 5.3)
         *   MLEs are asymptotically consistent, unbiased, normally distributed, and attain this bound.
         *   **Relative Efficiency of Tree Reconstruction Methods:**
             *   $E_{21} = n_1(P)/n_2(P)$: Ratio of sample sizes needed by method 1 ($n_1$) and method 2 ($n_2$) to recover the true tree with the same probability $P$. (Eq 5.4)
@@ -962,7 +957,7 @@ Focuses on statistical properties of the ML method for tree reconstruction.
 
 ### 5.2.1 Contrast with Conventional Parameter Estimation
 *   Tree reconstruction is argued to be a **model selection** problem, not just parameter estimation.
-*   Each tree topology $\tau$ represents a different statistical model $f_k(X|\theta_k)$, where $\theta_k$ are parameters (branch lengths, substitution model parameters) specific to that topology.
+*   Each tree topology $\tau$ represents a different statistical model $f_k(X\vert \theta_k)$, where $\theta_k$ are parameters (branch lengths, substitution model parameters) specific to that topology.
 *   The likelihood function itself changes with the topology.
 
 ### 5.2.2 Consistency
@@ -1052,7 +1047,7 @@ Methods to evaluate the reliability of a reconstructed tree (a point estimate).
         *   Susko (2009) showed $1-P$ is not a correct p-value to first-order.
         *   Issues: defining $H_0$ (e.g., branch length = 0), selection bias (testing splits found *post hoc* from the data).
         *   Generally, bootstrap proportions are conservative as p-values (false positive rate < 5% if $P \ge 95\%$).
-    3.  **Accuracy (Bayesian interpretation):** $P$ is $P(\text{split is true} | \text{data})$. Most common intuitive use by empiricists, but lacks formal frequentist justification.
+    3.  **Accuracy (Bayesian interpretation):** $P$ is $P(\text{split is true} \vert  \text{data})$. Most common intuitive use by empiricists, but lacks formal frequentist justification.
         *   Hillis and Bull (1993) suggested $P \ge 70\%$ often corresponds to $\ge 95\%$ probability of split being true, but this is not universal.
 *   Refinements to bootstrap (complete-and-partial, modified Efron et al.) exist but are not widely used and don't fix first-order error issues.
 
@@ -1069,7 +1064,7 @@ Methods to evaluate the reliability of a reconstructed tree (a point estimate).
 *   Compare two candidate phylogenetic trees.
 *   **Kishino-Hasegawa (K-H) Test (1989):**
     *   Test statistic $\Delta = l_1 - l_2$.
-    *   Standard error of $\Delta$ estimated from variance of per-site log-likelihood differences: $d_h = \log f_1(x_h|\hat{\theta}_1) - \log f_2(x_h|\hat{\theta}_2)$. (Eq 5.13-5.15)
+    *   Standard error of $\Delta$ estimated from variance of per-site log-likelihood differences: $d_h = \log f_1(x_h\vert \hat{\theta}_1) - \log f_2(x_h\vert \hat{\theta}_2)$. (Eq 5.13-5.15)
     *   Assumes $d_h$ are i.i.d. and $\Delta$ is normally distributed.
     *   **Valid only if trees are specified *a priori***.
     *   **Invalid usage:** Testing the ML tree (derived from data) against other trees. Suffers from *selection bias*, tending to falsely reject non-ML trees.
