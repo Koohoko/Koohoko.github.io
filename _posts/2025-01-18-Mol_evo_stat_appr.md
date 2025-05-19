@@ -855,11 +855,10 @@ This section discusses how to choose appropriate evolutionary models for ML anal
 *   **Problem:** Standard $\chi^2$ GoF test (comparing model $l$ to $l_{max}$) usually not applicable because many site patterns have low/zero counts.
 *   **Parametric Bootstrap for GoF (Goldman 1993a):**
     1.  Fit the chosen model (e.g., HKY85+$\Gamma_5$) to real data $\rightarrow \hat{\theta}$. Calculate $l_{model}$ and $l_{max}$. Test statistic $\Delta l_{obs} = l_{max} - l_{model}$.
-    2.  Simulate many (e.g., 1000) replicate datasets from the fitted model (using $\hat{\theta}$).
+    2.  Simulate many (e.g., 1000) replicate datasets from the fitted model (Given the tree topology and using $\hat{\theta}$).
     3.  For each simulated dataset, re-calculate $l_{max,sim}$ and $l_{model,sim}$, get $\Delta l_{sim}$.
     4.  The distribution of $\Delta l_{sim}$ values is the null distribution.
     5.  If $\Delta l_{obs}$ is in the extreme tail of this distribution (e.g., p-value = proportion of $\Delta l_{sim} > \Delta l_{obs}$ is small), the model fits poorly.
-*   **Example (rbcL, Fig 4.17):** HKY85+$\Gamma_5$ shows good fit (p=38.7%), JC69 shows poor fit.
 *   Parametric bootstrap is general but computationally expensive.
 
 ### *4.7.3 Diagnostic Tests to Detect Model Violations
@@ -1089,6 +1088,211 @@ Methods to evaluate the reliability of a reconstructed tree (a point estimate).
     *   **Problem:** For molecular data, CI and RI are poor indicators of phylogenetic information or parsimony's success (Fig. 5.6 shows CI barely changes while $P_c$ (prob. of correct tree) varies greatly).
 
 # 6. Bayesian theory
+
+## 6.1 Overview
+
+This chapter introduces Bayesian statistics, contrasting it with the classical Frequentist approach, and lays the groundwork for its application in molecular evolution.
+
+*   **Two Principal Philosophies:**
+    *   **Frequentist:** Defines probability as the long-run frequency of an event in repeated trials. Performance of inference is judged by properties in repeated sampling (e.g., bias, variance, confidence intervals, p-values). Maximum likelihood (ML) and likelihood ratio tests (LRT) are key tools.
+    *   **Bayesian:** Defines probability as a degree of belief in a hypothesis or parameter value. It uses probability distributions to describe uncertainty in parameters.
+        *   **Prior Distribution $f(\theta)$:** Represents belief about parameter $\theta$ *before* seeing the data.
+        *   **Posterior Distribution $f(\theta|X)$:** Represents updated belief about $\theta$ *after* observing data $X$, combining prior information with information from the data.
+*   **Historical Context:**
+    *   Probability theory developed over centuries (gambling). Statistics is younger.
+    *   Regression/correlation (Galton, Pearson, ~1900).
+    *   Classical statistics blossomed with R.A. Fisher (1920s-30s): likelihood, ANOVA, experimental design.
+    *   Hypothesis testing/confidence intervals (Neyman, Egon Pearson, ~same time).
+    *   Bayesian ideas are older (Thomas Bayes, 1763; Laplace). Initially not popular among 20th-century statisticians due to:
+        1.  **Philosophical objections:** Reliance on subjective priors.
+        2.  **Computational challenges:** Calculating posterior probabilities often involves high-dimensional integrals, historically intractable.
+*   **Modern Resurgence:**
+    *   **Markov Chain Monte Carlo (MCMC) algorithms** (Metropolis et al. 1953; Hastings 1970; Gelfand & Smith 1990) revolutionized Bayesian computation, making complex models feasible.
+    *   Bayesian inference now widely applied. Excitement has tempered as implementation complexities are appreciated.
+*   **Chapter Scope:** Overview of Bayesian theory and computation. Simple examples will be used, with more complex phylogenetic applications in later chapters.
+
+## 6.2 The Bayesian Paradigm
+
+### 6.2.1 The Bayes Theorem
+*   **Law of Total Probability:** For events A and B:
+    $P(B) = P(AB) + P(A\bar{B}) = P(A)P(B|A) + P(\bar{A})P(B|\bar{A})$ (Eq 6.1)
+    where $\bar{A}$ is "non A", $AB$ is "A and B".
+*   **Bayes' Theorem (Inverse Probability):** Gives the conditional probability of A given B:
+    $P(A|B) = \frac{P(AB)}{P(B)} = \frac{P(A)P(B|A)}{P(B)} = \frac{P(A)P(B|A)}{P(A)P(B|A) + P(\bar{A})P(B|\bar{A})}$ (Eq 6.2)
+*   **Example 6.1 (False Positives of a Clinical Test):**
+    *   Let A = person has infection, $\bar{A}$ = no infection. B = test positive.
+    *   Given: $P(A) = 0.001$ (prevalence), $P(\bar{A}) = 0.999$.
+    *   Test accuracy: $P(B|A) = 0.99$ (true positive rate/sensitivity), $P(B|\bar{A}) = 0.02$ (false positive rate, so $1-P(B|\bar{A})=0.98$ is specificity).
+    *   Probability of a random person testing positive:
+        $P(B) = (0.001 \times 0.99) + (0.999 \times 0.02) = 0.00099 + 0.01998 = 0.02097$ (Eq 6.3)
+    *   Probability of having infection given a positive test:
+        $P(A|B) = \frac{P(A)P(B|A)}{P(B)} = \frac{0.001 \times 0.99}{0.02097} \approx 0.0472$ (Eq 6.4)
+    *   Despite high test accuracy, only ~4.72% of those testing positive actually have the infection due to low prevalence. Most positives are false positives.
+
+### 6.2.2 The Bayes Theorem in Bayesian Statistics
+*   Hypotheses $H_1, H_2, ..., H_k$ replace events A, $\bar{A}$. Observed data $X$ replaces event B.
+*   For two hypotheses $H_1, H_2$:
+    $P(H_1|X) = \frac{P(H_1)P(X|H_1)}{P(X)} = \frac{P(H_1)P(X|H_1)}{P(H_1)P(X|H_1) + P(H_2)P(X|H_2)}$ (Eq 6.5)
+    *   $P(H_i)$: **Prior probability** of hypothesis $H_i$.
+    *   $P(X|H_i)$: **Likelihood** of data $X$ under $H_i$.
+    *   $P(H_i|X)$: **Posterior probability** of hypothesis $H_i$ given data $X$.
+    *   $P(X)$: Marginal likelihood of data (normalizing constant).
+*   **Continuous Parameters ($\theta$):** Uses probability densities.
+    $f(\theta|X) = \frac{f(\theta)f(X|\theta)}{f(X)} = \frac{f(\theta)f(X|\theta)}{\int f(\theta')f(X|\theta') d\theta'}$ (Eq 6.6)
+    "Posterior $\propto$ Prior $\times$ Likelihood"
+    *   $f(\theta)$: Prior density.
+    *   $f(X|\theta)$: Likelihood function (probability of data given $\theta$).
+    *   $f(\theta|X)$: Posterior density.
+    *   $f(X) = \int f(\theta)f(X|\theta) d\theta$: Marginal likelihood of data / Normalizing constant / Evidence.
+*   **Inference from Posterior Distribution:**
+    *   **Point Estimate:** Mean, median, or mode of $f(\theta|X)$.
+    *   **Interval Estimation (Credibility Interval):**
+        *   **Equal-Tail Credibility Interval (CI):** Interval $(\theta_L, \theta_U)$ such that $P(\theta < \theta_L|X) = \alpha/2$ and $P(\theta > \theta_U|X) = \alpha/2$. For 95% CI, use 2.5% and 97.5% quantiles. (Fig 6.2a)
+        *   **Highest Posterior Density (HPD) Interval:** Smallest interval containing $(1-\alpha)$ posterior probability. Every point inside has higher density than any point outside. May be disjoint if posterior is multimodal. (Fig 6.2b)
+        *   If posterior is symmetric and unimodal, equal-tail CI and HPD interval are similar.
+*   **Nuisance Parameters:** Bayesian approach naturally handles them through marginalization.
+    *   If $\theta = (\lambda, \eta)$ where $\lambda$ are parameters of interest and $\eta$ are nuisance parameters.
+    *   Joint posterior: $f(\lambda, \eta|X)$ (Eq 6.7)
+    *   Marginal posterior for $\lambda$: $f(\lambda|X) = \int f(\lambda, \eta|X) d\eta$ (Eq 6.8)
+*   **Example 6.2 (Estimation of Binomial Probability $\theta$):**
+    *   Data: $x$ successes in $n$ trials. Likelihood: $f(x|\theta) = \binom{n}{x} \theta^x (1-\theta)^{n-x}$ (Eq 6.9)
+    *   Prior: Beta distribution, $\theta \sim \text{Beta}(a,b)$, $f(\theta) = \frac{1}{B(a,b)} \theta^{a-1}(1-\theta)^{b-1}$ (Eq 6.10)
+        *   $B(a,b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}$ is the Beta function. Mean $a/(a+b)$.
+    *   Posterior: $f(\theta|x) = \frac{f(\theta)f(x|\theta)}{f(x)}$.
+        *   Marginal likelihood: $f(x) = \int_0^1 f(\theta)f(x|\theta)d\theta = \binom{n}{x} \frac{B(x+a, n-x+b)}{B(a,b)}$ (Eq 6.12)
+        *   Posterior distribution: $\theta|x \sim \text{Beta}(x+a, n-x+b)$ (Eq 6.13)
+        *   The Beta distribution is a **conjugate prior** for the binomial likelihood (prior and posterior are in the same family).
+        *   Information in prior $\text{Beta}(a,b)$ is like observing $a$ successes in $a+b$ trials.
+*   **Example 6.3 (Laplace's Rule of Succession):**
+    *   Event occurred $x$ times in $n$ trials. Probability of occurring in next trial?
+    *   Prior: Uniform, $\theta \sim U(0,1)$, which is $\text{Beta}(1,1)$.
+    *   Posterior: $\theta|x \sim \text{Beta}(x+1, n-x+1)$.
+    *   Probability of success in $(n+1)^{th}$ trial = Posterior mean $E(\theta|x) = \frac{x+1}{n+2}$ (Eq 6.14)
+    *   Laplace's sunrise example: if sun rose for $n$ days, $P(\text{sun rises tomorrow}) = (n+1)/(n+2)$.
+    *   Based on "principle of insufficient reason" (uniform prior for $\theta$). Problematic as priors are not invariant to non-linear transformations.
+*   **Example 6.4 (Bayesian Estimation of JC69 Distance $\theta$):**
+    *   Data: $x$ differences in $n$ sites. Likelihood $f(x|\theta)$ (Eq 6.19 from $p = \frac{3}{4}(1-e^{-4\theta/3})$ (Eq 6.18)).
+    *   Prior: Exponential, $f(\theta) = \frac{1}{\mu} e^{-\theta/\mu}$ with mean $\mu=0.2$ (Eq 6.16).
+    *   Posterior: $f(\theta|x) = \frac{f(\theta)f(x|\theta)}{\int_0^\infty f(\theta')f(x|\theta')d\theta'}$ (Eq 6.17)
+    *   For human-orangutan 12S rRNA ($x=90, n=948$), MLE $\hat{\theta}=0.1015$.
+    *   Posterior mean $E(\theta|x) = 0.10213$. Mode $0.10092$.
+    *   95% Equal-tail CI: $(0.08191, 0.12463)$.
+    *   95% HPD Interval: $(0.08116, 0.12377)$.
+    *   Similar to likelihood interval $(0.0817, 0.1245)$. Posterior dominated by likelihood here. (Fig 6.3)
+
+### *6.2.3 Classical versus Bayesian Statistics
+*   **6.2.3.1 Criticisms of Frequentist Statistics (from Bayesian perspective):**
+    *   Frequentist methods make probability statements about data or procedures, not directly about parameters of interest after data is observed.
+    *   **Confidence Intervals:** A 95% CI means that if we repeat the experiment many times, 95% of *such constructed intervals* will contain the true parameter. It does *not* mean there's a 95% probability that the *specific interval we calculated* contains the true parameter. (Fig 6.4)
+    *   **p-values:** The probability of observing data as extreme or more extreme than what was actually observed, *if the null hypothesis ($H_0$) were true*. It is *not* $P(H_0|\text{data})$.
+        *   **Likelihood Principle Violation:** p-values can depend on the stopping rule of an experiment (e.g., fixed $n$ trials vs. fixed number of successes), even if the likelihood function $L(\theta|x)$ is the same. (Fig 6.5 - binomial vs. negative binomial). Bayesian inference respects the likelihood principle.
+*   **6.2.3.2 Criticisms of Bayesian Methods (from Frequentist perspective):**
+    *   Levied on the **prior distribution $f(\theta)$**.
+    *   **Objective Bayes:** Aims to represent "prior ignorance."
+        *   Uniform priors (principle of insufficient reason) seem intuitive for ignorance but lead to contradictions because they are not invariant to parameter transformations (e.g., uniform on side length $a$ vs. uniform on area $A=a^2$).
+        *   No single prior truly represents "total ignorance."
+    *   **Subjective Bayes:** Prior represents researcher's personal belief.
+        *   Classical statisticians reject incorporating personal beliefs into scientific inference.
+        *   Likelihood models also involve subjectivity but can be checked against data; priors often cannot.
+*   **6.2.3.3 Does it Matter?**
+    1.  **Stable Estimation Problems:** Well-formulated model, large dataset. Prior has little effect. Likelihood and Bayesian estimates (and CIs/credibility intervals) are similar. (e.g., Example 6.4, Fig 6.3, Fig 6.6).
+    2.  **Prior and Likelihood Both Influential:** Ill-formulated/barely identifiable models, sparse data. Posterior is sensitive to prior. Classical and Bayesian results may differ.
+    3.  **Hypothesis Testing/Model Selection with Vague Priors:** Bayesian results can be highly sensitive to prior choice.
+        *   **Lindley's Paradox:** For $H_0: \mu=0$ vs. $H_1: \mu \ne 0$ (normal data). Large $n$, small $\bar{x}$ can lead to small p-value (reject $H_0$), but Bayesian analysis with a diffuse prior on $\mu$ under $H_1$ can strongly support $H_0$ ($P_0 \approx 1$). (Eq 6.27-6.33)
+        *   This happens because a diffuse prior spreads probability thinly over a wide range, making the marginal likelihood $M_1 = \int L_1(\mu)f(\mu|H_1)d\mu$ small.
+        *   The posterior model probability $P_0$ is sensitive to the "diffuseness" (e.g., variance $\sigma_0^2$) of the prior on $\mu$ under $H_1$. (Eq 6.33, 6.36)
+
+## 6.3 Prior
+
+Specification of the prior distribution $f(\theta)$.
+
+### 6.3.1 Methods of Prior Specification
+*   Prior should reflect belief *before* data analysis. Can use past experiments or model the physical/biological process.
+*   **Vague/Diffuse Priors (Objective Bayes idea):** Used when little prior information.
+    *   Principle of insufficient reason (uniform).
+    *   Invariance to reparameterization (Jeffreys prior).
+    *   Maximization of missing information (Reference prior).
+*   **Hierarchical Bayesian Approach:** If prior involves unknown parameters (hyper-parameters), assign priors to them (hyper-priors). Usually 2-3 levels.
+*   **Empirical Bayes (EB):** Estimate hyper-parameters from the marginal likelihood of the data $f(x|\text{hyper-param}) = \int f(\theta|\text{hyper-param})f(x|\theta)d\theta$, then use these estimates in the prior for $\theta$. Widely used in phylogenetics (e.g., estimating site rates, ASR).
+*   **Robustness Analysis:** Always assess sensitivity of posterior to prior choice. If posterior dominated by data, prior choice is less critical.
+
+### 6.3.2 Conjugate Priors
+*   Prior and posterior have the same distributional form. Likelihood updates parameters of the distribution.
+    *   **Beta prior for binomial $\theta$:** Likelihood $\theta^x(1-\theta)^{n-x}$. Prior $\theta^{a-1}(1-\theta)^{b-1}$. Posterior $\theta^{x+a-1}(1-\theta)^{n-x+b-1}$. (Eq 6.37-6.39)
+        *   $U(0,1) \equiv \text{Beta}(1,1)$.
+        *   Jeffreys prior for binomial $\theta$ is $\text{Beta}(1/2, 1/2)$.
+        *   Haldane's prior $\text{Beta}(0,0)$ (improper, $f(\theta) \propto \theta^{-1}(1-\theta)^{-1}$) gives posterior mean = MLE ($x/n$).
+    *   **Gamma prior for Poisson rate $\lambda$:** Likelihood $\lambda^{\sum x_i} e^{-n\lambda}$. Prior $\lambda^{\alpha-1}e^{-\beta\lambda}$. Posterior $\lambda^{\sum x_i+\alpha-1}e^{-(n+\beta)\lambda}$. (Eq 6.40-6.43)
+    *   **Normal prior for normal mean $\mu$ (known $\sigma^2$):** Posterior is also normal. Posterior mean is weighted average of prior mean and sample mean, weights are precisions (inverse variances). Posterior precision = prior precision + sample precision. (Eq 6.44)
+*   Rarely used in complex phylogenetic models.
+
+### 6.3.3 Flat or Uniform Priors
+*   Common when little information.
+*   **Improper Prior:** If it doesn't integrate to 1. Permissible if posterior is proper.
+*   May not be biologically reasonable (e.g., $U(0,10)$ for JC69 distance $\theta$ implies most distances are large, while data suggests small).
+*   Can cause MCMC convergence problems.
+*   For JC69 distance $\theta$, uniform prior on $p$ (proportion of different sites) $p \sim U(0, 3/4)$ implies $f(\theta) = \frac{4}{3}e^{-4\theta/3}$ (Eq 6.47), favoring small distances. This is more reasonable than uniform on $\theta$.
+
+### *6.3.4 The Jeffreys Priors
+*   Based on Fisher information $I(\theta)$. Invariant to reparameterization.
+*   $f(\theta) \propto [\det I(\theta)]^{1/2}$ (Eq 6.49)
+    *   For binomial $\theta$: $I(\theta) = n/(\theta(1-\theta))$. Prior $f(\theta) \propto \theta^{-1/2}(1-\theta)^{-1/2}$, which is $\text{Beta}(1/2, 1/2)$. (Eq 6.52)
+    *   For JC69 distance $\theta$: $f(\theta) \propto (e^{8\theta/3} + 2e^{4\theta/3} - 3)^{-1/2}$. (Eq 6.56)
+*   Reference prior is often Jeffreys prior for single parameter models. Rarely used in phylogenetics.
+
+### *6.3.5 The Reference Priors
+*   Maximizes expected K-L divergence between prior and posterior (maximizes missing information in prior).
+*   Formal procedure for derivation. Jeffreys prior for regular single-parameter models.
+*   Rarely used in phylogenetics.
+
+## 6.4 Methods of Integration
+
+Calculating the marginal likelihood $f(X) = \int f(\theta)f(X|\theta)d\theta$ is hard, especially for high-dimensional $\theta$.
+
+### *6.4.1 Laplace Approximation
+*   For large sample size $n$, likelihood $L(\theta) = e^{nh(\theta)}$ is highly peaked around MLE $\hat{\theta}$.
+*   Approximate $h(\theta)$ by Taylor expansion around $\hat{\theta}$: $h(\theta) \approx h(\hat{\theta}) + \frac{1}{2}(\theta-\hat{\theta})^T H (\theta-\hat{\theta})$, where $H = \frac{d^2h}{d\theta^2}|_{\hat{\theta}}$.
+*   $I = \int f(\theta)e^{nh(\theta)}d\theta \approx f(\hat{\theta})L(\hat{\theta}) \sqrt{(2\pi)^p |V|}$ (Eq 6.66 for multivariate)
+    where $V = -(nH)^{-1}$ is the asymptotic variance-covariance matrix of $\hat{\theta}$, $p$ is dimension of $\theta$.
+    For univariate: $I \approx f(\hat{\theta})L(\hat{\theta}) \sqrt{2\pi V}$ (Eq 6.64).
+*   Relatively accurate for peaked likelihoods.
+
+### 6.4.2 Mid-point and Trapezoid Methods
+*   Numerical integration by dividing interval $[a,b]$ into $n$ segments. (Fig 6.7)
+    *   **Mid-point:** Sum areas of rectangles (height = function value at mid-point of segment). (Eq 6.68)
+    *   **Trapezoid:** Sum areas of trapezoids. (Eq 6.69)
+
+### 6.4.3 Gaussian Quadrature
+*   Approximates $\int_{-1}^1 f(x)dx \approx \sum_{i=1}^N w_i f(x_i)$ using pre-determined points $x_i$ and weights $w_i$. (Eq 6.70)
+*   Exact if $f(x)$ is a polynomial of degree $2N-1$ or less.
+*   Integral over $(a,b)$ converted to $(-1,1)$ by linear transform (Eq 6.71).
+*   **Curse of Dimension:** For $d$-dimensional integrals, $N^d$ points needed. Feasible for low dimensions (1-3) only.
+
+### 6.4.4 Marginal Likelihood Calculation for JC69 Distance Estimation
+*   Illustrates numerical integration for $I = \int_0^\infty f(\theta)f(x|\theta)d\theta$ from Example 6.4. (Eq 6.62)
+*   Requires transforming $\theta \in (0, \infty)$ to $y \in (-1,1)$ or similar finite range. (Table 6.1, Fig 6.8)
+    *   Transform 1: $y = (\theta-1)/(\theta+1)$ (Eq 6.73) $\rightarrow I_1$ (Eq 6.74)
+    *   Transform 2 (based on $p$): $y = \frac{8}{3}p-1$ (Eq 6.75) $\rightarrow I_2$ (Eq 6.76)
+    *   Transform 3 (log-$t_2$ sigmoid): Based on fitting log $\theta$ with a $t_2$ distribution. (Eq 6.79, 6.80)
+    *   Transform 4 (log-logistic sigmoid): Based on fitting log $\theta$ with a logistic distribution. (Eq 6.82, 6.83)
+*   **Results:** Quadrature methods (esp. with good transforms like log-$t_2$ or log-logistic) are much more accurate than mid-point/trapezoid for same number of points $N$. Good transforms flatten the integrand.
+
+### 6.4.5 Monte Carlo (MC) Integration
+*   To compute $I = E_f[h(\theta)] = \int h(\theta)f(\theta)d\theta$.
+*   Draw $N$ samples $\theta_i$ from $f(\theta)$. Estimate $\hat{I} = \frac{1}{N}\sum_{i=1}^N h(\theta_i)$. (Eq 6.84, 6.85)
+*   Variance of $\hat{I}$ depends on $N$, not dimensionality of $\theta$. (Eq 6.86)
+*   For marginal likelihood $f(X)$, $f(\theta)$ is prior, $h(\theta)$ is likelihood $f(X|\theta)$.
+*   Inefficient if prior $f(\theta)$ is very different from posterior (i.e., if likelihood $h(\theta)$ is sharply peaked and prior is diffuse), as most samples $\theta_i$ will have tiny $h(\theta_i)$. (Table 6.2)
+
+### 6.4.6 Importance Sampling
+*   Sample $\theta_i$ from a different proposal distribution $g(\theta)$ instead of $f(\theta)$.
+*   $I = E_g \left[ h(\theta) \frac{f(\theta)}{g(\theta)} \right]$. Estimate $\hat{I}_{IS} = \frac{1}{N}\sum_{i=1}^N h(\theta_i) \frac{f(\theta_i)}{g(\theta_i)}$. (Eq 6.87, 6.88)
+    *   $w(\theta_i) = f(\theta_i)/g(\theta_i)$ are importance weights.
+*   Optimal $g(\theta) \propto h(\theta)f(\theta)$ (i.e., the posterior), but this requires knowing $I$.
+*   Choose $g(\theta)$ to be similar to posterior, and heavier-tailed than $f(\theta)$.
+*   Alternative form (sampling from unnormalized $g^*$):
+    $I_{IS}^* = \frac{\sum h(\theta_i) f(\theta_i)/g^*(\theta_i)}{\sum f(\theta_i)/g^*(\theta_i)}$ (Eq 6.90) (More robust to unbounded $f/g$ ratios).
+*   Using log-$t_2$ or log-logistic as sampling distributions $g(\theta)$ for JC69 example greatly improves efficiency over simple MC. (Table 6.2)
 
 # 7. Bayesian computation (MCMC)
 
