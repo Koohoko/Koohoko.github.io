@@ -11,7 +11,7 @@ toc: true
 last_modified_at: 2025-03-12
 ---
 
-We decide to read the book [*Molecular Evolution: A Statistical Approach*](http://abacus.gene.ucl.ac.uk/MESA/) by Ziheng Yang, to gether on a weekly basis. 
+We decide to read the book [*Molecular Evolution: A Statistical Approach*](http://abacus.gene.ucl.ac.uk/MESA/) by Ziheng Yang, to gether on a weekly basis. Contents in this summary involve AI-generated text.
 
 # 1. Models of nucleotide substitution
 
@@ -1097,7 +1097,7 @@ This chapter introduces Bayesian statistics, contrasting it with the classical F
     *   **Frequentist:** Defines probability as the long-run frequency of an event in repeated trials. Performance of inference is judged by properties in repeated sampling (e.g., bias, variance, confidence intervals, p-values). Maximum likelihood (ML) and likelihood ratio tests (LRT) are key tools.
     *   **Bayesian:** Defines probability as a degree of belief in a hypothesis or parameter value. It uses probability distributions to describe uncertainty in parameters.
         *   **Prior Distribution $f(\theta)$:** Represents belief about parameter $\theta$ *before* seeing the data.
-        *   **Posterior Distribution $f(\theta|X)$:** Represents updated belief about $\theta$ *after* observing data $X$, combining prior information with information from the data.
+        *   **Posterior Distribution $f(\theta\vert X)$:** Represents updated belief about $\theta$ *after* observing data $X$, combining prior information with information from the data.
 *   **Historical Context:**
     *   Probability theory developed over centuries (gambling). Statistics is younger.
     *   Regression/correlation (Galton, Pearson, ~1900).
@@ -1115,67 +1115,67 @@ This chapter introduces Bayesian statistics, contrasting it with the classical F
 
 ### 6.2.1 The Bayes Theorem
 *   **Law of Total Probability:** For events A and B:
-    $P(B) = P(AB) + P(A\bar{B}) = P(A)P(B|A) + P(\bar{A})P(B|\bar{A})$ (Eq 6.1)
+    $P(B) = P(AB) + P(\bar{A}B) = P(A)P(B\vert A) + P(\bar{A})P(B\vert \bar{A})$ (Eq 6.1)
     where $\bar{A}$ is "non A", $AB$ is "A and B".
 *   **Bayes' Theorem (Inverse Probability):** Gives the conditional probability of A given B:
-    $P(A|B) = \frac{P(AB)}{P(B)} = \frac{P(A)P(B|A)}{P(B)} = \frac{P(A)P(B|A)}{P(A)P(B|A) + P(\bar{A})P(B|\bar{A})}$ (Eq 6.2)
+    $P(A\vert B) = \frac{P(AB)}{P(B)} = \frac{P(A)P(B\vert A)}{P(B)} = \frac{P(A)P(B\vert A)}{P(A)P(B\vert A) + P(\bar{A})P(B\vert \bar{A})}$ (Eq 6.2)
 *   **Example 6.1 (False Positives of a Clinical Test):**
     *   Let A = person has infection, $\bar{A}$ = no infection. B = test positive.
     *   Given: $P(A) = 0.001$ (prevalence), $P(\bar{A}) = 0.999$.
-    *   Test accuracy: $P(B|A) = 0.99$ (true positive rate/sensitivity), $P(B|\bar{A}) = 0.02$ (false positive rate, so $1-P(B|\bar{A})=0.98$ is specificity).
+    *   Test accuracy: $P(B\vert A) = 0.99$ (true positive rate/sensitivity), $P(B\vert \bar{A}) = 0.02$ (false positive rate, so $1-P(B\vert \bar{A})=0.98$ is specificity).
     *   Probability of a random person testing positive:
         $P(B) = (0.001 \times 0.99) + (0.999 \times 0.02) = 0.00099 + 0.01998 = 0.02097$ (Eq 6.3)
     *   Probability of having infection given a positive test:
-        $P(A|B) = \frac{P(A)P(B|A)}{P(B)} = \frac{0.001 \times 0.99}{0.02097} \approx 0.0472$ (Eq 6.4)
+        $P(A\vert B) = \frac{P(A)P(B\vert A)}{P(B)} = \frac{0.001 \times 0.99}{0.02097} \approx 0.0472$ (Eq 6.4)
     *   Despite high test accuracy, only ~4.72% of those testing positive actually have the infection due to low prevalence. Most positives are false positives.
 
 ### 6.2.2 The Bayes Theorem in Bayesian Statistics
 *   Hypotheses $H_1, H_2, ..., H_k$ replace events A, $\bar{A}$. Observed data $X$ replaces event B.
 *   For two hypotheses $H_1, H_2$:
-    $P(H_1|X) = \frac{P(H_1)P(X|H_1)}{P(X)} = \frac{P(H_1)P(X|H_1)}{P(H_1)P(X|H_1) + P(H_2)P(X|H_2)}$ (Eq 6.5)
+    $P(H_1\vert X) = \frac{P(H_1)P(X\vert H_1)}{P(X)} = \frac{P(H_1)P(X\vert H_1)}{P(H_1)P(X\vert H_1) + P(H_2)P(X\vert H_2)}$ (Eq 6.5)
     *   $P(H_i)$: **Prior probability** of hypothesis $H_i$.
-    *   $P(X|H_i)$: **Likelihood** of data $X$ under $H_i$.
-    *   $P(H_i|X)$: **Posterior probability** of hypothesis $H_i$ given data $X$.
+    *   $P(X\vert H_i)$: **Likelihood** of data $X$ under $H_i$.
+    *   $P(H_i\vert X)$: **Posterior probability** of hypothesis $H_i$ given data $X$.
     *   $P(X)$: Marginal likelihood of data (normalizing constant).
 *   **Continuous Parameters ($\theta$):** Uses probability densities.
-    $f(\theta|X) = \frac{f(\theta)f(X|\theta)}{f(X)} = \frac{f(\theta)f(X|\theta)}{\int f(\theta')f(X|\theta') d\theta'}$ (Eq 6.6)
+    $f(\theta\vert X) = \frac{f(\theta)f(X\vert \theta)}{f(X)} = \frac{f(\theta)f(X\vert \theta)}{\int f(\theta')f(X\vert \theta') d\theta'}$ (Eq 6.6)
     "Posterior $\propto$ Prior $\times$ Likelihood"
     *   $f(\theta)$: Prior density.
-    *   $f(X|\theta)$: Likelihood function (probability of data given $\theta$).
-    *   $f(\theta|X)$: Posterior density.
-    *   $f(X) = \int f(\theta)f(X|\theta) d\theta$: Marginal likelihood of data / Normalizing constant / Evidence.
+    *   $f(X\vert \theta)$: Likelihood function (probability of data given $\theta$).
+    *   $f(\theta\vert X)$: Posterior density.
+    *   $f(X) = \int f(\theta)f(X\vert \theta) d\theta$: Marginal likelihood of data / Normalizing constant / Evidence.
 *   **Inference from Posterior Distribution:**
-    *   **Point Estimate:** Mean, median, or mode of $f(\theta|X)$.
+    *   **Point Estimate:** Mean, median, or mode of $f(\theta\vert X)$.
     *   **Interval Estimation (Credibility Interval):**
-        *   **Equal-Tail Credibility Interval (CI):** Interval $(\theta_L, \theta_U)$ such that $P(\theta < \theta_L|X) = \alpha/2$ and $P(\theta > \theta_U|X) = \alpha/2$. For 95% CI, use 2.5% and 97.5% quantiles. (Fig 6.2a)
+        *   **Equal-Tail Credibility Interval (CI):** Interval $(\theta_L, \theta_U)$ such that $P(\theta < \theta_L\vert X) = \alpha/2$ and $P(\theta > \theta_U\vert X) = \alpha/2$. For 95% CI, use 2.5% and 97.5% quantiles. (Fig 6.2a)
         *   **Highest Posterior Density (HPD) Interval:** Smallest interval containing $(1-\alpha)$ posterior probability. Every point inside has higher density than any point outside. May be disjoint if posterior is multimodal. (Fig 6.2b)
         *   If posterior is symmetric and unimodal, equal-tail CI and HPD interval are similar.
 *   **Nuisance Parameters:** Bayesian approach naturally handles them through marginalization.
     *   If $\theta = (\lambda, \eta)$ where $\lambda$ are parameters of interest and $\eta$ are nuisance parameters.
-    *   Joint posterior: $f(\lambda, \eta|X)$ (Eq 6.7)
-    *   Marginal posterior for $\lambda$: $f(\lambda|X) = \int f(\lambda, \eta|X) d\eta$ (Eq 6.8)
+    *   Joint posterior: $f(\lambda, \eta\vert X)$ (Eq 6.7)
+    *   Marginal posterior for $\lambda$: $f(\lambda\vert X) = \int f(\lambda, \eta\vert X) d\eta$ (Eq 6.8)
 *   **Example 6.2 (Estimation of Binomial Probability $\theta$):**
-    *   Data: $x$ successes in $n$ trials. Likelihood: $f(x|\theta) = \binom{n}{x} \theta^x (1-\theta)^{n-x}$ (Eq 6.9)
+    *   Data: $x$ successes in $n$ trials. Likelihood: $f(x\vert \theta) = \binom{n}{x} \theta^x (1-\theta)^{n-x}$ (Eq 6.9)
     *   Prior: Beta distribution, $\theta \sim \text{Beta}(a,b)$, $f(\theta) = \frac{1}{B(a,b)} \theta^{a-1}(1-\theta)^{b-1}$ (Eq 6.10)
         *   $B(a,b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}$ is the Beta function. Mean $a/(a+b)$.
-    *   Posterior: $f(\theta|x) = \frac{f(\theta)f(x|\theta)}{f(x)}$.
-        *   Marginal likelihood: $f(x) = \int_0^1 f(\theta)f(x|\theta)d\theta = \binom{n}{x} \frac{B(x+a, n-x+b)}{B(a,b)}$ (Eq 6.12)
-        *   Posterior distribution: $\theta|x \sim \text{Beta}(x+a, n-x+b)$ (Eq 6.13)
+    *   Posterior: $f(\theta\vert x) = \frac{f(\theta)f(x\vert \theta)}{f(x)}$.
+        *   Marginal likelihood: $f(x) = \int_0^1 f(\theta)f(x\vert \theta)d\theta = \binom{n}{x} \frac{B(x+a, n-x+b)}{B(a,b)}$ (Eq 6.12)
+        *   Posterior distribution: $\theta\vert x \sim \text{Beta}(x+a, n-x+b)$ (Eq 6.13)
         *   The Beta distribution is a **conjugate prior** for the binomial likelihood (prior and posterior are in the same family).
         *   Information in prior $\text{Beta}(a,b)$ is like observing $a$ successes in $a+b$ trials.
 *   **Example 6.3 (Laplace's Rule of Succession):**
     *   Event occurred $x$ times in $n$ trials. Probability of occurring in next trial?
     *   Prior: Uniform, $\theta \sim U(0,1)$, which is $\text{Beta}(1,1)$.
-    *   Posterior: $\theta|x \sim \text{Beta}(x+1, n-x+1)$.
-    *   Probability of success in $(n+1)^{th}$ trial = Posterior mean $E(\theta|x) = \frac{x+1}{n+2}$ (Eq 6.14)
+    *   Posterior: $\theta\vert x \sim \text{Beta}(x+1, n-x+1)$.
+    *   Probability of success in $(n+1)^{th}$ trial = Posterior mean $E(\theta\vert x) = \frac{x+1}{n+2}$ (Eq 6.14)
     *   Laplace's sunrise example: if sun rose for $n$ days, $P(\text{sun rises tomorrow}) = (n+1)/(n+2)$.
     *   Based on "principle of insufficient reason" (uniform prior for $\theta$). Problematic as priors are not invariant to non-linear transformations.
 *   **Example 6.4 (Bayesian Estimation of JC69 Distance $\theta$):**
-    *   Data: $x$ differences in $n$ sites. Likelihood $f(x|\theta)$ (Eq 6.19 from $p = \frac{3}{4}(1-e^{-4\theta/3})$ (Eq 6.18)).
+    *   Data: $x$ differences in $n$ sites. Likelihood $f(x\vert \theta)$ (Eq 6.19 from $p = \frac{3}{4}(1-e^{-4\theta/3})$ (Eq 6.18)).
     *   Prior: Exponential, $f(\theta) = \frac{1}{\mu} e^{-\theta/\mu}$ with mean $\mu=0.2$ (Eq 6.16).
-    *   Posterior: $f(\theta|x) = \frac{f(\theta)f(x|\theta)}{\int_0^\infty f(\theta')f(x|\theta')d\theta'}$ (Eq 6.17)
+    *   Posterior: $f(\theta\vert x) = \frac{f(\theta)f(x\vert \theta)}{\int_0^\infty f(\theta')f(x\vert \theta')d\theta'}$ (Eq 6.17)
     *   For human-orangutan 12S rRNA ($x=90, n=948$), MLE $\hat{\theta}=0.1015$.
-    *   Posterior mean $E(\theta|x) = 0.10213$. Mode $0.10092$.
+    *   Posterior mean $E(\theta\vert x) = 0.10213$. Mode $0.10092$.
     *   95% Equal-tail CI: $(0.08191, 0.12463)$.
     *   95% HPD Interval: $(0.08116, 0.12377)$.
     *   Similar to likelihood interval $(0.0817, 0.1245)$. Posterior dominated by likelihood here. (Fig 6.3)
@@ -1184,8 +1184,8 @@ This chapter introduces Bayesian statistics, contrasting it with the classical F
 *   **6.2.3.1 Criticisms of Frequentist Statistics (from Bayesian perspective):**
     *   Frequentist methods make probability statements about data or procedures, not directly about parameters of interest after data is observed.
     *   **Confidence Intervals:** A 95% CI means that if we repeat the experiment many times, 95% of *such constructed intervals* will contain the true parameter. It does *not* mean there's a 95% probability that the *specific interval we calculated* contains the true parameter. (Fig 6.4)
-    *   **p-values:** The probability of observing data as extreme or more extreme than what was actually observed, *if the null hypothesis ($H_0$) were true*. It is *not* $P(H_0|\text{data})$.
-        *   **Likelihood Principle Violation:** p-values can depend on the stopping rule of an experiment (e.g., fixed $n$ trials vs. fixed number of successes), even if the likelihood function $L(\theta|x)$ is the same. (Fig 6.5 - binomial vs. negative binomial). Bayesian inference respects the likelihood principle.
+    *   **p-values:** The probability of observing data as extreme or more extreme than what was actually observed, *if the null hypothesis ($H_0$) were true*. It is *not* $P(H_0\vert \text{data})$.
+        *   **Likelihood Principle Violation:** p-values can depend on the stopping rule of an experiment (e.g., fixed $n$ trials vs. fixed number of successes), even if the likelihood function $L(\theta\vert x)$ is the same. (Fig 6.5 - binomial vs. negative binomial). Bayesian inference respects the likelihood principle.
 *   **6.2.3.2 Criticisms of Bayesian Methods (from Frequentist perspective):**
     *   Levied on the **prior distribution $f(\theta)$**.
     *   **Objective Bayes:** Aims to represent "prior ignorance."
@@ -1199,7 +1199,7 @@ This chapter introduces Bayesian statistics, contrasting it with the classical F
     2.  **Prior and Likelihood Both Influential:** Ill-formulated/barely identifiable models, sparse data. Posterior is sensitive to prior. Classical and Bayesian results may differ.
     3.  **Hypothesis Testing/Model Selection with Vague Priors:** Bayesian results can be highly sensitive to prior choice.
         *   **Lindley's Paradox:** For $H_0: \mu=0$ vs. $H_1: \mu \ne 0$ (normal data). Large $n$, small $\bar{x}$ can lead to small p-value (reject $H_0$), but Bayesian analysis with a diffuse prior on $\mu$ under $H_1$ can strongly support $H_0$ ($P_0 \approx 1$). (Eq 6.27-6.33)
-        *   This happens because a diffuse prior spreads probability thinly over a wide range, making the marginal likelihood $M_1 = \int L_1(\mu)f(\mu|H_1)d\mu$ small.
+        *   This happens because a diffuse prior spreads probability thinly over a wide range, making the marginal likelihood $M_1 = \int L_1(\mu)f(\mu\vert H_1)d\mu$ small.
         *   The posterior model probability $P_0$ is sensitive to the "diffuseness" (e.g., variance $\sigma_0^2$) of the prior on $\mu$ under $H_1$. (Eq 6.33, 6.36)
 
 ## 6.3 Prior
@@ -1213,7 +1213,7 @@ Specification of the prior distribution $f(\theta)$.
     *   Invariance to reparameterization (Jeffreys prior).
     *   Maximization of missing information (Reference prior).
 *   **Hierarchical Bayesian Approach:** If prior involves unknown parameters (hyper-parameters), assign priors to them (hyper-priors). Usually 2-3 levels.
-*   **Empirical Bayes (EB):** Estimate hyper-parameters from the marginal likelihood of the data $f(x|\text{hyper-param}) = \int f(\theta|\text{hyper-param})f(x|\theta)d\theta$, then use these estimates in the prior for $\theta$. Widely used in phylogenetics (e.g., estimating site rates, ASR).
+*   **Empirical Bayes (EB):** Estimate hyper-parameters from the marginal likelihood of the data $f(x\vert \text{hyper-param}) = \int f(\theta\vert \text{hyper-param})f(x\vert \theta)d\theta$, then use these estimates in the prior for $\theta$. Widely used in phylogenetics (e.g., estimating site rates, ASR).
 *   **Robustness Analysis:** Always assess sensitivity of posterior to prior choice. If posterior dominated by data, prior choice is less critical.
 
 ### 6.3.2 Conjugate Priors
@@ -1247,12 +1247,12 @@ Specification of the prior distribution $f(\theta)$.
 
 ## 6.4 Methods of Integration
 
-Calculating the marginal likelihood $f(X) = \int f(\theta)f(X|\theta)d\theta$ is hard, especially for high-dimensional $\theta$.
+Calculating the marginal likelihood $f(X) = \int f(\theta)f(X\vert \theta)d\theta$ is hard, especially for high-dimensional $\theta$.
 
 ### *6.4.1 Laplace Approximation
 *   For large sample size $n$, likelihood $L(\theta) = e^{nh(\theta)}$ is highly peaked around MLE $\hat{\theta}$.
-*   Approximate $h(\theta)$ by Taylor expansion around $\hat{\theta}$: $h(\theta) \approx h(\hat{\theta}) + \frac{1}{2}(\theta-\hat{\theta})^T H (\theta-\hat{\theta})$, where $H = \frac{d^2h}{d\theta^2}|_{\hat{\theta}}$.
-*   $I = \int f(\theta)e^{nh(\theta)}d\theta \approx f(\hat{\theta})L(\hat{\theta}) \sqrt{(2\pi)^p |V|}$ (Eq 6.66 for multivariate)
+*   Approximate $h(\theta)$ by Taylor expansion around $\hat{\theta}$: $h(\theta) \approx h(\hat{\theta}) + \frac{1}{2}(\theta-\hat{\theta})^T H (\theta-\hat{\theta})$, where $H = \frac{d^2h}{d\theta^2}\vert _{\hat{\theta}}$.
+*   $I = \int f(\theta)e^{nh(\theta)}d\theta \approx f(\hat{\theta})L(\hat{\theta}) \sqrt{(2\pi)^p \vert V\vert }$ (Eq 6.66 for multivariate)
     where $V = -(nH)^{-1}$ is the asymptotic variance-covariance matrix of $\hat{\theta}$, $p$ is dimension of $\theta$.
     For univariate: $I \approx f(\hat{\theta})L(\hat{\theta}) \sqrt{2\pi V}$ (Eq 6.64).
 *   Relatively accurate for peaked likelihoods.
@@ -1269,7 +1269,7 @@ Calculating the marginal likelihood $f(X) = \int f(\theta)f(X|\theta)d\theta$ is
 *   **Curse of Dimension:** For $d$-dimensional integrals, $N^d$ points needed. Feasible for low dimensions (1-3) only.
 
 ### 6.4.4 Marginal Likelihood Calculation for JC69 Distance Estimation
-*   Illustrates numerical integration for $I = \int_0^\infty f(\theta)f(x|\theta)d\theta$ from Example 6.4. (Eq 6.62)
+*   Illustrates numerical integration for $I = \int_0^\infty f(\theta)f(x\vert \theta)d\theta$ from Example 6.4. (Eq 6.62)
 *   Requires transforming $\theta \in (0, \infty)$ to $y \in (-1,1)$ or similar finite range. (Table 6.1, Fig 6.8)
     *   Transform 1: $y = (\theta-1)/(\theta+1)$ (Eq 6.73) $\rightarrow I_1$ (Eq 6.74)
     *   Transform 2 (based on $p$): $y = \frac{8}{3}p-1$ (Eq 6.75) $\rightarrow I_2$ (Eq 6.76)
@@ -1281,7 +1281,7 @@ Calculating the marginal likelihood $f(X) = \int f(\theta)f(X|\theta)d\theta$ is
 *   To compute $I = E_f[h(\theta)] = \int h(\theta)f(\theta)d\theta$.
 *   Draw $N$ samples $\theta_i$ from $f(\theta)$. Estimate $\hat{I} = \frac{1}{N}\sum_{i=1}^N h(\theta_i)$. (Eq 6.84, 6.85)
 *   Variance of $\hat{I}$ depends on $N$, not dimensionality of $\theta$. (Eq 6.86)
-*   For marginal likelihood $f(X)$, $f(\theta)$ is prior, $h(\theta)$ is likelihood $f(X|\theta)$.
+*   For marginal likelihood $f(X)$, $f(\theta)$ is prior, $h(\theta)$ is likelihood $f(X\vert \theta)$.
 *   Inefficient if prior $f(\theta)$ is very different from posterior (i.e., if likelihood $h(\theta)$ is sharply peaked and prior is diffuse), as most samples $\theta_i$ will have tiny $h(\theta_i)$. (Table 6.2)
 
 ### 6.4.6 Importance Sampling
@@ -1296,40 +1296,1646 @@ Calculating the marginal likelihood $f(X) = \int f(\theta)f(X|\theta)d\theta$ is
 
 # 7. Bayesian computation (MCMC)
 
+This chapter delves into Markov chain Monte Carlo (MCMC) methods, which are simulation algorithms essential for Bayesian computation, particularly when the posterior distribution is complex and cannot be analyzed analytically.
+
+## 7.1 Markov Chain Monte Carlo
+
+### 7.1.1 Metropolis Algorithm
+*   **Concept:** MCMC generates a *dependent* sample $(\theta_1, \theta_2, ..., \theta_n)$ from a target probability density $\pi(\theta)$ (typically the posterior distribution $f(\theta|X)$). This sequence forms a stationary Markov chain whose states are the possible values of $\theta$.
+*   **Estimating Expectations:** The expectation of a function $h(\theta)$ over $\pi(\theta)$, which is an integral $I = E_{\pi}\{h(\theta)\} = \int h(\theta)\pi(\theta) d\theta$ (Eq 7.1), can be estimated by the sample average:
+    $\tilde{I} = \frac{1}{n} \sum_{i=1}^{n} h(\theta_i)$ (Eq 7.2)
+*   **Variance of the Estimate:** Unlike independent Monte Carlo integration, the variance of $\tilde{I}$ from an MCMC sample must account for autocorrelation. If $\rho_k = \text{corr}(h(\theta_i), h(\theta_{i+k}))$ is the autocorrelation at lag $k$:
+    $\text{var}(\tilde{I}) = \text{var}(\hat{I}) \times [1 + 2(\rho_1 + \rho_2 + \rho_3 + \dots)] = \text{var}(\hat{I}) \times \tau$ (Eq 7.3)
+    where $\text{var}(\hat{I})$ is the variance for an independent sample, and $\tau = [1 + 2\sum \rho_k]$ is the **autocorrelation time**.
+*   **Effective Sample Size (ESS):** The efficiency of the MCMC sample relative to an independent sample is $E = \text{var}(\hat{I})/\text{var}(\tilde{I}) = 1/\tau$ (Eq 7.4). An MCMC sample of size $n$ is as informative as an independent sample of size $nE = n/\tau$.
+*   **Why MCMC?** It's often hard to generate *independent* samples from the posterior, but MCMC provides a way to generate *dependent* samples.
+
+**Metropolis Algorithm (Metropolis et al., 1953) - Illustrated with a 3-state discrete example (robot on boxes, Fig 7.1a):**
+Let $\theta$ take values $\{1, 2, 3\}$ with target probabilities $\pi_1, \pi_2, \pi_3$.
+1.  **Initialization:** Set initial state (e.g., $\theta = 1$).
+2.  **Proposal:** Propose a new state $\theta'$ from the current state $\theta$. In this simple symmetric example, choose one of the two alternative states with probability $1/2$ each.
+3.  **Accept/Reject:**
+    *   If $\pi(\theta') > \pi(\theta)$, accept $\theta'$ (move to the higher box).
+    *   Otherwise (if $\pi(\theta') \le \pi(\theta)$), accept $\theta'$ with probability $\alpha = \frac{\pi(\theta')}{\pi(\theta)}$.
+    *   If the proposal is accepted, the next state is $\theta'$. Otherwise, the next state remains $\theta$.
+    (This can be implemented by drawing $u \sim U(0,1)$; if $u < \alpha$, accept, else reject).
+4.  **Record:** Print out the current state.
+5.  **Iterate:** Go to step 2.
+
+**Key Features of Metropolis Algorithm:**
+*   **Ratio of Densities:** Only the ratio $\frac{\pi(\theta')}{\pi(\theta)}$ is needed, not $\pi(\theta)$ itself. This is crucial because for posteriors, $\pi(\theta) = f(\theta|X) = \frac{f(\theta)f(X|\theta)}{f(X)}$. The normalizing constant $f(X)$ (marginal likelihood) is often very hard to compute but cancels out in the ratio:
+    $\alpha = \min\left(1, \frac{\pi(\theta')}{\pi(\theta)}\right) = \min\left(1, \frac{f(\theta')f(X|\theta')}{f(\theta)f(X|\theta)}\right)$ (Eq 7.5)
+    This allows sampling from the posterior without calculating $f(X)$.
+*   **Markov Chain:** The sequence of states is a Markov chain (next state depends only on current state).
+*   **Stationary Distribution:** If run long enough, the proportion of time spent in each state $i$ will be $\pi_i$. So, $\pi(\theta)$ is the stationary distribution of the chain.
+    *   *Proof Sketch (Detailed Balance):* The net flow from state $i$ to state $j$ is $f_i P_{ij} - f_j P_{ji}$. If $\pi_i \le \pi_j$, then $P_{ij}$ (proposal $i \to j$) is $1 \times \text{Prob(propose j from i)}$, and $P_{ji}$ is $\frac{\pi_i}{\pi_j} \times \text{Prob(propose i from j)}$. For symmetric proposals, $\text{Prob(propose j from i)} = \text{Prob(propose i from j)}$. The net flow is proportional to $f_i - f_j \frac{\pi_i}{\pi_j}$. This flow is positive (from $i$ to $j$) if $f_i/f_j > \pi_i/\pi_j$, meaning state $i$ is currently overrepresented relative to $j$. The chain moves to correct this imbalance, eventually reaching $f_i/f_j = \pi_i/\pi_j$. The chain is reversible under detailed balance.
+*   **Continuous Parameters:** The algorithm is essentially the same.
+    *   **Example 7.1 (JC69 distance $\theta$):**
+        *   Prior: $f(\theta) = \frac{1}{\mu} e^{-\theta/\mu}$
+        *   Likelihood: $f(x|\theta) = \left(\frac{3}{4} - \frac{3}{4}e^{-4\theta/3}\right)^x \left(\frac{1}{4} + \frac{3}{4}e^{-4\theta/3}\right)^{n-x}$ (Eq 7.6)
+        *   Proposal: Sliding window $\theta' \sim U(\theta - w/2, \theta + w/2)$. If $\theta'<0$, reflect ($\theta' = -\theta'$).
+        *   Acceptance ratio $\alpha$: As in Eq 7.7 (using product of prior ratio and likelihood ratio).
+        *   **Window Size ($w$):** Critical for mixing. (Fig 7.2a)
+            *   Too small $w$: High acceptance ($P_{jump}$), but tiny steps (poor mixing, high autocorrelation).
+            *   Too large $w$: Low acceptance ($P_{jump}$), chain gets stuck (poor mixing).
+            *   Optimal $P_{jump}$ often around 20-50% (e.g., ~30-40% for normal-like 1D targets).
+        *   **Burn-in:** Initial samples are discarded until the chain reaches stationarity (Fig 7.2b).
+        *   Posterior can be summarized by histogram (Fig 7.2c) or kernel density estimate (Fig 7.2d).
+
+### 7.1.2 Asymmetrical Moves and Proposal Ratio (Metropolis-Hastings)
+*   **Metropolis-Hastings (MH) Algorithm (Hastings, 1970):** Generalizes Metropolis to allow *asymmetric* proposal densities $q(\theta'|\theta)$ (probability of proposing $\theta'$ given current $\theta$).
+*   **Acceptance Ratio $\alpha$ modified:**
+    $\alpha(\theta, \theta') = \min \left(1, \frac{\pi(\theta')}{\pi(\theta)} \times \frac{q(\theta|\theta')}{q(\theta'|\theta)}\right)$
+    $= \min \left(1, \text{prior ratio} \times \text{likelihood ratio} \times \text{proposal ratio} \right)$ (Eq 7.8)
+    The term $\frac{q(\theta|\theta')}{q(\theta'|\theta)}$ is the **Hastings ratio** or **proposal ratio**, correcting for asymmetry in proposals.
+*   **Robot Example (Fig 7.1b):** Robot has 'left bias' (proposes left box with $2/3$, right with $1/3$).
+    *   If current $\theta=1$, propose $\theta'=2$. $q(2|1) = 1/3$ (assuming it picks right with $1/3$). For reverse move, if current $\theta=2$, propose $\theta'=1$. $q(1|2) = 2/3$ (assuming it picks left with $2/3$).
+    *   Proposal ratio $q(1|2)/q(2|1) = (2/3)/(1/3) = 2$.
+*   **Conditions for Convergence:** Proposal density $q(\cdot|\cdot)$ must define an irreducible (can reach any state from any state) and aperiodic (no fixed cycles) chain.
+
+### 7.1.3 The Transition Kernel
+*   For a continuous state space, the Markov chain is defined by a transition kernel $p(x, y)$, the probability density of moving to state $y$ given current state $x$.
+*   For MH:
+    $p(x, y) = q(y|x) \cdot \alpha(x, y)$, for $y \neq x$
+    $p(x, x) = 1 - \int q(y|x) \cdot \alpha(x, y) dy$ (probability of rejection, staying at $x$) (Eq 7.9, 7.10, 7.11)
+*   There's typically a point mass at $y=x$ due to rejections.
+*   **Acceptance Proportion ($P_{jump}$):** Overall probability that a proposal is accepted.
+    $P_{jump} = \iint \pi(x) q(y|x) \alpha(x, y) dx dy = \int \pi(x) (1 - p(x,x)) dx$ (Eq 7.12)
+
+### 7.1.4 Single-Component Metropolis-Hastings Algorithm
+*   For multi-parameter models $\theta = (x, y, z, \dots)$, updating all parameters simultaneously can be difficult or inefficient.
+*   **Single-Component MH:** Update parameters (or blocks of parameters) one at a time, conditioning on the current values of other parameters.
+*   **Iteration (3 blocks $x,y,z$):**
+    1.  Propose $x^*$ from $q(x^*|x, y, z)$. Accept with probability $\alpha_x$ based on $\frac{\pi(x^*, y, z)}{\pi(x, y, z)}$ and proposal ratio for $x$. Update $x \to x'$.
+    2.  Propose $y^*$ from $q(y^*|x', y, z)$. Accept with probability $\alpha_y$ based on $\frac{\pi(x', y^*, z)}{\pi(x', y, z)}$ and proposal ratio for $y$. Update $y \to y'$.
+    3.  Propose $z^*$ from $q(z^*|x', y', z)$. Accept with probability $\alpha_z$ based on $\frac{\pi(x', y', z^*)}{\pi(x', y', z)}$ and proposal ratio for $z$. Update $z \to z''$.
+*   The ratio of joint posteriors simplifies to the ratio of **full conditional distributions**. For step 2:
+    $\frac{\pi(x', y^*, z)}{\pi(x', y, z)} = \frac{\pi(y^*|x', z)}{\pi(y|x', z)}$ (Eq 7.16)
+*   Allows tailoring proposal mechanisms for different components. Advisable to block highly correlated parameters and update them together.
+
+### 7.1.5 Gibbs Sampler
+*   A special case of single-component MH.
+*   To update a component (e.g., $y$), **propose directly from its full conditional distribution**: $q(y^*|x', y, z) = \pi(y^*|x', z)$.
+*   This makes the acceptance ratio $\alpha = 1$ always (Eq 7.13-7.16). All proposals are accepted.
+*   Widely used in linear models where priors and likelihoods are normal, making full conditionals also normal and easy to sample from.
+*   Seldom used in phylogenetics as full conditionals are usually complex.
+
+## 7.2 Simple Moves and Their Proposal Ratios
+
+The proposal ratio depends only on the proposal algorithm, not the prior or likelihood.
+*   **7.2.1 Sliding Window with Uniform Proposal:**
+    *   $x' \sim U(x - w/2, x + w/2)$ (Eq 7.17)
+    *   Proposal ratio is 1 because $q(x'|x) = q(x|x') = 1/w$.
+    *   **Constraints:** If $x \in (a,b)$, reflections are used for proposed values outside the interval. E.g., if $x' < a$, new $x' = a + (a-x') = 2a-x'$.
+    *   Proposal ratio remains 1 even with reflections.
+*   **7.2.2 Sliding Window with Normal Proposal:**
+    *   $x'|x \sim N(x, \sigma^2)$ (Eq 7.18)
+    *   Proposal ratio is 1 because $q(x'|x) = q(x|x')$. (Normal PDF is symmetric around mean).
+    *   Handles constraints by reflection, proposal ratio still 1.
+*   **7.2.3 Bactrian Proposal (Yang & Rodriguez 2013):**
+    *   Aims to avoid proposing states very close to current state. Shaped like a two-humped camel.
+    *   Standard Bactrian: 1:1 mixture of $N(-m, 1-m^2)$ and $N(m, 1-m^2)$. Mean 0, variance 1. Parameter $m \in [0,1)$ controls "spikiness".
+    *   To use as sliding window: $x' = x + y\sigma$, where $y$ is from standard Bactrian, $\sigma$ is step size.
+    *   Proposal density $q(x'|x; m, \sigma^2) = \frac{1}{2\sigma\sqrt{1-m^2}} \left[ \exp\left(-\frac{(x'-x+m\sigma)^2}{2\sigma^2(1-m^2)}\right) + \exp\left(-\frac{(x'-x-m\sigma)^2}{2\sigma^2(1-m^2)}\right) \right]$ (Eq 7.20)
+    *   Symmetric, so proposal ratio is 1. Often more efficient than uniform/normal. $m=0.95$ is a good choice. (Fig 7.4)
+*   **7.2.4 Sliding Window with Multivariate Normal Proposal:**
+    *   To update $k$ parameters $x = (x_1, ..., x_k)$ at once.
+    *   Simplest: $x'|x \sim N_k(x, I\sigma^2)$ where $I$ is identity matrix. Proposal ratio 1.
+    *   Inefficient if parameters have different scales or are correlated (Fig 7.5).
+    *   Better: $x'|x \sim N_k(x, S\sigma^2)$, where $S$ is an estimate of the posterior variance-covariance matrix. (Can be estimated from pilot runs). This accounts for scales and correlations. Proposal ratio is still 1.
+*   **7.2.5 Proportional Scaling (Multiplier Proposal):**
+    *   Useful for positive parameters (e.g., branch lengths, rates).
+    *   $x' = x \cdot c$, where $c = e^{\lambda(u-1/2)}$ and $u \sim U(0,1)$. $\lambda$ is a tuning parameter.
+    *   Proposal density (from variable transform): $q(x'|x) = 1/(\lambda|x'|)$ (Eq 7.22, assuming $x'>0$).
+    *   Proposal ratio: $q(x|x')/q(x'|x) = |x'|/|x| = c$.
+    *   Alternative view: it's a sliding window on $y = \log(x)$, where $y' \sim U(y-\lambda/2, y+\lambda/2)$. Jacobian of transform $\log(x) \to x$ is $e^y=x$. Proposal ratio from Theorem 2 (Appendix A) is $x'/x = c$.
+    *   Cannot move a parameter from 0. Bounds handled by reflection in log-space.
+    *   Can scale multiple parameters $x_i' = c x_i$. Proposal ratio is $c^m$ for $m$ parameters.
+*   **7.2.6 Proportional Scaling with Bounds:**
+    *   For $m$ variables $x_i \in (a,b)$.
+    *   Transform: $y_i = (b-x_i)/(x_i-a)$, so $y_i \in (0, \infty)$. (Eq 7.23)
+    *   Apply proportional scaling to $y_i$: $y_i' = y_i \cdot c$. (Eq 7.24)
+    *   Proposal ratio for $x$: $c^m \times \prod_{i=1}^m \left(\frac{x_i'-a}{x_i-a}\right)^2$. (Eq 7.26)
+
+## 7.3 Convergence, Mixing, and Summary of MCMC
+
+### 7.3.1 Convergence and Tail Behaviour
+*   **7.3.1.1 Rejection Rate and Light/Heavy Tails:**
+    *   **Geometric Convergence:** Distance between current distribution and stationary distribution $\pi(x)$ decreases by $r^n$ ($r<1$) in $n$ steps.
+    *   Mengersen & Tweedie (1996): For 1D MCMC, geometric convergence if and only if $\lim_{x\to\infty} \nabla \log \pi(x) < 0$. (Eq 7.27)
+        *   This means the posterior must be **light-tailed** (e.g., normal, exponential, gamma).
+        *   Heavy-tailed posteriors (e.g., Cauchy, t-dist, inverse gamma) may lead to non-geometric convergence (random walk behavior in tails).
+    *   **Tail Paradox:** For light-tailed posteriors, the further in the tail, the flatter $\pi(x)$ is, but the steeper $\nabla \log \pi(x)$ is, leading to faster movement out of the tail. (Example: Normal distribution, Eq 7.28).
+    *   For heavy-tailed posteriors (e.g., inverse gamma, Eq 7.29), $\nabla \log \pi(x) \to 0$, so acceptance ratio for moves to right approaches 1. Chain behaves like random walk, very slow convergence if started in tail.
+    *   **Multidimensional Problem:** (Roberts & Tweedie, 1996) Posterior must be light-tailed AND "smooth" (no sharp ridges) (Fig 7.6 example, Eq 7.30).
+*   **7.3.1.2 Multiple Modes in the Posterior:**
+    *   Can cause serious convergence/mixing problems if MCMC gets trapped in a local mode.
+    *   Often due to conflict between prior and likelihood (Fig 7.7, 7.8).
+    *   Example: Human-chimp 12S rRNA distance. Informative (unreasonable) gamma prior $G(100,10)$ (mean 10, var 1) conflicts with likelihood (MLE $\approx 0.01172$). Posterior has two modes, one near MLE, one near prior mean (Fig 7.8). MCMC might get stuck in the very low prior-induced mode if started there.
+
+### 7.3.2 Mixing Efficiency, Jump Probability, and Step Length
+Focus on discrete state chains first for theory, then continuous.
+*   **7.3.2.1 Discrete State Chains:**
+    *   Asymptotic variance of $\tilde{I} = \frac{1}{n}\sum h(X_i)$ can be calculated from transition matrix $P=\{p_{ij}\}$ (Eq 7.35, 7.37). $v = h^T B (2Z - I - A) h$, where $Z = [I-(P-A)]^{-1}$ is fundamental matrix.
+    *   Efficiency related to second largest eigenvalue $\lambda_2$ of $P$. Smaller $|\lambda_2|$ means better mixing.
+    *   **Peskun's Theorem (1973):** For two reversible chains $P^{(1)}, P^{(2)}$ with same stationary $\pi$, if $p^{(1)}_{ij} \ge p^{(2)}_{ij}$ for all $i \ne j$ (i.e., $P^{(1)}$ has larger off-diagonal elements), then $P^{(1)}$ is more efficient (smaller variance for estimates of $I$). More mobile chains are better.
+    *   **Two States:** Optimal $p_{12} = \pi_2/\pi_1$ and $p_{21}=1$ (if $\pi_1 \ge \pi_2$). Efficiency $E = p_{12}/(2\pi_2 - p_{12})$. (Eq 7.40)
+    *   **K States:** Highest $P_{jump} = 2(1-\pi_1)$ (if states ordered by $\pi_i$). (Eq 7.41, 7.42).
+    *   Frigessi et al. (1992) construction for P achieving optimal $\lambda_2 = -\pi_K/(1-\pi_K)$. (Eq 7.43-7.46).
+*   **7.3.2.2 Efficiency of Continuous State Chains:**
+    *   Discretize state space to use discrete theory.
+    *   Gelman et al. (1996): For $N(0,1)$ target and $N(x, \sigma^2)$ proposal, optimal $\sigma \approx 2.5$ (relative to target SD), gives $P_{jump} \approx 0.43$, efficiency $E \approx 0.23$. (Table 7.2)
+    *   Yang & Rodriguez (2013): Compared proposals for different targets (Fig 7.9, 7.10, Table 7.2).
+        *   Bactrian proposal generally best, then uniform, then normal.
+        *   Bactrian with $m=0.95$ often optimal, $P_{jump} \approx 0.3$.
+*   **7.3.2.3 Convergence Rate and Step Length:**
+    *   Convergence rate dominated by $R = \max_{k\ge 2} |\lambda_k|$.
+    *   Optimal step length for fast convergence can be slightly larger than for efficient mixing (for uniform/normal). Suggests larger steps in burn-in.
+*   **7.3.2.4 Automatic Adjustment of Step Length:**
+    *   $P_{jump}$ is usually monotonic with step length $\sigma$. Can adjust $\sigma$ during burn-in to achieve target $P_{jump}$ (e.g., 0.3-0.4).
+    *   For Normal target & Normal proposal: $P_{jump} = \frac{2}{\pi} \tan^{-1}(\sigma/2)$. Can invert to find optimal $\sigma^*$ given current $\sigma, P_{jump}$ (Eq 7.50, 7.51, Fig 7.12, 7.13).
+    *   Similar logic can be applied for Bactrian, though integral for $P_{jump}$ is more complex (Eq 7.52).
+
+### 7.3.3 Validating and Diagnosing MCMC Algorithms
+*   MCMC enables complex models but introduces computational challenges (correctness, convergence, mixing).
+*   **Diagnostic Strategies:**
+    1.  **Time-series (Trace) Plots:** Plot parameter values against iteration number. Look for stability, good exploration.
+    2.  **Acceptance Proportion:** Should be in a reasonable range (e.g., 20-50% for many proposals).
+    3.  **Multiple Chains:** Run from different, over-dispersed starting points. Should converge to same distribution.
+    4.  **Run with No Data:** Posterior should equal prior.
+    5.  **Simulate Data:** Analyze simulated data (where truth is known) to see if Bayesian estimates are consistent and CIs have correct coverage.
+        *   **Hit Probability:** Proportion of CIs that include the true parameter value.
+        *   **Coverage Probability:** Average posterior probability density within a fixed prior interval.
+
+### 7.3.4 Potential Scale Reduction Statistic ($\hat{R}$)
+*   **Gelman & Rubin (1992):** Uses multiple chains ($m$) of length $n$ (post burn-in).
+*   Compares within-chain variance ($W$) and between-chain variance ($B$).
+    *   $B = \frac{n}{m-1} \sum_{i=1}^m (\bar{x}_{i\cdot} - \bar{x}_{\cdot\cdot})^2$ (Eq 7.53)
+    *   $W = \frac{1}{m(n-1)} \sum_{i=1}^m \sum_{j=1}^n (x_{ij} - \bar{x}_{i\cdot})^2$ (Eq 7.54)
+*   Estimate of posterior variance: $\hat{\sigma}^2 = \frac{n-1}{n}W + \frac{1}{n}B$ (Eq 7.55)
+*   **Potential Scale Reduction Factor:** $\hat{R} = \sqrt{\hat{\sigma}^2 / W}$ (Eq 7.56)
+*   $\hat{R}$ approaches 1 as chains converge. Values $< 1.1$ or $< 1.2$ often indicate convergence.
+
+### 7.3.5 Summary of MCMC Output
+*   **Burn-in:** Discard initial samples.
+*   **Thinning:** Sample every $k^{th}$ iteration to reduce autocorrelation and file size (though theoretically less efficient than using all samples).
+*   **Marginal Posterior:** For a parameter $\theta$, use its samples, ignoring others. Visualize with histogram/density plot.
+*   **Point Estimate:** Sample mean or median.
+*   **Credible Interval (CI):**
+    *   **Equal-tail CI:** e.g., 2.5% and 97.5% percentiles of sorted samples.
+    *   **Highest Posterior Density (HPD) Interval:** Shortest interval containing (e.g.) 95% of posterior mass. For unimodal, can be found by finding shortest interval among $((j), (j+0.95n))$ from sorted samples (Fig 7.14). More complex for multimodal.
+*   **Autocorrelation Time ($\tau$) / ESS ($n/\tau$):** Can be estimated from output using methods like initial positive sequence (Geyer 1992).
+
+## 7.4 Advanced Monte Carlo Methods
+
+This section discusses MCMC algorithms designed to handle more challenging situations, such as posteriors with multiple local peaks or the need to compare models of different dimensions.
+
+### 7.4.1 Parallel Tempering (MC³)
+*   **Problem:** Standard MCMC can get stuck in local peaks of a rugged posterior distribution (Fig 7.15).
+*   **Metropolis-Coupled MCMC (MC³ or MCMCMC):** (Geyer 1991; Marinari & Parisi 1992).
+    *   Run $m$ Markov chains in parallel.
+    *   Each chain $j$ samples from a "heated" (flattened) version of the target posterior $\pi(\theta)$:
+        $\pi_j(\theta) \propto [\pi(\theta)]^{1/T_j}$ (Eq 7.57)
+        where $T_j$ is the "temperature" for chain $j$.
+    *   Typically, $T_j = 1 + \delta(j-1)$ with $\delta > 0$.
+        *   The first chain ($j=1, T_1=1$) is the **cold chain** and samples from the true posterior $\pi(\theta)$. This is the chain used for inference.
+        *   Other chains ($j>1, T_j > 1$) are **hot chains**. Higher $T_j$ means a flatter surface, allowing these chains to cross valleys between peaks more easily.
+    *   **Within-chain moves:** Each chain $j$ performs standard MH updates using its target $\pi_j(\theta)$. Acceptance for a symmetric move from $\theta$ to $\theta'$ in chain $j$:
+        $\alpha = \min \left(1, \left[\frac{\pi(\theta')}{\pi(\theta)}\right]^{1/T_j}\right)$ (Eq 7.58)
+    *   **Chain Swaps:** Periodically, attempt to swap the current states $(\theta_i, \theta_j)$ between two randomly chosen chains $i$ and $j$. The acceptance probability for swapping states:
+        $\alpha_{swap} = \min \left(1, \frac{\pi_i(\theta_j)}{\pi_i(\theta_i)} \times \frac{\pi_j(\theta_i)}{\pi_j(\theta_j)}\right) = \min \left(1, \left[\frac{\pi(\theta_j)}{\pi(\theta_i)}\right]^{1/T_i - 1/T_j}\right)$ (Eq 7.59)
+        Swapping allows the cold chain to occasionally receive a state from a hot chain that might have explored a different peak.
+    *   **Optimal Temperature Spacing:** Atchadé et al. (2011) suggest spacing temperatures so that ~23.4% of chain swaps are accepted.
+    *   **Drawback:** Only the cold chain's output is used for inference, making it computationally more expensive as $m-1$ chains are run primarily to improve mixing of the cold chain.
+    *   Widely used in phylogenetics (e.g., MrBayes).
+    *   Fig 7.16 shows how a standard MCMC gets stuck in one of three peaks, while MC³ aims to allow transitions between them.
+
+### 7.4.2 Trans-model and Trans-dimensional MCMC
+Used when comparing different models or models with different numbers of parameters.
+
+#### 7.4.2.1 General Framework
+*   **Goal:** Sample from the joint posterior of model indicator $H_k$ and its parameters $\theta_k$:
+    $f(H_k, \theta_k | X) = \frac{1}{Z} \pi_k f(\theta_k|H_k) f(X|H_k, \theta_k)$ (Eq 7.60)
+    where $Z$ is the normalizing constant (sum of marginal likelihoods over all models, Eq 7.61), $\pi_k$ is prior on model $H_k$.
+    Can be written as: $f(H_k, \theta_k | X) = f(H_k|X) f(\theta_k|H_k, X)$ (Eq 7.62) (Posterior model prob $\times$ within-model parameter posterior).
+
+#### 7.4.2.2 Trans-model MCMC (Models with Same Number of Parameters)
+*   If different models $H_1, H_2, ...$ have parameters that can be matched up (e.g., $\mu_1 \leftrightarrow \mu_2$, $\sigma_1 \leftrightarrow \sigma_2$).
+*   The MCMC state is $(k, \theta_k)$. Moves can be within-model (update $\theta_k$ given $H_k$) or between-model (jump from $H_k$ to $H_{k'}$).
+*   **Example (Normal vs. Gamma model for 5 data points, Table 7.3, 7.4):**
+    *   $H_1$: Normal $N(\mu, \sigma^2)$, parameters $\theta_1 = (\mu, \sigma)$.
+    *   $H_2$: Gamma $G(\alpha, \beta)$, parameters $\theta_2 = (\alpha, \beta)$.
+    *   **Algorithm 1 (Simple Matching):** $\mu \leftrightarrow \alpha$, $\sigma \leftrightarrow \beta$.
+        1.  Initial model and parameters.
+        2.  Within-model move (e.g., update $\mu, \sigma$ if current model is $H_1$).
+        3.  Trans-model move (with some probability):
+            If in $H_1$ (current params $\mu, \sigma$), propose $H_2$ with params $\alpha'=\mu, \beta'=\sigma$.
+            If in $H_2$ (current params $\alpha, \beta$), propose $H_1$ with params $\mu'=\alpha, \sigma'=\beta$.
+            Acceptance ratio $\alpha_{1 \leftrightarrow 2} = \min \left(1, \frac{f(H_{new}, \theta_{new}|X)}{f(H_{old}, \theta_{old}|X)}\right)$. (Eq 7.71)
+            Proposal ratio is 1 as no new random variables are generated for the parameters.
+    *   **Algorithm 2 (Moment Matching):** Match means and variances.
+        To move $H_1 \to H_2$: set $\alpha' = (\mu/\sigma)^2$, $\beta' = \mu/\sigma^2$ (so gamma mean is $\mu$, variance is $\sigma^2$).
+        To move $H_2 \to H_1$: set $\mu' = \alpha/\beta$, $\sigma' = \sqrt{\alpha}/\beta$.
+        The acceptance ratio now includes a **Jacobian determinant** for the parameter transformation (Eq 7.73, 7.74, 7.75).
+    *   **Algorithm 3 (Random Proposal):** To move $H_1 \to H_2$, propose new $\alpha', \beta'$ from distributions centered on current $\mu, \sigma$ (e.g., $\text{new mean } u_1 \sim G(10, 10/\mu)$, $\text{new SD } u_2 \sim G(10, 10/\sigma)$, then set $\alpha'=(u_1/u_2)^2, \beta'=u_1/u_2^2$).
+        The acceptance ratio includes ratio of proposal densities $g(v_1,v_2)/g(u_1,u_2)$ and the Jacobian (Eq 7.79, 7.80, 7.81).
+    *   **Performance:** Moment matching (Alg 2) had highest acceptance (70.3%) and efficiency. Simple matching (Alg 1) was very poor (1.1% acceptance).
+
+#### 7.4.2.3 Trans-dimensional MCMC (rjMCMC) (Green 1995)
+*   For comparing models with *different numbers* of parameters (different dimensions).
+*   E.g., $H_1$ with parameter $\theta_1$ (dimension $d_1$) vs. $H_2$ with $\theta_2$ (dimension $d_2$, where $d_1 < d_2$).
+*   **Dimension Matching:** To move $H_1 \to H_2$, generate $d_2-d_1$ random auxiliary variables $u \sim g(u)$. Transform $(\theta_1, u) \to \theta_2$ using a deterministic, invertible function $T$. So, $\theta_2 = T(\theta_1, u)$.
+*   To move $H_2 \to H_1$, use inverse transform $(\theta_1, u) = T^{-1}(\theta_2)$. Drop $u$.
+*   **Acceptance Ratio (e.g., $H_1 \to H_2$):**
+    $R_{12} = \frac{f(H_2)f(\theta_2|H_2)f(X|H_2, \theta_2)}{f(H_1)f(\theta_1|H_1)f(X|H_1, \theta_1)} \times \frac{r_{21}}{r_{12}} \times \frac{1}{g(u)} \times \left| \frac{\partial \theta_2}{\partial(\theta_1, u)} \right|$ (Eq 7.83)
+    where $r_{12}, r_{21}$ are probabilities of attempting the jump between models, and the last term is the Jacobian.
+*   **Example (JC69 vs K80 for 2 sequences):**
+    *   $H_1$ (JC69): param $\theta_1 = (d)$. $H_2$ (K80): params $\theta_2 = (d, \kappa)$. $d_1=1, d_2=2$.
+    *   Auxiliary variable $u = \kappa$. To move $H_1 \to H_2$: keep $d$ same, generate $\kappa \sim g(\kappa)$ (e.g., from its prior).
+    *   To move $H_2 \to H_1$: keep $d$ same, drop $\kappa$.
+    *   Table 7.5 shows different rjMCMC proposals. Algorithm 1 (generating $\kappa$ from prior) most efficient.
+*   **Mixing Problems of rjMCMC:**
+    *   Often severe, especially if data is informative (within-model posteriors are concentrated).
+    *   Proposals for new model parameters are often poor, leading to high rejection rates.
+    *   No direct analogue to step-size tuning of within-model MCMC.
+    *   Product-space method (Carlin & Chib 1995) is an alternative but may be difficult for high-dimensional phylogenetic problems.
+
+#### 7.4.2.5 Model Averaging
+*   If interested in a quantity $\theta$ present in all models, its posterior can be estimated by averaging over models, weighted by posterior model probabilities $f(H_k|X)$:
+    $f(\theta|X) = \sum_{k=1}^K f(H_k|X) f(\theta|H_k, X)$ (Eq 7.89)
+*   Can be done by sampling $\theta$ from the rjMCMC output irrespective of current model.
+*   **Usefulness:**
+    *   Appealing for accounting for model uncertainty.
+    *   If one model strongly dominates ($f(H_k|X) \approx 1$), model averaging gives similar result to using best model.
+    *   If several models fit nearly equally well *but give different inferences for $\theta$*, model averaging is most useful (posterior for $\theta$ might become multimodal).
+    *   If all models fit poorly, model averaging is unlikely to help.
+
+### 7.4.3 Bayes Factor and Marginal Likelihood
+*   **Bayes Factor ($B_{01}$):** Ratio of posterior odds to prior odds for two models $H_0, H_1$. Equals ratio of marginal likelihoods.
+    $B_{01} = \frac{M_0}{M_1} = \frac{f(X|H_0)}{f(X|H_1)} = \frac{\int f(X|\theta_0, H_0)f(\theta_0|H_0)d\theta_0}{\int f(X|\theta_1, H_1)f(\theta_1|H_1)d\theta_1}$ (Eq 7.91)
+*   $\text{Posterior Odds} = \text{Prior Odds} \times B_{01}$ (Eq 7.92)
+*   If prior odds are 1 ($f(H_0)=f(H_1)=1/2$), then $f(H_0|X) = B_{01} / (1+B_{01}) = 1/(1+1/B_{01})$ (Eq 7.93)
+*   Interpretation of $B_{01}$ (Table 7.6).
+*   **Differences from LRT:**
+    1.  Bayes factor averages over parameters (via prior), LRT optimizes. Priors have strong influence.
+    2.  Numerical results differ. Bayes factor (model selection) is often more conservative than LRT (hypothesis testing), less likely to reject $H_0$ for large datasets.
+    3.  Bayes factors easily compare non-nested models or >2 models.
+*   Requires proper priors (marginal likelihood infinite for improper priors if likelihood doesn't go to zero fast enough).
+*   **Methods for Calculating Marginal Likelihood ($z=f(X)$):**
+    1.  **Arithmetic Mean (Prior):** $z \approx \frac{1}{n} \sum f(X|\theta_i)$, where $\theta_i \sim f(\theta)$. Inefficient as prior $f(\theta)$ usually far from posterior. (Eq 7.94, 7.95)
+    2.  **Harmonic Mean (Posterior):** $z \approx n / (\sum [1/f(X|\theta_i)])$, where $\theta_i \sim f(\theta|X)$. Unstable, infinite variance, positive bias. Generally unusable. (Eq 7.96)
+    3.  **Thermodynamic Integration (Path Sampling):** (Lartillot & Philippe 2006)
+        *   Define power posterior $p_\beta(\theta) \propto [f(X|\theta)]^\beta f(\theta)$. ($z_\beta$ is its normalizing constant).
+        *   $\log z_1 - \log z_0 = \log f(X) = \int_0^1 E_\beta[\log f(X|\theta)] d\beta$ (Eq 7.99-7.101)
+        *   Run MCMC for several $\beta$ values between 0 (prior) and 1 (posterior). Estimate $E_\beta[\log f(X|\theta)]$ from each. Numerically integrate.
+    4.  **Stepping Stone Sampling (Xie et al. 2011):**
+        *   $z_1/z_0 = \prod_{k=1}^K (z_{\beta_k}/z_{\beta_{k-1}})$, where $0=\beta_0 < \beta_1 < \dots < \beta_K=1$.
+        *   Each ratio $r_k = z_{\beta_k}/z_{\beta_{k-1}}$ estimated by importance sampling using samples from $p_{\beta_{k-1}}(\theta)$:
+            $\hat{r}_k = \frac{1}{n} \sum_{i=1}^n [f(X|\theta_i)]^{\beta_k - \beta_{k-1}}$ (Eq 7.104)
+        *   Requires $K-1$ MCMC runs (if prior can be sampled directly).
+
 # 8. Bayesian phylogenetics
 
-# 9. Coalescent theory and species trees
+This chapter provides an overview of Bayesian inference as applied to phylogenetic reconstruction, including historical background, MCMC algorithms, model and prior choices, and issues related to interpreting posterior probabilities.
 
-- Statistical analysis of sequence data from a few closely related species (statistical phylogeography, Knowles 2009) lies at the interface between population genetics and phylogenetics. 
-- Trends in theoretical population genetics:
-  - In the time of R.A. Fisher, J.B.S. Haldane, and S. Wright (1920–1930s), or of G. Malecot and M. Kimura (1950–1970s), there was much theory but little data, and the work was mostly concerned with probabilistic predictions of the model behaviour, i.e. how allele frequencies change over generations when the parameters in the model take certain values.
-  - Nowadays there is more data than we can analyse, and the focus of the field has shifted to statistical inference, i.e. parameter estimation and hypothesis testing using genomic sequence data. 
-  - Coalescent approach became central.
-  - More computation for modern inference methods.
+## 8.1 Overview
 
-## The coalescent model for a single species
+### 8.1.1 Historical Background
+*   **Early Efforts (1960s):** Edwards and Cavalli-Sforza attempted to apply Fisher's likelihood method to infer human population trees using gene frequency data.
+    *   They used the Yule process (pure birth process) for tree probabilities (prior on labeled histories) and Brownian motion for gene frequency drift.
+    *   This work led to the development of distance (additive-tree) and parsimony (minimum-evolution) methods as approximations to ML.
+    *   Edwards (1970) clarified that the tree (or labeled history) should be estimated from its conditional distribution given the data (i.e., the posterior), marking an early application of Bayesian ideas to phylogenetics.
+*   **Introduction to Molecular Phylogenetics (1990s):** Three groups independently introduced Bayesian inference for sequence data:
+    *   Rannala and Yang (1996; Yang and Rannala 1997)
+    *   Mau and Newton (1997)
+    *   Li et al. (2000)
+    *   Early studies often assumed a molecular clock and uniform priors on rooted trees (either labeled histories or simple rooted trees).
+*   **Development of MCMC Software:**
+    *   **BAMBE (Larget and Simon 1999)** and **MrBayes (Huelsenbeck and Ronquist 2001)** implemented more efficient MCMC algorithms.
+    *   The clock constraint was relaxed, allowing for more realistic evolutionary models.
+    *   Tree perturbation algorithms (NNI, SPR, TBR) were adapted as MCMC proposals.
+    *   Later versions of MrBayes (Ronquist et al. 2003, 2012b) incorporated many ML models and can handle heterogeneous multi-gene datasets.
+*   **Modern Bayesian Programs:**
+    *   **BEAST (Drummond et al. 2006; Drummond and Rambaut 2007):** Focuses on estimating rooted trees under clock and relaxed-clock models, particularly for divergence time estimation.
+    *   **PhyloBayes (Lartillot et al. 2007, 2009; Lartillot and Philippe 2008):** Implements sophisticated models for substitution heterogeneity (e.g., CAT model) important for deep phylogenies.
+    *   These are now standard tools alongside fast ML programs like RAxML and PhyML.
 
-### The backward time machine
+### 8.1.2 A Sketch MCMC Algorithm
+*   **General Framework:**
+    *   Data: Sequence alignment $X$.
+    *   Tree Topology: $\tau_i$, $i=1, \dots, T_s$. Prior $f(\tau_i)$ (often uniform $1/T_s$).
+    *   Branch Lengths: Vector $t_i$ for tree $\tau_i$. Prior $f(t_i \vert \tau_i)$ (often simplified to $f(t_i)$).
+    *   Substitution Model Parameters: $\theta$. Prior $f(\theta)$.
+*   **Joint Posterior Distribution:**
+    $f(\tau_i, t_i, \theta \vert X) \propto f(\theta) f(\tau_i) f(t_i \vert \tau_i) f(X \vert \theta, \tau_i, t_i)$ (Eq 8.1)
+    The normalizing constant $f(X)$ (marginal likelihood of data) is usually intractable. MCMC avoids its direct calculation.
+*   **Sketch of an MCMC Algorithm:**
+    1.  **Initialization:** Start with a random tree $\tau$, random branch lengths $t$, and random substitution parameters $\theta$.
+    2.  **Iteration:** Repeat the following steps:
+        a.  Propose a change to the tree topology $\tau \to \tau'$ (using NNI, SPR, TBR). This may also change branch lengths $t \to t'$.
+        b.  Propose changes to branch lengths $t \to t'$.
+        c.  Propose changes to substitution parameters $\theta \to \theta'$.
+        d.  Every $k$ iterations (thinning), sample the current state $(\tau, t, \theta)$ and save it to disk.
+    3.  **Summarization:** After a sufficient number of iterations (post burn-in), summarize the collected samples.
 
-- The coalescent theory, also known as Kingman’s coalescent, was developed in the early 1980s.
-- Classical population genetics models are forward in time, making predictions about allele frequencies changes over generations under the influence of mutation, genetic drift, population sub-division, and selection.
-- Coalescent approaches are backward, tracing the genealogical relationships of the samples until MRCA is reached.
-- Advantages:
-  - Usually easier to model the genealogy, as we can ignore the rest of the population and simply focus on the lineages that are ancestral to the sample.
-  - Separating genealogy from neutral mutations allows us to derive the tree likelihood under many population genetic models. We can 'drop' the mutations onto the tree afterwards.
-- Molecular phylogenetics focuses on reconstructing the species tree, showing how species or genes diverged.
-- Coalescent theory uses genetic variation data, reconstructing the unobserved genealogies backward in time to infer population dynamics and evolutionary forces.
+### 8.1.3 The Statistical Nature of Phylogeny Estimation
+*   **Tree as a Model:** A phylogenetic tree is a statistical model, not just a parameter. Phylogeny reconstruction is therefore a **model selection** problem.
+*   **Importance of Distinction:**
+    1.  **Asymptotic Efficiency of MLEs:** Applies to parameter estimation *within* a fixed model (e.g., branch lengths on a given tree), not to ML tree topology selection (see §5.2.3).
+    2.  **MCMC Design:** Proposals changing tree topology are **cross-model moves** and should be designed/optimized differently from **within-model moves** (parameter changes on a fixed tree).
+*   **Phylogeny vs. Typical Model Selection/Hypothesis Testing:**
+    *   Phylogenetics involves a vast number of tree models with complex relationships.
+    *   The likelihood model is a combination of the tree (topology) and the process model (substitution model).
+*   **MCMC Moves:**
+    *   **Within-tree move (within-model):** Modifies branch lengths or substitution parameters without changing topology. Goal: Traverse parameter space efficiently. Optimal $P_{jump}$ (acceptance proportion) around 30-40%.
+    *   **Cross-tree move (cross-model):** Changes tree topology. Goal: Efficiently move between models (trees). Higher $P_{jump}$ is generally better. Branch lengths in the new tree should be proposed to maximize acceptance, not necessarily to explore parameter space.
+    *   Many current proposals mix these, making step-length tuning awkward. The overall acceptance rate is often not a good indicator of efficiency; acceptance rate of topology changes is more relevant.
 
-### Fisher–Wright model and the neutral coalescent
+## 8.2 Models and Priors in Bayesian Phylogenetics
 
-- Idealized population: constant population size ($N$), non-overlapping generations, random mating (panmixia), and neutral evolution.
-- Number of genes $2N$ in diploid, no recombination.
-- The coalescent waiting time is shorter when the population size is smaller.
-- If the population size is changing over generations, $N_e$ is given by the harmonic mean, which is dominated by small values (population bottlenecks) and is much smaller than the arithmetic mean.
-- The probability that two genes coalesce in the $i$ generation is $(1 - \frac{1}{2N})^i \times \frac{1}{2N} \approx \frac{1}{2N}e^{-\frac{i}{2N}}$. 
-  - If viewing under that time unit of $2N$ generations ($T = \frac{i}{2N}$), with mean and variance 1 (in $2N$ generations), the probability density is $e^{-T}$.
-  - If using a time scale with mean and variance $2N\mu$, the probability density is $\frac{1}{2N\mu}e^{-\frac{1}{2N\mu}T}$.
-- Population size parameter $\theta = 4N\mu$. It is the expected number of mutations per site between two genes.
+To implement a model in a Bayesian framework: (i) assign priors to parameters, (ii) design MCMC proposals.
 
-### A sample of $n$ genes
+### 8.2.1 Priors on Branch Lengths
+*   A binary unrooted tree for $s$ species has $2s-3$ branches. Vector of branch lengths $t = \{t_1, \dots, t_{2s-3}\}$.
+*   **Common i.i.d. Priors (e.g., in MrBayes):**
+    *   **Uniform:** $t_i \sim U(0, A)$. User specifies $A$. Default $A=100$ in MrBayes.
+    *   **Exponential:** $t_i \sim \text{Exp}(\beta)$ with density $f(t_i \vert \beta) = \beta e^{-\beta t_i}$, $t_i > 0$. Mean $1/\beta$. Default $\beta=10$ (mean 0.1) in MrBayes. (Eq 8.2)
+*   **Problem with i.i.d. Priors:** Collectively, they can make strong and unreasonable statements about the **tree length** $T = \sum t_i$.
+    *   If $t_i \sim \text{Exp}(\beta)$ i.i.d., then $T \sim \text{Gamma}(2s-3, \beta)$. Density: $f(T \vert \beta, s) = \frac{\beta^{2s-3}}{\Gamma(2s-4)} T^{2s-4}e^{-\beta T}$. (Eq 8.3)
+        *   For large $s$, this Gamma distribution is approximately normal with mean $(2s-3)/\beta$ and variance $(2s-3)/\beta^2$.
+        *   Example: $s=100, \beta=10 \implies$ prior mean $T=19.7$, 99% prior CI for $T$ is $(16.3, 22.9)$. If data suggests $T<1$, this prior is extremely informative and will bias results towards long trees.
+    *   If $t_i \sim U(0,A)$ i.i.d., then $T \approx N((2s-3)A/2, (2s-3)A^2/12)$. This implies very long trees if $A$ is large (e.g., $A=100$).
+    *   These i.i.d. priors can lead to posterior tree lengths being orders of magnitude too large, especially in analyses of closely related sequences.
+*   **Improved Priors (Compound Dirichlet Priors, Rannala et al. 2012):**
+    1.  Assign a prior on the total tree length $T$.
+        *   **Gamma prior on T:** $f(T; \alpha_T, \beta_T) = \frac{\beta_T^{\alpha_T}}{\Gamma(\alpha_T)} e^{-\beta_T T} T^{\alpha_T-1}$. (Eq 8.4)
+            (Typically $\alpha_T=1$ for a diffuse prior on $T$).
+    2.  Partition $T$ into individual branch lengths $t_i$ using a symmetric Dirichlet distribution for proportions $x_i = t_i/T$.
+        $f(x; \alpha_1, \dots, \alpha_K) = \frac{\Gamma(\alpha_0)}{\prod \Gamma(\alpha_i)} \prod x_i^{\alpha_i-1}$, where $\alpha_0 = \sum \alpha_i$. (Eq 8.5)
+        If symmetric, all $\alpha_i=1$, then $f(x) = (K-1)!$ where $K=2s-3$.
+    3.  The joint prior on $t$ is (using $T=\sum t_i$ and $x_i=t_i/T$):
+        $f(t \vert \alpha_T, \beta_T) = \frac{\beta_T^{\alpha_T}}{\Gamma(\alpha_T)} e^{-\beta_T \sum t_i} (\sum t_i)^{\alpha_T-1-(2s-4)} (2s-4)!$ (Eq 8.8, given $T = \sum t_i$ and Jacobian $| \frac{\partial(T,x)}{\partial(t)} | = T^{-(2s-4)}$).
+    *   **Inverse Gamma prior on T:** $T \sim \text{invGamma}(\alpha_T, \beta_T)$, density $f(T; \alpha_T, \beta_T) = \frac{\beta_T^{\alpha_T}}{\Gamma(\alpha_T)} e^{-\beta_T/T} T^{-\alpha_T-1}$. (Eq 8.9)
+        Heavy-tailed. With symmetric Dirichlet, joint prior on $t$:
+        $f(t \vert \alpha_T, \beta_T) = \frac{\beta_T^{\alpha_T}}{\Gamma(\alpha_T)} e^{-\beta_T/\sum t_i} (\sum t_i)^{-\alpha_T-1-(2s-4)} (2s-4)!$ (Eq 8.10)
+    *   These compound priors are more robust to misspecification of prior mean tree length (Fig 8.2, Table 8.1). Tree topology inference is less affected by branch length priors than branch length estimation itself.
 
+### 8.2.2 Priors on Parameters in Substitution Models
+*   **8.2.2.1 Nucleotide Substitution Models:**
+    *   **Rate Ratios (e.g., $\kappa$ in K80/HKY85, $a-f$ in GTR):**
+        *   $\kappa$: Gamma prior, e.g., $G(2,1)$ (mean 2). Or transform $y=\kappa/(1+\kappa) \sim \text{Beta}(a,b)$. Density for $\kappa$: $f(\kappa) = \frac{1}{B(a,b)} \kappa^{a-1}(1+\kappa)^{-a-b}$. (Eq 8.12)
+    *   **Base Frequencies ($\pi_T, \pi_C, \pi_A, \pi_G$):**
+        *   Dirichlet prior, e.g., $\text{Dir}(1,1,1,1)$ (uniform).
+        *   Often fixed at observed frequencies if reliably estimated.
+    *   **GTR Relative Rates ($r_{TC}, r_{TA}, \dots, r_{AG}$):**
+        *   Assign Dirichlet prior on relative rates summing to 1. E.g., $\text{Dir}(1,1,1,1,1,1)$.
+        *   Alternatively, fix one rate (e.g., $r_{AG}=1$) and assign Gamma priors to others. Uniform priors on rate ratios (e.g., $U(0,100)$) are ill-advised.
+*   **8.2.2.2 Amino Acid and Codon Models:**
+    *   **Empirical AA Models (e.g., JTT, WAG):** No free parameters typically, unless using +F to estimate AA frequencies (Dirichlet prior).
+    *   **GY94-type Codon Models:**
+        *   Codon frequencies: Dirichlet prior or fixed.
+        *   $\kappa$: Gamma prior.
+        *   $\omega = d_N/d_S$: Gamma prior, e.g., $G(2,4)$ (mean 0.5), or $\omega/(1+\omega) \sim \text{Beta}$.
+*   **8.2.2.3 Models of Variable Substitution Rates Among Sites:**
+    *   **Gamma Model (+$\Gamma$):** Shape parameter $\alpha$.
+        *   Gamma prior, e.g., $G(2,4)$ (mean 0.5). Exponential prior also reasonable.
+        *   Uniform prior (e.g., $U(0,200)$ in MrBayes) is poor as likelihood is flat for large $\alpha$.
+    *   **Invariant Sites Model (+I):** Proportion of invariable sites $p_0$.
+        *   Uniform prior $p_0 \sim U(0,1)$ is common.
+    *   **I+$\Gamma$ Model:** Pathological, strong correlation between $p_0$ and $\alpha$. Ideally, prior should account for this.
+    *   **Finite-Mixture Models (Discrete Rates):** $K$ rate classes. Probabilities $(p_1, \dots, p_K) \sim \text{Dir}(1,\dots,1)$. Relative rates $(r_1, \dots, r_K) \sim \text{Dir}(1,\dots,1)$, then rescaled.
+*   **8.2.2.4 Dirichlet Process Models of Among-Site Heterogeneity:**
+    *   Nonparametric prior on partitions of sites into $K$ classes, where $K$ itself is estimated.
+    *   **Chinese Restaurant Process Analogy:** Defines probability of assigning $n$ sites into $K$ clusters.
+        *   $f(K, \mathbf{z} \vert \alpha, n) = \frac{\alpha^K \prod_{i=1}^K (n_i-1)!}{\prod_{i=1}^n (\alpha+i-1)}$, where $n_i$ is size of cluster $i$. (Eq 8.16)
+    *   Expected number of clusters $E(K|\alpha,n) \approx \alpha \log(1+n/\alpha)$. (Eq 8.18)
+    *   Concentration parameter $\alpha$ controls tendency to form new clusters.
+    *   Used to model variable rates (Huelsenbeck & Suchard 2007) or variable patterns (e.g., CAT model).
+    *   Can lead to very many site classes if prior favors them.
+*   **8.2.2.5 Nonhomogeneous Models (Compositional Heterogeneity):**
+    *   Allow base frequencies to drift across the tree.
+    *   **Foster (2004):** Fixed number of base frequency sets, assignment to branches varied in MCMC.
+    *   **Blanquart & Lartillot (2006 "Breakpoint Model"):** Compound Poisson process for breakpoints on branches. At breakpoint, new base frequencies drawn from prior. rjMCMC needed for number of breakpoints.
+    *   **CAT-BP (Blanquart & Lartillot 2008):** Combines CAT site mixture model with breakpoint model for nonstationarity.
+*   **8.2.2.6 Partition and Mixture Models for Large Genomic Datasets:**
+    *   Partition data (e.g., by gene, by codon position).
+    *   Allow different overall rates $r_k$ for partitions.
+        *   Priors on $r_k$: Dirichlet for relative rates, or i.i.d. $r_i \sim G(\alpha,\alpha)$ (mean 1).
+    *   Can also have different substitution model parameters (e.g., $\kappa_k, \pi_k$) per partition.
+    *   Within each partition, can further use a mixture model (e.g., +$\Gamma$) for remaining rate heterogeneity.
+
+### 8.2.3 Priors on Tree Topology
+*   **8.2.3.1 Prior on Rooted Trees:**
+    *   Often generated by a stochastic model of cladogenesis (speciation/extinction).
+    *   **Yule Process (Pure Birth):** Generates labeled histories with equal probability.
+    *   **Birth-Death-Sampling Process (Yang & Rannala 1997):** Parameters $\lambda$ (birth), $\mu$ (death), $\rho$ (sampling fraction). Also generates labeled histories with equal probability. Used for divergence time estimation.
+*   **8.2.3.2 Prior on Unrooted Trees:**
+    *   **Uniform Prior:** Common. $P(\tau_i) = 1/U_s$, where $U_s$ is total number of unrooted trees for $s$ species.
+    *   **Problem (Pickett & Randle 2005; Steel & Pickett 2006):** Uniform prior on trees induces a *non-uniform* prior on splits/clades. Smallest (2 taxa) and largest ($s-2$ taxa) splits are combinatorially more frequent among all possible trees than intermediate-sized splits.
+    *   This can lead to spuriously high posterior probabilities for incorrect small/large splits, especially if data is uninformative about a "rogue" taxon (Fig 8.3).
+
+## 8.3 MCMC Proposals in Bayesian Phylogenetics
+
+This section details the MCMC proposal mechanisms used for updating parameters within a fixed tree topology (within-tree moves) and for changing the tree topology itself (cross-tree moves).
+
+### 8.3.1 Within-Tree Moves
+
+These proposals modify parameters like branch lengths or substitution model parameters without altering the tree topology. Standard Metropolis-Hastings (MH) algorithms are used.
+
+#### 8.3.1.1 Updating Branch Lengths ($t_i$)
+*   **Individual Branch Length Updates:**
+    *   Update one branch length at a time using a sliding window (uniform, normal, or Bactrian proposal) or a multiplier (proportional scaling, see §7.2.1-5).
+    *   Updating all in a fixed order can be computationally advantageous (saves re-calculating parts of the likelihood).
+    *   Step length/multiplier size adjusted during burn-in for good mixing ($P_{jump} \approx 30-40\%$).
+    *   Multiplier proposal (log-scale sliding window) is often more suitable as longer branches tend to have larger variances and can take larger steps proportionally.
+*   **Scaling the Whole Tree:**
+    *   Apply a single multiplier $c$ to *all* branch lengths simultaneously ($t_i' = c \cdot t_i$). Proposal ratio is $c^{N_b}$ where $N_b$ is the number of branches (§7.2.5).
+    *   Useful for bringing all branch lengths into the correct scale, or for dealing with correlation between overall tree length and parameters like $\alpha$ (gamma shape).
+*   **Scaling a Subtree:**
+    *   Select an internal node $x$ (and its mother $a$). Propose a new age $t_x'$ for node $x$ (reflected into range $(0, t_a)$).
+    *   Scale all node ages within the clade defined by $x$ proportionally: $t_j' = t_j \times (t_x'/t_x)$. (Fig 8.4)
+    *   The proposal ratio for this scaling part is $(t_x'/t_x)^m$, where $m$ is the number of internal nodes within the clade $x$.
+*   **Branch Length Constraints:**
+    *   Branch lengths $t_i \ge 0$.
+    *   Problems near zero:
+        1.  $P(\text{data})$ can become 0 or negative due to rounding errors if tree distance between two different sequences is close to zero.
+        2.  If $t_i=0$, multiplier moves will keep it at 0.
+    *   **Solution:** Apply minimum bounds (e.g., $t_i > 10^{-6}$ for external, $t_i > 10^{-8}$ for internal). Reflect proposals into the bounded range. Truncation effect on prior usually negligible.
+
+#### 8.3.1.2 Updating Substitution Parameters
+*   Standard MH proposals for parameters like $\kappa$ (Ts/Tv ratio) or $\alpha$ (gamma shape).
+*   **Nucleotide Frequencies $\pi = (\pi_T, \pi_C, \pi_A, \pi_G)$:** Sum to 1.
+    *   Sample new frequencies $\pi'$ from a Dirichlet distribution centered on current $\pi$: $\pi' \sim \text{Dir}(\alpha_0\pi_T, \alpha_0\pi_C, \alpha_0\pi_A, \alpha_0\pi_G)$. $\alpha_0$ is a concentration parameter (step length).
+    *   Proposal ratio: $q(\pi|\pi')/q(\pi'|\pi) = \frac{\prod \Gamma(\alpha_0\pi_i') \cdot (\pi_i)^{\alpha_0\pi_i'-1}}{\prod \Gamma(\alpha_0\pi_i) \cdot (\pi_i')^{\alpha_0\pi_i-1}}$. (Eq 8.19)
+    *   Simpler: Pick two frequencies (e.g., $\pi_i, \pi_j$), keep sum $s=\pi_i+\pi_j$ fixed. Propose $\pi_i'$ from $U(0,s)$ (reflected), set $\pi_j' = s-\pi_i'$. Proposal ratio is 1. (1D move).
+*   Amino acid/codon frequencies updated similarly.
+
+### 8.3.2 Cross-Tree Moves
+Proposals that change the tree topology $\tau$. These are more complex as they are moves between different statistical models.
+
+#### 8.3.2.1 Proposals and Proposal Ratios (General)
+*   A move from state $x=(\tau, t)$ to $x'=(\tau', t')$ can be broken into component steps. If $x \to y \to z \to x'$, then the proposal ratio is a product of ratios for component steps:
+    $\frac{q(x|x')}{q(x'|x)} = \frac{q(x|y)}{q(y|x)} \times \frac{q(y|z)}{q(z|y)} \times \frac{q(z|x')}{q(x'|z)}$ (Eq 8.20)
+*   **Typical Two-Step Cross-Tree Move for NNI:**
+    1.  $(\tau, t) \to (\tau', t)$: Change topology (e.g., NNI). Symmetrical, component proposal ratio is 1.
+    2.  $(\tau', t) \to (\tau', t')$: Modify branch lengths for the new topology $\tau'$.
+*   **Acceptance Rate (from §7.4.2.2, Eq 7.63 for trans-model MCMC):**
+    $\alpha = \frac{f(\tau', t'|X)}{f(\tau, t|X)} \times \frac{r_{\tau'\tau}}{r_{\tau\tau'}} \times \frac{q((\tau,t)|(\tau',t'))}{q((\tau',t')|(\tau,t))}$ (Eq 8.21)
+    where $f(\cdot|X)$ is posterior, $r_{\tau\tau'}$ is probability of proposing topology $\tau'$ given current $\tau$, and the last term is the branch length proposal ratio.
+*   **Key Questions for Designing Cross-Tree Moves:**
+    i.  **Computational Effort:** How to divide between cross-tree and within-tree moves? (More mobile chain is better, so frequent cross-tree moves are desired. New branch lengths are automatically from posterior for the new tree if accepted, no need for many within-tree moves in the new tree immediately after a jump).
+    ii. **Tree Perturbation Algorithm:** NNI (local), SPR/TBR (global). Choice depends on tree space landscape.
+    iii. **Generating Branch Lengths for New Tree $\tau'$:** Crucial for acceptance. Aim to propose "good" branch lengths.
+
+#### 8.3.2.2 Criteria for Evaluating Cross-Tree Moves
+*   Evaluate MCMC mixing efficiency across trees using posterior probabilities of splits.
+*   Define a distance from "true" split probabilities (from a very long reference run) to estimates from test chain: $\delta_n = \max_i |\hat{p}_i - p_i|$ (Eq 8.22). Average $\delta_n$ over replicate runs.
+
+#### 8.3.2.3 Empirical Observations on Branch Lengths in Different Trees
+*   **Example (5 ape species mtDNA, Fig 8.5):**
+    *   MLEs of branch lengths for 15 unrooted trees under JC69.
+    *   Good trees (high likelihood) have similar ML tree lengths and MP tree lengths.
+    *   External branch lengths are quite similar across trees.
+    *   Internal branch lengths are very similar for trees that share that internal branch (e.g., the (HC)G split, if present, has similar length).
+    *   If a split is not supported by data (tree containing it has low likelihood), its branch length tends to be short, while branches within the incorrect subtrees might become long.
+*   These observations can guide how branch lengths are proposed for new topologies.
+
+### 8.3.3 NNI for Unrooted Trees
+*   **Basic NNI (Fig 8.6):**
+    1.  Select an internal branch (focal branch $u-v$) at random. This defines 4 subtrees $a,b,c,d$. Current tree is e.g., $((a,b),c,d)$.
+    2.  Choose one of the two alternative NNI neighbors (e.g., $((a,c),b,d)$) at random.
+    3.  **Branch Length Transfer:** Simplest: transfer branch lengths from old tree to new tree without alteration (e.g., length of $u-v$ becomes length of new internal branch).
+    *   Proposal ratio for this basic NNI is 1 (both topology choice and branch length transfer are symmetric).
+*   **Random Modification (Multiplier):** Can apply a multiplier $c = e^{\lambda(u-1/2)}$ to the internal branch length $t_0$. Proposal ratio becomes $c$. (But this might reduce acceptance).
+*   **LOCAL Move (Larget and Simon 1999):** (Fig 8.6a)
+    1.  Pick focal internal branch $u-v$. Choose one branch from each end (e.g., $b-u, v-c$) to form a 3-branch backbone $b-u-v-c$.
+    2.  Multiply these 3 lengths ($t_b, t_0, t_c$) by a common multiplier $c$. This step contributes $c^3$ to proposal ratio.
+    3.  Select one end of $u-v$ (e.g., $u$). Move $u$ and its other attached subtree ($a$) to a random location along the $b-u-v-c$ backbone. This step is symmetrical (proposal ratio 1).
+    *   Overall proposal ratio $c^3$. (Holder et al. 2005 corrected original $c^2$).
+    *   Mixture of within-tree and cross-tree moves. Random modification of 3 branches might be detrimental to cross-tree acceptance.
+*   **Lakner et al. NNI Variant:**
+    *   Choose one of 3 topologies around focal branch with probability $1/3$.
+    *   Modify all 5 branches around focal point with independent multipliers. (Proposal ratio is product of multipliers). This extensive random modification is likely poor for acceptance.
+*   **Selection of Target Tree:** Random choice of NNI neighbor might not be optimal.
+    *   Can use weights (e.g., based on parsimony scores $s_\tau, s_{\tau'}$) to propose target trees: $r_{\tau\tau'} = w_{\tau\tau'} / \sum_j w_{\tau j}$, where $w_{\tau\tau'} = e^{-\beta(s_{\tau'}-s_\tau)}$. (Eq 8.24)
+
+### 8.3.4 SPR for Unrooted Trees
+*   **Algorithm (Fig 8.7a,b):**
+    1.  Choose a focal branch $a$ (connecting subtrees $A$ and $B$). Prune $A$ (with $a$).
+    2.  Choose a random regrafting branch $r$ in the remaining tree $B$.
+    3.  Break $r$ into $x'$ and $r'$ by $u \sim U(0,1)$ ($x'=ru, r'=r(1-u)$). Reattach $A$ via branch $a$.
+*   **Proposal Ratio (branch lengths):** Original branches $p,x,r$ become $p' = p+x$, $a$ (reattached), $x'$, $r'$. (Mapping Fig 8.7b).
+    *   Mapping: $(p,x,r,u) \leftrightarrow (p',x',r',u')$. $u' = x'/(x'+p')$.
+    *   Jacobian $| \frac{\partial(p',x',r',u')}{\partial(p,x,r,u)} | = r/(x+p)$. (Eq 8.26)
+    *   Proposal ratio (if $u \sim U(0,1)$ and reverse $u'$ is calculated): $r/(x+p)$.
+*   **Lakner et al. SPR Variants (rSPR, eSPR):**
+    *   Select internal branches as focal.
+    *   **rSPR:** Random pruning and regrafting.
+    *   **eSPR (Extending SPR):** Scheme to give different probabilities to neighbors (favors local moves).
+    *   **Branch Length Transfer (Fig 8.7c):** Move branch $x$ (on backbone) along with $A$. $p,a,r$ lengths preserved. $b_1, b_2, \dots$ on backbone are split/merged. If only $x$ is between $a$ and $r$, it's NNI-like. Proposal ratio 1 for this transfer.
+    *   If SPR is not NNI, transferring $x$ might be too disruptive. Fig 8.7b strategy (breaking/merging) might be better.
+    *   Lakner et al. also apply random multipliers to $a$ and $x$, likely reducing acceptance.
+
+### 8.3.5 TBR for Unrooted Trees
+*   **Algorithm (Fig 8.8):**
+    1.  Cut an internal bisection branch $a$, splitting tree into $X, Y$.
+    2.  Choose reconnecting branch $x$ in $X$ and $y$ in $Y$.
+    3.  Generate $r_1, r_2 \sim U(0,1)$. Break $x$ into $x', t'$ ($x'=xr_1, t'=x(1-r_1)$). Break $y$ into $y', v'$ ($y'=yr_2, v'=y(1-r_2)$).
+    4.  Reconnect by joining new node to $x'$ and $y'$, with new internal branch $a'$ (length of old $a$).
+*   **Branch Length Mapping (Fig 8.8a-c):** Old $s,t$ merge to $s'$. Old $u,v$ merge to $u'$.
+    $$
+    x \to x', t'\\
+    y \to y', v'\\
+    s, t \to s' = s+t\\
+    u, v \to u' = u+v\\
+    a \to a'\\
+    $$
+*   **Proposal Ratio (branch lengths):**
+    Jacobi determinant of $(x,t,s,y,v,u,r_1,r_2) \leftrightarrow (x',t',s',y',v',u',r_1',r_2')$ is $xy/[(s+t)(u+v)]$. (Eq 8.28)
+    This is the proposal ratio if $r_1, r_2 \sim U(0,1)$.
+*   TBR affects many branches but preserves relationships within $X$ and $Y$.
+
+### 8.3.6 Subtree Swapping (STS)
+*   **Algorithm (Fig 8.9):**
+    1.  Pick two (non-adjacent) branches $x, y$ with their subtrees $X, Y$.
+    2.  Swap them. Branch lengths $x,y$ are transferred without alteration.
+*   **Proposal Ratio:** 1.
+*   NNI is a special case.
+*   **eSTS (Lakner et al.):** Extension mechanism favoring local swaps. Applies multipliers to backbone branches, may reduce acceptance.
+
+### 8.3.7 NNI for Rooted Trees
+*   Parameters are node ages $t_u, t_v, \dots$. Constraint: $t_{child} < t_{parent}$.
+*   **NNI Move (Fig 8.10):**
+    *   Internal branch $u-v$ defines 3 subtrees $a,b$ (daughters of $v$) and $c$ (sibling of $v$). Current tree $\tau_1 = ((a,b)v, c)u$.
+    *   Alternatives: $\tau_2 = ((c,a)v, b)u$, $\tau_3 = ((b,c)v, a)u$.
+*   **Drummond et al. (2002) "Narrow Exchange":**
+    *   Choose one of $\tau_2, \tau_3$ at random. Swap if node age constraints are met (e.g., for $\tau_2$, need $t_c < t_v$).
+    *   Node ages are *not changed*. Proposal ratio is 1.
+*   **Kuhner et al. (1995), Larget & Simon (1999 "LOCAL with clock"):**
+    *   Modify ages $t_u, t_v$. Other ages fixed.
+    *   $t_u', t_v'$ generated (e.g., uniformly between $t_w$ and older of $t_a, t_b, t_c$).
+    *   Mixture of within-tree and cross-tree.
+    *   Better to keep $t_u$ (height of clade $(abc)$) unchanged for cross-tree moves.
+
+### 8.3.8 SPR on Rooted Trees
+*   **Algorithm (Fig 8.11, Wilson & Balding 1998; Rannala & Yang 2003):**
+    1.  Prune subtree $x$ (by cutting branch $a-x$, mother of $x$ is $a$).
+    2.  Select random reattachment node $y$ in remaining tree.
+    3.  Generate new age for node $a$, $t_a'$.
+        *   If $y$ is not root: $t_a' \sim U(\max(t_x, t_y), t_b)$ where $b$ is mother of $y$.
+        *   If $y$ is root: $t_a' \sim \text{Exp}$ above $t_x$.
+*   **Proposal Ratio (Rannala & Yang 2003):** $n/m$, where $m$ is number of feasible reattachment branches in forward move (given $t_a'$), $n$ is for reverse move (given $t_a$).
+    *   If root changes, ratio involves ratio of uniform and exponential densities (Eq 8.29).
+
+### 8.3.9 Node Slider
+*   Slides an internal node $x$ (mother $a$) along the tree. (Fig 8.12)
+    1.  Choose non-root internal node $x$.
+    2.  Generate new age $t_a^*$ for its mother $a$ using sliding window. (Symmetric proposal, factor 1).
+    3.  Slide $a$ (with $x$) up/down according to $t_a^*$. Path chosen with equal probability at bifurcations. If tip is hit, reflect.
+    4.  Let final age of $a$ be $t_a'$. Scale all $m$ nodes inside subtree $x$ by factor $t_a'/t_a$.
+*   **Proposal Ratio:** $(t_a'/t_a)^m$.
+*   Mixture of local/global, within/cross-tree.
+
+## 8.4 Summarizing MCMC Output
+*   **Point Estimate of Tree:** Maximum A Posteriori (MAP) tree (topology with highest posterior probability). Should be similar to ML tree if data is informative.
+*   **Credibility Set of Trees:** Smallest set of trees whose cumulative posterior probability exceeds threshold (e.g., 95%).
+*   **Posterior Split/Clade Probabilities:** Proportion of sampled trees (post burn-in) that contain a specific split. Usually shown on a majority-rule consensus tree or MAP tree.
+*   **Concerns:**
+    *   Consensus tree may not be any of the sampled trees.
+    *   Uniform prior on trees induces non-uniform prior on splits (Pickett & Randle 2005), potentially biasing split posteriors if data is weak.
+*   Posterior means of branch lengths on consensus trees should be interpreted cautiously, better to fix topology if branch lengths are primary interest.
+
+## 8.5 High Posterior Probabilities for Trees
+
+Bayesian posterior probabilities for trees/splits are often very high (e.g., close to 1.0), even when bootstrap support is lower or relationships are known to be difficult.
+
+### 8.5.1 High Posterior Probabilities for Trees or Splits
+*   **Observation:** Posterior probabilities (PPs) from MrBayes etc. are often much higher than bootstrap values.
+*   **Reasons for Spurious High PPs:**
+    1.  **Errors:** Theory faults, program bugs, MCMC convergence/mixing problems (chain stuck in local peak). Generally less likely to be the fundamental reason for widespread observation.
+    2.  **Model Misspecification:** Using overly simplistic/wrong models can inflate PPs. (Though high PPs seen even when true model is used in simulations).
+    3.  **Impact of Prior & Asymptotic Behavior of Bayesian Model Selection:** This is considered a major factor. Bayesian model selection is consistent (converges to true model as data size $n \to \infty$). If multiple models are "equally wrong" or equally close to true, Bayesian selection tends to pick one with posterior probability approaching 1, even if data doesn't strongly differentiate them.
+
+### 8.5.2 Star Tree Paradox
+*   **Scenario (Fig 8.13):** Data simulated under a star tree (no resolution). Bayesian analysis of binary trees.
+*   **Intuition:** PPs for the 3 binary trees should approach $1/3$.
+*   **Actual Behavior (Lewis et al. 2005; Yang & Rannala 2005):** One of the binary trees gets PP close to 1, others close to 0. The favored tree varies randomly among datasets. (Distribution Fig 8.14).
+*   This is an extreme example of Bayesian methods giving confident (but arbitrary) answers when data lacks information.
+
+### *8.5.3 Fair Coin Paradox, Fair Balance Paradox, and Bayesian Model Selection
+Examines simple cases to understand Bayesian model selection behavior with large data.
+*   **8.5.3.1 Simple Models (No Free Parameters, Fig 8.15a):**
+    *   Data from $N(0,1)$. Compare $H_1: \mu=\mu_1$ vs $H_2: \mu=\mu_2$.
+    *   If $\mu_1, \mu_2$ are equally wrong (e.g., $\mu_1 = -0.1, \mu_2 = 0.1$), as $n \to \infty$, $P(H_1|X)$ converges to a 2-point distribution (0 or 1, each with prob 1/2). (Fig 8.16a).
+    *   If $H_1$ is less wrong than $H_2$ (e.g., $\mu_1=-0.1, \mu_2=0.2$), $P(H_1|X) \to 1$. (Fig 8.16b).
+    *   Bayesian selection becomes certain even if choosing between wrong models.
+*   **8.5.3.2 Composite Models (With Free Parameters):**
+    *   **Overlapping Models, Truth in Overlap (Fig 8.15b):** e.g., $H_1: \theta \in [0, 0.6]$, $H_2: \theta \in [0.4, 1.0]$. True $\theta_0=0.5$. $P(H_1|X) \to 1/2$. Desirable behavior.
+    *   **Models Bordering at Truth (Fig 8.15c, Star Tree Paradox is an instance):** e.g., $H_1: \mu<0$, $H_2: \mu>0$. True $\mu_0=0$. Data from $N(0,1)$, prior $\mu \sim N(0, \sigma_p^2)$ truncated. $P(H_1|X)$ converges to $U(0,1)$ distribution. (Fig 8.17).
+    *   **Models Crossing at Truth (Fig 8.15d):** e.g., Data $N(0,1)$. $H_1: X \sim N(\mu,1)$ (unknown $\mu$). $H_2: X \sim N(0, 1/\beta)$ (unknown precision $\beta$). $P(H_1|X)$ converges to a U-shaped distribution (peaks at 0 and 1). (Fig 8.18).
+
+### 8.5.4 Conservative Bayesian Phylogenetics
+Attempts to alleviate overly confident PPs.
+*   **Yang & Rannala (2005):** Exponential priors on internal ($\mu_0$) and external ($\mu_1$) branch lengths. Suggested small $\mu_0$ for internal branches (data size dependent, e.g., $\mu_0 = 0.1n^{-2/3}$).
+*   **Polytomy Prior (Lewis et al. 2005):** Assign non-zero prior probability to multifurcating (star-like) trees. This resolves star tree paradox (posterior will favor star tree if data supports it). Computationally more complex (rjMCMC).
+*   **Example (Apes, Fig 8.19):** Using different priors on internal branch lengths (default i.i.d. Exp(0.1); Exp with mean $0.1n^{-2/3}$; gamma-Dirichlet) for the 7 ape mtDNA dataset. All priors give PPs of 1.0 for all splits in the MAP tree (which is the ML tree). This suggests for this very informative dataset, the prior on branch length has little impact on split PPs, although it can affect branch length estimates.
+
+# Chapter 9: Coalescent Theory and Species Trees
+
+This chapter reviews computational methods for analyzing genetic and genomic sequence data under the coalescent model, applicable to samples from a single species or multiple closely related species. The focus is on likelihood-based inference methods.
+
+## 9.1 Overview
+*   **Coalescent Model:** Framework for analyzing sequence data from one or more populations/species.
+    *   **Single Population Coalescent (§9.2):** Basic model.
+    *   **Multispecies Coalescent (§9.3 onwards):** Extends to multiple closely related species, providing a framework for:
+        *   Estimating species trees despite conflicting gene trees.
+        *   Bayesian species delimitation.
+*   **Interface of Population Genetics and Phylogenetics:** Statistical analysis of sequence data from closely related species (statistical phylogeography) draws from both fields. Bayesian MCMC algorithms share similarities (sampling in tree space, calculating likelihoods).
+*   **Scope:** Focus on sequence data. Recombination and selection are not covered. Other data types (RFLPs, microsatellites, SNPs) are ignored.
+*   **Trends in Theoretical Population Genetics:**
+    1.  Shift from probabilistic predictions of model behavior to **statistical inference** (parameter estimation, hypothesis testing) driven by the availability of genomic data.
+    2.  The **coalescent approach** has become central to statistical methods for comparative data analysis.
+
+## 9.2 The Coalescent Model for a Single Species
+
+### 9.2.1 The Backward Time Machine
+*   **Coalescence:** The merging or joining of ancestral lineages when tracing genealogy backwards in time.
+*   **Kingman's Coalescent (1980s):** A genealogical process modeling the joining of lineages backwards in time.
+*   **Contrast with Classical (Forward) Population Genetics:**
+    *   **Forward:** Models allele frequency changes over generations under mutation, drift, selection, etc.
+    *   **Backward (Coalescent):** Focuses on the genealogy of a *sample* of genes, tracing lineages back to their Most Recent Common Ancestor (MRCA). Ignores individuals not ancestral to the sample.
+*   **Advantages of Coalescent:**
+    *   Modeling genealogy backward is often easier under neutral models with random mating.
+    *   Allows separation of genealogical process (tree structure, coalescent times) from mutational process (mutations dropped onto the tree).
+*   **Focus of Study:** In molecular phylogenetics, the species phylogeny is often the primary interest. In coalescent analyses, the genealogy is usually a means to infer population parameters or demographic history.
+
+### 9.2.2 Fisher-Wright Model and the Neutral Coalescent
+*   **Fisher-Wright Model (Idealized):** (Fig 9.1a)
+    *   Constant diploid population size $N$ (so $2N$ gene copies).
+    *   Non-overlapping generations.
+    *   Random mating (panmixia).
+    *   Neutral evolution (no selection).
+    *   No recombination within a locus, free recombination between loci.
+*   **Effective Population Size ($N_e$):** The size of an idealized Fisher-Wright population that would experience the same amount of genetic drift as the real population. $N_e$ is often smaller than census size $N$ due to factors like biased sex ratio, changing population size (bottlenecks reduce $N_e$ via harmonic mean). Hereafter, $N$ usually means $N_e$.
+*   **Coalescence of Two Genes:**
+    *   In a diploid population of size $N$, the probability that two gene lineages pick the same parent in the previous generation (coalesce) is $1/(2N)$.
+    *   Probability they do *not* coalesce in the previous generation is $1 - 1/(2N)$.
+    *   Probability they do not coalesce in the first $i$ generations: $P(T'_2 > i) = (1 - 1/(2N))^i$. (Eq 9.1)
+    *   Probability they coalesce exactly $i$ generations ago: $P(T'_2 = i) = (1 - 1/(2N))^{i-1} \times (1/(2N))$. (Eq 9.2)
+    *   $T'_2$ (time to coalescence in generations) follows a geometric distribution with mean $2N$.
+*   **Rescaled Time ($T_2$):** Time measured in units of $2N$ generations. $T_2 = T'_2 / (2N)$.
+    *   For large $N$, $P(T_2 > t) = P(T'_2 > 2Nt) = (1 - 1/(2N))^{2Nt} \approx e^{-t}$. (Eq 9.3)
+    *   $T_2$ follows an exponential distribution with mean 1 and density $f(T_2) = e^{-T_2}$. (Eq 9.4)
+*   **Mutation Time Scale ($t_2$):** Time measured in expected number of mutations per site. $t_2 = T'_2 \mu = T_2 \cdot (2N\mu) = T_2 \cdot (\theta/2)$, where $\mu$ is mutation rate per site per generation.
+    *   **Population Size Parameter $\theta = 4N\mu$.** This is a measure of genetic diversity.
+    *   $t_2$ follows an exponential distribution with mean $\theta/2$ and density $f(t_2) = (2/\theta) e^{-(2/\theta)t_2}$. (Eq 9.5)
+    *   Coalescent events occur at rate $2/\theta$ when time is measured in mutations.
+    *   For humans, $\theta \approx 0.0006$ (0.6 per kb). Given generation time $g \approx 20$ yrs and $\mu/g \approx 1.2 \times 10^{-9}$ mutations/site/year, $N_e \approx 6250$.
+
+### 9.2.3 A Sample of $n$ Genes
+*   Consider $n$ gene lineages. Probability that no pair coalesces in the previous generation:
+    $\approx 1 - \binom{n}{2} \frac{1}{2N}$ (Eq 9.6)
+    (Each of $\binom{n}{2}$ pairs has $1/(2N)$ chance to coalesce; assumes $n \ll N$).
+*   $T'_n$: Waiting time (generations) until the *next* coalescent event when there are $n$ lineages.
+    *   $P(T'_n = i) = \left(1 - \binom{n}{2}\frac{1}{2N}\right)^{i-1} \times \binom{n}{2}\frac{1}{2N}$. (Eq 9.7)
+    *   Geometric distribution with mean $2N / \binom{n}{2}$.
+*   Rescaled time $T_j = T'_j / (2N)$: Waiting time (in $2N$ units) when there are $j$ lineages.
+    *   $T_j \sim \text{Exp}(\text{rate} = \binom{j}{2})$ with mean $2/(j(j-1))$. (Eq 9.8)
+*   **Genealogy:** A random bifurcating tree. The $n-1$ coalescent times $T_n, T_{n-1}, \dots, T_2$ are independent exponential variables.
+*   The genealogical tree is a **labeled history** (ranking of nodes by age matters, §3.1.1.5). Number of labeled histories $H_n = n!(n-1)!/2^{n-1}$. (Eq 9.9) Each has probability $1/H_n$.
+*   Joint density of coalescent times for a given labeled history $G$:
+    $f(T_n, T_{n-1}, \dots, T_2 \vert G) = \prod_{j=2}^n \left[ \binom{j}{2} \exp\left(-\binom{j}{2}T_j\right) \right]$. (Eq 9.10)
+*   Joint density of tree $G$ and times: $f(G, T_n, \dots, T_2) = \prod_{j=2}^n \exp\left(-\binom{j}{2}T_j\right)$. (Eq 9.11)
+*   **Time to MRCA ($T_{MRCA}$):** $T_{MRCA} = T_n + T_{n-1} + \dots + T_2$. (Eq 9.12)
+    *   $E(T_{MRCA}) = \sum_{j=2}^n \frac{2}{j(j-1)} = 2(1 - 1/n)$. (Eq 9.13)
+    *   $V(T_{MRCA}) = \sum_{j=2}^n \left(\frac{2}{j(j-1)}\right)^2$.
+    *   For large $n$, $E(T_{MRCA}) \approx 2$ (in $2N$ units). Variation mostly from $T_2$.
+*   **Total Tree Length ($T_{total}$):** Sum of all branch lengths = $\sum_{j=2}^n j T_j$. (Fig 9.2)
+    *   $E(T_{total}) = \sum_{j=2}^n j \frac{2}{j(j-1)} = 2 \sum_{j=1}^{n-1} \frac{1}{j}$. (Eq 9.14)
+    *   Grows slowly with $n$ (approx $2(\gamma + \log n)$, $\gamma \approx 0.577$ Euler's constant).
+*   Probability that MRCA of sample is MRCA of whole population: $(n-1)/(n+1)$.
+*   Coalescent trees are very variable, short tips, long near-root branches (Fig 9.3). Increasing sample size $n$ is ineffective for inferring ancient events or $\theta$.
+
+### 9.2.4 Simulating the Coalescent
+*   **Forward Simulation:** Tracks all $2N$ gene copies. Computationally intensive.
+*   **Coalescent (Backward) Simulation:** Tracks only ancestors of the sample. Much more efficient.
+    1.  **Algorithm 9.1 (Mutations and Coalescences as Competing Poisson Events):**
+        *   Start with $k=n$ lineages.
+        *   Waiting time to next event (coalescence or mutation) is $\text{Exp}(\text{rate}_c + \text{rate}_m)$, where $\text{rate}_c = \binom{k}{2}$ (coalescence rate in $2N$ units) and $\text{rate}_m = kl(\theta/2)$ (total mutation rate for $k$ lineages, $l$ sites).
+        *   If event is coalescence (prob $\text{rate}_c / (\text{rate}_c + \text{rate}_m)$), pick two lineages to merge, $k \to k-1$.
+        *   If mutation (prob $\text{rate}_m / (\text{rate}_c + \text{rate}_m)$), pick a lineage and site to mutate.
+        *   Repeat until $k=1$.
+    2.  **Algorithm 9.2 (Genealogy First, then Mutations):** Preferred.
+        *   1. Set $k=n$.
+        *   2. Loop until $k=1$:
+            *   Generate waiting time $T_k \sim \text{Exp}(\binom{k}{2})$.
+            *   Choose a random pair from $k$ lineages to join. $k \to k-1$.
+        *   3. Generate root sequence. Evolve along branches (length $T_k \times \theta/2$ in mutations) to get tip sequences.
+
+### 9.2.5 Estimation of $\theta$ from a Sample of DNA Sequences
+*   **9.2.5.1 Estimation under the Infinite-Site Model:** Assumes every new mutation occurs at a new site.
+    *   **One Locus, Two Sequences ($n=2$):**
+        *   Number of differences $x$ (given $T_2$) $\sim \text{Poisson}(T_2 \cdot l\theta)$. Averaging over $T_2 \sim \text{Exp}(1)$:
+            $P(x) = \frac{(l\theta)^x}{(1+l\theta)^{x+1}}$ (Geometric distribution with mean $l\theta$). (Eq 9.16)
+    *   **One Locus, Many Sequences ($n>2$):**
+        *   $S_n$: number of segregating (variable) sites. Given $T_{total}$, $S_n \sim \text{Poisson}(T_{total} \cdot l\theta/2)$.
+        *   $E(S_n) = l\theta \sum_{j=1}^{n-1} (1/j)$.
+        *   **Watterson's Estimator $\hat{\theta}_S = S_n / (l \sum_{j=1}^{n-1} (1/j))$.** (Eq 9.18)
+        *   **Tajima's Estimator $\hat{\theta}_\pi = \pi/l$,** where $\pi$ is average pairwise differences.
+    *   **Many Loci ($L$), Two Sequences:**
+        *   Log-likelihood: $l(\theta) = \sum_{i=1}^L \left[ x_i \log \frac{l_i\theta}{1+l_i\theta} - \log(1+l_i\theta) \right]$. (Eq 9.19) MLE $\hat{\theta}$ found numerically.
+*   **9.2.5.2 Estimation under a Finite-Site Model (e.g., JC69):** Allows multiple hits.
+    *   **Two Sequences:** Coalescent time $t \sim \text{Exp}(2/\theta)$ (in mutations per site). (Eq 9.20)
+        *   Given $t$, probability of $x_i$ differences at locus $i$ with $l_i$ sites (using JC69, $p(t) = \frac{3}{4}(1-e^{-8t/3})$ is prob. of difference per site):
+            $f(x_i|t) = \binom{l_i}{x_i} [p(t)]^{x_i} [1-p(t)]^{l_i-x_i}$.
+        *   Likelihood for locus $i$: $f(x_i|\theta) = \int_0^\infty f(t|\theta) f(x_i|t) dt$. (Eq 9.22)
+        *   Total log-likelihood: $l(\theta) = \sum_{i=1}^L \log f(x_i|\theta)$. (Eq 9.23)
+    *   **Many Sequences ($n_i>2$ at locus $i$):**
+        *   Joint density of gene tree $G_i$ and coalescent times $t_i$ (in mutations): $f(G_i, t_i|\theta)$ (Eq 9.24, scaling Eq 9.11 by $\theta/2$).
+        *   Log-likelihood: $l(\theta) = \sum_{i=1}^L \log \left[ \sum_{G_i} \int_{t_i} f(G_i, t_i|\theta) f(X_i|G_i, t_i) dt_i \right]$. (Eq 9.25)
+            $f(X_i|G_i, t_i)$ is the standard phylogenetic likelihood.
+        *   Summation/integration is intractable for ML.
+    *   **Bayesian MCMC (Algorithm 9.3, Rannala & Yang 2003):**
+        *   Joint posterior: $f(\theta, G, t|X) \propto f(\theta) \prod_{i=1}^L [f(G_i, t_i|\theta) f(X_i|G_i, t_i)]$. (Eq 9.26)
+        *   MCMC steps:
+            1. Propose changes to coalescent times $t_i$ in each gene tree.
+            2. Propose changes to genealogy $G_i$ (e.g., SPR).
+            3. Propose change to $\theta$.
+            4. Propose change to all coalescent times using a multiplier.
+    *   **Example 9.1 (Human $\theta$ from 3 loci, Fig 9.4):** Posterior mean $\hat{\theta} \approx 0.00053$.
+
+## 9.3 Population Demographic Process
+
+Using multi-locus data to infer demographic history (population size changes).
+
+### 9.3.1 Homogeneous and Nonhomogeneous Poisson Processes
+*   **Homogeneous Poisson Process:** Events occur at constant rate $\lambda$.
+    *   Number of events in $(0,T)$ is $\text{Poisson}(\lambda T)$. Density $p_k = e^{-\lambda T}(\lambda T)^k/k!$. (Eq 9.27)
+    *   Waiting times between events are $\text{Exp}(\lambda)$.
+*   **Nonhomogeneous Poisson Process:** Event rate $\lambda(t)$ varies with time.
+    *   Number of events in $(0,T)$ is $\text{Poisson}(\bar{\lambda}T)$, where $\bar{\lambda} = \frac{1}{T}\int_0^T \lambda(t)dt$. (Eq 9.28, 9.29)
+    *   Joint PDF for $k$ events at times $y_1, \dots, y_k$ in $(0,T)$:
+        $\left[ \prod_{i=1}^k \lambda(y_i) \right] \times \exp\left(-\int_0^T \lambda(s)ds\right)$. (Eq 9.31)
+
+### 9.3.2 Deterministic Population Size Change
+*   Coalescent is a variable-rate Poisson process. If $j$ lineages exist at time $t$ (ago), coalescent rate (in mutations/site) is $\lambda(t) = \binom{j}{2} \frac{2}{\theta(t)}$. (Eq 9.32)
+*   Joint density of gene tree $G$ and coalescent times $(t_n, \dots, t_2)$:
+    $f(G, t_n, \dots, t_2) = \left( \prod_{j=2}^n \frac{2}{\theta(t_j)} \right) \times \exp \left( -\sum_{j=2}^n \int_{t_{j+1}}^{t_j} \binom{j}{2} \frac{2}{\theta(s)} ds \right)$. (Eq 9.33)
+    (Product of rates at coalescent events $\times$ prob. of no other events).
+*   **Exponential Growth Model:** $\theta(t) = \theta_0 e^{-rt}$. (Population grows forward, so size parameter decreases backward). Integral is tractable. (Eq 9.34)
+
+### 9.3.3 Nonparametric Population Demographic Models
+Avoid strong assumptions of specific functional forms for $\theta(t)$.
+*   **Piecewise Constant (Change-Point) Model (Fig 9.5a):** $\theta(t)$ is constant within segments defined by $K$ change points $s_1, \dots, s_K$. Parameters: $s_k$'s and $\theta_k$'s. (Drummond et al. 2005, Bayesian skyline plot).
+*   **Piecewise Linear Model (Fig 9.5b):** $\theta(t)$ is linear between change points. Integral $\int 1/\theta(s)ds = \int 1/(as+b)ds = \frac{1}{a}\log|\frac{at_1+b}{at_0+b}|$. (Eq 9.35) (Opgen-Rhein et al. 2005; Heled & Drummond 2008).
+*   **Implementations:**
+    *   Bayesian Skyline Plot (BEAST): Piecewise constant, works for one locus. Extended to multiple loci.
+    *   Bayesian Skyride (Minin et al. 2008): Uses Gaussian random field prior for $\log \theta(t)$.
+    *   Number of change points $K$ can be fixed or estimated (rjMCMC). Concern: assumption that population size changes coincide with coalescent events in some implementations.
+
+## 9.4 Multispecies Coalescent, Species Trees and Gene Trees
+
+This section introduces the multispecies coalescent model, which describes the genealogical relationships of sequences sampled from several related species, accounting for the species phylogeny.
+
+### 9.4.1 Multispecies Coalescent
+*   **Concept:** Models how gene lineages coalesce within the branches (populations) of a known species tree. (Fig 9.6)
+*   **Parameters ($C$):**
+    *   Species divergence times ($\tau_S$).
+    *   Effective population sizes ($\theta_S = 4N_S\mu$) for each ancestral and extant species $S$ on the species tree.
+    *   Both $\tau_S$ and $\theta_S$ are typically measured in expected number of mutations per site.
+*   **Assumptions:**
+    *   Known species tree topology.
+    *   Complete isolation after species divergence (no migration/hybridization/introgression).
+    *   No recombination within a locus; free recombination between loci (gene trees are independent conditional on $C$).
+*   **Process:** Gene lineages trace backwards in time within each species (population branch) according to the standard single-species coalescent. Lineages from different species can only coalesce once they reach a common ancestral species.
+*   **Probability Density of a Gene Tree ($f(G_i, t_i \vert C)$):**
+    *   $G_i$: Gene tree topology (labeled history) for locus $i$.
+    *   $t_i$: Vector of coalescent times on gene tree $G_i$.
+    *   Calculated by considering the independent coalescent processes within each population segment of the species tree.
+    *   For a segment of the species tree (population $P$) of duration $\Delta\tau_P$ (in mutations/site) and population size parameter $\theta_P$:
+        *   If $m$ lineages enter population $P$ and $n$ lineages leave ($n \le m$):
+            The contribution to the gene tree density from this segment is:
+            $\left[ \prod_{j=n+1}^{m} \frac{2}{\theta_P} \right] \times \exp \left( -\sum_{j=n+1}^{m} \binom{j}{2}\frac{2}{\theta_P} t_j \right) \times \exp \left( -\binom{n}{2}\frac{2}{\theta_P} \left(\Delta\tau_P - \sum_{k=n+1}^{m} t_k\right) \right)$ (Eq 9.38, adapted)
+            This formula has:
+            1.  Product of coalescent rates ($2/\theta_P$) for each of the $m-n$ coalescent events within this population.
+            2.  Probability of waiting times $t_j$ for these coalescences.
+            3.  Probability that the remaining $n$ lineages *do not* coalesce during the remaining time in this population segment.
+    *   The full density $f(G_i, t_i \vert C)$ is a product of such terms over all populations in the species tree traversed by lineages ancestral to locus $i$. (Example in Eq 9.40, 9.41 for Fig 9.6b).
+*   **Log Likelihood for Multi-Locus Data ($X = \{X_i\}$):**
+    $l(C) = \sum_{i=1}^L \log \left[ \sum_{G_i} \int_{t_i} f(G_i, t_i \vert C) f(X_i \vert G_i, t_i) dt_i \right]$ (Eq 9.42)
+    where $f(X_i \vert G_i, t_i)$ is the standard phylogenetic likelihood of sequence alignment $X_i$ given gene tree $G_i$ and its branch lengths (coalescent times) $t_i$.
+*   **ML Estimation:** Conceptually possible, but summation over gene tree topologies $G_i$ and integration over coalescent times $t_i$ is usually intractable.
+*   **Bayesian MCMC Estimation (e.g., BPP program by Rannala & Yang 2003):**
+    *   Joint posterior: $f(C, G, t \vert X) \propto f(C) \prod_{i=1}^L [f(G_i, t_i \vert C) f(X_i \vert G_i, t_i)]$ (Eq 9.43)
+    *   MCMC samples from this posterior, integrating out $G_i$ and $t_i$.
+    *   **Algorithm 9.4 (MCMC for estimating $\tau_s$ and $\theta_s$):**
+        1. Update coalescent times (node ages) in each gene tree $G_i$.
+        2. Propose changes to gene tree topologies $G_i$ (e.g., using SPR).
+        3. Update population size parameters $\theta_s$.
+        4. Update species divergence times $\tau_s$. This is complex as it constrains gene tree node ages ("rubber-band" algorithm to adjust gene tree times if a $\tau_s$ proposal violates $t_{coalescence} < \tau_{speciation}$).
+        5. Multiplier move for all coalescent times.
+*   **Example 9.2 (Hominoid genomic data, Fig 9.7, Table 9.1):** Estimation of divergence times and ancestral population sizes for Human-Chimp-Gorilla-Orangutan using BPP. Ancestral populations ($N_e$ for HC, HCG, HCGO) were much larger than modern human $N_e$.
+
+### 9.4.2 Species Tree-Gene Tree Conflict
+(Recap and expansion of §3.1.2)
+*   Biological processes causing gene tree topologies to differ from species tree topology:
+    1.  **Incomplete Lineage Sorting (ILS):** Due to ancestral polymorphism. Most significant when speciation events are close in time (short internal branches in species tree) and/or ancestral $N_e$ are large.
+    2.  Gene duplications and losses.
+    3.  Introgression or horizontal gene transfer.
+*   This section focuses on ILS.
+*   **Probability of Mismatch ($P_{SG}$):** Probability that the (true) gene tree topology $G$ differs from species tree $S$.
+    *   **Three Species ((A,B)ancestorAB, C)ancestorABC (Fig 9.8):**
+        $P_{SG} = P(G \neq S) = \frac{2}{3} e^{-(\tau_{ABC}-\tau_{AB})/\theta_{AB}}$ (Eq 9.44)
+        where $\tau_{ABC}-\tau_{AB}$ is the duration of ancestral species AB, and $\theta_{AB}$ is its population size parameter. $2/3$ is the probability of random joining of 3 lineages in ABC to produce a gene tree discordant with ((A,B),C).
+        For HCG, $P_{SG} \approx 30\%$.
+*   **Anomaly Zone (Fig 9.10):** Regions of species tree parameter space where the most probable gene tree topology is *different* from the species tree topology.
+    *   Can occur for asymmetrical species trees with very short internal branches.
+    *   E.g., Species tree $(((A,B),C),D)$. If internal branches $(\tau_{ABC}-\tau_{AB})$ and $(\tau_{ABCD}-\tau_{ABC})$ are very short, the gene tree $((A,B),(C,D))$ can be more probable than $(((A,B),C),D)$.
+*   **Impact on Inference:**
+    *   **Concatenation (Supermatrix):** May converge to an incorrect species tree (the anomalous gene tree) if in the anomaly zone and many loci are used.
+    *   **Majority Vote (Gene Tree Summary):** Will also be inconsistent in the anomaly zone.
+    *   Likelihood-based methods (ML or Bayesian) using the multispecies coalescent account for ILS and are consistent.
+
+### 9.4.3 Estimation of Species Trees
+Methods to estimate the species tree topology $S$ and parameters $C$ from multi-locus data.
+
+#### 9.4.3.1 Methods Using Gene Tree Topologies Only
+*   Input: A set of estimated gene tree topologies (one per locus).
+*   Ignore branch length information and uncertainty in gene tree estimation.
+*   Examples: Tree-mismatch method, gene tree parsimony (MDC), MPEST.
+*   Less efficient as they discard branch length information.
+
+#### 9.4.3.2 Methods Using Gene Trees with Branch Lengths
+*   Input: Estimated gene trees with node ages (branch lengths).
+*   **Maximum Tree Algorithm (Liu et al. 2010a, STEM program):**
+    *   Assumes a common $\theta$ for all populations.
+    *   Likelihood $f(G,t \vert S, C) = (\frac{2}{\theta})^C e^{-(\frac{2}{\theta})T}$ (Eq 9.45), where $C=\sum (n_i-1)$ is total coalescent events, $T$ is total per-lineage-pair coalescent time.
+    *   MLE for $\theta$: $\hat{\theta} = 2T/C$.
+    *   Substituting $\hat{\theta}$ into likelihood: $L \propto (T/C)^{-C} e^{-C}$. Maximized when $T$ is minimized.
+    *   The ML species tree is the one that implies the largest species divergence times ($\tau_s$) possible, given the constraints imposed by gene tree node ages ($t_{coalescence} \le \tau_{speciation}$). This tree minimizes $T$.
+    *   **Algorithm 9.5 (Maximum Tree):** Iteratively joins pairs of species/clades that have the smallest maximum-allowed divergence time (minimum of relevant gene tree coalescent times). Produces an ultrametric species tree.
+    *   **Criticism:** Ignores uncertainty in input gene trees.
+
+#### 9.4.3.3 Singularities on the Likelihood Surface
+*   If population sizes ($\theta_s$) are allowed to vary among branches, the multispecies coalescent likelihood $f(G,t \vert C)$ can become infinite for certain parameter values.
+*   Occurs if an ancestral population is collapsed onto a single coalescent event (branch length $\Delta\tau_P \to 0$ while $\theta_P \to 0$ such that rate $2/\theta_P \to \infty$). Similar to singularity in normal mixture models. (Eq 9.48)
+*   Not an issue if:
+    *   All $\theta_s$ are assumed equal (as in STEM).
+    *   Sequence alignments are analyzed directly (likelihood averages over gene trees, Eq 9.49).
+    *   Bayesian analysis is used (priors constrain $\theta_s > 0$ and $\tau_s$ to be different).
+
+#### 9.4.3.4 Methods Using Sequence Alignments
+*   Most statistically sound as they use all information and account for gene tree uncertainty.
+*   Full likelihood (Eq 9.42) or full Bayesian (Eq 9.49) approaches.
+*   **Implementations:**
+    *   **BEST (Liu & Pearl 2007; Liu 2008):** Bayesian, uses MrBayes output of gene trees as input and applies importance sampling correction. Assumes common $\theta$. Prone to poor mixing.
+    *   **\*BEAST (Heled & Drummond 2010):** Bayesian, co-estimates gene trees and species tree simultaneously in one MCMC. More robust.
+    *   **BUCKy (Ané et al. 2007; Baum 2007 "Bayesian Concordance Analysis"):**
+        *   Estimates concordance factor for each clade (proportion of genome where clade is true).
+        *   Uses Dirichlet process to cluster loci by shared gene tree topology.
+        *   Does not use multispecies coalescent model for $f(G_i, t_i \vert S,C)$, so potentially prone to anomalous gene tree issues.
+    *   **SNAPP (Bryant et al. 2012):** Bayesian MCMC for SNP data. Computes species tree likelihood directly from markers, integrating out gene trees.
+
+*   **Example 9.3 (Sceloporus lizards, Fig 9.12):** Species tree inference using BEST and \*BEAST from 8 nuclear loci. Results show high posterior support for many clades despite weak/conflicting signal in individual gene trees. BPP used to estimate parameters on the \*BEAST species tree.
+
+### 9.4.4 Migration
+Incorporating gene flow (migration) into the multispecies coalescent.
+
+#### 9.4.4.1 Definitions of Migration Rates
+*   **Forward Migration Rate ($m_{ij}$ from pop $i$ to $j$):** Proportion of individuals in pop $j$ that are immigrants from pop $i$ in one generation ($m_{ij} = M_{ij}/N_j$, where $M_{ij}$ is number of individuals). This is the definition used here ("backward in time" from coalescent perspective).
+*   **Scaled Migration Rate ($M_{ij}$):** Expected number of immigrant gene copies into population $j$ from population $i$ per generation ($M_{ij} = N_j m_{ij}$). (In some literature, this is $2N_j m_{ij}$ or $4N_j m_{ij}$).
+*   Alternative coalescent worldview migration rate: used in GENETREE, IMa2. An "i $\to$ j migration" in this view is a real-world migration from j to i.
+
+#### 9.4.4.2 Probability Density of Gene Tree with Migration Trajectory
+*   **Isolation-with-Migration (IM) Model:** Allows migration between populations after divergence.
+*   **Two Species (Fig 9.13a):** Parameters: $\theta_1, \theta_2, \theta_a$ (population sizes), $\tau$ (divergence time), $M_{12}, M_{21}$ (scaled migration rates).
+*   **Markov Chain for Lineage States (2 sequences per locus, Fig 9.13b):**
+    *   States: $S_{11}$ (both lineages in pop 1), $S_{22}$ (both in pop 2), $S_{12}$ (one in each), $S_1$ (coalesced in pop 1), $S_2$ (coalesced in pop 2).
+    *   Transition Rate Matrix $Q$: (Eq 9.50). Rates depend on $\theta_i$ and $M_{ij}$.
+        *   Coalescence rate $2/\theta_i$ if both in pop $i$.
+        *   Migration rate $m_1 = 4M_{21}/\theta_1$ (for lineage in pop 1 to move to pop 2, backward in time).
+        *   Migration rate $m_2 = 4M_{12}/\theta_2$ (for lineage in pop 2 to move to pop 1, backward in time).
+*   **Gene Tree Density $f(G \vert C)$ (Fig 9.13b):**
+    $f(G \vert C) = (\text{product of rates for events}) \times \exp(-\text{total rate} \times \text{duration})$
+    For example, $f(G \vert C) = (\frac{2}{\theta_2}) \cdot m_2^x \cdot m_1^y \cdot e^{-(m_1+m_2)U - (2m_1+2/\theta_1)V - (2m_2+2/\theta_2)W}$ (Eq 9.51, for specific G).
+*   **General Case (Multiple Species/Sequences):** Variable-rate Poisson process. Density is product of rates for all coalescent and migration events, times probability of no other events.
+
+#### 9.4.4.3 Inference Using Data from Only a Few Genomes
+*   **ML for 2 sequences/locus (Fig 9.15):**
+    *   Can analytically integrate out migration history to get $P(t \vert C)$, density of divergence time $t=T_{MRCA}$ between the two sequences. (Eq 9.52)
+    *   Log-likelihood: $l(C) = \sum_h \log \int_0^\infty f(t \vert C) f(X_h \vert t) dt$. (Eq 9.53)
+    *   Feasible for genome-scale data (many loci) if only 2-3 sequences per locus.
+*   Bayesian MCMC for IM models (IM, IMa, MIGRATE) is computationally very intensive, limited to few loci.
+
+## 9.5 Species Delimitation
+
+Inferring number of species, species boundaries, and discovering new species.
+
+### 9.5.1 Species Concept and Species Delimitation
+*   **Biological Species Concept (BSC, Mayr 1942):** Species are groups of actually or potentially interbreeding populations, reproductively isolated from other such groups.
+    *   Common mode: Allopatric speciation.
+    *   Limitations: Asexual species, hybridization.
+*   **Phylogenetic/Genealogical Species Concept (PSC, GSC):** Species are basal, exclusive groups of organisms whose members are more closely related to each other than to outsiders, and contain no such exclusive group within.
+    *   Often operationalized as reciprocal monophyly in gene trees.
+*   Species delimitation is important despite definitional controversies. Genetic data increasingly used.
+
+### 9.5.2 Simple Methods for Analysing Genetic Data
+*   **Cutoffs:** E.g., "10x rule" (mtDNA divergence between species > 10x within-species polymorphism). Arbitrary.
+*   **Reciprocal Monophyly:** Fails to account for gene tree error and ILS. Low power.
+*   **LRTs using Gene Tree Topologies (Knowles & Carstens 2007; O'Meara 2010):** Compare one- vs. two-species models. Ignores gene tree error.
+*   **STEM-based (Carstens & Dewry 2010; Ence & Carstens 2011 "SpedeSTEM"):** Fit species tree to gene trees by ML, compare delimitation models using AIC. Ignores gene tree error.
+*   **GMYC (Generalized Mixed Yule Coalescent, Pons et al. 2006):** Finds switch point on a single gene tree from coalescent (within-species) to Yule (between-species) process. Ignores ILS and gene tree error.
+
+### 9.5.3 Bayesian Species Delimitation
+*   Uses multispecies coalescent model in a Bayesian framework (Yang & Rannala 2010, BPP program).
+*   **Method:**
+    *   User provides a "guide tree" for populations/subspecies/morphotypes.
+    *   rjMCMC is used to evaluate models corresponding to collapsing (joining) or not collapsing (splitting) internal nodes on the guide tree. Each collapsed state represents a species delimitation scheme.
+    *   Assumes complete isolation after speciation (strict BSC).
+    *   Likelihood on sequence alignments accounts for gene tree uncertainty and ILS.
+*   **Models Evaluated (Fig 9.18):** Models differ in number of species (which nodes are collapsed) and species phylogeny (relationships among delimited species).
+*   **rjMCMC Moves ('Split' and 'Join', Fig 9.19):**
+    *   A 'split' move proposes to split a currently merged species (node $i$) back into its two descendant populations ($j,k$ from guide tree), introducing parameters $\tau_i, \theta_j, \theta_k$.
+    *   A 'join' move proposes to merge two currently distinct species ($j,k$ whose parent is $i$) into one, removing $\tau_i, \theta_j, \theta_k$.
+    *   Acceptance ratio: (Eq 9.55).
+    *   Mixing can be poor due to strong constraint of gene trees on new $\tau_i$. Modified algorithm (Rannala & Yang 2013) proposes $\tau_i$ first, then adjusts gene trees, improving mixing.
+
+### 9.5.4 The Impact of Guide Tree, Prior, and Migration
+*   **Guide Tree:** Can be from morphology, mtDNA, or concatenated nuclear data. Incorrect guide tree can lead to over-splitting if it wrongly separates very closely related populations.
+*   **Prior:** Priors on $\tau_s, \theta_s$ can affect posterior model probabilities.
+*   **Migration:** BPP assumes no gene flow.
+    *   Simulation (Zhang et al. 2011, Fig 9.20):
+        *   If migration $M=Nm \ll 1$ (e.g., < 0.1), BPP infers two species (correctly, if they are on path to speciation).
+        *   If $M \gg 1$ (e.g., > 10), BPP infers one species (effectively one panmictic unit).
+        *   Phase change around $M=1$.
+    *   Robust to complex population structures like stepping-stones (Fig 9.21) as long as $M$ between directly sampled populations is interpreted.
+
+### 9.5.5 Pros and Cons of Bayesian Species Delimitation
+*   **Pros:**
+    *   Uses multi-locus data fully.
+    *   Accounts for ILS and gene tree uncertainty.
+    *   More objective than traditional taxonomy (explicit model and assumptions).
+    *   Can incorporate prior biological information (via guide tree, priors).
+    *   Good power with small amounts of gene flow.
+*   **Cons:**
+    *   Assumes neutral evolution (no selection, especially species-specific).
+    *   Models differ in assumptions about isolation, but reticent about causes (reproductive vs. geographic).
+    *   Interpretation of "species" when allopatric populations are genetically divergent but not necessarily reproductively isolated can be ambiguous.
+
+# Chapter 10: Molecular Clock and Estimation of Species Divergence Times
+
+This chapter explores the molecular clock hypothesis, methods for testing it, and likelihood-based approaches for estimating species divergence times, including global and local clock models, and Bayesian methods.
+
+## 10.1 Overview
+*   **Molecular Clock Hypothesis (Zuckerkandl & Pauling 1965):** The rate of DNA or protein sequence evolution is approximately constant over time and among evolutionary lineages.
+    *   Initial observations (1960s): Number of differences between proteins (e.g., hemoglobin, cytochrome c) from different species was roughly proportional to their divergence times.
+*   **Clarifications:**
+    1.  **Stochastic Clock:** "Ticks" (substitutions) arrive randomly, following exponential time intervals under Markov models, not regularly.
+    2.  **Protein-Specific Rates:** Different proteins/regions evolve at different rates. Each protein has its "own clock."
+    3.  **Lineage Specificity:** Rate constancy might hold within a group (e.g., primates) but be violated in broader comparisons (e.g., across vertebrates).
+*   **Impact and Controversy:**
+    *   **Utility:** If rates are constant, molecular data can be used to reconstruct trees and estimate divergence times.
+    *   **Mechanism Debate:** Entwined with neutralist-selectionist debate. Constant rates seemed incompatible with neo-Darwinian selection (species with different life histories should have different selection pressures). Neutral theory (Kimura 1968; King & Jukes 1969) provided a mechanism: rate of evolution = neutral mutation rate ($\mu_0 = \mu f_0$), independent of population size or environment, if $\mu$ and $f_0$ (fraction of neutral mutations) are constant.
+*   **Factors Affecting Rates (leading to clock violations):**
+    *   **Generation Time:** Shorter generation time $\implies$ more germ-line divisions/year $\implies$ higher substitution rate (e.g., primate slowdown, hominoid slowdown).
+    *   **DNA Repair Efficiency:** Less efficient repair $\implies$ higher mutation/substitution rate.
+    *   **Body Size:** Negatively correlated with substitution rates (rodents fast, primates intermediate, whales slow). Body size correlates with generation time, metabolic rate, etc.
+*   **Molecular Dating and Fossil Record:**
+    *   Molecular clock used to date species divergences often yields dates conflicting with fossil record (e.g., origin of animal phyla much older molecularly than Cambrian explosion fossils).
+    *   Discrepancies due to: incomplete fossil record, misinterpretation of fossils, inaccuracies in early molecular dating (e.g., model misspecification, poor calibration).
+    *   Modern analyses integrating fossils and molecular data yield more consistent estimates.
+
+## 10.2 Tests of the Molecular Clock
+
+### 10.2.1 Relative-Rate Tests
+*   **Concept:** Compare evolutionary rates between two ingroup species (A, B) using an outgroup (C) (Fig 10.1).
+*   **Sarich & Wilson (1973):** If clock holds, distance from ancestor O to A ($d_{OA}$) equals distance to B ($d_{OB}$), i.e., $a=b$ in Fig 10.1b. Or, $d_{AC} = d_{BC}$.
+*   **Fitch (1976):** Calculated changes $a = (d_{AB} + d_{AC} - d_{BC})/2$ and $b = (d_{AB} + d_{BC} - d_{AC})/2$. Compared $(a-b)^2/(a+b)$ to $\chi^2_1$. Fails to correct for multiple hits.
+*   **Wu & Li (1985):** Corrected distances for multiple hits (e.g., K80 model). Calculated $d = d_{AC} - d_{BC}$ and its standard error $\text{SE}(d)$. Compared $d/\text{SE}(d)$ to standard normal.
+*   **Tajima (1993):** Non-model-based. Compares counts of site patterns $xyy$ ($m_1$) vs. $xyx$ ($m_2$). Compare $(m_1-m_2)^2/(m_1+m_2)$ to $\chi^2_1$.
+*   **Likelihood Framework (Muse & Weir 1992):**
+    *   Calculate log-likelihood with branch lengths $a, b$ free ($l_1$) and with $a=b$ constrained ($l_0$).
+    *   Test statistic $2\Delta l = 2(l_1 - l_0) \sim \chi^2_1$.
+
+### 10.2.2 Likelihood Ratio Test (LRT)
+*   **Felsenstein (1981):** General test for a tree of any size.
+*   **$H_0$ (Clock):** Tree is rooted, $s-1$ parameters (ages of $s-1$ internal nodes). (Fig 10.2a)
+*   **$H_1$ (No Clock):** Tree is unrooted, $2s-3$ parameters (branch lengths). (Fig 10.2b)
+*   The clock model is nested within the no-clock model by applying $s-2$ equality constraints.
+*   Test statistic: $2\Delta l = 2(l_1 - l_0) \sim \chi^2_{s-2}$.
+*   **Example 10.1 (Primate 12S rRNA):** $s=6$. $df=4$. $2\Delta l = 18.60$, $P < 0.001$. Clock rejected.
+
+### 10.2.3 Limitations of Molecular Clock Tests
+1.  **Weak Null Hypothesis:** Tests if tips are equidistant from root, not true rate constancy over time. (e.g., rates accelerating/decelerating in all lineages simultaneously would not be rejected).
+2.  **Average vs. Constant Rate:** Cannot distinguish a truly constant rate from an average of variable rates within a lineage.
+3.  **Lack of Power:** Failure to reject clock might be due to insufficient data, especially for few taxa (e.g., relative-rate test with 3 species). LRT with multiple species is generally powerful.
+
+### 10.2.4 Index of Dispersion ($R$)
+*   $R = \text{Variance}/\text{Mean}$ of number of substitutions among lineages (assuming star tree).
+*   If clock holds (Poisson process of substitutions), $R=1$. $R>1$ (over-dispersed clock) suggests violation.
+*   Used more as a diagnostic for selection vs. neutrality than a strict clock test.
+*   Obsolete due to sensitivity to assumed star phylogeny and availability of more rigorous LRTs.
+
+## 10.3 Likelihood Estimation of Divergence Times
+
+### 10.3.1 Global Clock Model
+*   Assumes clock holds for all lineages.
+*   **Procedure:**
+    1.  Estimate branch lengths (distances from nodes to tips) from sequence data, typically using ML on a rooted tree topology.
+    2.  Use fossil calibrations (node ages known without error) to convert relative distances to absolute geological times and estimate the substitution rate $\mu$.
+    *   Example (Fig 10.3): 5 species. If $t_2, t_4$ are fossil calibrations, estimate $\mu, t_1, t_3$.
+    *   Branch length on tree = rate $\times$ time duration.
+    *   Likelihood $f(X \vert \mu, t_1, t_3; t_2, t_4)$ is calculated via pruning algorithm.
+    *   Optimize $\mu, t_1, t_3$ under constraints (e.g., $t_1 > \max(t_2, t_4)$, $0 < t_3 < t_2$).
+*   **Issues:**
+    *   Assumed substitution model matters (can affect distance estimates).
+    *   Assumed tree topology matters. Best to use a well-supported (e.g., ML) binary tree.
+
+### 10.3.2 Local Clock Models (Relaxed Clocks)
+*   Address clock violations by allowing different rates on different parts of the tree.
+*   **Approach:** Assign different rates to branches/clades. Estimate divergence times and rates by ML.
+    *   Example (Fig 10.4, Quartet-Dating): ((a,b),(c,d)). One rate for left (a,b) part, another for right (c,d) part.
+    *   Generalization (Yoder & Yang 2000): Arbitrary number of rates assigned to branches. $k-1$ extra rate parameters if $k$ rates.
+*   **Drawback:** Arbitrary assignment of rates. Model can become unidentifiable.
+
+### 10.3.3 Heuristic Rate-Smoothing Methods
+Attempt to estimate rates and times jointly without *a priori* rate assignments, by minimizing rate changes across the tree.
+*   **Sanderson (1997) Penalized Likelihood:**
+    *   Input: Branch lengths $b_k$ (from no-clock ML or parsimony).
+    *   Minimize: $W(t,r) = \sum_k (r_k - r_{anc(k)})^2$ (penalty for rate changes) (Eq 10.1)
+    *   Subject to: $r_k T_k = b_k$ (rates and time durations $T_k$ must match observed branch lengths) (Eq 10.2)
+    *   **Improved Version (Sanderson 2002):** Maximize
+        $l(t,r,\lambda; X) = \log\{f(X|t,r)\} - \lambda \sum_k (r_k - r_{anc(k)})^2$ (Eq 10.3)
+        Log-likelihood of data + penalty. $\lambda$ is smoothing parameter (chosen by cross-validation).
+        $f(X|t,r)$ approximated using Poisson for changes on branches.
+*   **Yang (2004) Modification:**
+    *   Maximize: $l(t,r,\nu; X) = \log\{f(X|t,r)\} + \log\{f(r|t,\nu)\} + \log\{f(\nu)\}$ (Eq 10.4)
+    *   $f(X|t,r)$: Likelihood using normal approx. to MLEs of branch lengths.
+    *   $f(r|t,\nu)$: Prior for rates based on geometric Brownian motion (GBM) model of rate drift (Thorne et al. 1998). Given ancestral rate $r_A$, current rate $r$ has density:
+        $f(r|r_A, t, \nu) = \frac{1}{r\sqrt{2\pi\nu t}} \exp\left\{ -\frac{1}{2\nu t} \left(\log\frac{r}{r_A} + \frac{1}{2}\nu t\right)^2 \right\}$ (Eq 10.5)
+        $\nu$ is rate-drift parameter. (Fig 10.5)
+    *   $f(\nu)$: Prior on $\nu$ (e.g., exponential).
+*   **Issues with Heuristic Methods:** "Log likelihood" functions are ad hoc (not true likelihoods). Statistical properties uncertain.
+
+### 10.3.4 Uncertainties in Calibrations
+*   **10.3.4.1 Difficulty of Dating with Uncertain Calibrations:**
+    *   Fossil dating and placement on phylogeny are prone to errors.
+    *   Geological events for calibration also have uncertainties.
+    *   Probabilistic modeling of fossil discovery/dating is ideal but complex.
+    *   For likelihood methods, it's unclear how to use calibrations specified as distributions (rather than fixed points).
+*   **10.3.4.2 Problems with Naïve Likelihood Implementations:**
+    *   Treating fossil minimum bounds as fixed known ages leads to systematic underestimation of older dates if multiple conflicting minimums are used.
+    *   Sanderson's penalized likelihood with interval constraints $(t_L, t_U)$ on a node $t_C$ makes the model unidentifiable (many rate/time combinations give same fit). At least one point calibration (known age) is needed to avoid this.
+    *   Nonparametric bootstrap on sites, keeping calibrations fixed, fails to account for fossil uncertainty and gives misleadingly narrow CIs.
+
+### 10.3.5 Dating Viral Divergences
+*   RNA viruses evolve fast; samples collected at different times (heterochronous data) can calibrate the clock.
+*   **Tip-Dating (Rambaut 2000):** Sequences sampled earlier are closer to the root.
+    *   Example (Fig 10.6): 3 sequences $a,b,c$ sampled at $t_a, t_b, 0$. Rate can be estimated as $(d_{ac}-d_{bc})/(t_b-t_a)$.
+*   If clock violated, local clock models can be used, but estimation is harder.
+
+### 10.3.6 Dating Primate Divergences
+*   **Example (Steiper et al. 2004 data, 5 nuclear loci, 4 species, Fig 10.7):**
+    *   Fix H-C divergence at 7 MYA, Baboon-Macaque at 6 MYA.
+    *   **Global Clock ML:** Root age ($t_1$) $\approx 33-34$ MY. Rate $r \approx 6.6 \times 10^{-10}$ subst/site/year. (Table 10.1)
+    *   **Local Clock ML (quartet-dating):** Ape rate $r_{ape} \approx 5.4 \times 10^{-10}$, monkey rate $r_{monkey} \approx 8.0 \times 10^{-10}$. Root age similar.
+    *   These ML analyses ignore fossil uncertainty, leading to overly precise CIs.
+
+## 10.4 Bayesian Estimation of Divergence Times
+
+### 10.4.1 General Framework
+*   MCMC algorithm developed by Thorne et al. (1998), Kishino et al. (2001) (MULTIDIVTIME), Yang & Rannala (2006) (MCMCTREE), Drummond et al. (2006) (BEAST).
+*   **Joint Posterior:**
+    $f(t, r, \theta \vert X) \propto f(\theta) f(t|\theta) f(r|t, \theta) f(X|t, r, \theta)$ (Eq 10.6)
+    where $t$=divergence times, $r$=rates, $\theta$=substitution parameters.
+    $f(X|t,r,\theta)$: Sequence likelihood.
+    $f(r|t,\theta)$: Prior on rates (rate-drift model).
+    $f(t|\theta)$: Prior on divergence times (incorporating fossil calibrations).
+    $f(\theta)$: Prior on substitution parameters.
+*   MCMC algorithm samples $(t,r,\theta)$. Marginal posterior for $t$ (i.e., $f(t|X)$) obtained from samples. (Eq 10.7)
+*   **MCMC Sketch:**
+    *   Update $t$ (respecting node order constraints).
+    *   Update $r$ (e.g., based on rate-drift model).
+    *   Update $\theta$.
+    *   Global move: Scale all $t_i$ by $c$, all $r_i$ by $1/c$.
+
+### 10.4.2 Approximate Calculation of Likelihood
+*   Exact likelihood $f(X|t,r,\theta)$ is computationally expensive.
+*   **Approximation (Thorne et al. 1998; Kishino et al. 2001):**
+    1.  Estimate MLEs of branch lengths $\hat{b}$ and their var-cov matrix $V = -H^{-1}$ (from Hessian $H$) from data *without* clock.
+    2.  During MCMC, approximate $\log f(X|t,r,\theta)$ by a multivariate normal density for branch lengths $b$ predicted by current $t,r$:
+        $l(b) \approx l(\hat{b}) + g(\hat{b})^T(b-\hat{b}) + \frac{1}{2}(b-\hat{b})^T H(\hat{b}) (b-\hat{b})$ (Eq 10.8)
+        If all $\hat{b}_i > 0$, then $g(\hat{b})=0$.
+    *   More accurate if Taylor expansion is on transformed branch lengths (e.g., arcsine). (Fig 10.8)
+
+### 10.4.3 Prior on Evolutionary Rates
+*   **Correlated-Rate Model (Geometric Brownian Motion, GBM):** (Thorne et al. 1998) (Fig 10.5)
+    *   Rate at root $r_{root} \sim \text{Gamma}$.
+    *   Rate $r$ at end of branch of duration $t$, given ancestral rate $r_A$: $\log r \sim N(\log r_A - \frac{1}{2}\nu t, \nu t)$. Density $f(r|r_A)$ as in Eq 10.9.
+    *   $\nu$ is rate-drift parameter (prior, e.g., Gamma). Small $\nu \implies$ clock-like.
+*   **Independent-Rate Model:** (Drummond et al. 2006; Rannala & Yang 2007)
+    *   Rate $r$ for each branch drawn i.i.d. from a common distribution (e.g., log-normal):
+        $f(r|\mu_r, \sigma_r^2) = \frac{1}{r\sqrt{2\pi\sigma_r^2}} \exp\left\{ -\frac{1}{2\sigma_r^2} \left(\log(r/\mu_r) + \frac{1}{2}\sigma_r^2\right)^2 \right\}$ (Eq 10.10)
+        $\mu_r$ is mean rate, $\sigma_r^2$ measures departure from clock.
+*   Bayes factor comparisons between these rate models are sensitive to priors on $\nu$ or $\sigma_r^2$. Robustness of time estimates to rate prior is more important.
+
+### 10.4.4 Prior on Divergence Times and Fossil Calibrations
+*   Prior $f(t)$ incorporates fossil information.
+*   **Kishino et al. (2001):** Gamma prior for root age. Uniform Dirichlet to break paths into segments.
+*   **Soft Bounds (Yang & Rannala 2006):** Use arbitrary distributions for calibrations, not just hard min/max bounds.
+    *   Kernel density for node ages based on birth-death-sampling process: $g(t) = \lambda p_1(t)/v_{t_1}$ (Eq 10.11, 10.12)
+        $P(0,t)$ is prob. lineage at $t$ leaves $\ge 1$ descendant today (Eq 10.14).
+        If $\lambda=\mu$ (birth=death), $g(t) = (1+\rho\lambda t_1) / [t_1(1+\rho\lambda t)^2]$ (Eq 10.15).
+        Joint density of $s-2$ node ages (given root $t_1$): $f(t_2, \dots, t_{s-1}) = (s-2)! \prod_{j=2}^{s-1} g(t_j)$ (Eq 10.16)
+        (Fig 10.10, 10.11 show shapes of $g(t)$).
+    *   **Fossil Calibrations $f(t_C)$:** Specified by user (e.g., from Fig 10.9).
+    *   Full prior $f(t) = f_{BD}(t_{-C}|t_C) f(t_C)$ (Eq 10.17, 10.18). (Conditional construction).
+    *   Effective prior used by program (after node age constraints) can differ from user-specified prior. Run MCMC without data to check effective prior.
+
+### 10.4.5 Uncertainties in Time Estimates
+*   **Infinite-Site Theory (Yang & Rannala 2006; Rannala & Yang 2007):**
+    *   As sequence data $\to \infty$, branch lengths are known without error.
+    *   Posterior of times $f(t|X)$ converges to a 1D distribution, not a point. Root age $t_1$ has a posterior; other times $t_i$ are linear functions of $t_1$.
+    *   Plot of posterior CI width vs. posterior mean for node ages approaches a straight line (Fig 10.12 "infinite-site plot"). Slope reflects precision of fossil calibrations.
+*   **Finite-Site Data (dos Reis & Yang 2013a):** Posterior variance of node age = variance from fossil uncertainty + variance from finite data. CI width approaches infinite-data limit at rate $1/\sqrt{n}$.
+*   Relaxed clock makes time estimation more complex. Number of loci more important than sites per locus for precision.
+
+### 10.4.6 Dating Viral Divergences
+*   Use sampling times of viral sequences to calibrate clock.
+*   Birth-death-sequential-sampling (BDSS) models (Stadler 2010) provide priors on node ages. Can estimate $R_0$ (basic reproductive number).
+*   Relaxed clocks can be used if global clock violated. Caution if dating deep events with recent samples.
+
+### 10.4.7 Application to Primate and Mammalian Divergences
+*   **10.4.7.1 Primate Data (Steiper et al., Table 10.1):**
+    *   4 species, 5 nuclear loci. JC69 and HKY85+$\Gamma_5$. Global clock, independent rates, correlated rates.
+    *   Soft bounds for H-C (7MYA) and Baboon-Macaque (6MYA) calibrations. Max root age 60MYA.
+    *   Posterior mean root age $t_1 \approx 33$ MY across models. CIs much wider than ML CIs.
+*   **10.4.7.2 Mammalian Divergence Times (dos Reis & Yang 2013a, Fig 10.13, 10.14, 10.15):**
+    *   36 species, mtDNA (1st+2nd codon pos). HKY85+$\Gamma_5$. Correlated rates. 24 min, 14 max fossil calibrations.
+    *   Approximate likelihood (arcsine transform) very similar to exact.
+    *   Infinite-site plot (Fig 10.15) shows $R^2=0.516$, indicating significant contribution from sequence data uncertainty (not yet at infinite-data limit).
+
+## 10.5 Perspectives
+*   Confounding of time and rate is greatest obstacle.
+*   Relaxing clock is tricky. Multi-locus analysis and multiple calibrations are key.
+*   Probabilistic modeling of fossil record to get objective priors for calibrations is a promising direction.
+
+# Chapter 11: Neutral and Adaptive Protein Evolution
+
+This chapter discusses the roles of natural selection in the evolution of protein-coding genes, focusing on methods to detect positive (Darwinian) selection.
+
+## 11.1 Introduction
+*   **Adaptive Evolution:** The ultimate source of morphological, behavioral, and physiological adaptations, species divergences, and evolutionary innovations.
+*   **Role of Natural Selection:** While ubiquitous in shaping organismal traits, its role in gene/genome evolution is more debated.
+*   **Neutral Theory (Kimura 1968; King & Jukes 1969):** Claims most observed molecular variation (within and between species) is due to random fixation of mutations with little fitness effect, not natural selection.
+*   **$d_N/d_S$ Ratio ($\omega$):** A key measure of selective pressure at the protein level.
+    *   $d_N$: nonsynonymous substitution rate (changes amino acid).
+    *   $d_S$: synonymous substitution rate (does not change amino acid).
+    *   The synonymous rate is used as a benchmark for the neutral mutation rate.
+    *   **Interpreting $\omega$:**
+        *   $\omega = 1$ ($d_N = d_S$): Neutral evolution (nonsynonymous mutations fixed at same rate as synonymous ones).
+        *   $\omega < 1$ ($d_N < d_S$): Purifying (negative) selection (deleterious nonsynonymous mutations are removed, reducing their fixation rate).
+        *   $\omega > 1$ ($d_N > d_S$): Positive (Darwinian) selection (advantageous nonsynonymous mutations are favored and fixed at a higher rate).
+    *   A significantly higher $d_N$ than $d_S$ is evidence for adaptive protein evolution.
+*   **Noncoding DNA:** Detecting adaptive evolution is harder due to lack of a clear neutral benchmark like $d_S$.
+*   **Limitations of Pairwise $\omega$:** Averaging $d_N$ and $d_S$ over whole genes and long evolutionary times rarely detects positive selection because it's often episodic (affecting few sites for short periods).
+*   **Chapter Focus:** Codon models in a phylogenetic context to detect positive selection on specific lineages or sites. Primarily ML and LRT methods.
+
+## 11.2 The Neutral Theory and Tests of Neutrality
+
+### 11.2.1 The Neutral and Nearly Neutral Theories
+*   **Selection Coefficient ($s$):** Measures relative fitness of a new mutant allele $a$ vs. wild-type $A$. Fitnesses $AA:1, Aa:1+s, aa:1+2s$.
+    *   $s < 0$: Negative selection.
+    *   $s = 0$: Neutral.
+    *   $s > 0$: Positive selection.
+*   **Fate of Mutation:** Determined by interaction of selection and random genetic drift.
+    *   Effective population size $N_e$. Key parameter is $N_e s$.
+    *   If $\vert N_e s \vert \gg 1$: Selection dominates.
+    *   If $\vert N_e s \vert \approx 0$: Drift dominates (mutation is effectively neutral).
+*   **Neutral Theory (Kimura 1968; King & Jukes 1969):** Proposed to explain high levels of allozyme polymorphism.
+    *   **Claims/Predictions:**
+        1.  Most mutations are deleterious and removed by purifying selection.
+        2.  Substitution rate = neutral mutation rate ($\mu_0 = \mu \times f_0$, where $\mu$ is total mutation rate, $f_0$ is fraction of neutral mutations). If $\mu_0$ is constant, molecular clock holds.
+        3.  Functionally important genes/regions evolve slower (smaller $f_0$). Negative correlation between functional importance and substitution rate.
+        4.  Within-species polymorphism and between-species divergence are two phases of the same neutral process.
+        5.  Morphological evolution is driven by selection; neutral theory concerns molecular level.
+*   **Nearly Neutral Theory (Ohta 1973, 1992):** Allows for slightly deleterious or slightly advantageous mutations whose fate is influenced by both drift and selection (i.e., $\vert N_e s \vert$ is small but not zero). Dynamics depend on $N_e, s$. (Fig 11.1 illustrates different theories).
+
+### 11.2.2 Tajima's $D$ Statistic
+*   Compares two estimators of $\theta = 4N_e\mu$ under the infinite-sites model (each mutation at a new site).
+    1.  $\hat{\theta}_S = S / (l \cdot a_n)$: Based on number of segregating sites $S$ in a sample of $n$ sequences of length $l$. $a_n = \sum_{i=1}^{n-1} 1/i$. (Watterson 1975)
+    2.  $\hat{\theta}_\pi = \pi$: Average number of pairwise differences between sequences. (Tajima 1983)
+*   **Tajima's $D$:**
+    $D = \frac{\hat{\theta}_\pi - \hat{\theta}_S}{\text{SE}(\hat{\theta}_\pi - \hat{\theta}_S)}$ (Eq 11.1)
+*   **Interpretation under Neutrality:** $E(D)=0$. Significant deviation suggests departure from strict neutrality.
+    *   $D < 0$: Excess of low-frequency variants (singletons inflate $\hat{\theta}_S$). Consistent with purifying selection or population expansion.
+    *   $D > 0$: Excess of intermediate-frequency variants. Consistent with balancing selection or population shrinkage.
+
+### 11.2.3 Fu and Li's $D$, and Fay and Wu's $H$ Statistics
+Based on the site frequency spectrum (SFS): $(s_1, s_2, \dots, s_{n-1})$, where $s_j$ is number of sites where $j$ sequences carry the mutant allele. Requires outgroup to infer ancestral state.
+*   **Fu and Li's $D$ (1993):** Distinguishes internal ($\eta_I$) and external ($\eta_E$, singletons) mutations on the genealogy.
+    $D_{FL} = \frac{\eta_I - (a_n-1)\eta_E}{\text{SE}(\eta_I - (a_n-1)\eta_E)}$ (Eq 11.2)
+    Deleterious mutations tend to be recent (external).
+*   **Fay and Wu's $H$ (2000):** Compares intermediate-frequency variants ($\hat{\theta}_\pi$) with high-frequency derived variants ($\hat{\theta}_H$).
+    $\hat{\theta}_H = \sum_{i=1}^{n-1} \frac{2s_i i^2}{n(n-1)}$ (Eq 11.3)
+    $H = \hat{\theta}_\pi - \hat{\theta}_H$.
+    Negative $H$ indicates excess of high-frequency derived variants, a signature of **genetic hitchhiking** (selective sweep of a linked beneficial mutation carrying neutral variants to high frequency).
+
+### 11.2.4 McDonald-Kreitman (MK) Test and Estimation of Selective Strength
+*   **Neutral Theory Prediction:** Ratio of nonsynonymous to synonymous polymorphisms within a species should equal ratio of nonsynonymous to synonymous fixed differences between species.
+*   **MK Test (1991):** Uses a $2 \times 2$ contingency table (Table 11.1):
+    | Type of Change       | Fixed (Between Spp) | Polymorphic (Within Sp) |
+    |----------------------|---------------------|-------------------------|
+    | Replacement ($d_N$)  | $F_N$               | $P_N$                   |
+    | Silent ($d_S$)       | $F_S$               | $P_S$                   |
+    Test for independence (e.g., Fisher's exact test).
+*   **Interpretation:**
+    *   Significant excess of $F_N$ relative to $P_N$ (i.e., $F_N/F_S > P_N/P_S$) suggests positive selection driving replacement fixations.
+    *   Significant excess of $P_N$ relative to $F_N$ suggests slightly deleterious replacement mutations segregating within species but removed before fixation.
+*   **Poisson Random Field (PRF) Theory (Sawyer & Hartl 1992):** Extends MK test to estimate parameters of selection strength, assuming free recombination within gene. Uses full SFS. Powerful if multiple loci analyzed.
+
+### 11.2.5 Hudson-Kreitman-Aquade (HKA) Test
+*   **Hudson et al. (1987):** Tests neutral prediction that polymorphism within species and divergence between species are correlated across multiple unlinked loci.
+*   Loci with high mutation rates should show high polymorphism AND high divergence.
+*   Goodness-of-fit test statistic $X^2$ based on deviations from expected values for $S_A^i, S_B^i, D_i$ (polymorphisms in spp A, B; divergence) at locus $i$. (Eq 11.4)
+*   Null model has $L+2$ parameters. $df = 2L-2$.
+
+## 11.3 Lineages Undergoing Adaptive Evolution ($\omega$ on Branches)
+
+Phylogenetic methods to detect positive selection on specific branches using $d_N/d_S = \omega$.
+
+### 11.3.1 Heuristic Methods
+*   Early methods, often based on pairwise comparisons or ancestral sequence reconstruction (ASR).
+*   **Messier & Stewart (1997):** Lysozyme evolution. Used parsimony ASR, calculated $d_N, d_S$ per branch. Identified primate colobine ancestral branch with $\omega > 1$.
+*   **Zhang et al. (1997):** Fisher's exact test on counts of S/N sites and S/N differences per branch (from ASR). Addresses small sample size concerns of normal approximation for $d_N-d_S$.
+*   **Zhang et al. (1998):** Pairwise $d_N, d_S$. Fit synonymous ($b_S$) and nonsynonymous ($b_N$) branch lengths separately using least squares. Test $b_N > b_S$ for specific branches. Avoids ASR errors.
+*   **Limitations:** ASR errors, failure to correct for multiple hits (in counting methods), assumptions of normal approximation.
+
+### 11.3.2 Likelihood Method
+*   Analyze all sequences jointly on a phylogeny using codon substitution models (§2.4). Averages over ancestral states.
+*   **Branch Models (Yang 1998a):** Allow $\omega$ to vary among branches.
+    *   **One-ratio model:** Single $\omega$ for all branches.
+    *   **Free-ratio model:** Independent $\omega$ for each branch. Too many parameters for large trees.
+    *   **Two-ratio (or few-ratio) model:** Assign branches *a priori* to foreground (test) and background categories, each with its own $\omega$.
+        *   LRT compares one-ratio model ($H_0: \omega_0=\omega_1$) vs. two-ratio model ($H_1: \omega_0 \neq \omega_1$). $df=1$.
+        *   Can also test $H_0: \omega_1=1$ vs. $H_1: \omega_1 > 1$ (fixed $\omega_0$).
+*   **Likelihood Calculation:** Similar to standard phylogenetic likelihood (§4.2), but different $Q$ matrices (due to different $\omega$'s) used for transition probabilities on different branches.
+    *   Example (Fig 11.2): ASPM gene. Model 0 (one $\omega$). Model 1 (three $\omega$'s: $\omega_H, \omega_C, \omega_O$).
+*   **Caveats:**
+    1.  **A Priori Specification:** Foreground lineages must be specified *before* seeing the data (or results from an initial analysis). Post-hoc testing inflates Type I error.
+    2.  **$\omega > 1$ is for Positive Selection:** Variation in $\omega$ alone (e.g., foreground $\omega$ > background $\omega$, but both < 1) is not sufficient evidence for positive selection, could be relaxation of constraint. Need to show foreground $\omega > 1$.
+
+## 11.4 Amino Acid Sites Undergoing Adaptive Evolution ($\omega$ at Sites)
+
+Models allowing $\omega$ to vary among amino acid sites.
+
+### 11.4.1 Three Strategies
+1.  **Focus on Functionally Important Sites:** Use external (e.g., structural) information to identify candidate sites *a priori*. Assign different $\omega$ to these sites vs. others. Test if $\omega_{candidate} > 1$. (e.g., Hughes & Nei 1988 MHC ARS analysis).
+2.  **Site-by-Site $\omega$ Estimation:** Estimate $\omega$ for each site individually.
+    *   Fitch et al. (1997), Suzuki & Gojobori (1999): Parsimony ASR, count S/N changes per site.
+    *   Massingham & Goldman (2005): Site-wise LRT (SLR test). Model with per-site $\omega$ vs. $\omega=1$.
+    *   **Problem:** Infinite parameters. Bayesian/EB approaches better.
+3.  **Statistical Distribution for $\omega$ Across Sites (Random-Site Models):** Assume $\omega_h$ at site $h$ is a random variable from a distribution $f(\omega)$. Test if this distribution includes a class with $\omega > 1$. (Nielsen & Yang 1998; Yang et al. 2000).
+
+### 11.4.2 Likelihood Ratio Test of Positive Selection under Random-Site Models
+*   Probability of data at site $h$: $f(x_h) = \int_0^\infty f(\omega) f(x_h|\omega) d\omega \approx \sum_{k=1}^K p_k f(x_h|\omega_k)$ (Eq 11.7)
+    (Average likelihood over the distribution of $\omega$). Discrete approximation used.
+*   Synonymous rate assumed constant across sites; only $d_N$ varies.
+*   Correct scaling of $Q$ matrices for different $\omega_k$ is important.
+*   **Commonly Used Model Pairs for LRT (Table 11.2):**
+    *   **M1a (neutral) vs. M2a (selection):**
+        *   M1a: Two site classes $p_0$ (proportion) with $\omega_0 \in (0,1)$ and $p_1=1-p_0$ with $\omega_1=1$. (2 params: $p_0, \omega_0$).
+        *   M2a: Three site classes $p_0$ with $\omega_0 \in (0,1)$, $p_1$ with $\omega_1=1$, and $p_2=1-p_0-p_1$ with $\omega_2 \ge 1$. (4 params: $p_0, p_1, \omega_0, \omega_2$).
+        *   LRT: $2\Delta l$. Null distribution is complex (boundary issues), $\chi^2_2$ often too conservative.
+    *   **M7 (beta) vs. M8 (beta & $\omega_s$):** (Preferred test)
+        *   M7: $\omega$ follows a beta distribution $B(p,q)$ restricted to $(0,1)$. (2 params: $p,q$). (Fig 11.3 shows beta shapes).
+        *   M8: Mixture of beta $B(p,q)$ (proportion $p_0$) and an additional class $\omega_s \ge 1$ (proportion $p_1=1-p_0$). (4 params: $p_0, p, q, \omega_s$).
+        *   LRT: $2\Delta l \sim \chi^2_2$ (again, often conservative).
+    *   M3 (discrete) vs. M0 (one-ratio): Tests variability in $\omega$, not specifically positive selection.
+
+### 11.4.3 Identification of Sites Under Positive Selection
+*   If LRT (e.g., M7 vs M8) is significant, identify sites with high posterior probability of being in the $\omega_s > 1$ class.
+*   **Naïve Empirical Bayes (NEB):** Use MLEs of parameters in $f(\omega_k | x_h) = \frac{p_k f(x_h|\omega_k)}{\sum_j p_j f(x_h|\omega_j)}$. (Eq 11.9)
+*   **Bayes Empirical Bayes (BEB) (Yang et al. 2005):** Accounts for uncertainty in MLEs of parameters of $f(\omega)$ by integrating over their prior. More reliable for smaller datasets.
+*   Hierarchical full Bayesian (Huelsenbeck & Dyer 2004) also possible.
+
+### 11.4.4 Positive Selection at the Human MHC
+*   Analysis of 192 human MHC alleles (Yang & Swanson 2002) (Table 11.3).
+*   Tree estimated by NJ. Branch lengths from M0 (one-ratio $\hat{\omega}=0.612$).
+*   M2a: suggests 8.4% sites with $\hat{\omega}_2=5.389$. M8: suggests ~8.5% sites with $\hat{\omega}_s=5.079$.
+*   LRTs (M1a vs M2a, M7 vs M8) highly significant.
+*   Posterior probabilities $P(\omega_k | x_h)$ identify sites likely under positive selection (Fig 11.4).
+*   Most identified sites fall in Antigen Recognition Site (ARS) groove (Fig 11.5).
+
+## 11.5 Adaptive Evolution Affecting Particular Sites and Lineages
+
+### 11.5.1 Branch-Site Test of Positive Selection
+*   Detects positive selection at specific sites along specific (foreground) lineages. (Yang & Nielsen 2002; Yang et al. 2005; Zhang et al. 2005).
+*   **Model A (Alternative Hypothesis, Table 11.4):**
+    *   Background lineages: Sites are class 0 ($0 < \omega_0 < 1$) or class 1 ($\omega_1 = 1$).
+    *   Foreground lineages: Some sites from class 0 and 1 may switch to class 2a or 2b, both with $\omega_2 \ge 1$.
+    *   Proportions $p_0, p_1$ for background site classes. Parameters: $p_0, p_1, \omega_0, \omega_2$.
+*   **Null Hypothesis:** Model A with $\omega_2=1$ fixed. (3 params: $p_0, p_1, \omega_0$).
+*   **LRT:** $2\Delta l$. Null distribution is 50:50 mixture of 0 and $\chi^2_1$.
+*   More power than branch test or site test alone. Requires *a priori* specification of foreground branches. NEB/BEB can identify sites.
+
+### 11.5.2 Other Similar Models
+*   **Clade Models (Forsberg & Christiansen 2003; Bielawski & Yang 2004):**
+    *   Branches *a priori* divided into clades. $\omega$ varies among clades (and site classes).
+    *   Model C (Table 11.5): Site classes 0 ($\omega_0<1$) and 1 ($\omega_1=1$) common to all clades. Site class 2 has different $\omega$ values for different clades ($\omega_{2,clade1}, \omega_{2,clade2}, \dots$).
+*   **Switching Model (Guindon et al. 2004):** $\omega$ at a site can switch between values over time (along tree) via a hidden Markov chain. Does not require *a priori* partitioning of branches.
+
+### 11.5.3 Adaptive Evolution in Angiosperm Phytochromes
+*   Example of branch-site test (Alba et al. 2000 data, Fig 11.6).
+*   Test for positive selection on branch separating phytochrome A and C/F subfamilies (gene duplication).
+*   One-ratio model M0: $\hat{\omega}=0.089$.
+*   Branch model (2 ratios): $\hat{\omega}_{foreground}=0.016, \hat{\omega}_{background}=0.090$. Not significantly better than M0. No evidence of branch-wide $\omega > 1$.
+*   Branch-site test (Model A vs. Model A with $\omega_2=1$): $2\Delta l = 19.88$, $P \approx 4 \times 10^{-6}$. Strong evidence for positive selection. (Table 11.6)
+*   Suggests ~11% sites evolved under positive selection ($\hat{\omega}_2=131.1$) along the foreground branch. BEB identifies 27 such sites.
+
+## 11.6 Assumptions, Limitations, and Comparisons
+
+### 11.6.1 Assumptions and Limitations of Current Methods
+1.  **Substitution Models, Not Mutation-Selection Explicitly:** $\omega$ contrasts substitution rates. Less sensitive to neutral evolution details at silent sites. Not ideal for detecting selection on silent sites.
+2.  **Simplistic Codon Models:** Assume same $\omega$ for all AA changes. Real AA substitution patterns are complex. Incorporating AA properties improves fit but not dramatically; defining positive selection is harder.
+3.  **Conservative Tests:** Branch models (average $\omega$ over sites) and site models (average $\omega$ over branches) have low power. Branch-site tests are better for episodic selection.
+4.  **Synonymous Rate Variation:** Most site models assume constant $d_S$. Extensions allowing $d_S$ to vary exist but impact on $d_N$ inference is debatable. BEB with M2a/M8 robust.
+5.  **Recombination:** Current models assume one tree. Intragenic recombination can mislead LRTs (false positives). Methods for simultaneous detection of recombination and selection are needed.
+6.  **Sequence Divergence Levels:**
+    *   Too similar: Little information.
+    *   Too divergent: Saturation of $d_S$, alignment errors, different codon usage. These can all lead to false positives. Alignment quality is critical.
+
+### 11.6.2 Comparison of Methods for Detecting Positive Selection
+*   **Phylogenetic $\omega$-based tests vs. Population Genetic Neutrality Tests:**
+    1.  **Data Type:** $\omega$ tests need divergent sequences (between species). Neutrality tests for population samples or closely related species (infinite-sites model).
+    2.  **Evidence Strength:** $\omega > 1$ is strong evidence for positive selection. Neutrality test rejection is open to multiple interpretations (selection, demography, linkage).
+    3.  **Statistical Power:** $\omega$ tests (on species data) often more powerful for detecting repeated selective sweeps than neutrality tests (on population data), even at low divergence (Zhai et al. 2009). Due to transient nature of sweeps.
+
+## 11.7 Adaptively Evolving Genes
+Categories of genes often found under positive selection using $\omega$ tests:
+1.  **Host-Pathogen Arms Race:** Host defense/immunity genes (MHC, CD45, plant R-genes, TRIM5$\alpha$). Pathogen surface/capsid proteins, toxins. (Red Queen hypothesis).
+2.  **Sexual Reproduction:** Proteins involved in sperm-egg recognition, male/female reproduction. (Sexual conflict, speciation).
+3.  **Gene Duplication & Neofunctionalization:** One copy maintains original function, other acquires new function under positive selection (DAZ, chorionic gonadotropin, RNases).
+*   **Experimental Verification:** Statistical tests generate hypotheses. Functional assays (site-directed mutagenesis, chimeric proteins) needed to confirm adaptive role of specific AA changes (e.g., TRIM5$\alpha$ patch, AGPase allostery).
+*   **Regulatory vs. Structural Genes:** Debate on primary drivers of adaptation. Codon models primarily target structural (protein-coding) genes. Both are important.
+
+# Chapter 12: Simulating Molecular Evolution
+
+This chapter provides an introduction to computer simulation techniques, also known as stochastic simulation or Monte Carlo simulation, as applied to molecular evolution.
+
+## 12.1 Introduction
+*   **Definition:** Computer simulation is a virtual experiment mimicking a physical/biological process on a computer to study its properties. It's particularly useful for complex systems intractable analytically. Random numbers are a key feature.
+*   **Uses of Simulation:**
+    1.  **Validation:** Validating theories or program implementations when analytical methods are complex.
+    2.  **Method Comparison:** Comparing different analytical methods, especially for robustness when underlying assumptions are violated.
+    3.  **Education:** Gaining intuition about a system by observing its behavior under a model.
+    4.  **Basis of Modern Statistics:** Forms the foundation for computation-intensive methods like bootstrapping, importance sampling, and Markov chain Monte Carlo (MCMC).
+*   **Caveats:**
+    *   Simulation is experimentation; requires careful design and analysis.
+    *   **Limitation:** Only a small portion of parameter space can typically be examined. Behavior in unexplored regions might differ. Avoid over-generalization.
+    *   Analytical results are generally superior as they apply to all parameter values.
+*   **Chapter Goal:** Introduce basic simulation techniques.
+
+## 12.2 Random Number Generator
+*   **Random Numbers:** Random variables drawn from the uniform distribution $U(0,1)$. Fundamental for computer simulation.
+    *   Used to simulate random events with given probabilities (Fig 12.1a).
+    *   Basis for generating random variables from other distributions (Fig 12.1b).
+*   **Hardware Random Number Generators:**
+    *   Use "unpredictable" physical processes (e.g., coin flips, quantum phenomena like photonic emission).
+    *   Too slow for general computer simulation. Used for cryptographic keys or seeding pseudo-random generators.
+*   **Pseudo-Random Number Generator (PRNG):**
+    *   A mathematical algorithm producing a sequence of numbers that *appear* random but are entirely deterministic given an initial "seed".
+    *   **Multiplication-Congruential Method:** A common PRNG.
+        *   $A_i = c A_{i-1} \pmod M$ (Eq 12.1)
+        *   $u_i = A_i / M$ (Eq 12.2)
+        *   $A_0$: seed (initial integer value).
+        *   $c$: multiplier (integer).
+        *   $M$: modulus (integer, often $2^d$ where $d$ is number of bits in an integer type, e.g., $2^{31}, 2^{32}, 2^{64}$).
+        *   $A_i$ is the remainder when $c A_{i-1}$ is divided by $M$.
+        *   $u_i$ is the pseudo-random number in $[0,1)$.
+        *   The sequence $A_i$ (and thus $u_i$) is periodic. The goal is to choose $M, c, A_0$ to make the period very long and the sequence statistically "random-like."
+*   **Assessing PRNG Quality:**
+    *   Generated numbers should be indistinguishable from true $U(0,1)$ draws.
+    *   Statistical tests for mean ($1/2$), variance ($1/12$), lack of autocorrelation, etc.
+    *   It's generally not advisable to design one's own PRNG; use well-tested library functions (e.g., `rand()` in C/Perl, though quality varies).
+*   **Seeding PRNGs:**
+    *   Using the same seed always produces the same sequence (useful for debugging).
+    *   For multiple independent simulation replicates, different seeds are needed.
+    *   **Wall-clock time:** `time()` function can provide a seed. Unsafe for parallel jobs starting simultaneously (might get same seed).
+    *   **/dev/urandom (UNIX):** A file providing nearly true random numbers from environmental noise. Good for seeding PRNGs robustly.
+
+## 12.3 Generation of Discrete Random Variables
+
+### 12.3.1 Inversion Method for Sampling from a General Discrete Distribution
+*   **Setup:** Discrete random variable $X$ takes values $x_1, x_2, \dots$ with probabilities $p_i = P(X=x_i)$, where $\sum p_i = 1$. (Eq 12.3)
+*   **Cumulative Distribution Function (CDF):** $F_i = P(X \le x_i) = p_1 + \dots + p_i$. (Eq 12.4)
+*   **Inversion Method:**
+    1.  Generate $u \sim U(0,1)$.
+    2.  Find $i$ such that $F_{i-1} < u \le F_i$ (where $F_0=0$).
+    3.  Set $X = x_i$.
+*   This "inverts" the CDF: $X = F^{-1}(u)$.
+*   **Efficiency:** Number of comparisons depends on ordering of $p_i$. For $k$ categories, on average, it takes $\sum_{j=1}^k j p_j'$ comparisons if $p_j'$ is prob of $j^{th}$ category in the *ordered list*. Best to order categories from highest to lowest $p_i$.
+    *   Example: Nucleotides T,C,A,G with probs 0.1, 0.2, 0.3, 0.4.
+        *   Order T,C,A,G: average 2.6 comparisons.
+        *   Order G,A,C,T: average 1.9 comparisons.
+
+### 12.3.2 The Alias Method for Sampling from a Discrete Distribution
+*   Efficient for many categories and many samples, after an initial setup cost.
+*   Requires only one comparison per random variable generated, irrespective of number of categories $n$.
+*   **Basis:** Any discrete distribution $P = (p_1, \dots, p_n)$ can be expressed as an equiprobable mixture of $n$ two-point distributions $q^{(m)}$:
+    $p_i = \frac{1}{n} \sum_{m=1}^n q_i^{(m)}$, for all $i$. (Eq 12.5)
+    Each $q^{(m)}$ is non-zero for at most two values of $i$.
+*   **Simulation:**
+    1.  (Setup) Construct the $n$ distributions $q^{(m)}$ (Table 12.1 shows an example).
+    2.  Generate $u \sim U(0,1)$, set $m = \lfloor nu \rfloor + 1$.
+    3.  Sample from $q^{(m)}$ (which requires one comparison as it's a two-point distribution).
+*   Useful for sampling from multinomial distribution.
+
+### 12.3.3 Discrete Uniform Distribution
+*   Takes $n$ possible values, each with probability $1/n$.
+*   To sample $x \in \{1, 2, \dots, n\}$: Generate $u \sim U(0,1)$, set $x = \lfloor nu \rfloor + 1$.
+*   Used for:
+    *   Generating root sequence under JC69/K80 (equal base frequencies).
+    *   Nonparametric bootstrap (sampling sites with replacement from an alignment of length $l$: pick site index $\lfloor lu \rfloor + 1$).
+    *   Sampling a random pair $(i,j)$ from $1, \dots, n$.
+    *   Generating random permutations.
+
+### 12.3.4 Binomial Distribution
+*   $X \sim \text{bino}(n,p)$: number of successes in $n$ independent trials, probability of success $p$.
+*   **Simulation Method 1 (Direct):** Simulate $n$ Bernoulli trials. For each, generate $u \sim U(0,1)$; if $u<p$, count success. Sum successes.
+*   **Simulation Method 2 (Inversion):** Calculate probabilities $p_x = \binom{n}{x} p^x (1-p)^{n-x}$ for $x=0, \dots, n$. (Eq 12.6). Then sample from this $(n+1)$-category discrete distribution using inversion. More efficient if many samples needed from same binomial.
+
+### 12.3.5 The Multinomial Distribution
+*   Generalization of binomial: $k$ possible outcomes per trial, probabilities $p_1, \dots, p_k$.
+*   $MN(n; p_1, \dots, p_k)$: counts $n_1, \dots, n_k$ for each outcome in $n$ trials. $\sum n_i = n$.
+*   **Simulation:** Sample $n$ times from the $k$-category discrete distribution $(p_1, \dots, p_k)$, and count occurrences of each category. Alias method efficient if $k$ large.
+*   Sequence data under i.i.d. models follow a multinomial distribution (site patterns are categories).
+
+### 12.3.6 The Poisson Distribution
+*   $X \sim \text{Poisson}(\lambda)$ if $P(X=x) = e^{-\lambda} \lambda^x / x!$, for $x=0,1,\dots$. (Eq 12.7)
+*   Mean $E(X)=\lambda$, Variance $V(X)=\lambda$.
+*   **Algorithm 12.1 (Inversion Method for Poisson):**
+    1.  Generate $u \sim U(0,1)$.
+    2.  Set $x=0$, $F = p_0 = e^{-\lambda}$.
+    3.  If $u < F$, set $X=x$, stop.
+    4.  $x \to x+1$. Update $p_x = p_{x-1} \cdot \lambda/x$. $F \to F+p_x$. (Using $p_{k+1} = p_k \lambda/(k+1)$ and $F_x = \sum_{j=0}^x p_j$, so $F_{x+1}=F_x+p_{x+1}$) (Eq 12.8)
+    5.  Go to step 3.
+    *   Number of comparisons $1+X$. Can be slow if $\lambda$ is large. Reordering values or pre-calculating CDF can help for multiple samples.
+
+### 12.3.7 The Composition Method for Mixture Distributions
+*   If $X$ has a mixture distribution $f = \sum_{i=1}^m p_i f_i$. (Eq 12.9)
+*   **Composition Method:**
+    1.  Sample a component index $i$ from the discrete distribution $(p_1, \dots, p_m)$.
+    2.  Sample $X$ from the chosen component distribution $f_i$.
+*   Example: I+$\Gamma$ model. Sample if site is invariable ($p_0$) or gamma-distributed ($1-p_0$). If gamma, then sample from gamma.
+
+## 12.4 Generation of Continuous Random Variables
+
+### 12.4.1 The Inversion Method
+*   If $X$ has CDF $F(x)$, then $U=F(X) \sim U(0,1)$.
+*   If $F^{-1}(u)$ is analytically available:
+    1.  Generate $u \sim U(0,1)$.
+    2.  Set $X = F^{-1}(u)$.
+*   **Examples:**
+    1.  **Uniform $X \sim U(a,b)$:** $F(x)=(x-a)/(b-a)$. $F^{-1}(u) = a + u(b-a)$.
+    2.  **Exponential $X \sim \text{Exp}(\text{mean}=\theta)$:** $F(x)=1-e^{-x/\theta}$. $F^{-1}(u) = -\theta \log(1-u)$. Since $1-u \sim U(0,1)$ if $u \sim U(0,1)$, can use $X = -\theta \log(u)$.
+
+### 12.4.2 The Transformation Method
+*   If $X=h(Y)$ and $Y$ is easier to simulate, simulate $Y$ then transform. Inversion is a special case ($Y \sim U(0,1), h=F^{-1}$).
+*   **Normal $N(\mu, \sigma^2)$:** If $Z \sim N(0,1)$, then $X = \mu + Z\sigma \sim N(\mu, \sigma^2)$.
+*   **Gamma $G(n,\beta)$ for integer $n$:** If $Y_j \sim \text{Exp}(1)$ i.i.d., then $X = \frac{1}{\beta}\sum_{j=1}^n Y_j \sim G(n,\beta)$. (Eq 12.10)
+
+### 12.4.3 The Rejection Method
+*   Used when $F^{-1}$ is intractable.
+*   **Simple Rejection (from Uniform Envelope, Fig 12.2a):**
+    *   Assume $f(x)$ is defined on $(a,b)$ and $f(x) \le M$.
+    *   **Algorithm 12.2:**
+        1. Generate $x^* \sim U(a,b)$ and $y^* \sim U(0,M)$. This samples a point $(x^*, y^*)$ uniformly from rectangle $[a,b] \times [0,M]$.
+        2. If $y^* < f(x^*)$ (point is under curve $f(x)$), accept $X=x^*$. Otherwise, reject and go to Step 1.
+*   **General Rejection (using Envelope Function $g(x)$, Fig 12.2b):**
+    *   Need a "proposal" or "envelope" density $g(x)$ from which it's easy to sample.
+    *   Need a constant $M$ such that $f(x)/g(x) \le M$ for all $x$ (i.e., $M g(x)$ encloses $f(x)$). (Eq 12.11)
+    *   **Algorithm 12.3:**
+        1. Generate $x^* \sim g(x)$. Generate $u \sim U(0,1)$. Set $y^* = u M g(x^*)$. (This samples $(x^*, y^*)$ from under $M g(x)$).
+        2. If $y^* < f(x^*)$ (or equivalently, if $u < f(x^*)/(M g(x^*))$), accept $X=x^*$. Otherwise, reject and go to Step 1.
+    *   **Acceptance Probability:** $P_{accept} = 1/M$. (Eq 12.12). Want $M$ close to 1 (tight envelope).
+*   **Example: Generating $N(0,1)$ using Exponential Envelope:**
+    *   Target $f(x) = \frac{2}{\sqrt{2\pi}} e^{-x^2/2}$ for $x \ge 0$ (absolute value of normal).
+    *   Proposal $g(x) = e^{-x}$ for $x \ge 0$ (Exponential with mean 1).
+    *   $M = \sqrt{2e/\pi} \approx 1.3155$. $P_{accept} = 1/M \approx 0.76$.
+    *   **Algorithm 12.4 (Standard Normal):**
+        1. Generate $x^*$ from Exp(1) using $x^* = -\log u_1$. Generate $u_2 \sim U(0,1)$.
+        2. If $u_2 < e^{-(x^*-1)^2/2}$ (equivalent to $y^* < f(x^*)$ using Eq 12.15), accept $x^*$. Else go to 1.
+        3. Generate $u_3 \sim U(0,1)$. If $u_3 < 0.5$, set $X = -x^*$. Else $X=x^*$.
+
+### 12.4.4 Generation of a Standard Normal Variate using the Polar Method
+*   **Box-Muller Transform (Algorithm 12.5):**
+    *   Based on: If $X,Y \sim N(0,1)$ i.i.d., their polar coordinates $(R, \Theta)$ have $R^2 = X^2+Y^2 \sim \text{Exp}(\text{mean}=2)$ and $\Theta \sim U(0, 2\pi)$, independently. (Eq 12.18, 12.19)
+    1.  Generate $u_1, u_2 \sim U(0,1)$.
+    2.  Set $r^2 = -2\log u_1$ (Exponential with mean 2). Set $\theta = 2\pi u_2$.
+    3.  $x = \sqrt{r^2} \cos\theta = \sqrt{-2\log u_1} \cos(2\pi u_2)$.
+        $y = \sqrt{r^2} \sin\theta = \sqrt{-2\log u_1} \sin(2\pi u_2)$. (Eq 12.20)
+    *   Generates two $N(0,1)$ variates. Sine/cosine are expensive.
+*   **Polar Method (Marsaglia, Algorithm 12.6):** Avoids sine/cosine.
+    1.  Generate $(v_1, v_2)$ uniformly within the unit circle $v_1^2+v_2^2 \le 1$.
+        a. Generate $u_1, u_2 \sim U(0,1)$. Set $v_1 = 2u_1-1, v_2 = 2u_2-1$. (Uniform in $[-1,1]^2$ square).
+        b. If $s = v_1^2+v_2^2 > 1$, reject $(v_1,v_2)$ and go to 1a. (Now $(v_1,v_2)$ is uniform in unit circle).
+    2.  $x = \sqrt{-2\log s/s} \cdot v_1$.
+        $y = \sqrt{-2\log s/s} \cdot v_2$.
+    *   Uses $s=R^2 \sim U(0,1)$ and $\cos\Theta = v_1/\sqrt{s}, \sin\Theta = v_2/\sqrt{s}$. (Eq 12.21)
+    *   Rejection in step 1c has probability $1-\pi/4 \approx 0.215$. Average 1.273 iterations for step 1.
+
+### 12.4.5 Gamma, Beta, and Dirichlet Variables
+*   **Gamma $G(\alpha, \beta)$:** Density $f(x; \alpha, \beta) = \frac{\beta^\alpha}{\Gamma(\alpha)} e^{-\beta x} x^{\alpha-1}$. (Eq 12.22)
+    *   Specialized algorithms exist (e.g., Ziggurat).
+*   **Beta $\text{beta}(p,q)$:** Density $f(x; p,q) = \frac{1}{B(p,q)} x^{p-1}(1-x)^{q-1}$. (Eq 12.23)
+    *   Generate $Y_1 \sim G(p,1)$ and $Y_2 \sim G(q,1)$. Then $X = Y_1/(Y_1+Y_2) \sim \text{beta}(p,q)$. (Eq 12.24)
+*   **Dirichlet $\text{Dir}(\alpha_1, \dots, \alpha_K)$:** Density $f(x; \alpha) = \frac{\Gamma(\sum \alpha_i)}{\prod \Gamma(\alpha_i)} \prod x_i^{\alpha_i-1}$. (Eq 12.25)
+    *   Generate $Y_i \sim G(\alpha_i, 1)$ independently for $i=1, \dots, K$.
+    *   Set $X_i = Y_i / \sum_j Y_j$. Then $(X_1, \dots, X_K) \sim \text{Dir}(\alpha_1, \dots, \alpha_K)$.
+*   R functions: `runif, rnorm, rgamma, rbeta`.
+
+## 12.5 Simulation of Markov Processes
+
+### 12.5.1 Simulation of the Poisson Process
+*   Homogeneous Poisson process with rate $\lambda$. $N(t_0)$ = number of events in $[0,t_0]$. $N(t_0) \sim \text{Poisson}(\lambda t_0)$. (Eq 12.26)
+*   Waiting times $S_k$ between events are i.i.d. $\text{Exp}(\lambda)$.
+*   **Algorithm 12.7 (Simulate Path until $t_0$):**
+    1.  $t=0, N=0$.
+    2.  Generate $s \sim \text{Exp}(\lambda)$ (i.e., $s = -(1/\lambda)\log u$).
+    3.  $t \leftarrow t+s$. If $t > t_0$, stop.
+    4.  $N \leftarrow N+1$. Record event time $s_N = t$.
+    5.  Go to Step 2.
+*   Alternative: Generate $N(t_0) \sim \text{Poisson}(\lambda t_0)$. Then generate $N(t_0)$ event times as i.i.d. $U(0, t_0)$ and sort them.
+
+### 12.5.2 Simulation of the Nonhomogeneous Poisson Process
+*   Rate function $\lambda(t)$. Number of events in $[0,t_0]$ is $\text{Poisson}(\int_0^{t_0} \lambda(s)ds)$.
+*   **Thinning Algorithm (Algorithm 12.8):**
+    *   Requires an upper bound $\lambda_U \ge \lambda(t)$ for all $t \in [0,t_0]$. (Eq 12.28)
+    1.  $t=0, N=0$.
+    2.  Generate $s \sim \text{Exp}(\lambda_U)$. $t \leftarrow t+s$. If $t > t_0$, stop.
+    3.  Generate $u_2 \sim U(0,1)$. If $u_2 \le \lambda(t)/\lambda_U$, accept event: $N \leftarrow N+1$, record $s_N=t$.
+    4.  Go to Step 2.
+    *   Inefficient if $\lambda(t) \ll \lambda_U$. Can break $[0,t_0]$ into subintervals with tighter $\lambda_{U,i}$.
+*   **Inversion Method (if CDF of waiting times is tractable):**
+    *   CDF of time $x$ to next event, given last event at $s$: $F_s(x) = 1 - \exp(-\int_s^{s+x} \lambda(y)dy)$. (Eq 12.29)
+    *   Example: $\lambda(t) = 1/(t+a)$. $F_s(x) = x/(x+s+a)$. Inverse $x = F_s^{-1}(u) = (s+a)u/(1-u)$. (Eq 12.30-32)
+
+### 12.5.3 Simulation of Discrete-Time Markov Chains
+*   States $1, \dots, S$. Transition matrix $P=\{p_{ij}\}$. (Eq 12.33)
+*   Given current state $X_t=i$, next state $X_{t+1}$ is sampled from discrete distribution $(p_{i1}, \dots, p_{iS})$. Repeat for $m$ steps.
+*   For large $m$, can use $m$-step transition matrix $P^{(m)} = P^m$. (Eq 12.34)
+    *   If $P=U\Lambda U^{-1}$ (diagonalization, $\Lambda=\text{diag}(\lambda_k)$), then $P^m = U\Lambda^m U^{-1}$. (Eq 12.35, 36)
+*   **Example 12.2 (K80 nucleotide model):** Simulate evolution over $m$ years.
+    *   $P$ for one year (Eq 12.37). Calculate $P^m$ (Eq 12.38, 39) and sample from its rows.
+
+### 12.5.4 Simulation of Continuous-Time Markov Chains
+*   Rate matrix $Q=\{q_{ij}\}$. Rate of leaving state $i$ is $q_i = -q_{ii} = \sum_{j \ne i} q_{ij}$.
+*   **Algorithm 12.9 (Gillespie-type algorithm):**
+    1.  $t=0$, initial state $i=X(0)$.
+    2.  Generate waiting time $s \sim \text{Exp}(q_i)$.
+    3.  $t \leftarrow t+s$. If $t > t_0$, stop.
+    4.  Sample new state $j$ from discrete distribution $(q_{i1}/q_i, \dots, q_{iS}/q_i)$ (for $j \ne i$). Set $i \leftarrow j$.
+    5.  Go to Step 2.
+    *   This simulates the jump chain and waiting times.
+
+## 12.6 Simulating Molecular Evolution
+
+### 12.6.1 Simulation of Sequences on a Fixed Tree
+*   **12.6.1.1 Method 1: Multinomial Sampling of Site Patterns:**
+    *   Assumes sites are i.i.d. (includes +$\Gamma$ models).
+    *   Calculate probability $p_k$ for each of $4^s$ site patterns (using phylogenetic likelihood algorithm, Ch 4).
+    *   Sample $N_{sites}$ times from this multinomial distribution to get site pattern counts.
+    *   Feasible for small trees ($s \le 4$ or $5$). Efficient with alias method.
+*   **12.6.1.2 Method 2: Evolving Sequences Along Tree Branches (SEQ-GEN, EVOLVER):**
+    1.  Generate root sequence (from equilibrium frequencies $\pi_j$).
+    2.  For each branch of length $t$:
+        *   Calculate $P(t) = e^{Qt}$.
+        *   For each site, if current nucleotide is $i$, sample next nucleotide from row $i$ of $P(t)$.
+    3.  Repeat recursively down the tree. Final tip sequences are the data.
+*   **12.6.1.3 Method 3: Simulating Waiting Times (Jump Chain):**
+    *   Variation of Method 2. Evolve along branches using Algorithm 12.9 (simulate jumps and waiting times).
+    *   Advantage: No need to calculate $P(t)$. Useful for complex models (indels, rearrangements) where total rate of all events can be calculated.
+*   **12.6.1.4 Simulation under JC69 and K80:**
+    *   Substitution process is Poisson.
+    *   Can generate total number of changes $N_{subst} \sim \text{Poisson}(l \lambda t)$ for a branch of length $t$ with $l$ sites, rate $\lambda$.
+    *   Assign $N_{subst}$ changes to random sites.
+    *   For each change, pick new nucleotide type based on model (e.g., $1/3$ for JC69; based on $\kappa$ for K80).
+*   **12.6.1.5 Simulation under More Complex Models:**
+    *   **Partition Models (Fixed-Site Heterogeneity):** e.g., different genes/codon positions have different rates/parameters. Simulate each partition separately using Methods 1-3, then combine.
+    *   **Mixture Models (Random-Site Heterogeneity, e.g., +$\Gamma$):**
+        *   For each site, sample its rate $r_h$ from the distribution (e.g., gamma).
+        *   Then simulate evolution for that site using $P(t \cdot r_h)$.
+        *   If discrete gamma, sample rate class for each site first, then simulate all sites in same class together.
+
+### 12.6.2 Simulation of Random Trees
+*   **Coalescent Model:** Generate waiting times $T_j \sim \text{Exp}(\binom{j}{2})$, randomly join lineages. (Chapter 9)
+*   **Birth-Death Process Model:** (e.g., Yule) Node ages are order statistics from a kernel density (Eq 10.11). Generates trees with clock.
+*   Can simulate rate drift on tree (e.g., GBM from §10.4.3) to get non-clock trees.
+*   Or, sample random topologies, then sample branch lengths from arbitrary distributions (e.g., exponential, gamma).
+
+## 12.7 Validation of the Simulation Program
+*   Standard debugging techniques: modular testing, isolate problems.
+*   Test simple cases with known analytical answers.
+*   Print intermediate variable values to check correctness.
+*   Common error: Forcing root sequence to be a specific observed sequence instead of drawing from equilibrium distribution.
