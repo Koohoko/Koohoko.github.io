@@ -1301,7 +1301,7 @@ This chapter delves into Markov chain Monte Carlo (MCMC) methods, which are simu
 ## 7.1 Markov Chain Monte Carlo
 
 ### 7.1.1 Metropolis Algorithm
-*   **Concept:** MCMC generates a *dependent* sample $(\theta_1, \theta_2, ..., \theta_n)$ from a target probability density $\pi(\theta)$ (typically the posterior distribution $f(\theta|X)$). This sequence forms a stationary Markov chain whose states are the possible values of $\theta$.
+*   **Concept:** MCMC generates a *dependent* sample $(\theta_1, \theta_2, ..., \theta_n)$ from a target probability density $\pi(\theta)$ (typically the posterior distribution $f(\theta\vert X)$). This sequence forms a stationary Markov chain whose states are the possible values of $\theta$.
 *   **Estimating Expectations:** The expectation of a function $h(\theta)$ over $\pi(\theta)$, which is an integral $I = E_{\pi}\{h(\theta)\} = \int h(\theta)\pi(\theta) d\theta$ (Eq 7.1), can be estimated by the sample average:
     $\tilde{I} = \frac{1}{n} \sum_{i=1}^{n} h(\theta_i)$ (Eq 7.2)
 *   **Variance of the Estimate:** Unlike independent Monte Carlo integration, the variance of $\tilde{I}$ from an MCMC sample must account for autocorrelation. If $\rho_k = \text{corr}(h(\theta_i), h(\theta_{i+k}))$ is the autocorrelation at lag $k$:
@@ -1323,8 +1323,8 @@ Let $\theta$ take values $\{1, 2, 3\}$ with target probabilities $\pi_1, \pi_2, 
 5.  **Iterate:** Go to step 2.
 
 **Key Features of Metropolis Algorithm:**
-*   **Ratio of Densities:** Only the ratio $\frac{\pi(\theta')}{\pi(\theta)}$ is needed, not $\pi(\theta)$ itself. This is crucial because for posteriors, $\pi(\theta) = f(\theta|X) = \frac{f(\theta)f(X|\theta)}{f(X)}$. The normalizing constant $f(X)$ (marginal likelihood) is often very hard to compute but cancels out in the ratio:
-    $\alpha = \min\left(1, \frac{\pi(\theta')}{\pi(\theta)}\right) = \min\left(1, \frac{f(\theta')f(X|\theta')}{f(\theta)f(X|\theta)}\right)$ (Eq 7.5)
+*   **Ratio of Densities:** Only the ratio $\frac{\pi(\theta')}{\pi(\theta)}$ is needed, not $\pi(\theta)$ itself. This is crucial because for posteriors, $\pi(\theta) = f(\theta\vert X) = \frac{f(\theta)f(X\vert \theta)}{f(X)}$. The normalizing constant $f(X)$ (marginal likelihood) is often very hard to compute but cancels out in the ratio:
+    $\alpha = \min\left(1, \frac{\pi(\theta')}{\pi(\theta)}\right) = \min\left(1, \frac{f(\theta')f(X\vert \theta')}{f(\theta)f(X\vert \theta)}\right)$ (Eq 7.5)
     This allows sampling from the posterior without calculating $f(X)$.
 *   **Markov Chain:** The sequence of states is a Markov chain (next state depends only on current state).
 *   **Stationary Distribution:** If run long enough, the proportion of time spent in each state $i$ will be $\pi_i$. So, $\pi(\theta)$ is the stationary distribution of the chain.
@@ -1332,7 +1332,7 @@ Let $\theta$ take values $\{1, 2, 3\}$ with target probabilities $\pi_1, \pi_2, 
 *   **Continuous Parameters:** The algorithm is essentially the same.
     *   **Example 7.1 (JC69 distance $\theta$):**
         *   Prior: $f(\theta) = \frac{1}{\mu} e^{-\theta/\mu}$
-        *   Likelihood: $f(x|\theta) = \left(\frac{3}{4} - \frac{3}{4}e^{-4\theta/3}\right)^x \left(\frac{1}{4} + \frac{3}{4}e^{-4\theta/3}\right)^{n-x}$ (Eq 7.6)
+        *   Likelihood: $f(x\vert \theta) = \left(\frac{3}{4} - \frac{3}{4}e^{-4\theta/3}\right)^x \left(\frac{1}{4} + \frac{3}{4}e^{-4\theta/3}\right)^{n-x}$ (Eq 7.6)
         *   Proposal: Sliding window $\theta' \sim U(\theta - w/2, \theta + w/2)$. If $\theta'<0$, reflect ($\theta' = -\theta'$).
         *   Acceptance ratio $\alpha$: As in Eq 7.7 (using product of prior ratio and likelihood ratio).
         *   **Window Size ($w$):** Critical for mixing. (Fig 7.2a)
@@ -1343,39 +1343,39 @@ Let $\theta$ take values $\{1, 2, 3\}$ with target probabilities $\pi_1, \pi_2, 
         *   Posterior can be summarized by histogram (Fig 7.2c) or kernel density estimate (Fig 7.2d).
 
 ### 7.1.2 Asymmetrical Moves and Proposal Ratio (Metropolis-Hastings)
-*   **Metropolis-Hastings (MH) Algorithm (Hastings, 1970):** Generalizes Metropolis to allow *asymmetric* proposal densities $q(\theta'|\theta)$ (probability of proposing $\theta'$ given current $\theta$).
+*   **Metropolis-Hastings (MH) Algorithm (Hastings, 1970):** Generalizes Metropolis to allow *asymmetric* proposal densities $q(\theta'\vert \theta)$ (probability of proposing $\theta'$ given current $\theta$).
 *   **Acceptance Ratio $\alpha$ modified:**
-    $\alpha(\theta, \theta') = \min \left(1, \frac{\pi(\theta')}{\pi(\theta)} \times \frac{q(\theta|\theta')}{q(\theta'|\theta)}\right)$
+    $\alpha(\theta, \theta') = \min \left(1, \frac{\pi(\theta')}{\pi(\theta)} \times \frac{q(\theta\vert \theta')}{q(\theta'\vert \theta)}\right)$
     $= \min \left(1, \text{prior ratio} \times \text{likelihood ratio} \times \text{proposal ratio} \right)$ (Eq 7.8)
-    The term $\frac{q(\theta|\theta')}{q(\theta'|\theta)}$ is the **Hastings ratio** or **proposal ratio**, correcting for asymmetry in proposals.
+    The term $\frac{q(\theta\vert \theta')}{q(\theta'\vert \theta)}$ is the **Hastings ratio** or **proposal ratio**, correcting for asymmetry in proposals.
 *   **Robot Example (Fig 7.1b):** Robot has 'left bias' (proposes left box with $2/3$, right with $1/3$).
-    *   If current $\theta=1$, propose $\theta'=2$. $q(2|1) = 1/3$ (assuming it picks right with $1/3$). For reverse move, if current $\theta=2$, propose $\theta'=1$. $q(1|2) = 2/3$ (assuming it picks left with $2/3$).
-    *   Proposal ratio $q(1|2)/q(2|1) = (2/3)/(1/3) = 2$.
-*   **Conditions for Convergence:** Proposal density $q(\cdot|\cdot)$ must define an irreducible (can reach any state from any state) and aperiodic (no fixed cycles) chain.
+    *   If current $\theta=1$, propose $\theta'=2$. $q(2\vert 1) = 1/3$ (assuming it picks right with $1/3$). For reverse move, if current $\theta=2$, propose $\theta'=1$. $q(1\vert 2) = 2/3$ (assuming it picks left with $2/3$).
+    *   Proposal ratio $q(1\vert 2)/q(2\vert 1) = (2/3)/(1/3) = 2$.
+*   **Conditions for Convergence:** Proposal density $q(\cdot\vert \cdot)$ must define an irreducible (can reach any state from any state) and aperiodic (no fixed cycles) chain.
 
 ### 7.1.3 The Transition Kernel
 *   For a continuous state space, the Markov chain is defined by a transition kernel $p(x, y)$, the probability density of moving to state $y$ given current state $x$.
 *   For MH:
-    $p(x, y) = q(y|x) \cdot \alpha(x, y)$, for $y \neq x$
-    $p(x, x) = 1 - \int q(y|x) \cdot \alpha(x, y) dy$ (probability of rejection, staying at $x$) (Eq 7.9, 7.10, 7.11)
+    $p(x, y) = q(y\vert x) \cdot \alpha(x, y)$, for $y \neq x$
+    $p(x, x) = 1 - \int q(y\vert x) \cdot \alpha(x, y) dy$ (probability of rejection, staying at $x$) (Eq 7.9, 7.10, 7.11)
 *   There's typically a point mass at $y=x$ due to rejections.
 *   **Acceptance Proportion ($P_{jump}$):** Overall probability that a proposal is accepted.
-    $P_{jump} = \iint \pi(x) q(y|x) \alpha(x, y) dx dy = \int \pi(x) (1 - p(x,x)) dx$ (Eq 7.12)
+    $P_{jump} = \iint \pi(x) q(y\vert x) \alpha(x, y) dx dy = \int \pi(x) (1 - p(x,x)) dx$ (Eq 7.12)
 
 ### 7.1.4 Single-Component Metropolis-Hastings Algorithm
 *   For multi-parameter models $\theta = (x, y, z, \dots)$, updating all parameters simultaneously can be difficult or inefficient.
 *   **Single-Component MH:** Update parameters (or blocks of parameters) one at a time, conditioning on the current values of other parameters.
 *   **Iteration (3 blocks $x,y,z$):**
-    1.  Propose $x^*$ from $q(x^*|x, y, z)$. Accept with probability $\alpha_x$ based on $\frac{\pi(x^*, y, z)}{\pi(x, y, z)}$ and proposal ratio for $x$. Update $x \to x'$.
-    2.  Propose $y^*$ from $q(y^*|x', y, z)$. Accept with probability $\alpha_y$ based on $\frac{\pi(x', y^*, z)}{\pi(x', y, z)}$ and proposal ratio for $y$. Update $y \to y'$.
-    3.  Propose $z^*$ from $q(z^*|x', y', z)$. Accept with probability $\alpha_z$ based on $\frac{\pi(x', y', z^*)}{\pi(x', y', z)}$ and proposal ratio for $z$. Update $z \to z''$.
+    1.  Propose $x^*$ from $q(x^*\vert x, y, z)$. Accept with probability $\alpha_x$ based on $\frac{\pi(x^*, y, z)}{\pi(x, y, z)}$ and proposal ratio for $x$. Update $x \to x'$.
+    2.  Propose $y^*$ from $q(y^*\vert x', y, z)$. Accept with probability $\alpha_y$ based on $\frac{\pi(x', y^*, z)}{\pi(x', y, z)}$ and proposal ratio for $y$. Update $y \to y'$.
+    3.  Propose $z^*$ from $q(z^*\vert x', y', z)$. Accept with probability $\alpha_z$ based on $\frac{\pi(x', y', z^*)}{\pi(x', y', z)}$ and proposal ratio for $z$. Update $z \to z''$.
 *   The ratio of joint posteriors simplifies to the ratio of **full conditional distributions**. For step 2:
-    $\frac{\pi(x', y^*, z)}{\pi(x', y, z)} = \frac{\pi(y^*|x', z)}{\pi(y|x', z)}$ (Eq 7.16)
+    $\frac{\pi(x', y^*, z)}{\pi(x', y, z)} = \frac{\pi(y^*\vert x', z)}{\pi(y\vert x', z)}$ (Eq 7.16)
 *   Allows tailoring proposal mechanisms for different components. Advisable to block highly correlated parameters and update them together.
 
 ### 7.1.5 Gibbs Sampler
 *   A special case of single-component MH.
-*   To update a component (e.g., $y$), **propose directly from its full conditional distribution**: $q(y^*|x', y, z) = \pi(y^*|x', z)$.
+*   To update a component (e.g., $y$), **propose directly from its full conditional distribution**: $q(y^*\vert x', y, z) = \pi(y^*\vert x', z)$.
 *   This makes the acceptance ratio $\alpha = 1$ always (Eq 7.13-7.16). All proposals are accepted.
 *   Widely used in linear models where priors and likelihoods are normal, making full conditionals also normal and easy to sample from.
 *   Seldom used in phylogenetics as full conditionals are usually complex.
@@ -1385,29 +1385,29 @@ Let $\theta$ take values $\{1, 2, 3\}$ with target probabilities $\pi_1, \pi_2, 
 The proposal ratio depends only on the proposal algorithm, not the prior or likelihood.
 *   **7.2.1 Sliding Window with Uniform Proposal:**
     *   $x' \sim U(x - w/2, x + w/2)$ (Eq 7.17)
-    *   Proposal ratio is 1 because $q(x'|x) = q(x|x') = 1/w$.
+    *   Proposal ratio is 1 because $q(x'\vert x) = q(x\vert x') = 1/w$.
     *   **Constraints:** If $x \in (a,b)$, reflections are used for proposed values outside the interval. E.g., if $x' < a$, new $x' = a + (a-x') = 2a-x'$.
     *   Proposal ratio remains 1 even with reflections.
 *   **7.2.2 Sliding Window with Normal Proposal:**
-    *   $x'|x \sim N(x, \sigma^2)$ (Eq 7.18)
-    *   Proposal ratio is 1 because $q(x'|x) = q(x|x')$. (Normal PDF is symmetric around mean).
+    *   $x'\vert x \sim N(x, \sigma^2)$ (Eq 7.18)
+    *   Proposal ratio is 1 because $q(x'\vert x) = q(x\vert x')$. (Normal PDF is symmetric around mean).
     *   Handles constraints by reflection, proposal ratio still 1.
 *   **7.2.3 Bactrian Proposal (Yang & Rodriguez 2013):**
     *   Aims to avoid proposing states very close to current state. Shaped like a two-humped camel.
     *   Standard Bactrian: 1:1 mixture of $N(-m, 1-m^2)$ and $N(m, 1-m^2)$. Mean 0, variance 1. Parameter $m \in [0,1)$ controls "spikiness".
     *   To use as sliding window: $x' = x + y\sigma$, where $y$ is from standard Bactrian, $\sigma$ is step size.
-    *   Proposal density $q(x'|x; m, \sigma^2) = \frac{1}{2\sigma\sqrt{1-m^2}} \left[ \exp\left(-\frac{(x'-x+m\sigma)^2}{2\sigma^2(1-m^2)}\right) + \exp\left(-\frac{(x'-x-m\sigma)^2}{2\sigma^2(1-m^2)}\right) \right]$ (Eq 7.20)
+    *   Proposal density $q(x'\vert x; m, \sigma^2) = \frac{1}{2\sigma\sqrt{1-m^2}} \left[ \exp\left(-\frac{(x'-x+m\sigma)^2}{2\sigma^2(1-m^2)}\right) + \exp\left(-\frac{(x'-x-m\sigma)^2}{2\sigma^2(1-m^2)}\right) \right]$ (Eq 7.20)
     *   Symmetric, so proposal ratio is 1. Often more efficient than uniform/normal. $m=0.95$ is a good choice. (Fig 7.4)
 *   **7.2.4 Sliding Window with Multivariate Normal Proposal:**
     *   To update $k$ parameters $x = (x_1, ..., x_k)$ at once.
-    *   Simplest: $x'|x \sim N_k(x, I\sigma^2)$ where $I$ is identity matrix. Proposal ratio 1.
+    *   Simplest: $x'\vert x \sim N_k(x, I\sigma^2)$ where $I$ is identity matrix. Proposal ratio 1.
     *   Inefficient if parameters have different scales or are correlated (Fig 7.5).
-    *   Better: $x'|x \sim N_k(x, S\sigma^2)$, where $S$ is an estimate of the posterior variance-covariance matrix. (Can be estimated from pilot runs). This accounts for scales and correlations. Proposal ratio is still 1.
+    *   Better: $x'\vert x \sim N_k(x, S\sigma^2)$, where $S$ is an estimate of the posterior variance-covariance matrix. (Can be estimated from pilot runs). This accounts for scales and correlations. Proposal ratio is still 1.
 *   **7.2.5 Proportional Scaling (Multiplier Proposal):**
     *   Useful for positive parameters (e.g., branch lengths, rates).
     *   $x' = x \cdot c$, where $c = e^{\lambda(u-1/2)}$ and $u \sim U(0,1)$. $\lambda$ is a tuning parameter.
-    *   Proposal density (from variable transform): $q(x'|x) = 1/(\lambda|x'|)$ (Eq 7.22, assuming $x'>0$).
-    *   Proposal ratio: $q(x|x')/q(x'|x) = |x'|/|x| = c$.
+    *   Proposal density (from variable transform): $q(x'\vert x) = 1/(\lambda\vert x'\vert )$ (Eq 7.22, assuming $x'>0$).
+    *   Proposal ratio: $q(x\vert x')/q(x'\vert x) = \vert x'\vert /\vert x\vert  = c$.
     *   Alternative view: it's a sliding window on $y = \log(x)$, where $y' \sim U(y-\lambda/2, y+\lambda/2)$. Jacobian of transform $\log(x) \to x$ is $e^y=x$. Proposal ratio from Theorem 2 (Appendix A) is $x'/x = c$.
     *   Cannot move a parameter from 0. Bounds handled by reflection in log-space.
     *   Can scale multiple parameters $x_i' = c x_i$. Proposal ratio is $c^m$ for $m$ parameters.
@@ -1437,7 +1437,7 @@ The proposal ratio depends only on the proposal algorithm, not the prior or like
 Focus on discrete state chains first for theory, then continuous.
 *   **7.3.2.1 Discrete State Chains:**
     *   Asymptotic variance of $\tilde{I} = \frac{1}{n}\sum h(X_i)$ can be calculated from transition matrix $P=\{p_{ij}\}$ (Eq 7.35, 7.37). $v = h^T B (2Z - I - A) h$, where $Z = [I-(P-A)]^{-1}$ is fundamental matrix.
-    *   Efficiency related to second largest eigenvalue $\lambda_2$ of $P$. Smaller $|\lambda_2|$ means better mixing.
+    *   Efficiency related to second largest eigenvalue $\lambda_2$ of $P$. Smaller $\vert \lambda_2\vert $ means better mixing.
     *   **Peskun's Theorem (1973):** For two reversible chains $P^{(1)}, P^{(2)}$ with same stationary $\pi$, if $p^{(1)}_{ij} \ge p^{(2)}_{ij}$ for all $i \ne j$ (i.e., $P^{(1)}$ has larger off-diagonal elements), then $P^{(1)}$ is more efficient (smaller variance for estimates of $I$). More mobile chains are better.
     *   **Two States:** Optimal $p_{12} = \pi_2/\pi_1$ and $p_{21}=1$ (if $\pi_1 \ge \pi_2$). Efficiency $E = p_{12}/(2\pi_2 - p_{12})$. (Eq 7.40)
     *   **K States:** Highest $P_{jump} = 2(1-\pi_1)$ (if states ordered by $\pi_i$). (Eq 7.41, 7.42).
@@ -1449,7 +1449,7 @@ Focus on discrete state chains first for theory, then continuous.
         *   Bactrian proposal generally best, then uniform, then normal.
         *   Bactrian with $m=0.95$ often optimal, $P_{jump} \approx 0.3$.
 *   **7.3.2.3 Convergence Rate and Step Length:**
-    *   Convergence rate dominated by $R = \max_{k\ge 2} |\lambda_k|$.
+    *   Convergence rate dominated by $R = \max_{k\ge 2} \vert \lambda_k\vert $.
     *   Optimal step length for fast convergence can be slightly larger than for efficient mixing (for uniform/normal). Suggests larger steps in burn-in.
 *   **7.3.2.4 Automatic Adjustment of Step Length:**
     *   $P_{jump}$ is usually monotonic with step length $\sigma$. Can adjust $\sigma$ during burn-in to achieve target $P_{jump}$ (e.g., 0.3-0.4).
@@ -1515,9 +1515,9 @@ Used when comparing different models or models with different numbers of paramet
 
 #### 7.4.2.1 General Framework
 *   **Goal:** Sample from the joint posterior of model indicator $H_k$ and its parameters $\theta_k$:
-    $f(H_k, \theta_k | X) = \frac{1}{Z} \pi_k f(\theta_k|H_k) f(X|H_k, \theta_k)$ (Eq 7.60)
+    $f(H_k, \theta_k \vert  X) = \frac{1}{Z} \pi_k f(\theta_k\vert H_k) f(X\vert H_k, \theta_k)$ (Eq 7.60)
     where $Z$ is the normalizing constant (sum of marginal likelihoods over all models, Eq 7.61), $\pi_k$ is prior on model $H_k$.
-    Can be written as: $f(H_k, \theta_k | X) = f(H_k|X) f(\theta_k|H_k, X)$ (Eq 7.62) (Posterior model prob $\times$ within-model parameter posterior).
+    Can be written as: $f(H_k, \theta_k \vert  X) = f(H_k\vert X) f(\theta_k\vert H_k, X)$ (Eq 7.62) (Posterior model prob $\times$ within-model parameter posterior).
 
 #### 7.4.2.2 Trans-model MCMC (Models with Same Number of Parameters)
 *   If different models $H_1, H_2, ...$ have parameters that can be matched up (e.g., $\mu_1 \leftrightarrow \mu_2$, $\sigma_1 \leftrightarrow \sigma_2$).
@@ -1531,7 +1531,7 @@ Used when comparing different models or models with different numbers of paramet
         3.  Trans-model move (with some probability):
             If in $H_1$ (current params $\mu, \sigma$), propose $H_2$ with params $\alpha'=\mu, \beta'=\sigma$.
             If in $H_2$ (current params $\alpha, \beta$), propose $H_1$ with params $\mu'=\alpha, \sigma'=\beta$.
-            Acceptance ratio $\alpha_{1 \leftrightarrow 2} = \min \left(1, \frac{f(H_{new}, \theta_{new}|X)}{f(H_{old}, \theta_{old}|X)}\right)$. (Eq 7.71)
+            Acceptance ratio $\alpha_{1 \leftrightarrow 2} = \min \left(1, \frac{f(H_{new}, \theta_{new}\vert X)}{f(H_{old}, \theta_{old}\vert X)}\right)$. (Eq 7.71)
             Proposal ratio is 1 as no new random variables are generated for the parameters.
     *   **Algorithm 2 (Moment Matching):** Match means and variances.
         To move $H_1 \to H_2$: set $\alpha' = (\mu/\sigma)^2$, $\beta' = \mu/\sigma^2$ (so gamma mean is $\mu$, variance is $\sigma^2$).
@@ -1547,7 +1547,7 @@ Used when comparing different models or models with different numbers of paramet
 *   **Dimension Matching:** To move $H_1 \to H_2$, generate $d_2-d_1$ random auxiliary variables $u \sim g(u)$. Transform $(\theta_1, u) \to \theta_2$ using a deterministic, invertible function $T$. So, $\theta_2 = T(\theta_1, u)$.
 *   To move $H_2 \to H_1$, use inverse transform $(\theta_1, u) = T^{-1}(\theta_2)$. Drop $u$.
 *   **Acceptance Ratio (e.g., $H_1 \to H_2$):**
-    $R_{12} = \frac{f(H_2)f(\theta_2|H_2)f(X|H_2, \theta_2)}{f(H_1)f(\theta_1|H_1)f(X|H_1, \theta_1)} \times \frac{r_{21}}{r_{12}} \times \frac{1}{g(u)} \times \left| \frac{\partial \theta_2}{\partial(\theta_1, u)} \right|$ (Eq 7.83)
+    $R_{12} = \frac{f(H_2)f(\theta_2\vert H_2)f(X\vert H_2, \theta_2)}{f(H_1)f(\theta_1\vert H_1)f(X\vert H_1, \theta_1)} \times \frac{r_{21}}{r_{12}} \times \frac{1}{g(u)} \times \left\vert  \frac{\partial \theta_2}{\partial(\theta_1, u)} \right\vert $ (Eq 7.83)
     where $r_{12}, r_{21}$ are probabilities of attempting the jump between models, and the last term is the Jacobian.
 *   **Example (JC69 vs K80 for 2 sequences):**
     *   $H_1$ (JC69): param $\theta_1 = (d)$. $H_2$ (K80): params $\theta_2 = (d, \kappa)$. $d_1=1, d_2=2$.
@@ -1561,20 +1561,20 @@ Used when comparing different models or models with different numbers of paramet
     *   Product-space method (Carlin & Chib 1995) is an alternative but may be difficult for high-dimensional phylogenetic problems.
 
 #### 7.4.2.5 Model Averaging
-*   If interested in a quantity $\theta$ present in all models, its posterior can be estimated by averaging over models, weighted by posterior model probabilities $f(H_k|X)$:
-    $f(\theta|X) = \sum_{k=1}^K f(H_k|X) f(\theta|H_k, X)$ (Eq 7.89)
+*   If interested in a quantity $\theta$ present in all models, its posterior can be estimated by averaging over models, weighted by posterior model probabilities $f(H_k\vert X)$:
+    $f(\theta\vert X) = \sum_{k=1}^K f(H_k\vert X) f(\theta\vert H_k, X)$ (Eq 7.89)
 *   Can be done by sampling $\theta$ from the rjMCMC output irrespective of current model.
 *   **Usefulness:**
     *   Appealing for accounting for model uncertainty.
-    *   If one model strongly dominates ($f(H_k|X) \approx 1$), model averaging gives similar result to using best model.
+    *   If one model strongly dominates ($f(H_k\vert X) \approx 1$), model averaging gives similar result to using best model.
     *   If several models fit nearly equally well *but give different inferences for $\theta$*, model averaging is most useful (posterior for $\theta$ might become multimodal).
     *   If all models fit poorly, model averaging is unlikely to help.
 
 ### 7.4.3 Bayes Factor and Marginal Likelihood
 *   **Bayes Factor ($B_{01}$):** Ratio of posterior odds to prior odds for two models $H_0, H_1$. Equals ratio of marginal likelihoods.
-    $B_{01} = \frac{M_0}{M_1} = \frac{f(X|H_0)}{f(X|H_1)} = \frac{\int f(X|\theta_0, H_0)f(\theta_0|H_0)d\theta_0}{\int f(X|\theta_1, H_1)f(\theta_1|H_1)d\theta_1}$ (Eq 7.91)
+    $B_{01} = \frac{M_0}{M_1} = \frac{f(X\vert H_0)}{f(X\vert H_1)} = \frac{\int f(X\vert \theta_0, H_0)f(\theta_0\vert H_0)d\theta_0}{\int f(X\vert \theta_1, H_1)f(\theta_1\vert H_1)d\theta_1}$ (Eq 7.91)
 *   $\text{Posterior Odds} = \text{Prior Odds} \times B_{01}$ (Eq 7.92)
-*   If prior odds are 1 ($f(H_0)=f(H_1)=1/2$), then $f(H_0|X) = B_{01} / (1+B_{01}) = 1/(1+1/B_{01})$ (Eq 7.93)
+*   If prior odds are 1 ($f(H_0)=f(H_1)=1/2$), then $f(H_0\vert X) = B_{01} / (1+B_{01}) = 1/(1+1/B_{01})$ (Eq 7.93)
 *   Interpretation of $B_{01}$ (Table 7.6).
 *   **Differences from LRT:**
     1.  Bayes factor averages over parameters (via prior), LRT optimizes. Priors have strong influence.
@@ -1582,16 +1582,16 @@ Used when comparing different models or models with different numbers of paramet
     3.  Bayes factors easily compare non-nested models or >2 models.
 *   Requires proper priors (marginal likelihood infinite for improper priors if likelihood doesn't go to zero fast enough).
 *   **Methods for Calculating Marginal Likelihood ($z=f(X)$):**
-    1.  **Arithmetic Mean (Prior):** $z \approx \frac{1}{n} \sum f(X|\theta_i)$, where $\theta_i \sim f(\theta)$. Inefficient as prior $f(\theta)$ usually far from posterior. (Eq 7.94, 7.95)
-    2.  **Harmonic Mean (Posterior):** $z \approx n / (\sum [1/f(X|\theta_i)])$, where $\theta_i \sim f(\theta|X)$. Unstable, infinite variance, positive bias. Generally unusable. (Eq 7.96)
+    1.  **Arithmetic Mean (Prior):** $z \approx \frac{1}{n} \sum f(X\vert \theta_i)$, where $\theta_i \sim f(\theta)$. Inefficient as prior $f(\theta)$ usually far from posterior. (Eq 7.94, 7.95)
+    2.  **Harmonic Mean (Posterior):** $z \approx n / (\sum [1/f(X\vert \theta_i)])$, where $\theta_i \sim f(\theta\vert X)$. Unstable, infinite variance, positive bias. Generally unusable. (Eq 7.96)
     3.  **Thermodynamic Integration (Path Sampling):** (Lartillot & Philippe 2006)
-        *   Define power posterior $p_\beta(\theta) \propto [f(X|\theta)]^\beta f(\theta)$. ($z_\beta$ is its normalizing constant).
-        *   $\log z_1 - \log z_0 = \log f(X) = \int_0^1 E_\beta[\log f(X|\theta)] d\beta$ (Eq 7.99-7.101)
-        *   Run MCMC for several $\beta$ values between 0 (prior) and 1 (posterior). Estimate $E_\beta[\log f(X|\theta)]$ from each. Numerically integrate.
+        *   Define power posterior $p_\beta(\theta) \propto [f(X\vert \theta)]^\beta f(\theta)$. ($z_\beta$ is its normalizing constant).
+        *   $\log z_1 - \log z_0 = \log f(X) = \int_0^1 E_\beta[\log f(X\vert \theta)] d\beta$ (Eq 7.99-7.101)
+        *   Run MCMC for several $\beta$ values between 0 (prior) and 1 (posterior). Estimate $E_\beta[\log f(X\vert \theta)]$ from each. Numerically integrate.
     4.  **Stepping Stone Sampling (Xie et al. 2011):**
         *   $z_1/z_0 = \prod_{k=1}^K (z_{\beta_k}/z_{\beta_{k-1}})$, where $0=\beta_0 < \beta_1 < \dots < \beta_K=1$.
         *   Each ratio $r_k = z_{\beta_k}/z_{\beta_{k-1}}$ estimated by importance sampling using samples from $p_{\beta_{k-1}}(\theta)$:
-            $\hat{r}_k = \frac{1}{n} \sum_{i=1}^n [f(X|\theta_i)]^{\beta_k - \beta_{k-1}}$ (Eq 7.104)
+            $\hat{r}_k = \frac{1}{n} \sum_{i=1}^n [f(X\vert \theta_i)]^{\beta_k - \beta_{k-1}}$ (Eq 7.104)
         *   Requires $K-1$ MCMC runs (if prior can be sampled directly).
 
 # 8. Bayesian phylogenetics
@@ -1674,7 +1674,7 @@ To implement a model in a Bayesian framework: (i) assign priors to parameters, (
         $f(x; \alpha_1, \dots, \alpha_K) = \frac{\Gamma(\alpha_0)}{\prod \Gamma(\alpha_i)} \prod x_i^{\alpha_i-1}$, where $\alpha_0 = \sum \alpha_i$. (Eq 8.5)
         If symmetric, all $\alpha_i=1$, then $f(x) = (K-1)!$ where $K=2s-3$.
     3.  The joint prior on $t$ is (using $T=\sum t_i$ and $x_i=t_i/T$):
-        $f(t \vert \alpha_T, \beta_T) = \frac{\beta_T^{\alpha_T}}{\Gamma(\alpha_T)} e^{-\beta_T \sum t_i} (\sum t_i)^{\alpha_T-1-(2s-4)} (2s-4)!$ (Eq 8.8, given $T = \sum t_i$ and Jacobian $| \frac{\partial(T,x)}{\partial(t)} | = T^{-(2s-4)}$).
+        $f(t \vert \alpha_T, \beta_T) = \frac{\beta_T^{\alpha_T}}{\Gamma(\alpha_T)} e^{-\beta_T \sum t_i} (\sum t_i)^{\alpha_T-1-(2s-4)} (2s-4)!$ (Eq 8.8, given $T = \sum t_i$ and Jacobian $\vert  \frac{\partial(T,x)}{\partial(t)} \vert  = T^{-(2s-4)}$).
     *   **Inverse Gamma prior on T:** $T \sim \text{invGamma}(\alpha_T, \beta_T)$, density $f(T; \alpha_T, \beta_T) = \frac{\beta_T^{\alpha_T}}{\Gamma(\alpha_T)} e^{-\beta_T/T} T^{-\alpha_T-1}$. (Eq 8.9)
         Heavy-tailed. With symmetric Dirichlet, joint prior on $t$:
         $f(t \vert \alpha_T, \beta_T) = \frac{\beta_T^{\alpha_T}}{\Gamma(\alpha_T)} e^{-\beta_T/\sum t_i} (\sum t_i)^{-\alpha_T-1-(2s-4)} (2s-4)!$ (Eq 8.10)
@@ -1708,7 +1708,7 @@ To implement a model in a Bayesian framework: (i) assign priors to parameters, (
     *   Nonparametric prior on partitions of sites into $K$ classes, where $K$ itself is estimated.
     *   **Chinese Restaurant Process Analogy:** Defines probability of assigning $n$ sites into $K$ clusters.
         *   $f(K, \mathbf{z} \vert \alpha, n) = \frac{\alpha^K \prod_{i=1}^K (n_i-1)!}{\prod_{i=1}^n (\alpha+i-1)}$, where $n_i$ is size of cluster $i$. (Eq 8.16)
-    *   Expected number of clusters $E(K|\alpha,n) \approx \alpha \log(1+n/\alpha)$. (Eq 8.18)
+    *   Expected number of clusters $E(K\vert \alpha,n) \approx \alpha \log(1+n/\alpha)$. (Eq 8.18)
     *   Concentration parameter $\alpha$ controls tendency to form new clusters.
     *   Used to model variable rates (Huelsenbeck & Suchard 2007) or variable patterns (e.g., CAT model).
     *   Can lead to very many site classes if prior favors them.
@@ -1766,7 +1766,7 @@ These proposals modify parameters like branch lengths or substitution model para
 *   Standard MH proposals for parameters like $\kappa$ (Ts/Tv ratio) or $\alpha$ (gamma shape).
 *   **Nucleotide Frequencies $\pi = (\pi_T, \pi_C, \pi_A, \pi_G)$:** Sum to 1.
     *   Sample new frequencies $\pi'$ from a Dirichlet distribution centered on current $\pi$: $\pi' \sim \text{Dir}(\alpha_0\pi_T, \alpha_0\pi_C, \alpha_0\pi_A, \alpha_0\pi_G)$. $\alpha_0$ is a concentration parameter (step length).
-    *   Proposal ratio: $q(\pi|\pi')/q(\pi'|\pi) = \frac{\prod \Gamma(\alpha_0\pi_i') \cdot (\pi_i)^{\alpha_0\pi_i'-1}}{\prod \Gamma(\alpha_0\pi_i) \cdot (\pi_i')^{\alpha_0\pi_i-1}}$. (Eq 8.19)
+    *   Proposal ratio: $q(\pi\vert \pi')/q(\pi'\vert \pi) = \frac{\prod \Gamma(\alpha_0\pi_i') \cdot (\pi_i)^{\alpha_0\pi_i'-1}}{\prod \Gamma(\alpha_0\pi_i) \cdot (\pi_i')^{\alpha_0\pi_i-1}}$. (Eq 8.19)
     *   Simpler: Pick two frequencies (e.g., $\pi_i, \pi_j$), keep sum $s=\pi_i+\pi_j$ fixed. Propose $\pi_i'$ from $U(0,s)$ (reflected), set $\pi_j' = s-\pi_i'$. Proposal ratio is 1. (1D move).
 *   Amino acid/codon frequencies updated similarly.
 
@@ -1775,13 +1775,13 @@ Proposals that change the tree topology $\tau$. These are more complex as they a
 
 #### 8.3.2.1 Proposals and Proposal Ratios (General)
 *   A move from state $x=(\tau, t)$ to $x'=(\tau', t')$ can be broken into component steps. If $x \to y \to z \to x'$, then the proposal ratio is a product of ratios for component steps:
-    $\frac{q(x|x')}{q(x'|x)} = \frac{q(x|y)}{q(y|x)} \times \frac{q(y|z)}{q(z|y)} \times \frac{q(z|x')}{q(x'|z)}$ (Eq 8.20)
+    $\frac{q(x\vert x')}{q(x'\vert x)} = \frac{q(x\vert y)}{q(y\vert x)} \times \frac{q(y\vert z)}{q(z\vert y)} \times \frac{q(z\vert x')}{q(x'\vert z)}$ (Eq 8.20)
 *   **Typical Two-Step Cross-Tree Move for NNI:**
     1.  $(\tau, t) \to (\tau', t)$: Change topology (e.g., NNI). Symmetrical, component proposal ratio is 1.
     2.  $(\tau', t) \to (\tau', t')$: Modify branch lengths for the new topology $\tau'$.
 *   **Acceptance Rate (from §7.4.2.2, Eq 7.63 for trans-model MCMC):**
-    $\alpha = \frac{f(\tau', t'|X)}{f(\tau, t|X)} \times \frac{r_{\tau'\tau}}{r_{\tau\tau'}} \times \frac{q((\tau,t)|(\tau',t'))}{q((\tau',t')|(\tau,t))}$ (Eq 8.21)
-    where $f(\cdot|X)$ is posterior, $r_{\tau\tau'}$ is probability of proposing topology $\tau'$ given current $\tau$, and the last term is the branch length proposal ratio.
+    $\alpha = \frac{f(\tau', t'\vert X)}{f(\tau, t\vert X)} \times \frac{r_{\tau'\tau}}{r_{\tau\tau'}} \times \frac{q((\tau,t)\vert (\tau',t'))}{q((\tau',t')\vert (\tau,t))}$ (Eq 8.21)
+    where $f(\cdot\vert X)$ is posterior, $r_{\tau\tau'}$ is probability of proposing topology $\tau'$ given current $\tau$, and the last term is the branch length proposal ratio.
 *   **Key Questions for Designing Cross-Tree Moves:**
     i.  **Computational Effort:** How to divide between cross-tree and within-tree moves? (More mobile chain is better, so frequent cross-tree moves are desired. New branch lengths are automatically from posterior for the new tree if accepted, no need for many within-tree moves in the new tree immediately after a jump).
     ii. **Tree Perturbation Algorithm:** NNI (local), SPR/TBR (global). Choice depends on tree space landscape.
@@ -1789,7 +1789,7 @@ Proposals that change the tree topology $\tau$. These are more complex as they a
 
 #### 8.3.2.2 Criteria for Evaluating Cross-Tree Moves
 *   Evaluate MCMC mixing efficiency across trees using posterior probabilities of splits.
-*   Define a distance from "true" split probabilities (from a very long reference run) to estimates from test chain: $\delta_n = \max_i |\hat{p}_i - p_i|$ (Eq 8.22). Average $\delta_n$ over replicate runs.
+*   Define a distance from "true" split probabilities (from a very long reference run) to estimates from test chain: $\delta_n = \max_i \vert \hat{p}_i - p_i\vert $ (Eq 8.22). Average $\delta_n$ over replicate runs.
 
 #### 8.3.2.3 Empirical Observations on Branch Lengths in Different Trees
 *   **Example (5 ape species mtDNA, Fig 8.5):**
@@ -1826,7 +1826,7 @@ Proposals that change the tree topology $\tau$. These are more complex as they a
     3.  Break $r$ into $x'$ and $r'$ by $u \sim U(0,1)$ ($x'=ru, r'=r(1-u)$). Reattach $A$ via branch $a$.
 *   **Proposal Ratio (branch lengths):** Original branches $p,x,r$ become $p' = p+x$, $a$ (reattached), $x'$, $r'$. (Mapping Fig 8.7b).
     *   Mapping: $(p,x,r,u) \leftrightarrow (p',x',r',u')$. $u' = x'/(x'+p')$.
-    *   Jacobian $| \frac{\partial(p',x',r',u')}{\partial(p,x,r,u)} | = r/(x+p)$. (Eq 8.26)
+    *   Jacobian $\vert  \frac{\partial(p',x',r',u')}{\partial(p,x,r,u)} \vert  = r/(x+p)$. (Eq 8.26)
     *   Proposal ratio (if $u \sim U(0,1)$ and reverse $u'$ is calculated): $r/(x+p)$.
 *   **Lakner et al. SPR Variants (rSPR, eSPR):**
     *   Select internal branches as focal.
@@ -1926,13 +1926,13 @@ Bayesian posterior probabilities for trees/splits are often very high (e.g., clo
 Examines simple cases to understand Bayesian model selection behavior with large data.
 *   **8.5.3.1 Simple Models (No Free Parameters, Fig 8.15a):**
     *   Data from $N(0,1)$. Compare $H_1: \mu=\mu_1$ vs $H_2: \mu=\mu_2$.
-    *   If $\mu_1, \mu_2$ are equally wrong (e.g., $\mu_1 = -0.1, \mu_2 = 0.1$), as $n \to \infty$, $P(H_1|X)$ converges to a 2-point distribution (0 or 1, each with prob 1/2). (Fig 8.16a).
-    *   If $H_1$ is less wrong than $H_2$ (e.g., $\mu_1=-0.1, \mu_2=0.2$), $P(H_1|X) \to 1$. (Fig 8.16b).
+    *   If $\mu_1, \mu_2$ are equally wrong (e.g., $\mu_1 = -0.1, \mu_2 = 0.1$), as $n \to \infty$, $P(H_1\vert X)$ converges to a 2-point distribution (0 or 1, each with prob 1/2). (Fig 8.16a).
+    *   If $H_1$ is less wrong than $H_2$ (e.g., $\mu_1=-0.1, \mu_2=0.2$), $P(H_1\vert X) \to 1$. (Fig 8.16b).
     *   Bayesian selection becomes certain even if choosing between wrong models.
 *   **8.5.3.2 Composite Models (With Free Parameters):**
-    *   **Overlapping Models, Truth in Overlap (Fig 8.15b):** e.g., $H_1: \theta \in [0, 0.6]$, $H_2: \theta \in [0.4, 1.0]$. True $\theta_0=0.5$. $P(H_1|X) \to 1/2$. Desirable behavior.
-    *   **Models Bordering at Truth (Fig 8.15c, Star Tree Paradox is an instance):** e.g., $H_1: \mu<0$, $H_2: \mu>0$. True $\mu_0=0$. Data from $N(0,1)$, prior $\mu \sim N(0, \sigma_p^2)$ truncated. $P(H_1|X)$ converges to $U(0,1)$ distribution. (Fig 8.17).
-    *   **Models Crossing at Truth (Fig 8.15d):** e.g., Data $N(0,1)$. $H_1: X \sim N(\mu,1)$ (unknown $\mu$). $H_2: X \sim N(0, 1/\beta)$ (unknown precision $\beta$). $P(H_1|X)$ converges to a U-shaped distribution (peaks at 0 and 1). (Fig 8.18).
+    *   **Overlapping Models, Truth in Overlap (Fig 8.15b):** e.g., $H_1: \theta \in [0, 0.6]$, $H_2: \theta \in [0.4, 1.0]$. True $\theta_0=0.5$. $P(H_1\vert X) \to 1/2$. Desirable behavior.
+    *   **Models Bordering at Truth (Fig 8.15c, Star Tree Paradox is an instance):** e.g., $H_1: \mu<0$, $H_2: \mu>0$. True $\mu_0=0$. Data from $N(0,1)$, prior $\mu \sim N(0, \sigma_p^2)$ truncated. $P(H_1\vert X)$ converges to $U(0,1)$ distribution. (Fig 8.17).
+    *   **Models Crossing at Truth (Fig 8.15d):** e.g., Data $N(0,1)$. $H_1: X \sim N(\mu,1)$ (unknown $\mu$). $H_2: X \sim N(0, 1/\beta)$ (unknown precision $\beta$). $P(H_1\vert X)$ converges to a U-shaped distribution (peaks at 0 and 1). (Fig 8.18).
 
 ### 8.5.4 Conservative Bayesian Phylogenetics
 Attempts to alleviate overly confident PPs.
@@ -2047,16 +2047,16 @@ This chapter reviews computational methods for analyzing genetic and genomic seq
 *   **9.2.5.2 Estimation under a Finite-Site Model (e.g., JC69):** Allows multiple hits.
     *   **Two Sequences:** Coalescent time $t \sim \text{Exp}(2/\theta)$ (in mutations per site). (Eq 9.20)
         *   Given $t$, probability of $x_i$ differences at locus $i$ with $l_i$ sites (using JC69, $p(t) = \frac{3}{4}(1-e^{-8t/3})$ is prob. of difference per site):
-            $f(x_i|t) = \binom{l_i}{x_i} [p(t)]^{x_i} [1-p(t)]^{l_i-x_i}$.
-        *   Likelihood for locus $i$: $f(x_i|\theta) = \int_0^\infty f(t|\theta) f(x_i|t) dt$. (Eq 9.22)
-        *   Total log-likelihood: $l(\theta) = \sum_{i=1}^L \log f(x_i|\theta)$. (Eq 9.23)
+            $f(x_i\vert t) = \binom{l_i}{x_i} [p(t)]^{x_i} [1-p(t)]^{l_i-x_i}$.
+        *   Likelihood for locus $i$: $f(x_i\vert \theta) = \int_0^\infty f(t\vert \theta) f(x_i\vert t) dt$. (Eq 9.22)
+        *   Total log-likelihood: $l(\theta) = \sum_{i=1}^L \log f(x_i\vert \theta)$. (Eq 9.23)
     *   **Many Sequences ($n_i>2$ at locus $i$):**
-        *   Joint density of gene tree $G_i$ and coalescent times $t_i$ (in mutations): $f(G_i, t_i|\theta)$ (Eq 9.24, scaling Eq 9.11 by $\theta/2$).
-        *   Log-likelihood: $l(\theta) = \sum_{i=1}^L \log \left[ \sum_{G_i} \int_{t_i} f(G_i, t_i|\theta) f(X_i|G_i, t_i) dt_i \right]$. (Eq 9.25)
-            $f(X_i|G_i, t_i)$ is the standard phylogenetic likelihood.
+        *   Joint density of gene tree $G_i$ and coalescent times $t_i$ (in mutations): $f(G_i, t_i\vert \theta)$ (Eq 9.24, scaling Eq 9.11 by $\theta/2$).
+        *   Log-likelihood: $l(\theta) = \sum_{i=1}^L \log \left[ \sum_{G_i} \int_{t_i} f(G_i, t_i\vert \theta) f(X_i\vert G_i, t_i) dt_i \right]$. (Eq 9.25)
+            $f(X_i\vert G_i, t_i)$ is the standard phylogenetic likelihood.
         *   Summation/integration is intractable for ML.
     *   **Bayesian MCMC (Algorithm 9.3, Rannala & Yang 2003):**
-        *   Joint posterior: $f(\theta, G, t|X) \propto f(\theta) \prod_{i=1}^L [f(G_i, t_i|\theta) f(X_i|G_i, t_i)]$. (Eq 9.26)
+        *   Joint posterior: $f(\theta, G, t\vert X) \propto f(\theta) \prod_{i=1}^L [f(G_i, t_i\vert \theta) f(X_i\vert G_i, t_i)]$. (Eq 9.26)
         *   MCMC steps:
             1. Propose changes to coalescent times $t_i$ in each gene tree.
             2. Propose changes to genealogy $G_i$ (e.g., SPR).
@@ -2087,7 +2087,7 @@ Using multi-locus data to infer demographic history (population size changes).
 ### 9.3.3 Nonparametric Population Demographic Models
 Avoid strong assumptions of specific functional forms for $\theta(t)$.
 *   **Piecewise Constant (Change-Point) Model (Fig 9.5a):** $\theta(t)$ is constant within segments defined by $K$ change points $s_1, \dots, s_K$. Parameters: $s_k$'s and $\theta_k$'s. (Drummond et al. 2005, Bayesian skyline plot).
-*   **Piecewise Linear Model (Fig 9.5b):** $\theta(t)$ is linear between change points. Integral $\int 1/\theta(s)ds = \int 1/(as+b)ds = \frac{1}{a}\log|\frac{at_1+b}{at_0+b}|$. (Eq 9.35) (Opgen-Rhein et al. 2005; Heled & Drummond 2008).
+*   **Piecewise Linear Model (Fig 9.5b):** $\theta(t)$ is linear between change points. Integral $\int 1/\theta(s)ds = \int 1/(as+b)ds = \frac{1}{a}\log\vert \frac{at_1+b}{at_0+b}\vert $. (Eq 9.35) (Opgen-Rhein et al. 2005; Heled & Drummond 2008).
 *   **Implementations:**
     *   Bayesian Skyline Plot (BEAST): Piecewise constant, works for one locus. Extended to multiple loci.
     *   Bayesian Skyride (Minin et al. 2008): Uses Gaussian random field prior for $\log \theta(t)$.
@@ -2365,14 +2365,14 @@ Attempt to estimate rates and times jointly without *a priori* rate assignments,
     *   Minimize: $W(t,r) = \sum_k (r_k - r_{anc(k)})^2$ (penalty for rate changes) (Eq 10.1)
     *   Subject to: $r_k T_k = b_k$ (rates and time durations $T_k$ must match observed branch lengths) (Eq 10.2)
     *   **Improved Version (Sanderson 2002):** Maximize
-        $l(t,r,\lambda; X) = \log\{f(X|t,r)\} - \lambda \sum_k (r_k - r_{anc(k)})^2$ (Eq 10.3)
+        $l(t,r,\lambda; X) = \log\{f(X\vert t,r)\} - \lambda \sum_k (r_k - r_{anc(k)})^2$ (Eq 10.3)
         Log-likelihood of data + penalty. $\lambda$ is smoothing parameter (chosen by cross-validation).
-        $f(X|t,r)$ approximated using Poisson for changes on branches.
+        $f(X\vert t,r)$ approximated using Poisson for changes on branches.
 *   **Yang (2004) Modification:**
-    *   Maximize: $l(t,r,\nu; X) = \log\{f(X|t,r)\} + \log\{f(r|t,\nu)\} + \log\{f(\nu)\}$ (Eq 10.4)
-    *   $f(X|t,r)$: Likelihood using normal approx. to MLEs of branch lengths.
-    *   $f(r|t,\nu)$: Prior for rates based on geometric Brownian motion (GBM) model of rate drift (Thorne et al. 1998). Given ancestral rate $r_A$, current rate $r$ has density:
-        $f(r|r_A, t, \nu) = \frac{1}{r\sqrt{2\pi\nu t}} \exp\left\{ -\frac{1}{2\nu t} \left(\log\frac{r}{r_A} + \frac{1}{2}\nu t\right)^2 \right\}$ (Eq 10.5)
+    *   Maximize: $l(t,r,\nu; X) = \log\{f(X\vert t,r)\} + \log\{f(r\vert t,\nu)\} + \log\{f(\nu)\}$ (Eq 10.4)
+    *   $f(X\vert t,r)$: Likelihood using normal approx. to MLEs of branch lengths.
+    *   $f(r\vert t,\nu)$: Prior for rates based on geometric Brownian motion (GBM) model of rate drift (Thorne et al. 1998). Given ancestral rate $r_A$, current rate $r$ has density:
+        $f(r\vert r_A, t, \nu) = \frac{1}{r\sqrt{2\pi\nu t}} \exp\left\{ -\frac{1}{2\nu t} \left(\log\frac{r}{r_A} + \frac{1}{2}\nu t\right)^2 \right\}$ (Eq 10.5)
         $\nu$ is rate-drift parameter. (Fig 10.5)
     *   $f(\nu)$: Prior on $\nu$ (e.g., exponential).
 *   **Issues with Heuristic Methods:** "Log likelihood" functions are ad hoc (not true likelihoods). Statistical properties uncertain.
@@ -2406,13 +2406,13 @@ Attempt to estimate rates and times jointly without *a priori* rate assignments,
 ### 10.4.1 General Framework
 *   MCMC algorithm developed by Thorne et al. (1998), Kishino et al. (2001) (MULTIDIVTIME), Yang & Rannala (2006) (MCMCTREE), Drummond et al. (2006) (BEAST).
 *   **Joint Posterior:**
-    $f(t, r, \theta \vert X) \propto f(\theta) f(t|\theta) f(r|t, \theta) f(X|t, r, \theta)$ (Eq 10.6)
+    $f(t, r, \theta \vert X) \propto f(\theta) f(t\vert \theta) f(r\vert t, \theta) f(X\vert t, r, \theta)$ (Eq 10.6)
     where $t$=divergence times, $r$=rates, $\theta$=substitution parameters.
-    $f(X|t,r,\theta)$: Sequence likelihood.
-    $f(r|t,\theta)$: Prior on rates (rate-drift model).
-    $f(t|\theta)$: Prior on divergence times (incorporating fossil calibrations).
+    $f(X\vert t,r,\theta)$: Sequence likelihood.
+    $f(r\vert t,\theta)$: Prior on rates (rate-drift model).
+    $f(t\vert \theta)$: Prior on divergence times (incorporating fossil calibrations).
     $f(\theta)$: Prior on substitution parameters.
-*   MCMC algorithm samples $(t,r,\theta)$. Marginal posterior for $t$ (i.e., $f(t|X)$) obtained from samples. (Eq 10.7)
+*   MCMC algorithm samples $(t,r,\theta)$. Marginal posterior for $t$ (i.e., $f(t\vert X)$) obtained from samples. (Eq 10.7)
 *   **MCMC Sketch:**
     *   Update $t$ (respecting node order constraints).
     *   Update $r$ (e.g., based on rate-drift model).
@@ -2420,10 +2420,10 @@ Attempt to estimate rates and times jointly without *a priori* rate assignments,
     *   Global move: Scale all $t_i$ by $c$, all $r_i$ by $1/c$.
 
 ### 10.4.2 Approximate Calculation of Likelihood
-*   Exact likelihood $f(X|t,r,\theta)$ is computationally expensive.
+*   Exact likelihood $f(X\vert t,r,\theta)$ is computationally expensive.
 *   **Approximation (Thorne et al. 1998; Kishino et al. 2001):**
     1.  Estimate MLEs of branch lengths $\hat{b}$ and their var-cov matrix $V = -H^{-1}$ (from Hessian $H$) from data *without* clock.
-    2.  During MCMC, approximate $\log f(X|t,r,\theta)$ by a multivariate normal density for branch lengths $b$ predicted by current $t,r$:
+    2.  During MCMC, approximate $\log f(X\vert t,r,\theta)$ by a multivariate normal density for branch lengths $b$ predicted by current $t,r$:
         $l(b) \approx l(\hat{b}) + g(\hat{b})^T(b-\hat{b}) + \frac{1}{2}(b-\hat{b})^T H(\hat{b}) (b-\hat{b})$ (Eq 10.8)
         If all $\hat{b}_i > 0$, then $g(\hat{b})=0$.
     *   More accurate if Taylor expansion is on transformed branch lengths (e.g., arcsine). (Fig 10.8)
@@ -2431,11 +2431,11 @@ Attempt to estimate rates and times jointly without *a priori* rate assignments,
 ### 10.4.3 Prior on Evolutionary Rates
 *   **Correlated-Rate Model (Geometric Brownian Motion, GBM):** (Thorne et al. 1998) (Fig 10.5)
     *   Rate at root $r_{root} \sim \text{Gamma}$.
-    *   Rate $r$ at end of branch of duration $t$, given ancestral rate $r_A$: $\log r \sim N(\log r_A - \frac{1}{2}\nu t, \nu t)$. Density $f(r|r_A)$ as in Eq 10.9.
+    *   Rate $r$ at end of branch of duration $t$, given ancestral rate $r_A$: $\log r \sim N(\log r_A - \frac{1}{2}\nu t, \nu t)$. Density $f(r\vert r_A)$ as in Eq 10.9.
     *   $\nu$ is rate-drift parameter (prior, e.g., Gamma). Small $\nu \implies$ clock-like.
 *   **Independent-Rate Model:** (Drummond et al. 2006; Rannala & Yang 2007)
     *   Rate $r$ for each branch drawn i.i.d. from a common distribution (e.g., log-normal):
-        $f(r|\mu_r, \sigma_r^2) = \frac{1}{r\sqrt{2\pi\sigma_r^2}} \exp\left\{ -\frac{1}{2\sigma_r^2} \left(\log(r/\mu_r) + \frac{1}{2}\sigma_r^2\right)^2 \right\}$ (Eq 10.10)
+        $f(r\vert \mu_r, \sigma_r^2) = \frac{1}{r\sqrt{2\pi\sigma_r^2}} \exp\left\{ -\frac{1}{2\sigma_r^2} \left(\log(r/\mu_r) + \frac{1}{2}\sigma_r^2\right)^2 \right\}$ (Eq 10.10)
         $\mu_r$ is mean rate, $\sigma_r^2$ measures departure from clock.
 *   Bayes factor comparisons between these rate models are sensitive to priors on $\nu$ or $\sigma_r^2$. Robustness of time estimates to rate prior is more important.
 
@@ -2449,13 +2449,13 @@ Attempt to estimate rates and times jointly without *a priori* rate assignments,
         Joint density of $s-2$ node ages (given root $t_1$): $f(t_2, \dots, t_{s-1}) = (s-2)! \prod_{j=2}^{s-1} g(t_j)$ (Eq 10.16)
         (Fig 10.10, 10.11 show shapes of $g(t)$).
     *   **Fossil Calibrations $f(t_C)$:** Specified by user (e.g., from Fig 10.9).
-    *   Full prior $f(t) = f_{BD}(t_{-C}|t_C) f(t_C)$ (Eq 10.17, 10.18). (Conditional construction).
+    *   Full prior $f(t) = f_{BD}(t_{-C}\vert t_C) f(t_C)$ (Eq 10.17, 10.18). (Conditional construction).
     *   Effective prior used by program (after node age constraints) can differ from user-specified prior. Run MCMC without data to check effective prior.
 
 ### 10.4.5 Uncertainties in Time Estimates
 *   **Infinite-Site Theory (Yang & Rannala 2006; Rannala & Yang 2007):**
     *   As sequence data $\to \infty$, branch lengths are known without error.
-    *   Posterior of times $f(t|X)$ converges to a 1D distribution, not a point. Root age $t_1$ has a posterior; other times $t_i$ are linear functions of $t_1$.
+    *   Posterior of times $f(t\vert X)$ converges to a 1D distribution, not a point. Root age $t_1$ has a posterior; other times $t_i$ are linear functions of $t_1$.
     *   Plot of posterior CI width vs. posterior mean for node ages approaches a straight line (Fig 10.12 "infinite-site plot"). Slope reflects precision of fossil calibrations.
 *   **Finite-Site Data (dos Reis & Yang 2013a):** Posterior variance of node age = variance from fossil uncertainty + variance from finite data. CI width approaches infinite-data limit at rate $1/\sqrt{n}$.
 *   Relaxed clock makes time estimation more complex. Number of loci more important than sites per locus for precision.
@@ -2598,7 +2598,7 @@ Models allowing $\omega$ to vary among amino acid sites.
 3.  **Statistical Distribution for $\omega$ Across Sites (Random-Site Models):** Assume $\omega_h$ at site $h$ is a random variable from a distribution $f(\omega)$. Test if this distribution includes a class with $\omega > 1$. (Nielsen & Yang 1998; Yang et al. 2000).
 
 ### 11.4.2 Likelihood Ratio Test of Positive Selection under Random-Site Models
-*   Probability of data at site $h$: $f(x_h) = \int_0^\infty f(\omega) f(x_h|\omega) d\omega \approx \sum_{k=1}^K p_k f(x_h|\omega_k)$ (Eq 11.7)
+*   Probability of data at site $h$: $f(x_h) = \int_0^\infty f(\omega) f(x_h\vert \omega) d\omega \approx \sum_{k=1}^K p_k f(x_h\vert \omega_k)$ (Eq 11.7)
     (Average likelihood over the distribution of $\omega$). Discrete approximation used.
 *   Synonymous rate assumed constant across sites; only $d_N$ varies.
 *   Correct scaling of $Q$ matrices for different $\omega_k$ is important.
@@ -2615,7 +2615,7 @@ Models allowing $\omega$ to vary among amino acid sites.
 
 ### 11.4.3 Identification of Sites Under Positive Selection
 *   If LRT (e.g., M7 vs M8) is significant, identify sites with high posterior probability of being in the $\omega_s > 1$ class.
-*   **Naïve Empirical Bayes (NEB):** Use MLEs of parameters in $f(\omega_k | x_h) = \frac{p_k f(x_h|\omega_k)}{\sum_j p_j f(x_h|\omega_j)}$. (Eq 11.9)
+*   **Naïve Empirical Bayes (NEB):** Use MLEs of parameters in $f(\omega_k \vert  x_h) = \frac{p_k f(x_h\vert \omega_k)}{\sum_j p_j f(x_h\vert \omega_j)}$. (Eq 11.9)
 *   **Bayes Empirical Bayes (BEB) (Yang et al. 2005):** Accounts for uncertainty in MLEs of parameters of $f(\omega)$ by integrating over their prior. More reliable for smaller datasets.
 *   Hierarchical full Bayesian (Huelsenbeck & Dyer 2004) also possible.
 
@@ -2624,7 +2624,7 @@ Models allowing $\omega$ to vary among amino acid sites.
 *   Tree estimated by NJ. Branch lengths from M0 (one-ratio $\hat{\omega}=0.612$).
 *   M2a: suggests 8.4% sites with $\hat{\omega}_2=5.389$. M8: suggests ~8.5% sites with $\hat{\omega}_s=5.079$.
 *   LRTs (M1a vs M2a, M7 vs M8) highly significant.
-*   Posterior probabilities $P(\omega_k | x_h)$ identify sites likely under positive selection (Fig 11.4).
+*   Posterior probabilities $P(\omega_k \vert  x_h)$ identify sites likely under positive selection (Fig 11.4).
 *   Most identified sites fall in Antigen Recognition Site (ARS) groove (Fig 11.5).
 
 ## 11.5 Adaptive Evolution Affecting Particular Sites and Lineages
