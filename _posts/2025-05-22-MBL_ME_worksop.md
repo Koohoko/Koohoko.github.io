@@ -48,9 +48,78 @@ toc: true
 - Stationary: if the branch length is long enough, no matter where you start, you will end up in one state with equal probability.
 - We rescale the Q matrix such that the average rate of the process is $1$, then the time parameter $t$ in $P(t)=e^{Qt}$ directly represents the expected number of substitutions per site (the unit of the branch lengths). When $Q$ is scaled this way, the length of a branch ($v$) is directly interpretable as the expected number of substitutions that have occurred per site along that lineage.
 
-
-
-
 # Day 2
 
 ## Simulating molecular evolution - Huelsenbeck
+
+- Transform a uniform random variable into an exponential random: $t=-\frac{ln(n)}{\lambda}$ (keeping CDF the same).
+- Simulation starts from the $\pi_{A,C,G,T}$ from the root. Then we get a random number $u \in [0,1]$, and we find the first $u$ determines the root state. 
+- Below is an example code for simulating the state changes for v1.
+- He also talked about codon model, rate variation and covarion models.
+
+```r
+Q_matrix <- matrix(c(
+  -0.886, 0.19, 0.633, 0.063,
+  0.253, -0.696, 0.127, 0.316,
+  1.266, 0.19, -1.519, 0.063,
+  0.253, 0.949, 0.127, -1.329), nrow=4, byrow=TRUE)
+
+mutation_matrix <-  Q_matrix
+diag(mutation_matrix) <- 0
+mutation_matrix <- mutation_matrix / rowSums(mutation_matrix)
+
+v1 <- 0.3
+v6 <- 0.1
+v5 <- 0.1
+v4 <- 0.2
+v2 <- 0.1
+v3 <- 0.1
+
+# I    II   III    IV
+#  \  v2 \  /v3   /
+#   \     \/     /
+#    \     \    /
+# v1  \  v5 \  /
+#      \     \/
+#       \    / 
+#        \  / v6
+#         \/
+
+pi_vector <- c(A=0.4, C=0.3, G=0.2, T=0.1)
+cumsum_pi <- cumsum(pi_vector)
+
+(u <- runif(1))
+(root_nuc_index <- max(which(u>cumsum_pi))+1)
+
+(lambda <- -Q_matrix[nuc_index, nuc_index])
+
+# for v1
+remaining_time <- v1
+current_index <- root_nuc_index
+while(remaining_time > 0){
+	t = -log(runif(1))/lambda
+	print(t)
+	# get the next event
+	if(t>remaining_time){
+		state_I_index <- current_index
+		break
+	} else{
+		remaining_time <- remaining_time - t
+		current_index <- sample(1:4, 1, prob=mutation_matrix[current_index,])
+	}
+}
+print(c("A", "C", "G", "T")[state_I_index])
+
+```
+
+## [Model selection - Swofford](https://molevolworkshop.github.io/faculty/swofford/pdf/swofford_WH2024_modsel.pdf)
+
+- Models don't need to reflect reality, but they need to be useful (think about using map vs. the real world) .
+- He mentioned Felsenstein's zone and consistency of the ML methods, compared to the Parsimony methods.
+- ![alt text](/files/2025_mole_workshop/gtr.png)
+- [Should we use model-based methods for phylogenetic inference when we know that assumptions about among-site rate variation and nucleotide substitution pattern are violated?](https://pubmed.ncbi.nlm.nih.gov/12116942/)
+- BIC penalizes models with more parameters more strongly than AIC. BIC performs well when true model is contained in model set, and among a set of simple-ish models, AIC often selects a more complex model than the truth (indeed, AIC is formally statistically inconsistent); But in phylogenetics, no model is as complex as the truth, and the true model will never be contained in the model set; BIC often chooses models that seem too simple!; One should consider preferring AIC over BIC in phylogenetics?
+- Over-partitioning: Looking closely at the estimated parameters, it is possible that one model is sufficient to explain the data.
+- You can use AIC to choose the partitioning scheme, e.g., Rob Lanfear’s PartionFinder. If there are too many partitions combinations, you can use a greedy algorithm to find the best partitioning scheme. 
+
+## [Introduction to PAUP* - Swofford](http://paup.phylosolutions.com/)
