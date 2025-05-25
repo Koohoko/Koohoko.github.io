@@ -11,15 +11,17 @@ toc: true
 # last_modified_at: 2025-09-01
 ---
 
+Course materials are available at [here](https://molevolworkshop.github.io/schedule/).
+
 # Day 1
-## Introduction to phylogenetics - Heath
+## Introduction to phylogenetics - Tracy Heath
 
 - The Metazoa Phylogeny
   - There is scientific controversy over whether sponges (Porifera) or ctenophores (Ctenophora) are the earliest-diverging animal lineage; traditional morphological evidence supports sponges, but some molecular studies suggest ctenophores may be more basal.
   - This debate impacts our understanding of early animal evolution—especially whether complex traits like nervous systems evolved early and were later lost in sponges, or evolved independently in multiple lineages.
   - Check [this](https://www.nature.com/articles/s41586-023-05936-6) new evidence in Nature.
 
-## Scientific ethics - Bielawski
+## Scientific ethics - Joseph Bielawski
 
 - Ethical reasoning focus on what *I* (or *we*) should do, but not blaming others.
 - Normalization of Deviance, you should not start doing something just because it is common, or you think it has small consequences.
@@ -27,7 +29,7 @@ toc: true
 - If you do noting, you can be contributing to normalization of deviance.
 - Scientist have social privilege, and they have obligations.
 
-##	Introduction to Likelihood - Lewis
+##	Introduction to Likelihood - Paul Lewis
 
 - Why do we need the term likelihood?
   - Probability is describing the chance of an **event/outcome/data** given one model.
@@ -36,7 +38,7 @@ toc: true
 - Site specific rate variation, e.g. $r_1$ for codon positions 1 and 2, $r_2$ for codon position 3.
 - He said that even though the parameter in the Gamma and invariable site models can have correlation, a successful bayesian search algorithm should be able to deal with this, and there are no issue with identifiability. 
 
-## Model-based phylogenetics - Huelsenbeck
+## Model-based phylogenetics - John Huelsenbeck
 
 - Both likelihood and distance methods can marginalize different histories along the branch (via the CTMC model).
 - He revisited the Felsentein pruning algorithm.
@@ -50,7 +52,7 @@ toc: true
 
 # Day 2
 
-## Simulating molecular evolution - Huelsenbeck
+## Simulating molecular evolution - John Huelsenbeck
 
 - Transform a uniform random variable into an exponential random: $t=-\frac{ln(n)}{\lambda}$ (keeping CDF the same).
 - Simulation starts from the $\pi_{A,C,G,T}$ from the root. Then we get a random number $u \in [0,1]$, and we find the first $u$ determines the root state. 
@@ -112,7 +114,7 @@ print(c("A", "C", "G", "T")[state_I_index])
 
 ```
 
-## [Model selection - Swofford](https://molevolworkshop.github.io/faculty/swofford/pdf/swofford_WH2024_modsel.pdf)
+## [Model selection - David Swofford](https://molevolworkshop.github.io/faculty/swofford/pdf/swofford_WH2024_modsel.pdf)
 
 - Models don't need to reflect reality, but they need to be useful (think about using map vs. the real world) .
 - He mentioned Felsenstein's zone and consistency of the ML methods, compared to the Parsimony methods.
@@ -122,7 +124,7 @@ print(c("A", "C", "G", "T")[state_I_index])
 - Over-partitioning: Looking closely at the estimated parameters, it is possible that one model is sufficient to explain the data.
 - You can use AIC to choose the partitioning scheme, e.g., Rob Lanfear’s PartionFinder. If there are too many partitions combinations, you can use a greedy algorithm to find the best partitioning scheme. 
 
-## [Introduction to PAUP* - Swofford](http://paup.phylosolutions.com/)
+## [Introduction to PAUP* - David Swofford](http://paup.phylosolutions.com/)
 
 - PAUP* is a software package for phylogenetic analysis using parsimony and other methods (*: likelihood, and distance methods).
 - [Exploring Models and Hypothesis Testing using Simulation](https://molevolworkshop.github.io/faculty/swofford/pdf/modsel-sim-tutorial.html)
@@ -148,3 +150,72 @@ print(c("A", "C", "G", "T")[state_I_index])
 - https://doi.org/10.1186/1741-7007-10-65
 - https://academic.oup.com/sysbio/article/66/4/517/2950896?login=true
 - https://academic.oup.com/mbe/article/42/1/msae264/7931682?login=true
+
+# Day 3
+
+## Bayesian inference - Paul Lewis
+
+- Joint probability, conditional probability, marginal/total probability.
+- Baye's rule: the joint probability can be written as the product of the conditional probability and the marginal/total probability: $P(A|B)P(B)=P(B|A)P(A)$.
+- Note that the **likelihood** $L(\theta|D)$ is the **probability** of the data given the model $P(D|\theta)$.
+- Prior can have huge impact on the posterior distribution, consider the HIV screening test example.
+- A continous case: 
+  $$
+  \underbrace{p(\theta \mid D)}_{\text{Posterior probability density}} \;
+  =
+  \frac{
+    \underbrace{p(D \mid \theta)}_{\text{Likelihood}}
+    \;\times\;
+    \underbrace{p(\theta)}_{\text{Prior probability density}}
+  }{
+    \underbrace{\displaystyle \int p(D \mid \theta)\,p(\theta)\,\mathrm{d}\theta}_{\text{Marginal probability of the data (evidence)}}
+  }
+  $$
+- A **informative** prior have **low variance** (not necessarily low bias), and a vague prior have high variance.
+- The y-axis of a PDF is not a probability, but a probability density.
+- When you use posterior ratio, you can ignore the denominator.
+- Metropolis algorithm allows us to explore and characterize the posterior probability distribution $p(θ,ϕ∣D)$ without ever needing to compute the intractable denominator $P(D)$.
+- [A nice demonstration of the MCMC robot](https://plewis.github.io/applets/mcmc-robot/).
+- MCMCMC is a "team effort" where different chains with different "perspectives" (temperatures) on the landscape help each other to map out the entire territory effectively. By adjusting the temperatures, we can control how the posterior distribution being flattened or sharpened, which can help us to explore the posterior distribution more efficiently.
+
+## MCMC proposals in phylogenetics - Paul Lewis
+
+- The Largest-Simon move:
+  - Step 1: Pick 3 contiguous edges randomly, defining two subtrees, X and Y.
+  - Step 2: Shrink or grow selected 3-edge segment by a random amount.
+  - Step 3: Choose X or Y randomly, then reposition randomly (NNI).
+  - After NNI, we get a proposed tree, we will decide whether to accept basing on the log-posterior.
+  - While the strategy of optimizing topology and then branch lengths iteratively is key to finding a single optimal tree in ML, Bayesian MCMC aims to explore the entire landscape of possibilities. A key of the MCMC proposal is to maintain symmetricly, and making sure that the time it stays at the higher posterior region is longer than the time it stays at the lower posterior region.
+- Remember that MCMC is primarily about deciding whether to accept a randomly proposed move. 
+  - The proposal mechanism itself is generally "blind" to whether the new state will have a higher or lower posterior probability. It just generates a candidate state. The Metropolis-Hastings acceptance step then evaluates the proposed state's posterior probability relative to the current state's and decides whether to accept the move. This acceptance step is what guides the chain towards regions of higher posterior probability over time.
+- 95% HPD interval: highest posterior density interval, the region of parameter space that contains 95% of the posterior probability mass.
+- Prior distributions:
+  - Gamma(a, b): appropriate for parameters that range from 0 to infinity, such as branch lengths or rates.
+  - Lognormal: ranges from 0 to infinity, yields a paticular mean and variance.
+  - Beta(a,b) distributions are appropriate for proportions, which must lie between 0 and 1 (inclusive).
+  - A Dirichlet(a,b,c,d) distribution is ideal for nucleotide relative frequencies.
+  - Discrete uniform can be used for tree topologies.
+  - Gamma-Dirichlet can be used for branch lengths
+    - Gamma prior on Total Tree Length (TL), then Dirichlet Prior on Edge Length Proportions.
+    - It solves the problem of overestimation by default i.i.d. exponential priors (which implicitly enforce an unwanted informative prior) (the prior mean and variance of the total tree length can increase linearly with the number of taxa, sometimes leading to unrealistically long trees ("branch length overestimation") if the data is sparse or sequences are highly similar, see [Ziheng's](chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/http://abacus.gene.ucl.ac.uk/ziheng/pdf/2012ZhangRannalaYang.SBv61p779.pdf)):
+  - Yule (pure birth) prior: a prior distribution that can jointly specify both the tree topology and its edge lengths.
+- Hierarchical models: some parameters of the prior distributions (called hyperparameters) are themselves drawn from another distribution (a hyperprior). 
+- Empirical Bayes: 
+  - Instead of setting a hyperprior on a parameter of the prior distribution (like the mean of the branch length prior), the Empirical Bayes uses the data (e.g. MLEs) to get an estimate for this parameter.
+  - This approach uses the data "twice": once to inform the prior and again in the likelihood calculation. It's a pragmatic approach but differs from a fully Bayesian hierarchical model where all parameters, including hyperparameters, have prior distributions.
+- rjMCMC: a type of Markov Chain Monte Carlo algorithm that allows the MCMC chain to jump between models of different dimensions. Useful for:
+  -  Substitution model averaging/selection
+  -  Species delimitation
+- Marginal likelihood and Bayes factors
+  - The marginal likelihood is higher in models when they are true.
+  - Marginal likelihood inherently penalizes models that are overly complex and do not fit the data well, often favoring models that better capture the true underlying process that generated the data.
+- Dirichlet process (DP) prior
+  - The Dirichlet Process prior is presented in the context of analyzing data from multiple loci (e.g., genes A, B, C, D) and wanting a prior that can model the situation where:
+    - Some loci might share the same tree topology (concordance).
+    - Other loci might have different tree topologies (discordance), possibly due to processes like incomplete lineage sorting.
+  - BUCKy model: Ané et al. 2007. Molecular Biology and Evolution 24:412–426.
+  - Use Concentration Parameter($\alpha$) to suggest how frequent different loci share the same tree.
+  - https://plewis.github.io/applets/dpp/
+
+## Intro. to Graphical Models and RevBayes - Brown
+
