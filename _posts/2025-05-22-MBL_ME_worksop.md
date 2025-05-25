@@ -257,6 +257,7 @@ print(c("A", "C", "G", "T")[state_I_index])
 - The weights in moves determine the probability of different moves being selected.
 - An MCMC iteration isn't just one move; it's typically a series of these individual parameter update attempts (each involving a proposal, likelihood calculation, and an accept/reject decision) for many, if not all, of the parameters in the model.
 - Below is an example script for the GTR+G+I model:
+
 ```python
 ################################################################################
 #
@@ -377,4 +378,8 @@ map_tree = mapTree(treetrace,"output/primates_cytb_GTRGI_MAP.tre")
 # you may want to quit RevBayes now
 q()
 ```
+
 - https://revbayes.github.io/tutorials/ctmc/
+
+## Bayesian Divergence time estimation - Tracy Heath
+
