@@ -217,5 +217,163 @@ print(c("A", "C", "G", "T")[state_I_index])
   - Use Concentration Parameter($\alpha$) to suggest how frequent different loci share the same tree.
   - https://plewis.github.io/applets/dpp/
 
-## Intro. to Graphical Models and RevBayes - Brown
+## Intro. to Graphical Models and RevBayes - Jeremy Brown
 
+- In Rev language, `z ~ dnBernoulli(0.5)` is creating a random variable `z` which is fundamentally a stochastic node in the model graph.
+- `z.clamp(1)` then `z.probability()` will return the probability of `z` being 1.
+- Graphical models provide a means of depicting the dependencies among parameters in probabilistic models. 
+  - Squared boxes represent constant nodes: `x <- 2.3`
+  - Dashed circles represent deterministic nodes: `y := 2 * x`
+  - Solid circles represent stochastic nodes: `z ~ dnExponential(1)`
+  - Filled solid circles represent clamped stochastic nodes: `z.clamp(1)`
+  - Plates are used to indicate replication (for loop) in the model.
+- Setting up MCMC in RevBayes
+  - We use the `=` assignment operator for “workspace” variables: `myModel = model(n)`
+  - We need to define a proposal distribution (move) for any parameters we are trying to infer. `moves = VectorMoves()` `moves.append( mvSlide(p,delta=0.1,weight=1) )`.
+  - We need to keep track of our progress and sampled parameter values. To do that we use monitors. `monitors = VectorMonitors()` `monitors.append( mnScreen(printgen=1000,p) )` `monitors.append( mnModel(filename=“myMCMC.log", printgen=10) )`
+  - Next we create an MCMC object. `myMCMC = mcmc(myModel,moves,monitors)`, and start it with `myMCMC.run(10000)`.
+- We tested a simple example for inferring a parameter in binomial process in RevBayes:
+  ```r
+  p ~ dnUnif(0,1)
+  n <- 50
+  k ~ dnBinomial(n,p)
+  k.clamp(30)
+  myModel = model(n)
+  moves = VectorMoves()
+  moves.append( mvSlide(p,delta=0.1,weight=1) )
+  monitors = VectorMonitors()
+  monitors.append( mnScreen(printgen=1000,p) )
+  monitors.append( mnModel(filename="myMCMC.log", printgen=100) )
+  myMCMC = mcmc(myModel,moves,monitors)
+  myMCMC.run(2000000)
+  quit()
+  ```
+  Run it by `rb myMCMC.rb`.
+
+- It is nice that he demonstrated the Gamma-Dirichlet model in RevBayes.
+- There are example Rev scripts for JC, HKY, GTR, GTR+G+I available.
+- ![alt text](/files/2025_mole_workshop/Gamme_dirchlet.png)
+- The weights in moves determine the probability of different moves being selected.
+- An MCMC iteration isn't just one move; it's typically a series of these individual parameter update attempts (each involving a proposal, likelihood calculation, and an accept/reject decision) for many, if not all, of the parameters in the model.
+- Below is an example script for the GTR+G+I model:
+```python
+################################################################################
+#
+# RevBayes Example: Bayesian inference of phylogeny using a GTR+Gamma+Inv
+#                   substitution model on a single gene.
+#
+# authors: Sebastian Hoehna, Michael Landis, and Tracy A. Heath
+#
+################################################################################
+
+
+### Read in sequence data for the gene
+data = readDiscreteCharacterData("data/primates_and_galeopterus_cytb.nex")
+
+# Get some useful variables from the data. We need these later on.
+num_taxa <- data.ntaxa()
+num_branches <- 2 * num_taxa - 3
+taxa <- data.taxa()
+
+
+moves    = VectorMoves()
+monitors = VectorMonitors()
+
+
+######################
+# Substitution Model #
+######################
+
+# specify the stationary frequency parameters
+pi_prior <- v(1,1,1,1) 
+pi ~ dnDirichlet(pi_prior)
+moves.append( mvBetaSimplex(pi, weight=2) )
+moves.append( mvDirichletSimplex(pi, weight=1) )
+
+
+# specify the exchangeability rate parameters
+er_prior <- v(1,1,1,1,1,1)
+er ~ dnDirichlet(er_prior)
+moves.append( mvBetaSimplex(er, weight=3) )
+moves.append( mvDirichletSimplex(er, weight=1) )
+
+
+# create a deterministic variable for the rate matrix, GTR
+Q := fnGTR(er,pi) 
+
+
+#############################
+# Among Site Rate Variation #
+#############################
+
+# among site rate variation, +Gamma4
+alpha ~ dnUniform( 0.0, 10 )
+sr := fnDiscretizeGamma( alpha, alpha, 4 )
+moves.append( mvScale(alpha, weight=2.0) )
+
+
+# the probability of a site being invariable, +I
+p_inv ~ dnBeta(1,1)
+moves.append( mvSlide(p_inv) )
+
+##############
+# Tree model #
+##############
+
+out_group = clade("Galeopterus_variegatus")
+# Prior distribution on the tree topology
+topology ~ dnUniformTopology(taxa, outgroup=out_group)
+moves.append( mvNNI(topology, weight=num_taxa/2.0) )
+moves.append( mvSPR(topology, weight=num_taxa/10.0) )
+
+# Branch length prior
+for (i in 1:num_branches) {
+    bl[i] ~ dnExponential(10.0)
+    moves.append( mvScale(bl[i]) )
+}
+
+TL := sum(bl)
+
+psi := treeAssembly(topology, bl)
+
+
+
+
+###################
+# PhyloCTMC Model #
+###################
+
+# the sequence evolution model
+seq ~ dnPhyloCTMC(tree=psi, Q=Q, siteRates=sr, type = "DNA")
+seq ~ dnPhyloCTMC(tree=psi, Q=Q, siteRates=sr, pInv=p_inv, type="DNA")
+
+# attach the data
+seq.clamp(data)
+
+
+############
+# Analysis #
+############
+
+mymodel = model(psi)
+
+# add monitors
+monitors.append( mnScreen(printgen=100, alpha, p_inv, TL) )
+monitors.append( mnFile(filename="output/primates_cytb_GTRGI.trees", printgen=10, psi) )
+monitors.append( mnModel(filename="output/primates_cytb_GTRGI.log", printgen=10) )
+
+# run the analysis
+mymcmc = mcmc(mymodel, moves, monitors)
+mymcmc.run(generations=20000)
+
+
+# summarize output
+treetrace = readTreeTrace("output/primates_cytb_GTRGI.trees", treetype="non-clock")
+# and then get the MAP tree
+map_tree = mapTree(treetrace,"output/primates_cytb_GTRGI_MAP.tre")
+
+
+# you may want to quit RevBayes now
+q()
+```
+- https://revbayes.github.io/tutorials/ctmc/
