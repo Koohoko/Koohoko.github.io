@@ -199,6 +199,7 @@ print(c("A", "C", "G", "T")[state_I_index])
     - Gamma prior on Total Tree Length (TL), then Dirichlet Prior on Edge Length Proportions.
     - It solves the problem of overestimation by default i.i.d. exponential priors (which implicitly enforce an unwanted informative prior) (the prior mean and variance of the total tree length can increase linearly with the number of taxa, sometimes leading to unrealistically long trees ("branch length overestimation") if the data is sparse or sequences are highly similar, see [Ziheng's](chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/http://abacus.gene.ucl.ac.uk/ziheng/pdf/2012ZhangRannalaYang.SBv61p779.pdf)):
   - Yule (pure birth) prior: a prior distribution that can jointly specify both the tree topology and its edge lengths.
+- Check **distribution explorer**! https://distribution-explorer.github.io/
 - Hierarchical models: some parameters of the prior distributions (called hyperparameters) are themselves drawn from another distribution (a hyperprior). 
 - Empirical Bayes: 
   - Instead of setting a hyperprior on a parameter of the prior distribution (like the mean of the branch length prior), the Empirical Bayes uses the data (e.g. MLEs) to get an estimate for this parameter.
