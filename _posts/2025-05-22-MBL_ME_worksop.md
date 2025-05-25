@@ -123,3 +123,28 @@ print(c("A", "C", "G", "T")[state_I_index])
 - You can use AIC to choose the partitioning scheme, e.g., Rob Lanfear’s PartionFinder. If there are too many partitions combinations, you can use a greedy algorithm to find the best partitioning scheme. 
 
 ## [Introduction to PAUP* - Swofford](http://paup.phylosolutions.com/)
+
+- PAUP* is a software package for phylogenetic analysis using parsimony and other methods (*: likelihood, and distance methods).
+- [Exploring Models and Hypothesis Testing using Simulation](https://molevolworkshop.github.io/faculty/swofford/pdf/modsel-sim-tutorial.html)
+- He confirmed an interesting point for my question: 1. when we do model selection we will need a initial tree (model), but after model selection if we choose a different model (e.g. based on AIC), the best tree may change; And changing of the best tree may further change the likelihood for model selection; that will result in a "loop", and he confirmed that yes, we can do it iteratively.
+- PAUP* can often achieve a higher likelihood than RAxML, due to fine-tuning of the optimization algorithm from Swofford.
+
+## [IQ-TREE introduction](https://molevolworkshop.github.io/faculty/mcshea/pdf/MOLE2025-IQ-TREE.pdf)
+
+- IQ-TREE3 is now available.
+- MixtureFinder is a new tool for partitioning (TODO).
+- Q matrix can be customized via Qmaker or NQmaker.
+- Concatenation methods for genome-scale data, and partitioned analysis. `-q`, `-p`, and `-Q` are three different models for linking branch lengths.
+- PartitionFinder is used for merging similar partitions, to reduce calculation of considering all possible paris, clustering algorithms are used.
+- Q mixture model is available (TODO).
+- For species tree, gCF and sCF are useful when bootstrap supports reach 100%.
+- IQ-TREE can do K-H, S-H, and AU tests, to compare trees.
+- Mixture across sites and trees (MAST) model. MAST assumes that there is a collection of trees, where each site of the alignment can have a certain probability of having evolved under each of the trees. Each tree has its own topology and branch lengths, and optionally different substitution rates, different nucleotide/amino acid frequencies, and even different rate heterogeneities across sites. 
+
+## [IQ-TREE lab](https://iqtree.github.io/workshop/molevol_tutorial2025)
+
+- I like this tutorial, it looks into a real dataset, which historically caused a lot of confusion.
+- Where is turtle in the tree? Different papers, different methods led to different results.
+- https://doi.org/10.1186/1741-7007-10-65
+- https://academic.oup.com/sysbio/article/66/4/517/2950896?login=true
+- https://academic.oup.com/mbe/article/42/1/msae264/7931682?login=true
