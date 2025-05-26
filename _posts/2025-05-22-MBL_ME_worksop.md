@@ -383,3 +383,50 @@ q()
 
 ## Bayesian Divergence time estimation - Tracy Heath
 
+- The global molecular clock - Assume that the rate of evolutionary change is constant over time, for all lineages.
+- However, rates of evolution vary across lineages and over time.
+- Sequence data alone provide branch lengths, in the unit of expected substitutions per site. The rate and time are not identifiable by sequence data alone.
+- Tree-time priors (e.g., Yule, Birth-Death) for molecular phylogenies are only informative on a relative time scale.
+- $f(R, A, \Psi, \theta_R, \theta_A, \theta_s | D) = \frac{f(D | R, A, \theta_s) f(R | \theta_R) f(A, \Psi | \theta_A) f(\theta_s)}{f(D)}$
+  - The parameters involved are:
+    * **$R$**: A vector representing the evolutionary **rates on each branch** of the tree.
+    * **$A$**: A vector representing the **ages of the internal nodes** in the tree (divergence times).
+    * **$\Psi$ (Psi)**: The **tree topology** (the branching pattern).
+    * **$\theta_R$**: Hyperparameters for the model of how branch rates ($R$) evolve or are distributed (e.g., parameters of a relaxed clock model).
+    * **$\theta_A$**: Hyperparameters for the tree prior, which models how topologies ($\Psi$) and node ages ($A$) arise (e.g., parameters of a birth-death process like speciation/extinction rates).
+    * **$\theta_s$**: Parameters of the substitution model describing how sequences change (e.g., GTR rates, base frequencies, gamma shape parameter for among-site rate variation).
+    * **$D$**: The observed **character data** (e.g., DNA or protein sequence alignment)[cite: 33].
+  * **$f(D | R, A, \theta_s)$ - The Likelihood:**
+    * This is the probability (or probability density) of observing the sequence data $D$, given a specific tree (defined by topology $\Psi$ and node ages $A$, which together yield branch durations), the rates of evolution along each branch ($R$), and the substitution model parameters ($\theta_s$).
+    * Branch lengths in units of expected substitutions per site (which the likelihood calculation uses) are obtained by multiplying the rate on a branch ($R_i$) by the duration of that branch (derived from $A$ and $\Psi$).
+  * **$f(R | \theta_R)$ - The Prior on Branch Rates:**
+  * **$f(A, \Psi | \theta_A)$ - The Joint Prior on Node Ages and Topology (The "Tree Prior"):**
+  * **$f(\theta_s)$ - The Prior on Substitution Model Parameters:**
+- **Independent/Uncorrelated Rates**: Lineage-specific rates are uncorrelated when the rate assigned to each branch is **independently drawn** from an underlying distribution (you can do it in a for loop for every **branch**).
+- **Autocorrelated Rates**: closely related lineages have similar rates. The rate at a **node** is drawn from a distribution with a mean equal to the parent rate.
+  - Note that the $\mu$ in log-normal distribution is the **mean** of the log-transformed rates, **not** the mean of the rates themselves.
+  - The correlation between parameters in this model makes it hard for MCMC to explore the parameter space.
+- Tree priors:
+  - The Birth-Death Process: $\lambda$ is the speciation rate, $\mu$ is the extinction rate.
+  - The Yule Process: $\lambda$ is the speciation rate, $\mu$ is 0.
+  - We also have the origin time $\phi$, and the sampling fraction $\rho$.
+- Conceptual debate in fossil calibration: Calibrations as Priors vs. Calibrations as Data (Likelihoods):
+  - **Node Calibrations as Priors**: One approach is to directly treat these calibration densities as defining the prior distribution for the age of the calibrated node(s). The overall tree prior (e.g., from a birth-death process) is then conditioned on these specified node ages
+    - Commonly, a **parametric probability distribution** (e.g., Uniform, Lognormal, Gamma, Exponential) is placed on the age of an internal node. This distribution is typically offset by the age of the oldest fossil confidently assigned to that clade, effectively setting a minimum age for that node.
+    - While minimum age bounds from fossils are common, reliable maximum age bounds are often difficult to establish.
+    - Problems with multiple calibrations as priors: Rannala (2016) showed this conditional prior approach can lead to "counterintuitive topologically inconsistent realized priors" (the effective prior on tree shapes and other node ages can be strange). Dos Reis (2016) also demonstrated that this can be computationally intractable with many calibrations.
+  - **Node Calibrations as Likelihoods (Fossil Data Likelihood)**: An alternative view is to treat the fossil information (e.g., fossil age $F$) as data. The probability of observing this fossil data is then expressed as a likelihood function conditional on the age of the relevant node ($t$) in the tree, $f(F\vert t,parameters)$. This approach is argued to be conceptually simpler and more easily manageable with multiple fossil calibrations.
+  - **Common Misinterpretation**: Even if the mathematical implementation of a calibration effectively treats the fossil as data (i.e., a likelihood component), it is often misinterpreted by users as directly setting the prior distribution for the node's age. The mathematical form for $f(t\vert F)$ (a prior on node age $t$ given fossil $F$) and $f(F\vert t)$ (likelihood of fossil $F$ given node age $t$) can be identical for certain distributions (like a shifted exponential), contributing to this confusion.
+- Improving Fossil Calibration:
+  - The goal is to use all available fossil information in a more cohesive way.
+  - This is achieved by recognizing that fossils are not just isolated time points but are products of the same underlying diversification (speciation, extinction, and fossilization) process that generated the extant taxa.
+- The Fossilized Birth-Death (FBD) Process (by Stadler 2010)
+  - The FBD process is a generative model that describes the birth of new lineages (speciation, rate $λ$), the death of lineages (extinction, rate $μ$), and the recovery of fossils (fossil sampling or recovery rate, $ψ$) through time.
+  - It allows all relevant fossils to contribute to the analysis, not just those used to set minimum bounds on specific nodes.
+  - It explicitly models the processes of speciation, extinction, and fossilization.
+- [From fossils to phylogenies: exploring the integration of paleontological data into Bayesian phylogenetic inference](https://www.cambridge.org/core/journals/paleobiology/article/from-fossils-to-phylogenies-exploring-the-integration-of-paleontological-data-into-bayesian-phylogenetic-inference/BF7DB160A01BDD5183252BFB89A9699F)
+- FBD was used in a detailed penguin phylogeny with geological time, highlighting known fossils, significant paleoclimatic events, and the estimated divergence times of crown penguins, illustrating the rich evolutionary narrative that can be reconstructed (Thomas et al. Proc. Roy Soc. B 2020; Cole et al, Nature Comm. 2022; .Ksepka et al. J. Paleontology 2023)
+
+## Tutorial: Estimating a Time-Calibrated Phylogeny of Fossil and Extant Taxa using Morphological Data
+
+- https://revbayes.github.io/tutorials/fbd_simple/
