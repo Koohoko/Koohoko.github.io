@@ -156,8 +156,8 @@ print(c("A", "C", "G", "T")[state_I_index])
 ## Bayesian inference - Paul Lewis
 
 - Joint probability, conditional probability, marginal/total probability.
-- Baye's rule: the joint probability can be written as the product of the conditional probability and the marginal/total probability: $P(A|B)P(B)=P(B|A)P(A)$.
-- Note that the **likelihood** $L(\theta|D)$ is the **probability** of the data given the model $P(D|\theta)$.
+- Baye's rule: the joint probability can be written as the product of the conditional probability and the marginal/total probability: $P(A\vert B)P(B)=P(B\vert A)P(A)$.
+- Note that the **likelihood** $L(\theta\vert D)$ is the **probability** of the data given the model $P(D\vert \theta)$.
 - Prior can have huge impact on the posterior distribution, consider the HIV screening test example.
 - A continous case: 
   $$
@@ -387,7 +387,7 @@ q()
 - However, rates of evolution vary across lineages and over time.
 - Sequence data alone provide branch lengths, in the unit of expected substitutions per site. The rate and time are not identifiable by sequence data alone.
 - Tree-time priors (e.g., Yule, Birth-Death) for molecular phylogenies are only informative on a relative time scale.
-- $f(R, A, \Psi, \theta_R, \theta_A, \theta_s | D) = \frac{f(D | R, A, \theta_s) f(R | \theta_R) f(A, \Psi | \theta_A) f(\theta_s)}{f(D)}$
+- $f(R, A, \Psi, \theta_R, \theta_A, \theta_s \vert  D) = \frac{f(D \vert  R, A, \theta_s) f(R \vert  \theta_R) f(A, \Psi \vert  \theta_A) f(\theta_s)}{f(D)}$
   - The parameters involved are:
     * **$R$**: A vector representing the evolutionary **rates on each branch** of the tree.
     * **$A$**: A vector representing the **ages of the internal nodes** in the tree (divergence times).
@@ -396,11 +396,11 @@ q()
     * **$\theta_A$**: Hyperparameters for the tree prior, which models how topologies ($\Psi$) and node ages ($A$) arise (e.g., parameters of a birth-death process like speciation/extinction rates).
     * **$\theta_s$**: Parameters of the substitution model describing how sequences change (e.g., GTR rates, base frequencies, gamma shape parameter for among-site rate variation).
     * **$D$**: The observed **character data** (e.g., DNA or protein sequence alignment)[cite: 33].
-  * **$f(D | R, A, \theta_s)$ - The Likelihood:**
+  * **$f(D \vert  R, A, \theta_s)$ - The Likelihood:**
     * This is the probability (or probability density) of observing the sequence data $D$, given a specific tree (defined by topology $\Psi$ and node ages $A$, which together yield branch durations), the rates of evolution along each branch ($R$), and the substitution model parameters ($\theta_s$).
     * Branch lengths in units of expected substitutions per site (which the likelihood calculation uses) are obtained by multiplying the rate on a branch ($R_i$) by the duration of that branch (derived from $A$ and $\Psi$).
-  * **$f(R | \theta_R)$ - The Prior on Branch Rates:**
-  * **$f(A, \Psi | \theta_A)$ - The Joint Prior on Node Ages and Topology (The "Tree Prior"):**
+  * **$f(R \vert  \theta_R)$ - The Prior on Branch Rates:**
+  * **$f(A, \Psi \vert  \theta_A)$ - The Joint Prior on Node Ages and Topology (The "Tree Prior"):**
   * **$f(\theta_s)$ - The Prior on Substitution Model Parameters:**
 - **Independent/Uncorrelated Rates**: Lineage-specific rates are uncorrelated when the rate assigned to each branch is **independently drawn** from an underlying distribution (you can do it in a for loop for every **branch**).
 - **Autocorrelated Rates**: closely related lineages have similar rates. The rate at a **node** is drawn from a distribution with a mean equal to the parent rate.
