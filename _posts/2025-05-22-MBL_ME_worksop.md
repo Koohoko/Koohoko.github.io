@@ -154,7 +154,6 @@ print(c("A", "C", "G", "T")[state_I_index])
 # Day 3
 
 ## Bayesian inference - Paul Lewis
-
 - Joint probability, conditional probability, marginal/total probability.
 - Baye's rule: the joint probability can be written as the product of the conditional probability and the marginal/total probability: $P(A\vert B)P(B)=P(B\vert A)P(A)$.
 - Note that the **likelihood** $L(\theta\vert D)$ is the **probability** of the data given the model $P(D\vert \theta)$.
@@ -395,7 +394,7 @@ q()
     * **$\theta_R$**: Hyperparameters for the model of how branch rates ($R$) evolve or are distributed (e.g., parameters of a relaxed clock model).
     * **$\theta_A$**: Hyperparameters for the tree prior, which models how topologies ($\Psi$) and node ages ($A$) arise (e.g., parameters of a birth-death process like speciation/extinction rates).
     * **$\theta_s$**: Parameters of the substitution model describing how sequences change (e.g., GTR rates, base frequencies, gamma shape parameter for among-site rate variation).
-    * **$D$**: The observed **character data** (e.g., DNA or protein sequence alignment)[cite: 33].
+    * **$D$**: The observed **character data** (e.g., DNA or protein sequence alignment).
   * **$f(D \vert  R, A, \theta_s)$ - The Likelihood:**
     * This is the probability (or probability density) of observing the sequence data $D$, given a specific tree (defined by topology $\Psi$ and node ages $A$, which together yield branch durations), the rates of evolution along each branch ($R$), and the substitution model parameters ($\theta_s$).
     * Branch lengths in units of expected substitutions per site (which the likelihood calculation uses) are obtained by multiplying the rate on a branch ($R_i$) by the duration of that branch (derived from $A$ and $\Psi$).
@@ -430,3 +429,209 @@ q()
 ## Tutorial: Estimating a Time-Calibrated Phylogeny of Fossil and Extant Taxa using Morphological Data
 
 - https://revbayes.github.io/tutorials/fbd_simple/
+
+# Day 4
+
+## Deep phylogenomics - Laura Eme
+
+- Protein models of evolution
+  - Empirical models
+    - Based on alignment data.
+    - Typically 20*20 matrix assuming stationarity and reversibility.
+    - Dayhoff, JTT, WAG, LG etc.
+    - One can also use AIC/BIC based methods (e.g. ModelFinder) to compare empirical models.
+    - FreeRate model (+R): more parameters than (+G). Does not follow a parametric distribution. Not all categories will have the same number of sites.
+    - Model misspecification (single-matrix models) often means systematic error (LBA).
+  - Fully parameterized time-reversible model
+    - GTR: estiamte 189 rate parameters from your data.
+  - Mixture model
+    - As reflected in Wang et al. (2008) BMC Evolutionary Biology 8: 331, the simulated data does not match the real data well, suggesting that JTT+F+G is not enough.
+    - Standard protein substitution models: single Q matrix
+    - Mixture models: combine several amino-acid replacement matrices
+    - Can mixtured among sites, or among branches
+    - Standard LG+gamma: Q matrix is the same.
+    - LG4M: each gamma rate category gets its own Q matrix
+    - LG4X: each rate category gets its own Q matrix BUT rates and weights are left out of the gamma distribution assumption
+    - CAT: Infinite mixture model, Bayesian framework only.
+    - C10, C20, …, C60: approximations of the CAT model for ML.
+    - Complex mixture models are often hard to compute and fail to converge (by multiple chains). **PMSF approximation** can be useful (available in IQtree).
+    - Heterotachy: changing rates of evolution at sites in different parts of the tree .
+      - Covarion models
+      - Rate-shift models
+      - Mixture of branch-length models (GHOST in IQtree)
+    - Functional shifts (functional divergence)
+      - FD sites violate homogeneity assumption and artefactually increase branch-length (LBA).
+      - Try the FunDi mixture model.
+- Reconstructing ‘deep’ phylogenies (large-scale species trees)
+  - Single gene trees are not enough to resolve ‘ancient relationships’
+    - “Ancient” signal erased by more recent substitutions
+  - Improving phylogenetic signal, one way is to use multiple genes.
+    - Supermatrices: combining genes together
+    - Supertrees
+    - Reconciliation methods
+  - Minimazing potential artefacts
+    - Cross validation was used to test two different topologies within Obazoa are supported by different phylogenetic models: The fitted parameter values from traning set are then used to compute the likelihood of the test set: how well the test set is 'predicted' by the model?
+    - Try to eliminate ‘noisiest’ data
+      - Fast-evolving site removal: Check *Brown et al. 2013 PRSB*, they gradually **remove a proportion of the fastest evolving sites** (determined by the $\Gamma$ model), then they observe the topology changes, suggesting misspecified simple model (e.g. LG) gave problematic topology.
+      - Fast-evolving gene removal
+      - Fast-evolving taxon removal
+      - Recoding
+    - GFmix model: tackle compositional bias in a protein model.
+    - Eme is an expert on deep evolution (a LOT of Nature papers). How does LECA looks like? How do Eukaryotes relate to Asgards? 
+    - Recoding: instead of studying all 20 aa, recode them to e.g. 4 category.
+    - Testing for long branch attraction: you can test different models for whether they yield even propotion of differnt topologies under simulation.
+    - TODO: Check the reserach context on viruses evolution, viruses tree of life, the narrow down to flu related or coronaviruses.
+
+## The Coalescent: Inference using trees of ‘individuals’ - Peter Beerli
+
+- Linking population genetics (population) and phylogenetics (trees)
+  - Wright-Fisher model
+    - The number of generations for two individuals to coalesce it a Geometric distribution with expected value $2N$.
+  - Canning mdoel
+  - Moran model
+  - Kingman's coalescent
+    - When the population size (N) is large, the discrete-generation Wright-Fisher process can be approximated by a continuous-time process. 
+    - **Scaled Coalescence Rate ($\lambda_k$) for $k$ lineages:** When time is scaled appropriately (e.g., in units of $2N$ generations for diploids, or by $\Theta=4N\mu$), the rate at which *any* pair of $k$ lineages coalesces is:
+    $\lambda_k = \binom{k}{2} \frac{1}{2N} = \frac{k(k-1)}{4N}$ (the other $k−2$ lineages continue into the past without coalescing in that same infinitesimal time step or generation where the first coalescence occurred.)
+    - Exponential waiting time with rate $\lambda_k$ for the next coalescent event.
+    - **Probability of a Specific Genealogy ($G$) given population size $N$:** Assuming each coalescence event is independent, the probability of a given genealogy (a specific tree topology and set of coalescent times $u_j$ for each interval where there were $k_j$ lineages) is the product of the probabilities of each interval:
+    $$
+    P(G\vert N) = \prod_{j \text{ (intervals)}} e^{-u_j \frac{k_j(k_j-1)}{4N}} \frac{k_j(k_j-1)}{4N} \times \frac{2}{k_j(k_j-1)}
+    $$
+    This simplifies to:
+    $$
+    P(G\vert N, \text{sample size } n) = \prod_{k=2}^{n} \exp\left(-u_k \frac{k(k-1)}{4N}\right) \frac{2}{4N}
+    $$
+    where $u_k$ is the duration of the interval when there were $k$ lineages.
+  - The time to the most recent common ancestor (TMRCA) has a large variance (He demonstrated this with a simulation, even under a same population size, tree shapes can be very different).
+  - The sample size should be much smaller than the population size
+- A simulator: https://phyleauxsim.github.io/coalescent/
+- Genetic data and the coalescent
+  - Mutation introduces new alleles into a population at rate $µ$.
+  - $4N\mu$ can be estimated genetic variability $S$ (Summary statistics).
+  - Using genetic variability alone therefore does not allow to disentangle $N$ and $µ$. With multiple dated samples and known generation time we can estimate N and $µ$ independently.
+  - **Watterson's Estimator ($\theta_W$):** Uses the number of variable sites ($S$) in a sample of $n$ individuals from a single locus: $\theta_W = \frac{S}{\sum_{i=1}^{n-1} \frac{1}{i}}$ This estimator uses a mutation rate *per locus*
+- Bayesian Inference using the Coalescent
+  * Goal: Calculate $p(\text{Model Parameters } \vert  \text{Data } D)$, e.g., $p(\Theta \vert  D)$.
+  * Uses Bayes' rule: $p(\Theta \vert  D) = \frac{p(\Theta) p(D \vert  \Theta)}{p(D)}$.
+  * **Felsenstein-like Equation for Likelihood (integrating over genealogies):** The likelihood of the parameters $\Theta$ given the data $D$ involves integrating over all possible genealogies $G$:
+      $p(D \vert  \Theta) = \int_G p(G \vert  \Theta) p(D \vert  G) dG$
+      where:
+    * $p(G \vert  \Theta)$: Probability density of a genealogy $G$ given parameters $\Theta$ (from the coalescent model).
+    * $p(D \vert  G)$: Probability density of the data $D$ given genealogy $G$ (from the mutation model, this is the standard phylogenetic tree likelihood).
+
+## Extensions of the basic coalescent - Peter Beerli
+
+### Recap
+
+* The probability of a specific genealogy $G$ (topology and coalescent times $u_j$ for intervals with $k_j$ lineages) given the mutation-scaled effective population size $\Theta = 4N_e\mu$ (for diploids) is:
+    $P(G\vert \Theta) = \prod_{j \text{ (intervals)}} e^{-u_j \frac{k_j(k_j-1)}{\Theta}} \frac{2}{\Theta}$
+  * This formula involves:
+    * Calculating the probability of waiting time $u_j$ until a coalescence: $e^{-u_j \frac{k_j(k_j-1)}{\Theta}}$ (survival probability).
+    * Calculating the probability density of the specific coalescence event happening: $\frac{k_j(k_j-1)}{\Theta}$ (rate of coalescence for $k_j$ lineages) multiplied by the probability of a specific pair coalescing (which is $2/(k_j(k_j-1))$, simplifying the rate term for the interval to $2/\Theta$).
+  * This allows calculating the probability density of a genealogy given $\Theta$.
+
+### Extensions of the Coalescent
+
+- The basic coalescent assumes a single, constant-sized, randomly mating population. Extensions address more realistic scenarios:
+* **Exponential Growth Model:** If population size changes exponentially, $N(t) = N_0 e^{-gt}$ (where $N_0$ is current size, $t$ is time into the past, and $g$ is growth rate towards the present). The probability of a genealogy becomes:
+$P(G\vert \Theta_0, g) = \prod_{j \text{ (intervals)}} e^{-(t_j - t_{j-1}) \frac{k(k-1)}{\Theta_0 e^{-gt_j}}} \frac{2}{\Theta_0 e^{-gt_j}}$ (Here, $t_j$ is the time at the end of the interval with $k$ lineages, and $\Theta_0$ is the current mutation-scaled population size).
+* **Skyline Plots (Random Fluctuations):** Methods like Bayesian Skyline (BEAST), Skyride, Skyfish (BEAST, RevBayes) can estimate population size changes over time.
+* **Bottlenecks:** Estimating bottlenecks depends on their severity, duration, and the amount of data (sample size, number of loci), it is HARD.
+- **Migration Among Populations (Structured Coalescent):**
+  * For multiple populations, the overall rate of events (coalescence or migration) changes. For two populations (1 and 2) with $k_1$ lineages in pop 1 and $k_2$ in pop 2, the total rate of any event is: $\text{Total Rate} = \underbrace{\frac{k_1(k_1-1)}{\Theta_1}}_{\text{coalescence in pop1}} + \underbrace{\frac{k_2(k_2-1)}{\Theta_2}}_{\text{coalescence in pop2}} + \underbrace{k_1 M_{21}}_{\text{migration 1 } \leftarrow \text{ 2}} + \underbrace{k_2 M_{12}}_{\text{migration 2 } \leftarrow \text{ 1}}$ where $M_{ij}$ is the scaled migration rate from population $j$ to $i$ (e.g., $M_{21} = 4N_1m_{21}$ if $\Theta_1=4N_1\mu$).
+
+- **Population Splitting (Divergence Models):**
+  * Used to estimate divergence times ($\tau$), ancestral population sizes, and migration rates between diverging populations (e.g., Isolation with Migration - IM models).
+  * Tracing lineages backward: a lineage in population A today had an ancestor in an ancestral population B. The timing of this "population label switch" can be modeled using hazard functions (e.g., based on a Normal distribution for the divergence time).
+  * The resulting genealogies incorporate coalescence, migration, and population splitting events.
+  * More loci generally improve the precision of divergence time estimates.
+
+### Robustness and Assumptions of the Coalescent
+
+* **Sample Size ($n \ll N_e$):** Kingman's n-coalescent assumes at most two lineages merge per generation (no multiple mergers). This is a good approximation if $n \ll N_e$ (e.g., $n < \sqrt{4N_e}$ for diploids). It's fairly robust even if this is moderately violated, as multiple mergers become very rare with large $N_e$.
+* **TMRCA Estimation:** The Time to Most Recent Common Ancestor (TMRCA) is often robust to sample size; even small samples can yield similar TMRCA estimates to large samples. Adding more independent loci is often more beneficial than adding more individuals per locus beyond a certain point (e.g., >8 individuals ).
+* **Long-Term Averages:** Coalescent parameter estimates represent averages over long evolutionary timescales.
+* **Recombination:** Standard coalescent typically assumes no intra-locus recombination. Recombination means different segments of a locus can have different genealogical histories. Ignoring recombination when it's present can bias estimates of $\Theta$ (often upwards) and migration rates (often downwards).
+
+### Mutation Models and Genetic Data in Coalescent Inference
+
+* **Confounding $N_e$ and $\mu$:** Genetic diversity (e.g., number of segregating sites $S$) is primarily a function of the product $N_e\mu$ (scaled as $\Theta$). It's hard to estimate $N_e$ and $\mu$ separately from genetic data alone without external information (like dated samples or known mutation rates per generation).
+* **Methods of Inference:**
+  * **Watterson's Estimator ($\theta_W$):** $\theta_W = \frac{S}{\sum_{i=1}^{n-1} (1/i)}$ (uses mutation rate per locus).
+  * **Bayesian Inference:** Calculates $p(\Theta \vert  D) \propto p(\Theta) \int_G p(G\vert \Theta)p(D\vert G)dG$. The integral sums/averages over all possible genealogies ($G$) and is usually computed via MCMC.
+* **Types of Mutation Models for $p(D\vert G)$:**
+  * **Infinite Sites Model:** Assumes every new mutation occurs at a brand new site (no multiple hits). Leads to SNP data (bi-allelic markers). Often used with Site Frequency Spectra (SFS).
+  * **Finite Sites Models (e.g., JC69, HKY, GTR):** Allow multiple hits, back mutations. Used for aligned DNA sequences.
+* **Site Frequency Spectrum (SFS):**
+  * The distribution of allele frequencies in a sample. Many recent population genomic methods use the SFS, often assuming an infinite sites model.
+  * **Challenges with SFS:**
+    * Accommodating real data to the infinite sites model (defining ancestral alleles, handling multi-allelic sites, errors).
+    * SNP ascertainment bias: How SNPs are discovered can bias the SFS if not corrected.
+    * May be problematic for species with high diversity / large $N_e$ where the infinite sites assumption is often violated (e.g., many tri-allelic sites observed in *Anopheles*).
+
+- [Population divergence time estimation using individual lineage label switching](https://academic.oup.com/g3journal/article/12/4/jkac040/6528849?login=true)
+- A potential mistake in [The Anopheles gambiae 1000 Genomes Consortium: Genetic diversity of the African malaria vector Anopheles gambiae. Nature, 552(7683):96–100, Dec 2017](https://pubmed.ncbi.nlm.nih.gov/29186111/), they report very high rate for positions with $>2$ mutations.
+
+## Genomic data for evolutionary inference - Emily Jane McTavish
+
+The talk emphasizes that while the quantity of sequence data is rapidly increasing, outstripping analytical capabilities (a point made by Jeff Thorne as early as 1991), many choices and potential pitfalls exist:
+
+### Orthology vs. Paralogy
+
+* Distinguishing orthologs (genes diverged by speciation) from paralogs (genes diverged by duplication) is critical.
+* Including unrecognized paralogs can lead to incorrect phylogenetic inferences, as demonstrated by an example of turtle phylogeny where a small number of paralogous alignments had an extraordinary influence.
+* Newer "orthology-free" methods like ROADIES aim to infer species trees directly from raw genome assemblies by sampling genes, performing pairwise alignments, and iteratively estimating gene and species trees (dubious).
+
+### Speed vs. Accuracy of Phylogenetic Inference Methods
+* For very large datasets (1000+ sequences), different ML tree inference software offer trade-offs:
+  * **RAxML/ExaML:** Very efficient, especially with multiple runs.
+  * **IQ-TREE:** Also fast and relatively accurate.
+  * **FastTree:** Very fast but may have trade-offs with accuracy.
+  - Fasttree joke: It is fast, and it is a tree.
+* The presentation notes that "quick and dirty or black box methods" used for large datasets might lead to worse answers if not carefully considered.
+* Newer methods like CASTER (a site-based quartet method) are very fast but their performance on complex, real-world problems needs further evaluation.
+- Comments on [CASTER: Direct species tree inference from whole-genome alignments](https://www.science.org/doi/10.1126/science.adk9688): If you have to use “quick and dirty” or black box methods in order to be able to analyze large data sets - more data may result in WORSE answers.
+
+### Is the Species Tree Always What You Want?
+* Different genes can have different evolutionary histories (gene trees) due to processes like incomplete lineage sorting or introgression.
+* If interested in a trait controlled by one or a few genes, the species tree may not accurately describe the evolutionary history of those specific genes.
+* Holistic genome approaches, like considering ancient gene linkages, can offer insights into deep evolutionary questions, such as the sister group to all other animals.
+
+### Data Processing Choices and Ascertainment Bias
+* **Ascertainment bias** is a bias in parameter estimation or testing caused by non-random sampling of data. It is ubiquitous and can arise from how data is collected or filtered (e.g., sampling across the tree of life, volunteer surveys, studying undergraduates).
+* **Missing Data in RADseq:** Factors like mutations at restriction sites, clustering parameters, or low coverage can cause allele drop-out. While random missing data might not be highly problematic, phylogenetically-biased missing data can mislead inference, affecting topology, branch lengths, and support values. Simply excluding sites with high missing data can bias rate estimation downwards by preferentially removing high-rate loci. There are no universal "rules-of-thumb" for handling this due to complex interactions. Investigating a range of filtering parameters is advised. The Penstemon RADseq case study shows that missing data can be phylogenetically biased, with many loci found only in one of the major clades, suggesting that analyzing clades **separately** or using different filtering parameters might be necessary.
+* **Sequencing Error:** Can be problematic when true variation is rare, as errors (often singletons) can overestimate tip branch lengths. While error correction methods exist and genotype likelihoods could help, these are not always implemented in standard phylogenetic likelihood models. High coverage likely reduces the impact of sequencing error.
+  - TODO: Can sequencing quality data used and implemented in phylogenetic likelihood models?
+* **Reference Genome Choice:** Mapping reads to a reference can speed up consensus sequence generation but can also introduce bias. Variant calling can be biased towards the reference base in polymorphic regions, and branch lengths can change based on reference choice. Error rates can be correlated with distance to the reference, with errors biased towards the reference base. Reference choice can even affect topology. While sequence calls may change based on the reference, overall phylogenetic conclusions might sometimes remain unaffected.
+  - Base call errors match the reference base 97% of the time, so the choice of reference genome can have a large impact on the phylogeny.
+  - A useful tutorial on Reference Bias: https://github.com/snacktavish/TreeUpdatingComparison/blob/master/TreeUpdating.md
+- [Free textbook: Phylogenetics in the Genomic Era](https://inria.hal.science/PGE/page/table-of-contents)
+
+## Open Tree of Life project
+
+### The Need for a Comprehensive Tree of Life
+
+* New and improved evolutionary trees are constantly published, but even large-scale efforts often miss a significant fraction of known biodiversity (e.g., a recent plant phylogeny covering 8,000 species still missed 40% of plants).
+* Taxonomy is often used as a proxy for evolutionary history, but it can be a coarse or even misleading representation.
+* Researchers use taxonomy because comprehensive phylogenies are often not available for all species of interest, keep changing, or are hard to access.
+
+### Features and Functionality
+
+* **Taxonomic Integration:** Users can view the lineage of any taxon within the Open Tree Taxonomy (OTT). New taxa from uploaded trees can be added and will be incorporated into future synthetic trees, with opportunities for feedback to source taxonomies.
+* **Synthetic Tree:** A continuously updated tree that synthesizes information from the curated phylogenies and the taxonomic backbone. It visualizes phylogenetic information and areas of conflict.
+* **Date Estimates (DATELife):**
+  * The main synthetic tree currently does not have inherent branch lengths because combining diverse data types (DNA, morphology, taxonomy) makes direct branch length synthesis non-obvious.
+  * However, the DATELife project (Sanchez-Reyes, McTavish, O'Meara, 2024) allows for the translation of date estimates from input chronograms (dated trees) onto the Open Tree synthetic topology or a user-provided tree.
+  * It works by matching taxa, finding congruent nodes between source chronograms and the target topology, and using median pairwise node ages to date the target tree.
+
+### Why Use Open Tree?
+
+* **For common community phylogenetic analyses:** Studies suggest that using synthesis phylogenies like the Open Tree of Life is justified and often sufficient.
+* **Large-scale diversity assessment:** Facilitates projects like PhyloNext for analyzing phylogenetic diversity of GBIF-mediated data.
+* **Conservation:** Can be used to measure potential loss of evolutionary distinct history due to extinctions by identifying species at risk that represent significant unique evolutionary heritage.
+* **Convenience:** Easily get accurate relationships and citations for arbitrary sets of species (e.g., finding the closest relative with a reference genome).
+* **Custom Synthesis:** Users can generate custom synthetic trees for their specific taxa of interest, potentially with personalized phylogeny rankings and choice of root.
+* **Bird Tree Example:** A synthesis phylogeny of all birds (McTavish et al., 2025) covering 87% of species, built from 321 published trees, is available [A complete and dynamic tree of birds](https://www.pnas.org/doi/abs/10.1073/pnas.2409658122).
+
+# Day 5
