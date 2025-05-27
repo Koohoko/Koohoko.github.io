@@ -539,7 +539,11 @@ $P(G\vert \Theta_0, g) = \prod_{j \text{ (intervals)}} e^{-(t_j - t_{j-1}) \frac
 * **Skyline Plots (Random Fluctuations):** Methods like Bayesian Skyline (BEAST), Skyride, Skyfish (BEAST, RevBayes) can estimate population size changes over time.
 * **Bottlenecks:** Estimating bottlenecks depends on their severity, duration, and the amount of data (sample size, number of loci), it is HARD.
 - **Migration Among Populations (Structured Coalescent):**
-  * For multiple populations, the overall rate of events (coalescence or migration) changes. For two populations (1 and 2) with $k_1$ lineages in pop 1 and $k_2$ in pop 2, the total rate of any event is: $\text{Total Rate} = \underbrace{\frac{k_1(k_1-1)}{\Theta_1}}_{\text{coalescence in pop1}} + \underbrace{\frac{k_2(k_2-1)}{\Theta_2}}_{\text{coalescence in pop2}} + \underbrace{k_1 M_{21}}_{\text{migration 1 } \leftarrow \text{ 2}} + \underbrace{k_2 M_{12}}_{\text{migration 2 } \leftarrow \text{ 1}}$ where $M_{ij}$ is the scaled migration rate from population $j$ to $i$ (e.g., $M_{21} = 4N_1m_{21}$ if $\Theta_1=4N_1\mu$).
+  * For multiple populations, the overall rate of events (coalescence or migration) changes. For two populations (1 and 2) with $k_1$ lineages in pop 1 and $k_2$ in pop 2, the total rate of any event is: 
+  $$
+  \text{Total Rate} = \underbrace{\frac{k_1(k_1-1)}{\Theta_1}}_{\text{coalescence in pop1}} + \underbrace{\frac{k_2(k_2-1)}{\Theta_2}}_{\text{coalescence in pop2}} + \underbrace{k_1 M_{21}}_{\text{migration 1 } \leftarrow \text{ 2}} + \underbrace{k_2 M_{12}}_{\text{migration 2 } \leftarrow \text{ 1}}
+  $$
+  where $M_{ij}$ is the scaled migration rate from population $j$ to $i$ (e.g., $M_{21} = 4N_1m_{21}$ if $\Theta_1=4N_1\mu$).
 
 - **Population Splitting (Divergence Models):**
   * Used to estimate divergence times ($\tau$), ancestral population sizes, and migration rates between diverging populations (e.g., Isolation with Migration - IM models).
