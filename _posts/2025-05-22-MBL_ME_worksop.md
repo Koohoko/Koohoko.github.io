@@ -631,11 +631,185 @@ The talk emphasizes that while the quantity of sequence data is rapidly increasi
 
 ### Why Use Open Tree?
 
-* **For common community phylogenetic analyses:** Studies suggest that using synthesis phylogenies like the Open Tree of Life is justified and often sufficient.
 * **Large-scale diversity assessment:** Facilitates projects like PhyloNext for analyzing phylogenetic diversity of GBIF-mediated data.
-* **Conservation:** Can be used to measure potential loss of evolutionary distinct history due to extinctions by identifying species at risk that represent significant unique evolutionary heritage.
 * **Convenience:** Easily get accurate relationships and citations for arbitrary sets of species (e.g., finding the closest relative with a reference genome).
 * **Custom Synthesis:** Users can generate custom synthetic trees for their specific taxa of interest, potentially with personalized phylogeny rankings and choice of root.
 * **Bird Tree Example:** A synthesis phylogeny of all birds (McTavish et al., 2025) covering 87% of species, built from 321 published trees, is available [A complete and dynamic tree of birds](https://www.pnas.org/doi/abs/10.1073/pnas.2409658122).
 
 # Day 5
+
+## Cpp session in the morning - John Huelsenbeck
+
+- Yesterday we talked about pointers and references, and how to construct functions that take pointers and references as arguments. You can also dereference pointers to access the data they point to.
+- The evolution of PRNG algorithms, Von Neumann etc.
+  - A USB device called TrueRNG3 on Amazon, which is a hardware random number generator that uses quantum noise to generate random numbers.
+- Making arrays/vectors: the `[]` operator is just dereferencing a pointer.
+
+```cpp
+#include <iostream>
+#include <iomanip>
+
+int main(int argc, char* argv[] ) {
+	
+	int x[10];
+	for (int i = 0; i < 10; ++i) {
+		x[i] = i * 10;
+		std::cout << std::setw(3) << x[i] << " " << &x[i] << "\n";
+	}
+
+	std::cout << "\n";
+
+	int* p = &x[3];
+	std::cout << "p = " << p << "\n";
+	std::cout << "p's dereferenced value: " << *p << "\n";
+	std::cout << "p[0] = " << p[0] << "\n";
+	std::cout << "p[1] = " << p[1] << "\n"; # you can actually put a negative index here, causing out-of-bounds access
+
+	return 0;
+}
+```
+
+## Bayesian Model Comparison with MIGRATE - Peter Beerli
+
+### Inference of parameters
+
+- If the model of prime interest is on population dynamics (e.g., geographic structure, colonization, recurrent gene flow, past population splitting, ...), the mutation model and genealogies (trees) become nuisance (we may simply integrate them).
+- The primary goal in population genetics is often to infer parameters related to geographic structure, colonization, gene flow, population splitting, etc. 
+- Genetic data (sequence differences) are used as a proxy because detailed historical records are usually unavailable. This necessitates additional models, like mutation models and genealogical models (e.g., the coalescent).
+- Inferring the posterior probability of population model parameters ($\theta$) given the data ($D$) using Bayes' theorem, often employing MCMC:
+    $P(\theta\vert D) = \frac{P(\theta)P(D\vert \theta)}{P(D)} = \frac{P(\theta)\int_{G}P(G\vert \theta)P(D\vert G,\mu)dG}{\int_{\theta}P(\theta)\int_{G}P(G\vert \theta)P(D\vert G,\mu)dGd\theta}$
+    (where $G$ is genealogy, $\mu$ is mutation model parameters).
+- Beyond just reporting posteriors, we can statistically compare different demographic models.
+
+### Structured vs. Non-structured Populations
+- **Non-structured (single population):** Free interbreeding. Variability accumulates approximately by $N \times \mu$. Highly variable populations may persist longer.
+- **Structured population:** Interbreeding restricted to subpopulations. Variability in a subpopulation is gained via $N_{subpop} \times (m+\mu)$ (where $m$ is immigration rate). High immigration makes it behave like a single population. Structured systems can be more resistant to extinction from threats like parasites due to slowed transmission.
+
+### Bayesian Model Comparison
+- **Bayesian Odds Ratios:** The posterior odds ratio for two models ($M_1$ vs. $M_2$) given data ($X$) is: $\frac{P(M_1\vert X)}{P(M_2\vert X)} = \frac{P(M_1)}{P(M_2)} \times \frac{P(X\vert M_1)}{P(X\vert M_2)}$ This is (Prior Odds) $\times$ (Bayes Factor).
+- **Bayes Factor (BF):** $BF = \frac{P(X\vert M_1)}{P(X\vert M_2)}$ This is the ratio of the **marginal likelihoods of the data under each model**. The **log Bayes Factor (LBF)** is $LBF = 2 \ln(BF)$. Interpretation of LBF magnitude:
+  - $0 < \vert LBF\vert  < 2$: No real difference
+  - $2 < \vert LBF\vert  < 6$: Positive evidence
+  - $6 < \vert LBF\vert  < 10$: Strong evidence
+  - $\vert LBF\vert  > 10$: Very strong evidence
+- The marginal likelihood $P(X\vert M_i)$ is the denominator $P(X)$ in the standard Bayesian posterior calculation for **parameters** within model $M_i$, integrated over the entire parameter space of that model.
+
+### Marginal Likelihood Calculation
+* Calculating marginal likelihoods is often complicated in MCMC applications.
+* The harmonic mean estimator is unreliable.
+* Accurate methods include:
+  * Thermodynamic integration (used by MIGRATE)
+  * Stepping-stone integration
+  * Inflated Density Ratio
+
+## MIGRATE Tutorial - Peter Beerli
+
+- [MIGRATE homepage](https://peterbeerli.com/migrate-html5/about.html)
+- He actually developped a specific file format for MIGRATE.
+- We learnt how to specify structured models and population split/migration models in MIGRATE.
+- The model with the highest marginal likelihood (or model probability) is the best-supported model by the data.
+- An example with simulated Zika virus data illustrates model comparison for population splitting and migration scenarios.
+- Bayesian model selection using marginal likelihoods allows comparison of **non-nested models**.
+- Complex biogeographic or demographic models can be compared easily.
+- 
+  > specify a migration matrix for a 5-population system where population 1 and 5 are on a mainland, population 2 is an island close to 1, population 4 is close to 5, and population 3 is far out in the sea but closest to 2. ‘Close’ means reachable by rafting, and once on an island, it will be difficult to get off again.
+  
+  The migration matrix should be:  
+  ```
+    1 2 3 4 5
+  1 x 0 0 0 x
+  2 x x 0 0 0
+  3 0 x x 0 0
+  4 0 0 0 x b
+  5 x 0 0 0 x
+  ```
+- https://molevolworkshop.github.io/faculty/beerli/migrate-tutorial-html/MIGRATEtutorial2023.html
+- I found that in [Tim's MultiTypeTree paper](https://academic.oup.com/bioinformatics/article/30/16/2272/2748160), actually used migrate-n as a benchmark.
+
+## Multilocus phylogeography and phylogenetics - Scott Edwards
+
+**Part I: Reticulation and the Emerging Continuum**
+
+- Incomplete Lineage Sorting (ILS) / Deep Coalescence
+- [Genes mirror geography within Europe](https://www.nature.com/articles/nature07331)
+- Multilocus Models in Phylogeography: population genetic parameters like population size ($\theta = 4N\mu$), divergence time ($\tau = \mu t$), and gene flow ($M = m/\mu$).
+- Whole-genome Phylogeography: using whole-genome resequencing data to investigate population structure, effective migration surfaces (EEMS), and introgression using ABBA-BABA tests (Dsuite). 
+
+**Part II: PhyloG2P - Macroevolution and the Origin of Phenotypic Traits**
+
+* **Genomic Signatures of Trait Associations:**
+  * Deletion/inactivation or acceleration of conserved noncoding elements (CNEEs). The neutral theory (Motoo Kimura) predicts that functionally important regions will have lower substitution rates than less important ones; thus, acceleration can suggest a change, loss, or relaxation of function.
+* **PhyloAcc Software Family:**
+  * This software connects genomic and trait variation via phylogenies.
+  * **PhyloAcc:** Models rates on branches as background ($r_0=1$), conserved ($r_1 < 1$), or accelerated ($r_2 > 1$) based on a hidden state $Z_s$ for element $i$ on branch $s$. It uses a transition matrix for $Z_s$ with parameters $\alpha$ (probability of gain of conserved state) and $\beta$ (probability of loss of conserved state).
+  * **PhyloAcc-GT (binary traits):** Extends PhyloAcc to account for gene tree variation when detecting accelerations.
+  * **PhyloAcc-C (continuous traits):** Models molecular rates ($r_0, r_1, r_2$) and phenotypic rates ($\nu$, which is $\sigma^2$ scaled by $\beta_2$ or $\beta_3$) jointly, allowing estimation of the association ($log(\beta_3/\beta_2)$) between molecular acceleration and phenotypic change. An example links molecular accelerations in a CNEE with changes in longevity in mammals.
+  * CNEEs linked to longevity were found near genes with diverse functions.
+* **Case Studies (Birds):**
+  * **Tarsus Length in Birds:** Four groups (penguins, kingfishers, bulbuls, swallows) show shifts to shorter tarsus length. PhyloAcc identified ~14,000 elements accelerated in short-tarsus lineages, many in ATAC-seq peaks, near genes involved in limb development pathways.
+  * **Convergent Evolution of Flightlessness in Palaeognathae:** This section highlights the long-standing debate about whether phenotypic evolution is driven more by changes in genes or gene regulation (King & Wilson 1975). It shows the phylogeny of birds including palaeognaths. Whole-genome alignments (e.g., 42 bird species using ProgressiveCactus) and analysis of different noncoding markers (UCEs, introns, CNEEs) are used. Coalescent analyses (MP-EST) using thousands of loci (CNEEs, introns, UCEs) helped resolve the position of rheas and suggested an ancient rapid radiation, potentially in the anomaly zone where the most common gene tree might not match the species tree. The study identified convergently accelerated CNEEs in ratite (flightless bird) lineages, particularly near developmental genes. ATAC-seq data further showed CNEEs in flight-related tissues active in early chick development. The combined information suggests candidate enhancers for flightlessness.
+
+## Pangenomes for Ecology and Evolution - Scott Edwards
+
+**1. Introduction to Pangenomes:**
+- **Moving Beyond Reference-Based Genomics:** Traditional genomics often relies on mapping reads to a single reference genome. Pangenomics aims to capture the entire set of genes and genomic regions found in a group of individuals or species.
+- A pangenome consists of:
+  * **Core genome:** Genes present in all individuals/strains.
+  * **Accessory/Dispensable genome:** Genes present in only some individuals/strains.
+
+**2. Pangenomes in Avian Genomics - Case Study: Scrub Jays**
+
+* **Context: Avian Genomes:** Birds generally have small, streamlined genomes compared to other amniotes like mammals or other reptiles. However, avian genome assembly quality is improving with new sequencing technologies: Pacbio HiFi.
+* **Population Size Variation:** PSMC and bpp analyses show a ~60-fold range in effective population size ($N_e$) across the scrub-jay species, with Island Scrub Jays having the smallest $N_e$ and Woodhouse's having the largest.
+* **Repeat Content:** RepeatMasker analysis indicates over 25% repeats and transposable elements in scrub-jay genomes. There's interspecific variation in repeat content, especially LTR elements and satellites. Male birds (ZZ) show higher counts of a specific 18-kb satellite unit.
+* **Genome Size Variation:** Island Scrub Jay assemblies are ~100 Mb smaller than Woodhouse's Scrub Jay. Genomescope estimates of maximum genome size vary across individuals and species.
+* **Telomeres:** Telomeres are mentioned as barometers of age and stress, with chronic malaria shown to accelerate telomere degradation in wild birds (Ashgar et al. 2015). A recent study (Brown et al. 2024) suggests that species with **smaller** $N_e$ (like the Island Scrub Jay) are predicted to have shorter telomeres and show changes in the genomic proportion of telomeric sequence.
+
+**3. Pangenome Graphs and Structural Variation (SV)**
+
+* **Pangenome Graphs:** These graphs capture structural variation (SVs) within and between species. 
+  * Graph "depth" (how many haplotypes cover a region) can reveal different genomic features:
+    * Medium depth: Normal regions.
+    * Low depth: SNPs or small indels.
+    * High depth: Large SVs, satellites, repeats.
+* **SVs and Population Size:**
+  * The number of SVs scales with population size.
+  * The Nearly Neutral Theory of molecular evolution (Tomoko Ohta) is invoked, suggesting that the efficacy of selection depends on $N_e s$ (effective population size × selection coefficient).
+  * In smaller populations (like the Island Scrub Jay), slightly deleterious mutations (including SVs) can drift to higher frequencies or become fixed more easily.
+  * Data suggests SVs are, on average, more deleterious than SNPs. Longer SVs appear to rise to higher frequencies in the small Island Scrub Jay population.
+* **Inversions:** Inversions are common and their numbers also track population size. Pangenome and reference-based methods can identify numerous inversions, and these inversions show enhanced differentiation ($F_{ST}$) between species.
+* **Copy Number Variants (CNVs) and Gene Deletions:** Abundant CNVs and gene deletions are found, with patterns varying across species. Gene CNVs show a surprising pattern, with the Island Scrub Jay (smallest $N_e$) having fewer deletions but more increases in copy number compared to the larger mainland populations. These CNVs have functional consequences on gene expression (TPM - transcripts per million).
+
+### Further Reading
+- [Bayesian Detection of Convergent Rate Changes of Conserved Noncoding Elements on Phylogenetic Trees](https://academic.oup.com/mbe/article/36/5/1086/5372678)
+- Linking sequence evolution and continuous trait data, [Gemmell et al. 2024. PLoS Comp. Biol. (4): e1011995](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1011995).
+- TODO: The phenotypic traits for birds and avian flu evolution. Avonet database, Bayou. Can we link (serodata variations)/(DMS predictions) to accelerated rates?
+
+# Day 7
+
+## The neutral and nearly neutral theories of molecular evolution - Joseph P. Bielawski
+
+* The fundamental evolutionary "forces" are mutation, genetic drift, and natural selection.
+* Conceptual Models for Genetic Variation:
+  * **Neo-Darwinism:** Natural selection is the dominant force shaping genetic variation.
+  * **Neutral Theory (Motoo Kimura):** Genetic drift is the dominant force for most observed molecular variation and evolution.
+  * **Nearly Neutral Theory (Tomoko Ohta):** The interaction between genetic drift and selection is crucial, especially for mutations with small fitness effects.
+* **Substitution:** The outcome of a fixation process, representing a change in the "state" of the population at a particular genetic locus. **Mutations** can either be fixed or lost from a population.
+
+- Neutral Theory of Molecular Evolution (Kimura 1968)
+  * **Rate of Substitution ($k$):** Under neutrality, the rate of nucleotide substitution ($k$) at mutation-drift equilibrium is equal to the rate of new mutations ($\mu$) per gene (or site) per generation.
+    * $k = (\text{new mutations}) \times (\text{probability of fixation})$
+    * Number of new mutations in a diploid population = $2N\mu$.
+    * Probability of fixation for a new *neutral* mutant = $1/(2N)$.
+    * Therefore, $k = 2N\mu \times \frac{1}{2N} = \mu$. 
+  * **Independence from Population Size:** A key prediction is that the rate of neutral molecular evolution ($k$) is independent of population size ($N$). This is because in small populations, fewer new mutants arise but each has a higher chance of fixation by drift. In large populations, more mutants arise but each has a lower chance of fixation by drift.
+  * **Molecular Clock:** The constant neutral rate ($k=\mu$) implies a "molecular clock," meaning sequences should diverge at a roughly constant rate over time.
+  * **Functional Constraint:** The evolutionary rate is inversely related to functional constraint.
+    * Highly functional regions have more sites where mutations are deleterious.
+    * **Lower-rate genes/regions:** More sites are functional, so more mutations are deleterious and removed by selection. The remaining (neutral) mutations contribute to $k=\mu$.
+    * **High-rate genes/regions:** More sites are neutral (less functional constraint), so a larger fraction of mutations behave neutrally and can be fixed by drift, leading to $k=\mu$.
+  * **Distribution of Fitness Effects (DFE) under Neutral Theory:**
+    * Lethal and strongly deleterious mutations are rapidly removed by selection and ignored by Kimura.
+    * Beneficial mutations are considered very rare and also ignored by Kimura.
+    * Neutral mutations ($s=0$, where $s$ is the selection coefficient) are considered the vast majority of mutations contributing to polymorphism and species divergence.
+

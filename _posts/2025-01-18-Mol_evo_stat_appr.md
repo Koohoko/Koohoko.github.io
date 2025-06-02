@@ -930,7 +930,7 @@ Criteria for judging methods include:
         *   MLEs are asymptotically consistent, unbiased, normally distributed, and attain this bound.
         *   **Relative Efficiency of Tree Reconstruction Methods:**
             *   $E_{21} = n_1(P)/n_2(P)$: Ratio of sample sizes needed by method 1 ($n_1$) and method 2 ($n_2$) to recover the true tree with the same probability $P$. (Eq 5.4)
-            *   Alternatively: $E^*_{21} = \frac{1 - P_1(n)}{1 - P_2(n)}$: Ratio of error rates for a given sample size $n$. Method 2 is more efficient if $E^*_{21} > 1$. (Eq 5.5)
+            *   Alternatively: $E^{*}_{21} = \frac{1 - P_{1}(n)}{1 - P_{2}(n)}$: Ratio of error rates for a given sample size $n$. Method 2 is more efficient if $E^*_{21} > 1$. (Eq 5.5)
     *   **5.1.1.4 Robustness:** A model-based method is robust if it performs well even when its assumptions are slightly violated.
 
 ### 5.1.2 Performance
