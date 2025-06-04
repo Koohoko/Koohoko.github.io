@@ -1,28 +1,10 @@
----
-title: "Paper digest: "
-date: 2025-00-00
-permalink: /posts/2024-00-00/new-blog
-categories:
-  - Course notes
-  - Book notes
-  - Paper digest
-  - Programming
-  - My tools
-  - Misc
-tags:
-  - Unassigned
-toc: true
-# last_modified_at: 2025-09-01
----
+Day5 早上的编程课讲了随机数生成器的历史以及怎么自己用Cpp写一个。然后早上理论课迎来了Peter Beerli，他是地球上最早做structured coalescent的一群人之一，他20年前写的软件Migrate-n是这个领域的标杆。他1999年的文章《Maximum-likelihood estimation of migration rates and effective population numbers in two populations using a coalescent approach》，你们猜两个作者的另外一个是谁。。是Joseph Felsenstein，对，就是Felsenstein zone那个Felsenstein。他首先介绍了为什么需要coalescent model，然后用两种动画演示了wrigth fisher model。然后是model comparison between structured and unstructured coalescent。讲了Bayes Factors为什么计算量大。然后我们做了tutorial学习了migrate-n怎么specify不同的population split和migration，然后做模型/假设检验。
 
-The paper titled []() introduced.
+Day5 下午是Scott Edwards的课，他是哈佛的鸟类进化教授，跟李恒大佬有紧密的合作。他第一部分讲了他多年在澳洲的研究，利用不同基因树，地理环境和phenotype一起研究鸟类物种分化的历史：为什么multiple species coalescent有用；alignment free的snps data竟然就可以跟地图惊人吻合；testing gene glow events。第二部分是PhyloG2P，形态学或者性状的改变本质来源于基因组的变化，历史上有哪些方法把他们联合在一起分析；有些分析很有酷，比如他结合多基因进化树，化石证据，推断不同陆地鸟类丧失飞行能力的机制，是一个convergent evolution事件，而且是受一些enhancer调控的。第三部分是pangenome。李恒最近几年在憋的pangenome项目就是跟Scott一起搞的，pangenome这个概念，是随着越来越多不同物种的基因组数据的积累，而自然形成的，你可以理解为怎么利用你可以得到的不同物种的所有基因片段的信息，然后用所有这些信息来推断物种的进化关系（复杂的点在于在进化过程中有gene duplication and loss等复杂过程，而且由于你不是关注某一个基因靶点，所以不能用reference based mapping的算法来比对基因，所以李恒要搞新的高效的算法去整合出一个pangenome graph）。Scott先讲了pangenome graph怎么得出不同物种基因组structural variations，然后这些“有害突变”和进化上面一个物种的群体数量有什么关系。
 
-## Background
+Day5晚上是龙虾晚宴，Day6是放假去跑步了。后面来更Day7。
 
-## Results
+Day6 早上的编程课讲了Cpp里面heap和stack在内存调用的不同，和object的概念，然后实践了一下。理论课迎来Joe Bielawski，他的教学风格我很喜欢，很善于引导学生思考，我最喜欢的老师之一。他在2000年前后跟Ziheng Yang一起写了很多文章，包括分子进化里面模型选择和假设检验的统计方法。他早上主要讲群体遗传学里面分子进化中的突变与选择。包括经典的Kimura的neutral theory，和kimura学生Ohta的nearly neutral theory。Distribution of fitness effects（DFE）的概念，
 
-## Useful methods
-
-## Other notes
 
 

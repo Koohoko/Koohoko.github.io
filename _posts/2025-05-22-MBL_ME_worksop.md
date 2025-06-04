@@ -813,3 +813,375 @@ int main(int argc, char* argv[] ) {
     * Beneficial mutations are considered very rare and also ignored by Kimura.
     * Neutral mutations ($s=0$, where $s$ is the selection coefficient) are considered the vast majority of mutations contributing to polymorphism and species divergence.
 
+- Nearly Neutral Theory (Ohta):
+  * **Interaction of Drift and Selection:** This theory emphasizes the importance of mutations with small selection coefficients (nearly neutral mutations) where both genetic drift and weak selection interact to determine their fate.
+  * **Population Size Matters:**
+    * The "neutral zone" (where mutations behave as effectively neutral) is defined by roughly $-1/(2N_e) < s < +1/(2N_e)$ (where $N_e$ is effective population size).
+    * **Small populations:** Have a larger "neutral space." More mutations (including slightly deleterious ones) behave as effectively neutral and evolve by drift. Selection is less effective.
+    * **Large populations:** Have a smaller "neutral space." Slightly deleterious mutations are more effectively eliminated by selection. Slightly beneficial mutations are fixed more frequently than by drift alone (though fixation is not certain).
+  * **Molecular Clock Unlikely:** Because the rate of evolution now depends on $N_e$ (which can change), a strict molecular clock is less likely under this theory.
+  * **DFE under Nearly Neutral Theory:**
+    * Includes a spectrum of slightly deleterious and slightly beneficial mutations, in addition to strictly neutral ones.
+  * **Selective Implications / Dynamics:**
+    * **Rate slows as population becomes adapted:** On a concave (saturating) fitness curve, mutations have larger fitness effects when fitness is low and smaller effects when fitness is high (closer to the optimum). This means selection is initially strong but becomes less effective as the population approaches an equilibrium.
+    * **Population approaches an equilibrium:** The phenotype may reach a steady state where mutation pressure (more ways for mutations to decrease fitness) balances selection.
+    * **Detailed Balance:** At equilibrium, the evolutionary process can reach a state of "detailed balance" where, for nearly neutral mutations, the rate of beneficial substitutions equals the rate of deleterious substitutions of the same absolute effect.
+    * **Equilibrium phenotype is NOT necessarily the most fit:** The "marginal stability" of natural proteins might not be an adaptive optimum but rather a balance. Natural selection plays a role in preventing "mutational meltdown" by purging highly deleterious mutations.
+  * Sometimes called "steady state models" or "balance mutation models".
+
+**6. Epistasis and Protein Stability (Slides 38, 39 [context from slide 35], 51-52):**
+* The presentation briefly touches upon stability-mediated epistasis, where the fitness effect of a mutation at one site depends on the amino acids at other sites due to interactions affecting protein stability.
+* A cited paper (Youssef et al. 2022) suggests that while epistasis is critical for understanding protein evolutionary dynamics, traditional site-independent models might still provide reasonable summaries of *average* selection intensities[cite: 81, 82]. However, this doesn't mean model assumptions can be ignored[cite: 97].
+
+**7. Index of Selection Intensity for Proteins ($d_N/d_S$ or $\omega$) (Slides 42-50):**
+* **Rationale:** Proteins have a "built-in ruler" for their own neutral rate – the **synonymous substitution rate ($K_S$ or $d_S$)**.
+    * Synonymous mutations do not change the amino acid sequence and are assumed to be largely selectively neutral (rate = neutral rate with respect to protein evolution). [cite: 64, 68]
+    * Non-synonymous mutations ($K_N$ or $d_N$) change the amino acid and can be deleterious, neutral, or beneficial; their rate depends on selection intensity. [cite: 64, 68]
+* **The $d_N/d_S$ ratio ($\omega$):** This ratio is an index of selection intensity acting on the protein.
+    * $d_N/d_S < 1$: Purifying (negative) selection (most non-synonymous changes are deleterious and removed). Examples: histones. [cite: 70]
+    * $d_N/d_S = 1$: Neutral evolution (non-synonymous changes are as likely to fix as synonymous ones). Examples: pseudogenes. [cite: 70]
+    * $d_N/d_S > 1$: Diversifying (positive) selection (non-synonymous changes are favored and fix at a higher rate than synonymous ones). Examples: MHC, Lysin. [cite: 70]
+* This allows classification of sites or genes:
+    * Selectively constrained: $d_N/d_S < 1$. [cite: 58, 72]
+    * Strictly neutral: $d_N/d_S = 1$. [cite: 58, 72]
+    * Adaptive evolution: $d_N/d_S > 1$. [cite: 58, 72]
+
+This summary covers the core theoretical concepts presented in Part I of the slides.
+
+
+Okay, here's a summary of the "Bielawski_lecture_PART_2.pdf" slides on "Codon substitution models and the analysis of natural selection pressure."
+
+---
+## Codon Substitution Models & Analysis of Natural Selection - Summary
+
+**1. Introduction and Challenges (Slides 2-3):**
+* Codon models are complex, with deep statistical issues, varied modeling strategies, and strong opinions on correct approaches[cite: 2].
+* The lecture refers to a book chapter (Jones, Susko, and Bielawski, in Anisimova (ed.) 2019) that discusses the validity and success of Codon Substitution Models (CSMs) in inferring natural selection[cite: 3].
+* Challenges with CSMs and Maximum Likelihood (ML) inference include[cite: 6, 10]:
+    * Model misspecification.
+    * Low information content in data.
+    * Confounding of processes.
+    * Phenomenological load (PL) – where overly complex models may negatively impact inference.
+* Understanding the relationship between the model and data is crucial, and *in silico* experiments using a realistic generating process (like Mutation-Selection models) are advocated[cite: 12, 13, 14].
+
+---
+**2. Mechanistic vs. Phenomenological Codon Models (Slides 4-14):**
+The presentation distinguishes between two broad classes of codon models based on the evolutionary timescale they primarily address:
+
+* **A. Mechanistic Codon Models (Population Time-Scale) (Slides 7-9, 20):**
+    * These models are rooted in population genetics principles, considering mutation ($\mu_{ij}$), genetic drift (effective population size $N_e$), and selection ($s_{ij}$, the selection coefficient for a change from codon $i$ to $j$ at site $h$).
+    * The fixation probability of a mutation depends on these parameters. The slide presents Kimura's formula for fixation probability [cite: 24] and a general formula for substitution rate $Pr$ (if neutral vs. if selected) from Halpern and Bruno (1998)[cite: 21].
+        * $S_{ij} = \Delta f_{ij}$ (difference in fitness between codon $j$ and $i$)[cite: 21].
+        * The rate of substitution $A_{ij}^h$ from codon $i$ to $j$ at site $h$ is $\mu_{ij}$ if $s_{ij}^h = 0$ (neutral), and $\mu_{ij}N \times \frac{s_{ij}^h}{1-e^{-Ns_{ij}^h}}$ otherwise (a simplified version of Kimura's fixation probability scaled by $N\mu_{ij}$ if $s_{ij}$ is small, or the full $2Ns_{ij}/(1-e^{-4Ns_{ij}})$ if $s_{ij}$ refers to selection coefficient in diploids)[cite: 46]. *(The formula on slide 7 and 20 has a slight variation in the denominator and the $N$ scaling compared to the standard Kimura's $2s/(1-e^{-4N_es})$ for fixation probability of an advantageous mutation. The slide seems to present $Ns_{ij}$ directly in the exponent, suggesting $s_{ij}$ might be a scaled selection coefficient or it's a specific formulation from the cited works).*
+    * **Realism & Cost:** These models are more realistic as fixation depends on the fitness effects of amino acid changes in the protein context[cite: 22]. However, they are often too complex to fit to real data due to the large number of parameters (e.g., site-specific fitness coefficients $f^h$)[cite: 23].
+
+* **B. Phenomenological Codon Models (Macroevolutionary Time-Scale) (Slides 14-18, 49-50):**
+    * These models (often called "$d_N/d_S$" or "$\omega$" models) typically do not explicitly model population genetic processes but describe the overall pattern of codon substitution over longer evolutionary timescales.
+    * They use a few key phenomenological parameters[cite: 29]:
+        * $\kappa$: transition/transversion rate ratio.
+        * $\pi_j$: equilibrium frequency of codon $j$.
+        * $\omega = d_N/d_S$: the ratio of non-synonymous to synonymous substitution rates. This is the primary parameter of interest for detecting selection.
+    * The instantaneous rate matrix $Q$ (typically $61 \times 61$ for sense codons) is defined using these parameters[cite: 31, 32, 38]. For example, the rate from codon $i$ to $j$ ($Q_{ij}$) might be:
+        * 0 if $i$ and $j$ differ by >1 nucleotide.
+        * $\pi_j$ for synonymous transversions.
+        * $\kappa \pi_j$ for synonymous transitions.
+        * $\omega \pi_j$ for non-synonymous transversions.
+        * $\omega \kappa \pi_j$ for non-synonymous transitions.
+        (This is the Goldman and Yang 1994 / Muse and Gaut 1994 style).
+    * These models assume $\omega$ is constant across all contexts (i.e., the effect of a non-synonymous change is scaled by the same $\omega$ regardless of the specific amino acids involved)[cite: 35].
+    * Transition probabilities over time $P(t)$ are calculated as $P(v) = e^{Qv}$ (where $v$ is branch length)[cite: 39].
+    * Site likelihoods $L_h$ are computed by summing over all possible ancestral codon states[cite: 40], and the total likelihood $L$ is the product of site likelihoods (or sum of log-likelihoods $l$)[cite: 43, 44].
+
+---
+**3. Bridging Timescales: The MutSel Framework (Slides 19-21, 46):**
+* The "MutSel framework" (Mutation-Selection models) attempts to bridge the population genetic (mechanistic) and macroevolutionary (phenomenological) scales.
+* It defines the substitution rate $A_{ij}^h$ based on mutation rates $\mu_{ij}$ and scaled selection coefficients $S_{ij}^h = N_e s_{ij}^h$ (where $s_{ij}^h$ is the selection coefficient reflecting fitness differences $f_j^h - f_i^h$). Slide 20 gives the formula which includes Kimura's fixation probability.
+* **Two ways to reconcile:**
+    1.  **Map fitness to equilibrium codon frequencies (Sella and Hirsh 2005):** Site-specific fitness coefficients $f^h$ for each codon determine the expected stationary codon frequencies $\pi^h$ at that site[cite: 47, 49].
+    2.  **Expected index of selection intensity (Jones et al. 2016):** The site-specific $d_N^h/d_S^h$ can be calculated from the MutSel rate matrix by comparing the expected rate of evolution with selection to the expected rate by drift alone[cite: 47, 50]. The $d_N/d_S = \omega$ of phenomenological models (like M0) is an analogue of this $dN/dS$ under the MutSel framework.
+
+---
+**4. Three Positive Selection Scenarios (Slides 24-48):**
+The slides discuss how $\omega > 1$ (often interpreted as positive selection) can arise.
+
+* **Scenario 1: Frequency-Dependent Selection (Slides 26-30)**
+    * Arises from antagonistic co-evolution (host-pathogen, sexual conflict, molecular interactions)[cite: 54].
+    * The fitness landscape is *dynamic*: the fitness of an amino acid changes depending on the context (e.g., frequency of other alleles or interacting partners).
+    * A simplified model where one amino acid at a site has fitness $f^h$ and all others have $f^h + S^h$, and these values swap upon substitution, can surprisingly result in the same $Q$ matrix structure as the phenomenological M0 model[cite: 56, 58].
+    * Conclusion: Phenomenological codon models (like M0) implicitly assume a form of frequency-dependent selection when $\omega > 1$[cite: 59, 60].
+
+* **Scenario 2: Episodic Adaptation (Adaptive Peak Shift) (Slides 26, 31-36)**
+    * Occurs due to exploitation of a new niche, lateral gene transfer, or gene duplication, leading to a shift in the fitness landscape[cite: 61].
+    * The fitness peak itself moves. Initially, the population is sub-optimal in the new environment, and selection drives it towards the new peak (a non-stationary process)[cite: 63, 64].
+    * The MutSel-ES (Episodic Selection) model tries to capture this.
+    * Conclusion: Episodic models "work" because $\omega > 1$ can be a consequence of the system moving towards a new fitness peak; they are sensitive to this non-stationary behavior. The estimated $\omega$ can be biased over short branches if the process is non-stationary[cite: 70, 71].
+
+* **Scenario 3: Non-Adaptive Shifting Balance (Movement around a Stationary Peak) (Slides 26, 37-48)**
+    * The fitness landscape (peak) is *static*, but mutation and drift can move a population off the fitness peak to less fit states[cite: 72, 74].
+    * Selection then acts to "repair" these shifts, pushing the population back towards the peak[cite: 75, 76, 40]. This involves positive selection without necessarily leading to adaptation beyond maintaining the current function.
+    * This is related to the "fixed drift load"[cite: 77].
+    * The $d_N^h/d_S^h$ ratio can vary depending on the current amino acid at the site. Even with purifying selection acting most of the time to maintain a site near its fitness peak, occasional shifts away from the peak followed by selective "repair" can lead to observed $d_N/d_S > 1$ for certain amino acid states when they are rare (i.e., when the site is "in the tail" of its fitness landscape)[cite: 78, 80].
+    * Conclusion: Positive selection ($d_N/d_S > 1$) can operate even on a stationary fitness peak due to this shifting balance process, mimicking an adaptive peak shift in terms of $\omega$ values[cite: 78].
+    * **Heterotachy:** This process, where $d_N/d_S$ at a site can change depending on the incumbent amino acid (effectively switching between low $\omega_1$ "near the peak" and high $\omega_2$ "in the tail"), is a form of heterotachy (rate-switching)[cite: 81]. This can be modeled with covarion-like models[cite: 83, 84, 85, 86].
+
+---
+**5. Common Types of Phenomenological Codon Models (Slides 49-60):**
+These models are widely used to infer selection.
+* **M0 Model (Goldman & Yang 1994; Muse & Gaut 1994):** Assumes one $\omega$ for all sites and all branches[cite: 92, 93, 94].
+* **Branch Models:** Allow $\omega$ to vary among different branches of the tree (useful for detecting episodic adaptation on specific lineages)[cite: 95, 97, 98, 99, 100].
+* **Site Models:** Allow $\omega$ to vary among codon sites within the alignment (useful for detecting sites under selection across the tree)[cite: 96, 101, 102, 103, 104, 105, 106].
+    * E.g., M3 (discrete model) allows sites to fall into several pre-defined $\omega$ categories (e.g., $\omega_0=0.01, \omega_1=1.0, \omega_2=2.0$) with certain proportions[cite: 106].
+* **Branch-Site Models:** Combine features, allowing $\omega$ to vary among sites and also differently on pre-specified "foreground" branches versus "background" branches[cite: 108, 109, 110, 111, 112].
+    * Can detect positive selection affecting only a few sites on specific lineages.
+    * However, branch-site models cannot distinguish between episodic adaptive evolution for a novel function and non-adaptive shifting balance on a fixed peak without external information[cite: 114].
+
+---
+**6. "Bells -n- Whistles" - More Complex Codon Models (Slides 61-63):**
+The presentation lists further complexities that can be, or have been, incorporated into codon models, such as:
+* Alternative models for codon frequencies (the $\pi$'s are important).
+* Modeling the GTR process at the DNA level.
+* Among-site synonymous rate ($d_S$) variation (important for some genes).
+* Double and triple nucleotide changes within codons.
+* Amino acid exchangeabilities (e.g., from protein models, though can be confounded with codon frequencies via fitness).
+* Multi-process variation among sites (questioning if this much complexity is always desired).
+* Multi-pattern (tree) variation among sites (e.g., due to recombination).
+The question is posed: "Is adding more 'bells -n- whistles' the way forward?"[cite: 120].
+
+---
+**7. Phenotype-Genotype Codon Models (PhyloG2P) (Slides 64-70):**
+* This section introduces an approach to link genomic evolution to phenotypic changes, leveraging phylogenies ("Phylogenetics is the New Genetics")[cite: 123].
+* Traditional genetics often requires segregating populations or lab crosses, which isn't feasible for many species or deep evolutionary traits[cite: 129, 130, 131, 132, 133, 134, 135, 136].
+* Phylogenetic comparative methods can be applied to genomic data.
+* **Phenotype + Genotype Models:** Several models are cited that explicitly link phenotypic trait evolution with rates or patterns of molecular (DNA or codon) evolution[cite: 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153].
+* **Jones et al. (2020) Phenotype-Genotype (P-G) Codon Model:**
+    * Builds on the idea of heterotachy and covarion models for $d_N/d_S$ (where sites can switch between evolutionary regimes, e.g., $\omega_1$ low "near peak" and $\omega_2$ high "in tail")[cite: 154, 155, 156].
+    * The P-G model links the $d_N/d_S$ (or the switching process between $\omega$ states) to observed changes in a phenotype mapped onto the tree[cite: 157, 158, 164, 165].
+    * A null model assumes $d_N/d_S$ evolution is independent of phenotype, while the P-G model allows gene evolution (specifically $d_N/d_S$ state) to depend on phenotypic changes.
+    * This allows for detecting adaptive molecular evolution linked to phenotypic shifts, possibly without requiring $d_N/d_S > 1$ globally.
+
+---
+This summary covers the main theoretical concepts, model types, and inferential approaches discussed in the presentation regarding codon substitution models and the analysis of natural selection.
+
+
+
+
+
+
+- double & triple nucleotide changes is confounded with heterotachy:[Phenomenological Load on Model Parameters Can Lead to False Biological Conclusions](https://academic.oup.com/mbe/article/35/6/1473/4955390)
+
+- [A New Comparative Framework for Estimating Selection on Synonymous Substitutions](https://academic.oup.com/mbe/article/42/4/msaf068/8092905)
+
+
+## Adaptive protein evolution: Introduction - Belinda Chang
+
+These slides, by Belinda Chang, provide an introduction to **adaptive protein evolution**, focusing on how comparative sequence and structural analyses, combined with experimental approaches like ancestral protein reconstruction, can be used to understand shifts in protein function and the underlying selective pressures.
+
+---
+## Key Concepts:
+
+**1. Motivation and Tools (Slides 2-9):**
+* The central questions are: How do protein sequences evolve, and can we identify patterns of selection associated with adaptive functional shifts and their mechanisms? [cite: 2]
+* The rapid accumulation of sequence data (from GenBank and whole-genome sequencing [cite: 5]) and protein structures (from PDB [cite: 12]) provides vast amounts of data for these investigations.
+* **Comparative sequence analysis** using phylogenetically based methods is key. This involves:
+    * Models of evolution (nucleotide, amino acid, codon)[cite: 7].
+    * Hypothesis testing regarding theories of selection[cite: 7].
+    * Using $dN/dS$ (the ratio of non-synonymous to synonymous substitution rates) as a measure of selection strength[cite: 7].
+* Codon models have become increasingly popular for testing hypotheses about *when*, *which*, and *why* selection occurred, and on *which regions* of a protein[cite: 9, 10]. The $Q$ matrix for codon models incorporates parameters like codon frequencies ($\pi_j$), transition/transversion ratio ($\kappa$), and the $dN/dS$ ratio ($\omega$)[cite: 4, 11].
+
+**2. Protein Structure and Functional Shifts (Slides 10-26):**
+* The number of known protein structures is also rapidly increasing, driven by high-throughput crystallography and advances in methods like cryo-electron microscopy (cryo-EM)[cite: 12, 13, 19, 25].
+* Examples of proteins whose structures are important for understanding function and adaptation include:
+    * G protein-coupled receptors (GPCRs), which undergo conformational changes upon activation[cite: 14, 15].
+    * Large transmembrane proteins like FecA (a bacterial ion transporter)[cite: 16, 17].
+    * Huge macromolecular assemblies like the nuclear pore complex[cite: 18].
+* **Experimental Methods for Studying Proteins:**
+    * **In vitro protein expression** (using bacteria, yeast, insect, or mammalian cells) is crucial for obtaining large amounts of protein for functional and structural studies, and allows for site-directed mutagenesis to test evolutionary hypotheses[cite: 20, 21, 22].
+    * **Structure determination methods:**
+        * X-ray crystallography (can have issues with flexibility, crystallization conditions)[cite: 23].
+        * NMR spectroscopy (good for solution-state and flexible proteins, but limited to smaller proteins)[cite: 24].
+        * Cryo-electron microscopy (high resolution for larger complexes in a native-like state)[cite: 25].
+    * **Protein structure prediction:** Homology modeling (e.g., MODELLER, Rosetta, SWISS-MODEL) and machine learning approaches (e.g., AlphaFold) are used, especially when experimental structures are unavailable or to predict structures *ab initio*[cite: 26, 28, 29]. The "twilight zone" refers to sequence identity ranges where homology modeling becomes less reliable[cite: 26].
+
+**3. Phylogenetic Approaches to Protein Structure and Function (Slides 27-28):**
+* **Key Methods:**
+    * **Ancestral protein reconstruction:** Inferring ancient protein sequences and then "resurrecting" them experimentally to study their properties.
+    * **Computational analyses of selection ($dN/dS$)**: Identifying sites or lineages under positive or purifying selection.
+* The power lies in **combining computational analyses with experimental approaches** to test evolutionary hypotheses[cite: 31].
+
+**4. Ancestral Protein Reconstruction (APR) (Slides 29-39):**
+* **Process (Thornton, 2004)[cite: 34]:**
+    1.  Infer a phylogenetic tree and evolutionary model from aligned extant sequences.
+    2.  Reconstruct the ancestral protein sequence at a node of interest using ML or Bayesian methods (often a single point estimate with the highest probability)[cite: 33].
+    3.  Synthesize the gene for the ancestral protein (e.g., by stepwise PCR from oligonucleotides).
+    4.  Subclone the gene, transform cells, and express the ancestral protein.
+    5.  Purify and characterize its function (e.g., enzyme activity, ligand binding).
+* **Considerations and Assessing Robustness[cite: 36, 38]:**
+    * Most studies use a single, highest-probability ancestral sequence.
+    * Potential issues: violations of model assumptions (e.g., shifts in equilibrium frequencies), uncertainty in tree topology, statistical bias towards states with high equilibrium frequencies (which might bias towards more stable proteins).
+    * To assess robustness: consider alternate topologies/models, sample alternative ancestors from the posterior distribution, or sample "near-ancestor" sequences.
+    * Uncertainty in the reconstructed genotype does not always mean uncertainty in the phenotype (function)[cite: 38]. Experimental data is needed.
+* **Example: Uricase Evolution in Primates (Kratzer et al., 2014)[cite: 40, 41, 43, 44, 45, 46]:**
+    * Uricase metabolizes uric acid; its loss in humans and some other primates is linked to diseases like gout.
+    * APR was used to resurrect ancient primate uricases to determine when and how function was lost.
+    * The study traced a gradual decline in uricase activity through primate evolution, with inactivating mutations identified at specific codons.
+    * This addresses questions like "Thrifty genes vs. drifty genes" for the loss of function[cite: 47].
+* **Example: Paleoenvironments (EF-Tu thermostability) (Gaucher et al., 2008)[cite: 49, 50, 51, 53]:**
+    * Resurrected Elongation Factor Tu (EF-Tu) proteins from ancestral bacteria and archaea were used to infer ancient environmental temperatures.
+    * The thermostability ($T_m$) of modern EF-Tu correlates with the organism's growth temperature.
+    * By measuring the $T_m$ of resurrected ancestral EF-Tu proteins (expressed in *E. coli*), researchers inferred that early bacterial ancestors were likely thermophilic (living at 60-80°C). The posterior distribution of ancestral $T_m$ values can be obtained by sampling from the posterior distribution of ancestral sequences.
+
+**5. Rhodopsin Evolution and Nocturnality in Early Mammals (Slides 41-44):**
+* This section discusses investigating the hypothesis that early mammals lived in a nocturnal niche, which might have led to adaptive changes in rod photoreceptors (rhodopsin) for dim-light vision.
+* **Methodology:**
+    * Ancestral rhodopsin sequences (Amniote, Mammalian, Therian) were reconstructed and expressed *in vitro*.
+    * Spectroscopic assays measured rhodopsin spectral tuning ($\lambda_{MAX}$) and the lifetime of the activated state ($t_{1/2}$), which relates to signal shut-off kinetics.
+* **Findings (Bickelmann et al., 2015)[cite: 57, 60]:** An increased lifetime ($t_{1/2}$) of activated rhodopsin was found in reconstructed mammalian and therian ancestors compared to the general amniote ancestor, suggesting adaptations for enhanced sensitivity in dim light.
+
+**6. Glutamate Receptors (GPCRs) (Slides 45-48):**
+* Briefly introduces metabotropic glutamate receptors (mGluRs) and other G protein-coupled receptors (GPCRs) involved in synaptic neurotransmission[cite: 62].
+* Shows an example of reconstructed ancestral amino-acid-binding GPCRs (Kuang et al., 2006) to study the evolution of ligand binding and potency of different agonists[cite: 63, 66].
+
+**7. Coral Pigments (GFP-like proteins) (Slides 49-50):**
+* Illustrates using APR to study the evolution of fluorescent proteins in corals (e.g., great star coral, Ugalde et al., 2004)[cite: 68]. By reconstructing ancestral proteins, researchers can trace the spectral shifts (e.g., from green to red) and understand the molecular basis of color diversification.
+
+**8. Conclusions on Ancestral Reconstruction (Slide 52):**
+* APR offers a window into past adaptive shifts in protein function.
+* Computational analyses generate hypotheses testable by experiment.
+* Experimental approaches extend the hypothesis-testing framework for molecular evolution.
+* Emphasizes the need for more interaction between computational and experimental methods.
+
+This summary captures the main flow and key examples from Belinda Chang's presentation on adaptive protein evolution.
+
+## Adaptive protein evolution: Detecting changes in selection - Belinda Chang
+
+Okay, here's a summary of the "BChang_WH_2_2024_compressed_updated.pdf" slides by Belinda Chang, focusing on "Adaptive protein evolution: Detecting changes in selection."
+
+---
+## Adaptive Protein Evolution: Detecting Changes in Selection - Summary
+
+**1. Core Goal: Combining Computational and Experimental Approaches (Slides 2, 4-10)**
+* The presentation emphasizes that understanding adaptive protein evolution requires integrating **computational analyses of selection** (primarily using $dN/dS$ or $\omega$ from codon models) with **experimental studies** of protein function.
+* **Computational analyses** (phylogenetic, codon models) can:
+    * Statistically test for positive ($\omega > 1$) or divergent selection.
+    * Identify specific amino acid sites or regions that may have been targets of selection.
+    * Formulate hypotheses about when, where, and which proteins/regions were selected.
+    * **Limitation:** Computational results alone do NOT prove adaptive evolution; functional validation is needed.
+* **Experimental studies** (e.g., ancestral reconstruction, site-directed mutagenesis, functional assays) can:
+    * Empirically test for shifts in protein function due to specific substitutions.
+    * **Limitation:** Functional changes alone do NOT prove selection or adaptation without an evolutionary context.
+* **Synergy:** Taken together, these approaches can provide strong evidence for adaptive evolution in protein function driven by natural selection. A general workflow involves formulating a selection hypothesis, collecting sequences, using codon models to test for selection and identify sites, forming functional hypotheses, and then experimentally testing these (slides 6-7).
+* **A Priori Information (Slide 10):** Using existing knowledge about protein function is crucial for formulating specific and testable hypotheses.
+
+---
+**2. Examples of Positive Selection Studies (Slide 11-14):**
+The slides highlight several areas where positive selection has been experimentally investigated:
+* **Host-viral arms races:**
+    * Primate TRIM5$\alpha$, Protein Kinase R (PKR)[cite: 16, 19, 21].
+    * Potato virus Y.
+    * Neutrophil-mediated responses.
+* **Sperm-egg recognition:** Abalone lysin.
+* **Sensory proteins:** Visual pigments in various vertebrates.
+* **Transcription factors in development:** Stem cell pluripotency.
+
+**Case Study: Primate Protein Kinase R (PKR) vs. Viral K3L (Slides 12-15)**
+* PKR is an antiviral protein; viral proteins like K3L try to mimic its substrate (eIF2$\alpha$) to evade it.
+* Phylogenetic analysis shows PKR evolving rapidly ($dN/dS > 1$) in primates, while eIF2$\alpha$ is highly conserved. Viral K3L also shows evidence of rapid evolution ($dN/dS > 1$).
+* Sites under positive selection in PKR are identified, particularly in the kinase domain, including regions that interact with viral antagonists or eIF2$\alpha$.
+* Experimental work (yeast growth assays) demonstrated that specific, positively selected residues (e.g., F394L in gibbon PKR) are crucial for resistance to viral K3L, confirming an adaptive arms race.
+
+---
+**3. Codon Models for Detecting Varying Selection Pressures (Slides 3, 16-18, 21-23):**
+* **$dN/dS$ ($\omega$) as a measure:**
+    * $\omega < 1$: Purifying selection (amino acid changes are deleterious).
+    * $\omega = 1$: Neutral evolution.
+    * $\omega > 1$: Positive (diversifying) selection (amino acid changes are favored).
+* **Beyond Random Sites Models - Clade Models (e.g., CmC by Bielawski & Yang 2004):**
+    * These models allow the form and strength of selection ($\omega$) to vary across both the phylogeny (different clades/lineages) and among sites within the protein.
+    * **Clade Model C (CmC)**, for example, allows sites to be in categories like:
+        1.  Always under purifying selection ($0 < \omega_0 < 1$) across the tree.
+        2.  Always evolving neutrally ($\omega_1 = 1$) across the tree.
+        3.  Evolving under **divergent selection** ($\omega_2 \neq \omega_3$) between pre-specified foreground and background clades.
+    * An improved null model (M2a_rel by Weadick & Chang 2012) is mentioned for testing divergent selection, where the third site class estimates a single $\omega$ across all branches.
+* **Case Study: Neotropical Cichlid Rhodopsin (Hauser et al. 2017) (Slides 20-27):**
+    * **Hypothesis:** Adaptation of rhodopsin (visual pigment) during the invasion of different light environments in Central and South America by cichlid fish.
+    * Clade models were used to test for divergent selection in rhodopsin associated with geography (Central vs. South America) and ecology (lacustrine vs. riverine).
+    * Strong evidence was found for accelerated rhodopsin divergence ($\omega = 14.0$ for 3.4% of sites) in the Central American cichlid lineage compared to the background South American lineage ($\omega = 4.5$).
+    * Site 83 was identified as under positive selection and showed independent N83D substitutions in Central American lineages.
+    * **Experimental follow-up:** *In vitro* expression and spectroscopic assays of rhodopsin variants showed that the N83D mutation (found in Central American fish) significantly altered rhodopsin function (faster retinal release kinetics, $t_{1/2}$), suggesting adaptation to increased light levels in clearer Central American streams.
+
+---
+**4. Integrating Ancestral Reconstruction with Selection Analyses (Slides 28-39):**
+* **Case Study: Rhodopsin in Marine-Derived Amazonian Anchovies (Van Nynatten et al. 2015, 2021):**
+    * **Hypothesis:** Adaptive evolution in rhodopsin during freshwater invasion.
+    * **Computational analysis:** Increased $dN/dS$ was found in the rhodopsin of the freshwater anchovy clade compared to marine relatives (and compared to non-visual control genes). Positively selected sites were often located in or near the retinal binding pocket.
+    * **Ancestral Reconstruction & Experiment:**
+        * Ancestral marine and freshwater rhodopsins were reconstructed.
+        * Spectroscopic assays showed that the resurrected freshwater ancestral rhodopsin had a **red-shifted spectral sensitivity** ($\lambda_{max}$ from 496nm to 504nm) compared to the marine ancestor, matching the red-shifted light environment of many Amazonian rivers.
+        * Freshwater variants also showed **faster dark adaptation kinetics** (retinal release rate), which might be advantageous in freshwater environments with a high dynamic range of light intensities.
+
+---
+**5. Future Directions: High-Throughput Functional Studies (Slides 40-43):**
+* **Deep Scanning Mutagenesis:** Experimental approaches to create and test large libraries of protein variants.
+* **Example: High-throughput rhodopsin variant libraries:**
+    * Random mutagenesis of a rhodopsin gene.
+    * Transformation into yeast, followed by selection or screening based on function (e.g., light-dependent signaling pathway activation linked to GFP expression).
+    * Sequencing to identify which mutations lead to gain, loss, or neutral changes in function.
+    * This allows mapping of fitness landscapes and understanding the effects of many mutations simultaneously.
+
+---
+This summary focuses on how codon models are used to detect selection, the importance of combining these computational approaches with experimental validation (often involving ancestral protein reconstruction), and provides examples of how this integrated strategy can elucidate the mechanisms and functional consequences of adaptive protein evolution.
+
+## Tutorial
+
+
+# Day 8
+
+## Species Tree Estimation - Laura Kubatko
+
+- https://lkubatko.shinyapps.io/GeneTreeProbs/
+
+
+## Phylogenetic comparative models, MKn models - Rosana Zenil-Ferguson
+
+- The Q matrix have to sum to zero by each row, it is because the derivative of the probability row sum (1) at time $t$ is zero.
+- Hypothesis testing - Bayesian framework: calculating the difference between the posterior probabilities of two parameter, is cheaper, than do a model selection using Bayes factor.
+- [The Unsolved Challenge to Phylogenetic Correlation Tests for Categorical Characters](https://academic.oup.com/sysbio/article/64/1/127/2847997)
+- [Rethinking phylogenetic comparative methods](https://academic.oup.com/sysbio/article/67/6/1091/4985805)
+
+## State-dependent diversification models - Rosana Zenil-Ferguson
+
+- [CONFOUNDING ASYMMETRIES IN EVOLUTIONARY DIVERSIFICATION AND CHARACTER CHANGE](https://doi.org/10.1111/j.0014-3820.2006.tb00517.x)
+- [BiSSE author video](https://m.youtube.com/watch?v=rgtjowkiH3k)
+- [Exploring power and parameter estimation of the BiSSE method for analyzing species diversification](https://bmcecolevol.biomedcentral.com/articles/10.1186/1471-2148-13-38)
+
+# Day 9
+
+## Molecular evolution: gene trees and species trees - Anne D. Yoder
+
+- Highly recommended paper: [Gene Trees in Species Trees](https://academic.oup.com/sysbio/article/46/3/523/1651369)
+
+## Phylogenetic networks to study reticulate evolution - Claudia Solís-Lemus
+
+- A modified newick notation for networks, with the third colon indicating the parenthetical information about the reticulation events.
+- [Classes of explicit phylogenetic networks and their biological and mathematical significance](https://link.springer.com/article/10.1007/s00285-022-01746-y)
+- Figure 7 of [Inconsistency of Species Tree Methods under Gene Flow](https://academic.oup.com/sysbio/article/65/5/843/2223565)
+- [Bayesian inference of reassortment networks reveals fitness benefits of reassortment in human influenza viruses](https://www.pnas.org/doi/abs/10.1073/pnas.1918304117)
+- [Revealing reassortment in influenza A viruses with TreeSort](https://www.biorxiv.org/content/10.1101/2024.11.15.623781v1.full.pdf+html)
+- It happens when there is a vertical transmission between and ancestor and a descendant, this may suggest that you did not sample a extant species which is a descendant of the ancestor.
+- [Brownian Motion + weighted average in hybrid](https://academic.oup.com/sysbio/article/67/5/800/4985806)
+- RF-Net2
+- Phylo-network-rs? 
+- Conotribution to the Julia package?
+
+## Evolutionary applications of genomic data - L. Lacey Knowles
+
+- He et al. 2017. Inferring the geographic origin of a range expansion: latitudinal and longitudinal coordinates inferred from genomic data in an ABC framework with the program X-ORIGIN. Mol. Ecol. 26:6908-6920. DOI: 10.1111/mec.14380
+
+
+
+- Interaction between host immune response and viral evolution within host. Finer scale to the NC paper, logitutinal data, long read sequencing, host immune measurement, host RNA-seq.
+- Spatial evolution within host - differnt organs? / continous space evolution of the virus.
+
+- Population level immunity and viral evolution.
+- Climate change and viral evolution.
+- Co-evolution of host and virus, bats and coronaviruses?
