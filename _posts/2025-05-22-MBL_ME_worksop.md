@@ -965,11 +965,6 @@ int main(int argc, char* argv[] ) {
 
 ## Adaptive protein evolution: Detecting changes in selection - Belinda Chang
 
-Okay, here's a summary of the "BChang_WH_2_2024_compressed_updated.pdf" slides by Belinda Chang, focusing on "Adaptive protein evolution: Detecting changes in selection."
-
----
-## Adaptive Protein Evolution: Detecting Changes in Selection - Summary
-
 **1. Core Goal: Combining Computational and Experimental Approaches (Slides 2, 4-10)**
 * The presentation emphasizes that understanding adaptive protein evolution requires integrating **computational analyses of selection** (primarily using $dN/dS$ or $\omega$ from codon models) with **experimental studies** of protein function.
 * **Computational analyses** (phylogenetic, codon models) can:
