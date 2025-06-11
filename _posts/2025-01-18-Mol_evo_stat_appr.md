@@ -1178,7 +1178,76 @@ This chapter introduces Bayesian statistics, contrasting it with the classical F
     *   Posterior mean $E(\theta\vert x) = 0.10213$. Mode $0.10092$.
     *   95% Equal-tail CI: $(0.08191, 0.12463)$.
     *   95% HPD Interval: $(0.08116, 0.12377)$.
-    *   Similar to likelihood interval $(0.0817, 0.1245)$. Posterior dominated by likelihood here. (Fig 6.3)
+    ```r
+    ###############################################################
+    ##  JC69 distance (θ) – Bayesian and Classical inference
+    ##  Data: x = 90 differences, n = 948 sites (human vs. orang-utan 12S rRNA)
+    ###############################################################
+    library(HDInterval)
+    library(pracma)
+
+    n <- 948;  x <- 90
+    p_fun  <- function(theta) 0.75 - 0.75*exp(-4*theta/3)
+    logLik <- function(theta){
+        p <- p_fun(theta)
+        log(p^x * (1 - p)^(n - x))
+    }
+
+    mu_values <- c(0.01, 0.1, 1, 10)  # Four very different mu
+    grid <- seq(0, 0.25, length.out = 10001)
+
+    par(mfrow = c(2,2), mar = c(4,4,2,1))
+    for (mu in mu_values) {
+    prior   <- function(theta) (1/mu) * exp(-theta/mu)
+    log_u   <- log(prior(grid)) + logLik(grid)
+    u       <- exp(log_u - max(log_u))
+    post    <- u / sum(u)
+    post_mean <- sum(grid * post)
+    theta_samp <- sample(grid, 5e5, replace = TRUE, prob = post)
+    HPD  <- hdi(theta_samp, credMass = 0.95)
+    
+    dens_post <- post / diff(grid[1:2])
+    dens_prior<- prior(grid); dens_prior <- dens_prior/ trapz(grid, dens_prior)
+    lik       <- exp(logLik(grid)); lik  <- lik / trapz(grid, lik)
+    
+    # MLE and profile likelihood CI
+    loglik_vals <- logLik(grid)
+    mle_idx <- which.max(loglik_vals)
+    mle_theta <- grid[mle_idx]
+    cutoff <- max(loglik_vals) - 0.5 * qchisq(0.95, df = 1)
+    ci_idx <- which(loglik_vals >= cutoff)
+    ci_theta <- range(grid[ci_idx])
+    
+    plot(grid, dens_post, type = "l", lwd = 2,
+        ylab = "Density", xlab = expression(theta),
+        main = bquote(mu == .(mu)))
+    lines(grid, dens_prior, lty = 2, col = "red", lwd = 2)
+    lines(grid, lik, lty = 3, col = "darkgreen", lwd = 2)
+    abline(v = post_mean, col = "blue", lwd = 2)
+    polygon(x = c(HPD[1], HPD[2], HPD[2], HPD[1]),
+            y = c(0,0,max(dens_post),max(dens_post)),
+            col = adjustcolor("blue",0.15), border = NA)
+    # Add MLE and profile likelihood CI
+    abline(v = mle_theta, col = "purple", lwd = 2, lty = 2)
+    polygon(x = c(ci_theta[1], ci_theta[2], ci_theta[2], ci_theta[1]),
+            y = c(0,0,max(dens_post),max(dens_post)),
+            col = adjustcolor("purple",0.15), border = NA)
+    legend("topright",
+            c("Posterior","Prior","Likelihood",
+            "Posterior mean","95% HPD",
+            "MLE","95% Profile Likelihood CI"),
+            lty = c(1,2,3,1, NA, 2, NA),
+            lwd = c(2,2,2,2, NA, 2, NA),
+            pch = c(NA,NA,NA,NA, 15, NA, 15),
+            col = c("black","red","darkgreen","blue",
+                    adjustcolor("blue",0.4),
+                    "purple", adjustcolor("purple",0.4)),
+            pt.cex = 1.2, bty = "n")
+    }
+    par(mfrow = c(1,1))
+
+    ```
+    ![alt text](/files/MESA/example_6.4.png)
 
 ### *6.2.3 Classical versus Bayesian Statistics
 *   **6.2.3.1 Criticisms of Frequentist Statistics (from Bayesian perspective):**
