@@ -965,80 +965,43 @@ int main(int argc, char* argv[] ) {
 
 ## Adaptive protein evolution: Detecting changes in selection - Belinda Chang
 
-**1. Core Goal: Combining Computational and Experimental Approaches (Slides 2, 4-10)**
-* The presentation emphasizes that understanding adaptive protein evolution requires integrating **computational analyses of selection** (primarily using $dN/dS$ or $\omega$ from codon models) with **experimental studies** of protein function.
-* **Computational analyses** (phylogenetic, codon models) can:
-    * Statistically test for positive ($\omega > 1$) or divergent selection.
-    * Identify specific amino acid sites or regions that may have been targets of selection.
-    * Formulate hypotheses about when, where, and which proteins/regions were selected.
-    * **Limitation:** Computational results alone do NOT prove adaptive evolution; functional validation is needed.
-* **Experimental studies** (e.g., ancestral reconstruction, site-directed mutagenesis, functional assays) can:
-    * Empirically test for shifts in protein function due to specific substitutions.
-    * **Limitation:** Functional changes alone do NOT prove selection or adaptation without an evolutionary context.
-* **Synergy:** Taken together, these approaches can provide strong evidence for adaptive evolution in protein function driven by natural selection. A general workflow involves formulating a selection hypothesis, collecting sequences, using codon models to test for selection and identify sites, forming functional hypotheses, and then experimentally testing these (slides 6-7).
-* **A Priori Information (Slide 10):** Using existing knowledge about protein function is crucial for formulating specific and testable hypotheses.
-
----
-**2. Examples of Positive Selection Studies (Slide 11-14):**
-The slides highlight several areas where positive selection has been experimentally investigated:
-* **Host-viral arms races:**
-    * Primate TRIM5$\alpha$, Protein Kinase R (PKR)[cite: 16, 19, 21].
+- Examples of Positive Selection Studies:
+  * **Host-viral arms races:**
+    * Primate TRIM5$\alpha$, Protein Kinase R (PKR).
     * Potato virus Y.
     * Neutrophil-mediated responses.
-* **Sperm-egg recognition:** Abalone lysin.
-* **Sensory proteins:** Visual pigments in various vertebrates.
-* **Transcription factors in development:** Stem cell pluripotency.
+  * **Sperm-egg recognition:** Abalone lysin.
+  * **Sensory proteins:** Visual pigments in various vertebrates.
+  * **Transcription factors in development:** Stem cell pluripotency.
+- Case Study: Primate Protein Kinase R (PKR) vs. Viral K3L:
+  * PKR is an antiviral protein; viral proteins like K3L try to mimic its substrate (eIF2$\alpha$) to evade it.
+  * Phylogenetic analysis shows PKR evolving rapidly ($dN/dS > 1$) in primates, while eIF2$\alpha$ is highly conserved. Viral K3L also shows evidence of rapid evolution ($dN/dS > 1$).
+  * Sites under positive selection in PKR are identified, particularly in the kinase domain, including regions that interact with viral antagonists or eIF2$\alpha$.
+  * Experimental work (yeast growth assays) demonstrated that specific, positively selected residues (e.g., F394L in gibbon PKR) are crucial for resistance to viral K3L, confirming an adaptive arms race.
 
-**Case Study: Primate Protein Kinase R (PKR) vs. Viral K3L (Slides 12-15)**
-* PKR is an antiviral protein; viral proteins like K3L try to mimic its substrate (eIF2$\alpha$) to evade it.
-* Phylogenetic analysis shows PKR evolving rapidly ($dN/dS > 1$) in primates, while eIF2$\alpha$ is highly conserved. Viral K3L also shows evidence of rapid evolution ($dN/dS > 1$).
-* Sites under positive selection in PKR are identified, particularly in the kinase domain, including regions that interact with viral antagonists or eIF2$\alpha$.
-* Experimental work (yeast growth assays) demonstrated that specific, positively selected residues (e.g., F394L in gibbon PKR) are crucial for resistance to viral K3L, confirming an adaptive arms race.
-
----
-**3. Codon Models for Detecting Varying Selection Pressures (Slides 3, 16-18, 21-23):**
-* **$dN/dS$ ($\omega$) as a measure:**
-    * $\omega < 1$: Purifying selection (amino acid changes are deleterious).
-    * $\omega = 1$: Neutral evolution.
-    * $\omega > 1$: Positive (diversifying) selection (amino acid changes are favored).
 * **Beyond Random Sites Models - Clade Models (e.g., CmC by Bielawski & Yang 2004):**
-    * These models allow the form and strength of selection ($\omega$) to vary across both the phylogeny (different clades/lineages) and among sites within the protein.
-    * **Clade Model C (CmC)**, for example, allows sites to be in categories like:
-        1.  Always under purifying selection ($0 < \omega_0 < 1$) across the tree.
-        2.  Always evolving neutrally ($\omega_1 = 1$) across the tree.
-        3.  Evolving under **divergent selection** ($\omega_2 \neq \omega_3$) between pre-specified foreground and background clades.
-    * An improved null model (M2a_rel by Weadick & Chang 2012) is mentioned for testing divergent selection, where the third site class estimates a single $\omega$ across all branches.
-* **Case Study: Neotropical Cichlid Rhodopsin (Hauser et al. 2017) (Slides 20-27):**
-    * **Hypothesis:** Adaptation of rhodopsin (visual pigment) during the invasion of different light environments in Central and South America by cichlid fish.
-    * Clade models were used to test for divergent selection in rhodopsin associated with geography (Central vs. South America) and ecology (lacustrine vs. riverine).
-    * Strong evidence was found for accelerated rhodopsin divergence ($\omega = 14.0$ for 3.4% of sites) in the Central American cichlid lineage compared to the background South American lineage ($\omega = 4.5$).
-    * Site 83 was identified as under positive selection and showed independent N83D substitutions in Central American lineages.
-    * **Experimental follow-up:** *In vitro* expression and spectroscopic assays of rhodopsin variants showed that the N83D mutation (found in Central American fish) significantly altered rhodopsin function (faster retinal release kinetics, $t_{1/2}$), suggesting adaptation to increased light levels in clearer Central American streams.
-
----
-**4. Integrating Ancestral Reconstruction with Selection Analyses (Slides 28-39):**
-* **Case Study: Rhodopsin in Marine-Derived Amazonian Anchovies (Van Nynatten et al. 2015, 2021):**
-    * **Hypothesis:** Adaptive evolution in rhodopsin during freshwater invasion.
-    * **Computational analysis:** Increased $dN/dS$ was found in the rhodopsin of the freshwater anchovy clade compared to marine relatives (and compared to non-visual control genes). Positively selected sites were often located in or near the retinal binding pocket.
-    * **Ancestral Reconstruction & Experiment:**
-        * Ancestral marine and freshwater rhodopsins were reconstructed.
-        * Spectroscopic assays showed that the resurrected freshwater ancestral rhodopsin had a **red-shifted spectral sensitivity** ($\lambda_{max}$ from 496nm to 504nm) compared to the marine ancestor, matching the red-shifted light environment of many Amazonian rivers.
-        * Freshwater variants also showed **faster dark adaptation kinetics** (retinal release rate), which might be advantageous in freshwater environments with a high dynamic range of light intensities.
-
----
-**5. Future Directions: High-Throughput Functional Studies (Slides 40-43):**
-* **Deep Scanning Mutagenesis:** Experimental approaches to create and test large libraries of protein variants.
-* **Example: High-throughput rhodopsin variant libraries:**
+  * These models allow the form and strength of selection ($\omega$) to vary across both the phylogeny (different clades/lineages) and among sites within the protein.
+  * **Clade Model C (CmC)**, for example, allows sites to be in categories like:
+    1.  Always under purifying selection ($0 < \omega_0 < 1$) across the tree.
+    2.  Always evolving neutrally ($\omega_1 = 1$) across the tree.
+    3.  Evolving under **divergent selection** ($\omega_2 \neq \omega_3$) between pre-specified foreground and background clades.
+  * An improved null model (M2a_rel by Weadick & Chang 2012) is mentioned for testing divergent selection, where the third site class estimates a single $\omega$ across all branches.
+* **Case Study: Neotropical Cichlid Rhodopsin (Hauser et al. 2017):**
+  * **Hypothesis:** Adaptation of rhodopsin (visual pigment) during the invasion of different light environments in Central and South America by cichlid fish.
+  * Clade models were used to test for divergent selection in rhodopsin associated with geography (Central vs. South America) and ecology (lacustrine vs. riverine).
+  * Strong evidence was found for accelerated rhodopsin divergence ($\omega = 14.0$ for 3.4% of sites) in the Central American cichlid lineage compared to the background South American lineage ($\omega = 4.5$).
+  * Site 83 was identified as under positive selection and showed independent N83D substitutions in Central American lineages.
+  * **Experimental follow-up:** *In vitro* expression and spectroscopic assays of rhodopsin variants showed that the N83D mutation (found in Central American fish) significantly altered rhodopsin function (faster retinal release kinetics, $t_{1/2}$), suggesting adaptation to increased light levels in clearer Central American streams.
+- Future Directions: High-Throughput Functional Studies：
+  * **Deep Scanning Mutagenesis:** Experimental approaches to create and test large libraries of protein variants.
+  * **Example: High-throughput rhodopsin variant libraries:**
     * Random mutagenesis of a rhodopsin gene.
     * Transformation into yeast, followed by selection or screening based on function (e.g., light-dependent signaling pathway activation linked to GFP expression).
     * Sequencing to identify which mutations lead to gain, loss, or neutral changes in function.
     * This allows mapping of fitness landscapes and understanding the effects of many mutations simultaneously.
 
----
-This summary focuses on how codon models are used to detect selection, the importance of combining these computational approaches with experimental validation (often involving ancestral protein reconstruction), and provides examples of how this integrated strategy can elucidate the mechanisms and functional consequences of adaptive protein evolution.
-
-## Tutorial
-
+## [Tutorial](http://awarnach.mathstat.dal.ca/~joeb/PAML_lab/lab.html)
+- Likelihood ratio test between models using PAML.
 
 # Day 8
 
