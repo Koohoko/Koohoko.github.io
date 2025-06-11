@@ -1178,6 +1178,7 @@ This chapter introduces Bayesian statistics, contrasting it with the classical F
     *   Posterior mean $E(\theta\vert x) = 0.10213$. Mode $0.10092$.
     *   95% Equal-tail CI: $(0.08191, 0.12463)$.
     *   95% HPD Interval: $(0.08116, 0.12377)$.
+    
     ```r
     ###############################################################
     ##  JC69 distance (θ) – Bayesian and Classical inference
