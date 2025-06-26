@@ -930,7 +930,7 @@ Criteria for judging methods include:
         *   MLEs are asymptotically consistent, unbiased, normally distributed, and attain this bound.
         *   **Relative Efficiency of Tree Reconstruction Methods:**
             *   $E_{21} = n_1(P)/n_2(P)$: Ratio of sample sizes needed by method 1 ($n_1$) and method 2 ($n_2$) to recover the true tree with the same probability $P$. (Eq 5.4)
-            *   Alternatively: $E^{*}_{21} = \frac{1 - P_{1}(n)}{1 - P_{2}(n)}$: Ratio of error rates for a given sample size $n$. Method 2 is more efficient if $E^*_{21} > 1$. (Eq 5.5)
+            *   Alternatively: $E^{\ast}_{21} = \frac{1 - P_{1}(n)}{1 - P_{2}(n)}$: Ratio of error rates for a given sample size $n$. Method 2 is more efficient if $E^*_{21} > 1$. (Eq 5.5)
     *   **5.1.1.4 Robustness:** A model-based method is robust if it performs well even when its assumptions are slightly violated.
 
 ### 5.1.2 Performance
@@ -1436,16 +1436,16 @@ Let $\theta$ take values $\{1, 2, 3\}$ with target probabilities $\pi_1, \pi_2, 
 *   For multi-parameter models $\theta = (x, y, z, \dots)$, updating all parameters simultaneously can be difficult or inefficient.
 *   **Single-Component MH:** Update parameters (or blocks of parameters) one at a time, conditioning on the current values of other parameters.
 *   **Iteration (3 blocks $x,y,z$):**
-    1.  Propose $x^{*}$ from $q(x^{*} \vert x, y, z)$. Accept with probability $\alpha_x$ based on $\frac{\pi(x^{*}, y, z)}{\pi(x, y, z)}$ and proposal ratio for $x$. Update $x \to x'$.
-    2.  Propose $y^{*}$ from $q(y^{*} \vert x', y, z)$. Accept with probability $\alpha_y$ based on $\frac{\pi(x', y^{*}, z)}{\pi(x', y, z)}$ and proposal ratio for $y$. Update $y \to y'$.
-    3.  Propose $z^{*}$ from $q(z^{*} \vert x', y', z)$. Accept with probability $\alpha_z$ based on $\frac{\pi(x', y', z^{*})}{\pi(x', y', z)}$ and proposal ratio for $z$. Update $z \to z''$.
+    1.  Propose $x^{\ast}$ from $q(x^{\ast} \vert x, y, z)$. Accept with probability $\alpha_x$ based on $\frac{\pi(x^{\ast}, y, z)}{\pi(x, y, z)}$ and proposal ratio for $x$. Update $x \to x'$.
+    2.  Propose $y^{\ast}$ from $q(y^{\ast} \vert x', y, z)$. Accept with probability $\alpha_y$ based on $\frac{\pi(x', y^{\ast}, z)}{\pi(x', y, z)}$ and proposal ratio for $y$. Update $y \to y'$.
+    3.  Propose $z^{\ast}$ from $q(z^{\ast} \vert x', y', z)$. Accept with probability $\alpha_z$ based on $\frac{\pi(x', y', z^{\ast})}{\pi(x', y', z)}$ and proposal ratio for $z$. Update $z \to z''$.
 *   The ratio of joint posteriors simplifies to the ratio of **full conditional distributions**. For step 2:
-    $\frac{\pi(x', y^{*}, z)}{\pi(x', y, z)} = \frac{\pi(y^{*} \vert x', z)}{\pi(y \vert x', z)}$ (Eq 7.16)
+    $\frac{\pi(x', y^{\ast}, z)}{\pi(x', y, z)} = \frac{\pi(y^{\ast} \vert x', z)}{\pi(y \vert x', z)}$ (Eq 7.16)
 *   Allows tailoring proposal mechanisms for different components. Advisable to block highly correlated parameters and update them together.
 
 ### 7.1.5 Gibbs Sampler
 *   A special case of single-component MH.
-*   To update a component (e.g., $y$), **propose directly from its full conditional distribution**: $q(y^{*} \vert x', y, z) = \pi(y^{*} \vert x', z)$.
+*   To update a component (e.g., $y$), **propose directly from its full conditional distribution**: $q(y^{\ast} \vert x', y, z) = \pi(y^{\ast} \vert x', z)$.
 *   This makes the acceptance ratio $\alpha = 1$ always (Eq 7.13-7.16). All proposals are accepted.
 *   Widely used in linear models where priors and likelihoods are normal, making full conditionals also normal and easy to sample from.
 *   Seldom used in phylogenetics as full conditionals are usually complex.
@@ -2880,23 +2880,23 @@ This chapter provides an introduction to computer simulation techniques, also kn
 *   **Simple Rejection (from Uniform Envelope, Fig 12.2a):**
     *   Assume $f(x)$ is defined on $(a,b)$ and $f(x) \le M$.
     *   **Algorithm 12.2:**
-        1. Generate $x^* \sim U(a,b)$ and $y^* \sim U(0,M)$. This samples a point $(x^*, y^*)$ uniformly from rectangle $[a,b] \times [0,M]$.
-        2. If $y^* < f(x^*)$ (point is under curve $f(x)$), accept $X=x^*$. Otherwise, reject and go to Step 1.
+        1. Generate $x^{\ast} \sim U(a,b)$ and $y^{\ast} \sim U(0,M)$. This samples a point $(x^{\ast}, y^{\ast})$ uniformly from rectangle $[a,b] \times [0,M]$.
+        2. If $y^{\ast} < f(x^{\ast})$ (point is under curve $f(x)$), accept $X=x^{\ast}$. Otherwise, reject and go to Step 1.
 *   **General Rejection (using Envelope Function $g(x)$, Fig 12.2b):**
     *   Need a "proposal" or "envelope" density $g(x)$ from which it's easy to sample.
     *   Need a constant $M$ such that $f(x)/g(x) \le M$ for all $x$ (i.e., $M g(x)$ encloses $f(x)$). (Eq 12.11)
     *   **Algorithm 12.3:**
-        1. Generate $x^* \sim g(x)$. Generate $u \sim U(0,1)$. Set $y^* = u M g(x^*)$. (This samples $(x^*, y^*)$ from under $M g(x)$).
-        2. If $y^* < f(x^*)$ (or equivalently, if $u < f(x^*)/(M g(x^*))$), accept $X=x^*$. Otherwise, reject and go to Step 1.
+        1. Generate $x^{\ast} \sim g(x)$. Generate $u \sim U(0,1)$. Set $y^{\ast} = u M g(x^{\ast})$. (This samples $(x^{\ast}, y^{\ast})$ from under $M g(x)$).
+        2. If $y^{\ast} < f(x^{\ast})$ (or equivalently, if $u < f(x^{\ast})/(M g(x^{\ast}))$), accept $X=x^{\ast}$. Otherwise, reject and go to Step 1.
     *   **Acceptance Probability:** $P_{accept} = 1/M$. (Eq 12.12). Want $M$ close to 1 (tight envelope).
 *   **Example: Generating $N(0,1)$ using Exponential Envelope:**
     *   Target $f(x) = \frac{2}{\sqrt{2\pi}} e^{-x^2/2}$ for $x \ge 0$ (absolute value of normal).
     *   Proposal $g(x) = e^{-x}$ for $x \ge 0$ (Exponential with mean 1).
     *   $M = \sqrt{2e/\pi} \approx 1.3155$. $P_{accept} = 1/M \approx 0.76$.
     *   **Algorithm 12.4 (Standard Normal):**
-        1. Generate $x^*$ from Exp(1) using $x^* = -\log u_1$. Generate $u_2 \sim U(0,1)$.
-        2. If $u_2 < e^{-(x^*-1)^2/2}$ (equivalent to $y^* < f(x^*)$ using Eq 12.15), accept $x^*$. Else go to 1.
-        3. Generate $u_3 \sim U(0,1)$. If $u_3 < 0.5$, set $X = -x^*$. Else $X=x^*$.
+        1. Generate $x^{\ast}$ from Exp(1) using $x^{\ast} = -\log u_1$. Generate $u_2 \sim U(0,1)$.
+        2. If $u_2 < e^{-(x^{\ast}-1)^2/2}$ (equivalent to $y^{\ast} < f(x^{\ast})$ using Eq 12.15), accept $x^{\ast}$. Else go to 1.
+        3. Generate $u_3 \sim U(0,1)$. If $u_3 < 0.5$, set $X = -x^{\ast}$. Else $X=x^{\ast}$.
 
 ### 12.4.4 Generation of a Standard Normal Variate using the Polar Method
 *   **Box-Muller Transform (Algorithm 12.5):**
