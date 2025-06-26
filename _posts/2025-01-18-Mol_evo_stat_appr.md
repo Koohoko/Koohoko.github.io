@@ -1436,16 +1436,16 @@ Let $\theta$ take values $\{1, 2, 3\}$ with target probabilities $\pi_1, \pi_2, 
 *   For multi-parameter models $\theta = (x, y, z, \dots)$, updating all parameters simultaneously can be difficult or inefficient.
 *   **Single-Component MH:** Update parameters (or blocks of parameters) one at a time, conditioning on the current values of other parameters.
 *   **Iteration (3 blocks $x,y,z$):**
-    1.  Propose $x^*$ from $q(x^*\vert x, y, z)$. Accept with probability $\alpha_x$ based on $\frac{\pi(x^*, y, z)}{\pi(x, y, z)}$ and proposal ratio for $x$. Update $x \to x'$.
-    2.  Propose $y^*$ from $q(y^*\vert x', y, z)$. Accept with probability $\alpha_y$ based on $\frac{\pi(x', y^*, z)}{\pi(x', y, z)}$ and proposal ratio for $y$. Update $y \to y'$.
-    3.  Propose $z^*$ from $q(z^*\vert x', y', z)$. Accept with probability $\alpha_z$ based on $\frac{\pi(x', y', z^*)}{\pi(x', y', z)}$ and proposal ratio for $z$. Update $z \to z''$.
+    1.  Propose $x^{*}$ from $q(x^{*} \vert x, y, z)$. Accept with probability $\alpha_x$ based on $\frac{\pi(x^{*}, y, z)}{\pi(x, y, z)}$ and proposal ratio for $x$. Update $x \to x'$.
+    2.  Propose $y^{*}$ from $q(y^{*} \vert x', y, z)$. Accept with probability $\alpha_y$ based on $\frac{\pi(x', y^{*}, z)}{\pi(x', y, z)}$ and proposal ratio for $y$. Update $y \to y'$.
+    3.  Propose $z^{*}$ from $q(z^{*} \vert x', y', z)$. Accept with probability $\alpha_z$ based on $\frac{\pi(x', y', z^{*})}{\pi(x', y', z)}$ and proposal ratio for $z$. Update $z \to z''$.
 *   The ratio of joint posteriors simplifies to the ratio of **full conditional distributions**. For step 2:
-    $\frac{\pi(x', y^*, z)}{\pi(x', y, z)} = \frac{\pi(y^*\vert x', z)}{\pi(y\vert x', z)}$ (Eq 7.16)
+    $\frac{\pi(x', y^{*}, z)}{\pi(x', y, z)} = \frac{\pi(y^{*} \vert x', z)}{\pi(y \vert x', z)}$ (Eq 7.16)
 *   Allows tailoring proposal mechanisms for different components. Advisable to block highly correlated parameters and update them together.
 
 ### 7.1.5 Gibbs Sampler
 *   A special case of single-component MH.
-*   To update a component (e.g., $y$), **propose directly from its full conditional distribution**: $q(y^*\vert x', y, z) = \pi(y^*\vert x', z)$.
+*   To update a component (e.g., $y$), **propose directly from its full conditional distribution**: $q(y^{*} \vert x', y, z) = \pi(y^{*} \vert x', z)$.
 *   This makes the acceptance ratio $\alpha = 1$ always (Eq 7.13-7.16). All proposals are accepted.
 *   Widely used in linear models where priors and likelihoods are normal, making full conditionals also normal and easy to sample from.
 *   Seldom used in phylogenetics as full conditionals are usually complex.
