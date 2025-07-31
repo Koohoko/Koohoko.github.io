@@ -1009,6 +1009,87 @@ int main(int argc, char* argv[] ) {
 
 - https://lkubatko.shinyapps.io/GeneTreeProbs/
 
+Here is a summary of the key concepts and methods from the lecture on Species Tree Inference, formatted as a set of course notes for future reference.
+
+### **Course Notes: Species Tree Inference**
+
+#### **1. Core Concepts: Phylogenetics and Population Genetics**
+
+* [cite_start]**Phylogenetics:** Uses genetic variation *between* different species or populations to infer their evolutionary relationships[cite: 2].
+* [cite_start]**Population Genetics:** Studies genetic variation *within* a single population[cite: 2].
+* [cite_start]**Coalescence Theory:** The theoretical bridge that links these two fields[cite: 3]. [cite_start]It models how gene lineages merge (coalesce) as you look back in time[cite: 3].
+
+#### **2. The Coalescent Model: The Engine of Inference**
+
+The coalescent process describes what happens to gene lineages within a single population as we trace them backward in time.
+
+* **The Coalescent Event:** The point at which two gene lineages merge into a common ancestor.
+* [cite_start]**Waiting Time:** The time until a coalescence event occurs follows an **exponential distribution**[cite: 6, 7].
+* **Rate of Coalescence ($$\lambda$$):** The speed at which lineages coalesce depends on two key factors:
+    1.  [cite_start]**Number of lineages ($$k$$):** More lineages lead to faster coalescence[cite: 6, 10].
+    2.  [cite_start]**Effective population size ($$N$$):** Larger populations lead to slower coalescence (it's harder for lineages to find each other)[cite: 6].
+* [cite_start]**The Rate Formula:** The rate of coalescence for $$k$$lineages is$$\lambda = \frac{\binom{k}{2}}{2N}$$[cite: 6].
+
+#### **3. The Multispecies Coalescent (MSC): Gene Trees vs. Species Trees**
+
+The MSC applies the coalescent model to a phylogenetic context, where populations are linked together in a species tree.
+
+* [cite_start]**Species Tree:** A phylogeny showing how species split from one another over time[cite: 12].
+* [cite_start]**Gene Tree:** The evolutionary history of a single gene, which evolves *within* the branches of the species tree[cite: 12].
+* [cite_start]**Coalescent History:** A specific mapping of the coalescent events for a gene onto the branches (ancestral populations) of the species tree[cite: 50, 51].
+    * Even when a gene tree's shape matches the species tree, there can be multiple valid histories. [cite_start]For an asymmetric 4-taxon tree, there are 5 such histories[cite: 50, 53].
+    * [cite_start]The total probability of a gene tree is the sum of the probabilities of all its possible histories[cite: 55].
+
+* **Incomplete Lineage Sorting (ILS):**
+    * [cite_start]Gene trees do not always match the species tree[cite: 16, 17].
+    * This discordance often arises when coalescence fails to occur in the ancestral population immediately preceding a speciation event. [cite_start]The lineages sort independently in the deeper ancestral population, sometimes leading to a conflicting topology[cite: 32].
+    * [cite_start]**Key takeaway:** Shorter time intervals between speciation events lead to more disagreement between gene and species trees[cite: 32].
+
+#### **4. The Problem with Concatenation**
+
+[cite_start]A common but flawed approach is to combine all gene sequences into one large dataset ("concatenation") and build a single tree[cite: 80]. [cite_start]This is problematic for three main reasons[cite: 86, 90, 94]:
+
+1.  [cite_start]**Statistical Inconsistency:** Concatenation can strongly support the wrong species tree, especially in the presence of high ILS[cite: 87, 91, 95].
+2.  [cite_start]**Inflated Support Values:** Bootstrap or posterior probability values for nodes become artificially high (e.g., 100%), giving false confidence in the relationships[cite: 91, 95].
+3.  [cite_start]**Overestimated Speciation Times:** The resulting branch lengths are often significant overestimates of the true speciation times[cite: 95].
+
+#### **5. Methods for Species Tree Inference under the MSC**
+
+Given the issues with concatenation, methods specifically designed to handle the MSC are necessary. They fall into three main categories:
+
+**A. Summary / Two-Step Methods**
+[cite_start]These methods first estimate individual gene trees and then summarize them to find the species tree[cite: 98].
+
+* [cite_start]**ASTRAL:** A popular summary method with a clear three-step process[cite: 102]:
+    1.  [cite_start]**Estimate Gene Trees:** Create a phylogenetic tree for each gene/locus independently[cite: 102].
+    2.  [cite_start]**Extract Quartets:** From the set of gene trees, extract all possible four-taxon relationships (quartets)[cite: 102, 104].
+    3.  [cite_start]**Find the Best Species Tree:** Find the species tree topology that "agrees" with the maximum number of quartets from the gene trees[cite: 102, 107].
+* [cite_start]**Key Features:** ASTRAL is statistically consistent (if gene trees are correct) and computationally efficient[cite: 113]. [cite_start]It can also estimate branch lengths and provides local posterior probabilities as a measure of node support[cite: 112].
+
+**B. Bayesian Co-estimation Methods**
+[cite_start]These methods avoid estimating gene trees in a separate step and instead co-estimate the gene trees and the species tree simultaneously in a single, fully model-based framework[cite: 99, 116].
+
+* [cite_start]**Software Examples:** StarBEAST, BPP[cite: 117, 118, 119].
+* [cite_start]**Strengths:** They are fully model-based and provide estimates for all model parameters (like population size) along with posterior probabilities for uncertainty[cite: 122].
+* [cite_start]**Challenges:** They are computationally very intensive, do not scale well to genome-sized data, and assessing convergence of the analysis can be difficult[cite: 122].
+
+**C. Site-Based Methods**
+[cite_start]These methods bypass the estimation of gene trees entirely and compute the likelihood of the species tree directly from the DNA sequence alignment[cite: 100].
+
+* **SVDQuartets:**
+    * [cite_start]**Basic Idea:** For any four taxa, site patterns from the DNA are arranged into a "flattening matrix"[cite: 134].
+    * [cite_start]**Inference:** Under the MSC, the matrix corresponding to the *true* species tree relationship will have a reduced mathematical rank (rank 10)[cite: 131]. [cite_start]The matrices for the two incorrect trees will have a full rank[cite: 132]. [cite_start]The method finds the tree topology whose matrix is closest to rank 10[cite: 134].
+    * [cite_start]**Features:** It is statistically consistent and scales well to large datasets[cite: 140].
+* **Composite Likelihood (CL):**
+    * [cite_start]**Idea:** Decompose a large species tree into all possible 4-taxon subsets[cite: 141]. [cite_start]Calculate the exact likelihood for each small subset and then multiply them together to get a composite likelihood for the full tree[cite: 141, 143].
+    * [cite_start]**Features:** This approach is computationally tractable while remaining model-based and having a strong theoretical foundation in statistics[cite: 144, 167].
+
+#### **6. Lessons from Empirical Data**
+
+* [cite_start]**Sistrurus Rattlesnakes:** Analysis of 19 genes showed that while most methods agreed on the major relationships, there was uncertainty in the fine-scale branching pattern[cite: 182, 183]. [cite_start]Concatenated analysis gave a highly supported tree but with severely biased (overestimated) speciation times[cite: 184].
+* [cite_start]**Canid Phylogeny:** A concatenated analysis of dog and wolf relatives produced very high support values[cite: 185]. [cite_start]However, species tree methods like StarBEAST and SVDQuartets revealed much lower (and likely more realistic) support for many of the same nodes, highlighting the overconfidence of concatenation[cite: 187].
+
+
 
 ## Phylogenetic comparative models, MKn models - Rosana Zenil-Ferguson
 
