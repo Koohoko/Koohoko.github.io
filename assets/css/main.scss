@@ -104,8 +104,9 @@ h1:before, .anchor:before {
     margin-top: .5em;
     margin-left: -.5em;
     color: white;
-    background-color: #00369f;
+    background-color: $primary-color;  /* Use primary blue */
     font-size: .8em;
+    border-radius: 4px;
 }
 
 .task-list {
@@ -137,14 +138,221 @@ pre {
   overflow-x: auto; /* existing style */
 }
 
+/* ============================================
+   COPY BUTTON STYLING
+   ============================================ */
 .copy-button {
   position: absolute;
   top: 0.5em;
   right: 0.5em;
-  padding: 0.25em 0.5em;
+  padding: 0.4em 0.8em;
   font-size: 0.75em;
-  background-color: #f5f5f5;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+  font-family: $sans-serif;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ddd;
+  border-radius: 4px;
   cursor: pointer;
+  opacity: 0;
+  transition: all 0.2s ease;
+  z-index: 10;
+  
+  i {
+    margin-right: 0.3em;
+  }
+  
+  &:hover {
+    background-color: $info-color;
+    color: white;
+    border-color: $info-color;
+  }
+  
+  &.copied {
+    background-color: $success-color;
+    color: white;
+    border-color: $success-color;
+  }
 }
+
+/* Show copy button on hover */
+div.highlighter-rouge:hover .copy-button,
+figure.highlight:hover .copy-button {
+  opacity: 1;
+}
+
+/* ============================================
+   COPY BUTTON STYLING
+   ============================================ */
+.copy-button {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  padding: 0.4em 0.8em;
+  font-size: 0.75em;
+  font-family: $sans-serif;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.2s ease;
+  z-index: 10;
+  
+  i {
+    margin-right: 0.3em;
+  }
+  
+  &:hover {
+    background-color: $info-color;
+    color: white;
+    border-color: $info-color;
+  }
+  
+  &.copied {
+    background-color: $success-color;
+    color: white;
+    border-color: $success-color;
+  }
+}
+
+/* Show copy button on hover */
+div.highlighter-rouge:hover .copy-button,
+figure.highlight:hover .copy-button {
+  opacity: 1;
+}
+
+/* ============================================
+   LINE NUMBERS STYLING
+   ============================================ */
+.line-number {
+  display: inline-block;
+  min-width: 2.5em;
+  padding-right: 1em;
+  margin-right: 1em;
+  text-align: right;
+  color: #999;
+  border-right: 1px solid #ddd;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Line numbers styling */
+.highlight .lineno {
+  color: #9ca3af;
+  padding-right: 1em;
+  border-right: 1px solid #e5e7eb;
+  margin-right: 1em;
+  user-select: none;
+}
+
+pre {
+  position: relative;
+  overflow-x: auto;
+}
+
+/* ============================================
+   PROFESSIONAL ENHANCEMENTS
+   ============================================ */
+
+/* Headings - subtle bottom border */
+.page__content h1 {
+  border-bottom: 2px solid $primary-color;
+  padding-bottom: 0.3em;
+}
+
+.page__content h2 {
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.2em;
+}
+
+/* Author name styling */
+.author__name {
+  color: $dark-gray;
+}
+
+/* Smooth transitions for interactive elements */
+a {
+  transition: color 0.2s ease;
+}
+
+/* Selection color */
+::selection {
+  background-color: rgba(26, 58, 52, 0.15);  /* Forest green tint */
+  color: inherit;
+}
+
+::-moz-selection {
+  background-color: rgba(26, 58, 52, 0.15);
+  color: inherit;
+}
+
+/* Blockquote styling */
+blockquote {
+  border-left: 4px solid #1a3a34;  /* Forest green */
+  background-color: #fafaf9;
+  padding: 1em 1.5em;
+  margin: 1.5em 0;
+  color: #292524;
+}
+
+/* Paper box hover effect */
+.paper-box {
+  transition: box-shadow 0.2s ease;
+}
+
+.paper-box:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* ============================================
+   DROPDOWN MENU STYLING
+   ============================================ */
+.masthead__menu-item.dropdown {
+  position: relative;
+  
+  .dropdown-arrow {
+    font-size: 0.7em;
+    margin-left: 0.2em;
+    opacity: 0.5;
+  }
+  
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 140px;
+    padding: 0.5em 0;
+    margin: 0;
+    list-style: none;
+    background-color: #fff;
+    border: 1px solid #d6d3d1;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    z-index: 100;
+    
+    li {
+      margin: 0;
+      
+      a {
+        display: block;
+        padding: 0.5em 1em;
+        color: #292524;
+        font-size: 0.9em;
+        text-decoration: none;
+        transition: background-color 0.15s ease;
+        
+        &:hover {
+          background-color: #f5f5f4;
+          color: #1a3a34;  /* Forest green */
+        }
+      }
+    }
+  }
+  
+  &:hover .dropdown-menu {
+    display: block;
+  }
+}
+

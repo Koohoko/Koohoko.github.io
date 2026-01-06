@@ -4,9 +4,19 @@
       <nav id="site-nav" class="greedy-nav">
         <button><div class="navicon"></div></button>
         <ul class="visible-links">
-          <li class="masthead__menu-item masthead__menu-item--lg masthead__menu-home-item"><a target="_self" href="/">Homepage</a></li>
           {% for link in site.data.navigation.main %}
-            <li class="masthead__menu-item"><a target="_self" href="{{ domain }}{{ link.url }}">{{ link.title }}</a></li>
+            {% if link.children %}
+              <li class="masthead__menu-item dropdown">
+                <a target="_self" href="{{ domain }}{{ link.url }}" class="dropdown-toggle">{{ link.title }} <span class="dropdown-arrow">▾</span></a>
+                <ul class="dropdown-menu">
+                  {% for child in link.children %}
+                    <li><a target="_self" href="{{ domain }}{{ child.url }}">{{ child.title }}</a></li>
+                  {% endfor %}
+                </ul>
+              </li>
+            {% else %}
+              <li class="masthead__menu-item"><a target="_self" href="{{ domain }}{{ link.url }}">{{ link.title }}</a></li>
+            {% endif %}
           {% endfor %}
         </ul>
         <ul class="hidden-links hidden"></ul>

@@ -9,15 +9,12 @@
 $doc-font-size              : 14;
 
 /* paragraph indention */
-$paragraph-indent           : false; // true, false (default)
+$paragraph-indent           : false; // true, false (default);
 $indent-var                 : 0.5em;
 
 /* system typefaces */
 $serif                      : Georgia, Times, serif;
 $sans-serif                 : "Trebuchet MS", Helvetica, sans-serif;
-// $sans-serif                 : Georgia, serif, sans-serif;
-
-// $sans-serif                 : -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
 $monospace                  : Monaco, Consolas, "Lucida Console", monospace;
 
 /* sans serif typefaces */
@@ -38,10 +35,10 @@ $caption-font-family        : $serif;
 /* type scale */
 $type-size-1                : 2.441em;  // ~39.056px
 $type-size-2                : 1.953em;  // ~31.248px
-$type-size-3                : 1.5em;  // ~
-$type-size-4                : 1.35em;   // ~
-$type-size-5                : 1.2em;      // ~
-$type-size-6                : 1em;   // ~
+$type-size-3                : 1.5em;
+$type-size-4                : 1.35em;
+$type-size-5                : 1.2em;
+$type-size-6                : 1em;
 $type-size-7                : 0.6875em; // ~11px
 $type-size-8                : 0.625em;  // ~10px
 
@@ -50,25 +47,26 @@ $type-size-8                : 0.625em;  // ~10px
    Colors
    ========================================================================== */
 
-$gray                       : #7a8288;
-$dark-gray                  : mix(#000, $gray, 40%);
-$darker-gray                : mix(#000, $gray, 60%);
-$light-gray                 : mix(#fff, $gray, 50%);
-$lighter-gray               : mix(#fff, $gray, 90%);
+/* Elegant Dark Green & Charcoal Color Palette */
+$gray                       : #525252;  /* Neutral-600 */
+$dark-gray                  : #262626;  /* Neutral-800 */
+$darker-gray                : #171717;  /* Neutral-900 */
+$light-gray                 : #737373;  /* Neutral-500 */
+$lighter-gray               : #e5e5e5;  /* Neutral-200 */
 
 $body-color                 : #fff;
 $background-color           : #fff;
-$code-background-color      : #fafafa;
-$code-background-color-dark : $light-gray;
-$text-color                 : $dark-gray;
-$border-color               : $lighter-gray;
+$code-background-color      : #fafaf9;  /* Stone-50 */
+$code-background-color-dark : #1c1917;  /* Stone-900 */
+$text-color                 : #292524;  /* Stone-800 */
+$border-color               : #d6d3d1;  /* Stone-300 */
 
-$primary-color              : #7a8288;
-$success-color              : #62c462;
-$warning-color              : #f89406;
-$danger-color               : #ee5f5b;
-$info-color                 : #224b8d;
-// $info-color                 : #52adc8;
+/* Primary palette - Dark green & charcoal */
+$primary-color              : #1a3a34;  /* Deep forest green */
+$success-color              : #14532d;  /* Green-900 */
+$warning-color              : #78350f;  /* Amber-900 */
+$danger-color               : #7f1d1d;  /* Red-900 */
+$info-color                 : #134e4a;  /* Teal-900 - dark teal */
 
 /* brands */
 $behance-color              : #1769FF;
@@ -93,12 +91,12 @@ $youtube-color              : #bb0000;
 $xing-color                 : #006567;
 
 
-/* links */
-$link-color                 : $info-color;
-$link-color-hover           : mix(#000, $link-color, 25%);
-$link-color-visited         : mix(#fff, $link-color, 25%);
-$masthead-link-color        : $primary-color;
-$masthead-link-color-hover  : mix(#000, $primary-color, 25%);
+/* links - dark green tones */
+$link-color                 : #14532d;  /* Green-900 */
+$link-color-hover           : #166534;  /* Green-800 */
+$link-color-visited         : #1e3a5f;  /* Slate blue */
+$masthead-link-color        : #404040;  /* Neutral-700 */
+$masthead-link-color-hover  : #1a3a34;  /* Deep forest green */
 
 /* notices */
 $notice-background-mix: 80% !default;
@@ -172,11 +170,11 @@ $susy: (
    Other
    ========================================================================== */
 
-$border-radius: 4px !default;
-$box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125) !default;
+$border-radius: 6px !default;  /* Slightly more rounded */
+$box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !default;  /* Softer, more elegant shadow */
 $nav-height: 2em !default;
 $nav-toggle-height: 2rem !default;
 $navicon-width: 1.5rem !default;
 $navicon-height: 0.25rem !default;
-$global-transition: all 0.2s ease-in-out !default;
+$global-transition: all 0.3s ease !default;  /* Smoother transitions */
 $intro-transition: intro 0.3s both !default;
