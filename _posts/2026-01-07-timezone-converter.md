@@ -511,17 +511,150 @@ A simple tool to convert time across different time zones and find overlapping w
   white-space: nowrap;
 }
 
+/* Mobile responsive styles */
 @media (max-width: 600px) {
+  .tz-container {
+    padding: 1em;
+  }
+  
+  .tz-title {
+    font-size: 1.2em;
+  }
+  
+  .tz-section {
+    padding: 0.8em;
+  }
+  
   .tz-input-group {
     flex-direction: column;
+    gap: 0.8em;
   }
-  .tz-result-item {
-    flex-wrap: wrap;
-    gap: 0.5em;
+  
+  .tz-input-item {
+    width: 100%;
   }
+  
+  .tz-input-item select,
+  .tz-input-item input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
   .tz-work-hours {
     flex-direction: column;
+    align-items: stretch;
+    gap: 0.5em;
+  }
+  
+  .tz-work-hours label {
+    margin-bottom: 0.3em;
+  }
+  
+  .tz-work-hours input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .tz-result-item {
+    flex-direction: column;
     align-items: flex-start;
+    gap: 0.5em;
+    padding: 0.8em;
+  }
+  
+  .tz-result-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .tz-result-time {
+    font-size: 1.2em;
+  }
+  
+  .tz-remove-btn {
+    margin-left: auto;
+  }
+  
+  .tz-legend {
+    flex-direction: column;
+    gap: 0.5em;
+  }
+  
+  .tz-priority-selector {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6em;
+  }
+  
+  .tz-priority-selector select {
+    width: 100%;
+    min-width: unset;
+  }
+  
+  .tz-focus-checkbox {
+    margin-left: 0;
+    justify-content: center;
+  }
+  
+  .tz-suggestion-options {
+    grid-template-columns: 1fr;
+  }
+  
+  .tz-suggestion-option {
+    padding: 0.8em;
+  }
+  
+  .tz-suggestion-option-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3em;
+  }
+  
+  .tz-suggestion-score {
+    align-self: flex-start;
+  }
+  
+  .tz-suggestion-time {
+    font-size: 1.1em !important;
+  }
+  
+  .tz-suggestion-breakdown {
+    font-size: 0.8em;
+  }
+  
+  .tz-copy-btn {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .tz-zones-header {
+    flex-direction: column;
+    gap: 0.5em;
+    align-items: stretch;
+  }
+  
+  .tz-add-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 380px) {
+  .tz-container {
+    padding: 0.8em;
+  }
+  
+  .tz-section {
+    padding: 0.6em;
+  }
+  
+  .tz-result-time {
+    font-size: 1em;
+  }
+  
+  .tz-result-date {
+    font-size: 0.7em;
   }
 }
 </style>
