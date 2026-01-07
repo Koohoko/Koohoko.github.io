@@ -18,6 +18,12 @@ A simple tool to convert time across different time zones and find overlapping w
   background: #fafaf9;
   border-radius: 8px;
   border: 1px solid #d6d3d1;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.tz-container * {
+  box-sizing: border-box;
 }
 
 .tz-title {
@@ -515,6 +521,7 @@ A simple tool to convert time across different time zones and find overlapping w
 @media (max-width: 600px) {
   .tz-container {
     padding: 1em;
+    overflow-x: hidden;
   }
   
   .tz-title {
@@ -523,20 +530,25 @@ A simple tool to convert time across different time zones and find overlapping w
   
   .tz-section {
     padding: 0.8em;
+    overflow: hidden;
   }
   
   .tz-input-group {
     flex-direction: column;
     gap: 0.8em;
+    margin-bottom: 1em;
+    padding-bottom: 1em;
   }
   
   .tz-input-item {
     width: 100%;
+    min-width: 0;
   }
   
   .tz-input-item select,
   .tz-input-item input {
     width: 100%;
+    max-width: 100%;
     box-sizing: border-box;
   }
   
@@ -589,6 +601,7 @@ A simple tool to convert time across different time zones and find overlapping w
   .tz-priority-selector select {
     width: 100%;
     min-width: unset;
+    box-sizing: border-box;
   }
   
   .tz-focus-checkbox {
@@ -596,12 +609,21 @@ A simple tool to convert time across different time zones and find overlapping w
     justify-content: center;
   }
   
+  .tz-suggestion-result {
+    padding: 0.8em;
+    overflow: hidden;
+  }
+  
   .tz-suggestion-options {
     grid-template-columns: 1fr;
+    gap: 0.8em;
+    margin-top: 0.8em;
   }
   
   .tz-suggestion-option {
     padding: 0.8em;
+    width: 100%;
+    box-sizing: border-box;
   }
   
   .tz-suggestion-option-header {
@@ -625,6 +647,7 @@ A simple tool to convert time across different time zones and find overlapping w
   .tz-copy-btn {
     width: 100%;
     text-align: center;
+    box-sizing: border-box;
   }
   
   .tz-zones-header {
