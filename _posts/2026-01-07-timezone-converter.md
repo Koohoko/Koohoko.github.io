@@ -239,6 +239,27 @@ A simple tool to convert time across different time zones and find overlapping w
   box-shadow: 0 0 0 1px #a7f3d0;
 }
 
+.tz-result-item.your-time {
+  background: linear-gradient(135deg, #fafaf9 0%, #f5f5f4 100%);
+  border: 1px dashed #d6d3d1;
+  border-left: 4px solid #1a3a34;
+}
+
+.tz-result-item.your-time .tz-result-zone {
+  font-weight: 600;
+}
+
+.tz-result-item.your-time .tz-you-badge {
+  display: inline-block;
+  background: #1a3a34;
+  color: #fff;
+  font-size: 0.7em;
+  padding: 0.15em 0.5em;
+  border-radius: 3px;
+  margin-left: 0.5em;
+  vertical-align: middle;
+}
+
 .tz-result-item:hover {
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
@@ -869,16 +890,12 @@ A simple tool to convert time across different time zones and find overlapping w
     
     <div class="tz-legend" id="tz-legend" style="display:none;">
       <div class="tz-legend-item">
-        <div class="tz-legend-dot overlap"></div>
-        <span>All in working hours</span>
-      </div>
-      <div class="tz-legend-item">
         <div class="tz-legend-dot working"></div>
-        <span>Working hours</span>
+        <span>In working hours</span>
       </div>
       <div class="tz-legend-item">
         <div class="tz-legend-dot outside"></div>
-        <span>Outside hours</span>
+        <span>Outside working hours</span>
       </div>
     </div>
     
@@ -913,20 +930,20 @@ const worldCities = [
   // Asia
   { value: 'Asia/Hong_Kong', label: 'Hong Kong', country: 'China' },
   { value: 'Asia/Shanghai', label: 'Shanghai', country: 'China' },
-  { value: 'Asia/Beijing', label: 'Beijing', country: 'China' },
-  { value: 'Asia/Shenzhen', label: 'Shenzhen', country: 'China' },
-  { value: 'Asia/Guangzhou', label: 'Guangzhou', country: 'China' },
-  { value: 'Asia/Chongqing', label: 'Chongqing', country: 'China' },
+  { value: 'Asia/Shanghai', label: 'Beijing', country: 'China' },
+  { value: 'Asia/Shanghai', label: 'Shenzhen', country: 'China' },
+  { value: 'Asia/Shanghai', label: 'Guangzhou', country: 'China' },
+  { value: 'Asia/Shanghai', label: 'Chongqing', country: 'China' },
   { value: 'Asia/Taipei', label: 'Taipei', country: 'Taiwan' },
   { value: 'Asia/Tokyo', label: 'Tokyo', country: 'Japan' },
-  { value: 'Asia/Osaka', label: 'Osaka', country: 'Japan' },
+  { value: 'Asia/Tokyo', label: 'Osaka', country: 'Japan' },
   { value: 'Asia/Seoul', label: 'Seoul', country: 'South Korea' },
-  { value: 'Asia/Busan', label: 'Busan', country: 'South Korea' },
+  { value: 'Asia/Seoul', label: 'Busan', country: 'South Korea' },
   { value: 'Asia/Singapore', label: 'Singapore', country: 'Singapore' },
   { value: 'Asia/Kuala_Lumpur', label: 'Kuala Lumpur', country: 'Malaysia' },
   { value: 'Asia/Bangkok', label: 'Bangkok', country: 'Thailand' },
   { value: 'Asia/Ho_Chi_Minh', label: 'Ho Chi Minh City', country: 'Vietnam' },
-  { value: 'Asia/Hanoi', label: 'Hanoi', country: 'Vietnam' },
+  { value: 'Asia/Bangkok', label: 'Hanoi', country: 'Vietnam' },
   { value: 'Asia/Jakarta', label: 'Jakarta', country: 'Indonesia' },
   { value: 'Asia/Manila', label: 'Manila', country: 'Philippines' },
   { value: 'Asia/Kolkata', label: 'Mumbai', country: 'India' },
@@ -938,14 +955,14 @@ const worldCities = [
   { value: 'Asia/Kolkata', label: 'Pune', country: 'India' },
   { value: 'Asia/Dhaka', label: 'Dhaka', country: 'Bangladesh' },
   { value: 'Asia/Karachi', label: 'Karachi', country: 'Pakistan' },
-  { value: 'Asia/Lahore', label: 'Lahore', country: 'Pakistan' },
+  { value: 'Asia/Karachi', label: 'Lahore', country: 'Pakistan' },
   { value: 'Asia/Dubai', label: 'Dubai', country: 'UAE' },
-  { value: 'Asia/Abu_Dhabi', label: 'Abu Dhabi', country: 'UAE' },
+  { value: 'Asia/Dubai', label: 'Abu Dhabi', country: 'UAE' },
   { value: 'Asia/Riyadh', label: 'Riyadh', country: 'Saudi Arabia' },
   { value: 'Asia/Jerusalem', label: 'Tel Aviv', country: 'Israel' },
   { value: 'Asia/Jerusalem', label: 'Jerusalem', country: 'Israel' },
   { value: 'Asia/Tehran', label: 'Tehran', country: 'Iran' },
-  { value: 'Asia/Istanbul', label: 'Istanbul', country: 'Turkey' },
+  { value: 'Europe/Istanbul', label: 'Istanbul', country: 'Turkey' },
   
   // Europe
   { value: 'Europe/London', label: 'London', country: 'UK' },
@@ -960,13 +977,13 @@ const worldCities = [
   { value: 'Europe/London', label: 'Edinburgh', country: 'UK' },
   { value: 'Europe/Dublin', label: 'Dublin', country: 'Ireland' },
   { value: 'Europe/Paris', label: 'Paris', country: 'France' },
-  { value: 'Europe/Lyon', label: 'Lyon', country: 'France' },
+  { value: 'Europe/Paris', label: 'Lyon', country: 'France' },
   { value: 'Europe/Berlin', label: 'Berlin', country: 'Germany' },
-  { value: 'Europe/Munich', label: 'Munich', country: 'Germany' },
-  { value: 'Europe/Frankfurt', label: 'Frankfurt', country: 'Germany' },
-  { value: 'Europe/Hamburg', label: 'Hamburg', country: 'Germany' },
+  { value: 'Europe/Berlin', label: 'Munich', country: 'Germany' },
+  { value: 'Europe/Berlin', label: 'Frankfurt', country: 'Germany' },
+  { value: 'Europe/Berlin', label: 'Hamburg', country: 'Germany' },
   { value: 'Europe/Zurich', label: 'Zurich', country: 'Switzerland' },
-  { value: 'Europe/Geneva', label: 'Geneva', country: 'Switzerland' },
+  { value: 'Europe/Zurich', label: 'Geneva', country: 'Switzerland' },
   { value: 'Europe/Amsterdam', label: 'Amsterdam', country: 'Netherlands' },
   { value: 'Europe/Amsterdam', label: 'Rotterdam', country: 'Netherlands' },
   { value: 'Europe/Amsterdam', label: 'Utrecht', country: 'Netherlands' },
@@ -975,9 +992,9 @@ const worldCities = [
   { value: 'Europe/Brussels', label: 'Leuven', country: 'Belgium' },
   { value: 'Europe/Vienna', label: 'Vienna', country: 'Austria' },
   { value: 'Europe/Rome', label: 'Rome', country: 'Italy' },
-  { value: 'Europe/Milan', label: 'Milan', country: 'Italy' },
+  { value: 'Europe/Rome', label: 'Milan', country: 'Italy' },
   { value: 'Europe/Madrid', label: 'Madrid', country: 'Spain' },
-  { value: 'Europe/Barcelona', label: 'Barcelona', country: 'Spain' },
+  { value: 'Europe/Madrid', label: 'Barcelona', country: 'Spain' },
   { value: 'Europe/Lisbon', label: 'Lisbon', country: 'Portugal' },
   { value: 'Europe/Stockholm', label: 'Stockholm', country: 'Sweden' },
   { value: 'Europe/Oslo', label: 'Oslo', country: 'Norway' },
@@ -988,7 +1005,7 @@ const worldCities = [
   { value: 'Europe/Budapest', label: 'Budapest', country: 'Hungary' },
   { value: 'Europe/Athens', label: 'Athens', country: 'Greece' },
   { value: 'Europe/Moscow', label: 'Moscow', country: 'Russia' },
-  { value: 'Europe/St_Petersburg', label: 'St Petersburg', country: 'Russia' },
+  { value: 'Europe/Moscow', label: 'St Petersburg', country: 'Russia' },
   
   // North America
   { value: 'America/New_York', label: 'New York', country: 'USA' },
@@ -1223,11 +1240,45 @@ function updateResults() {
     });
   });
   
-  // Render results
+  // Render user's own time first
+  const sourceFormatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: sourceTz,
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  });
+  const sourceFormatted = sourceFormatter.format(sourceDate);
+  const sourceParts = sourceFormatted.split(', ');
+  const sourceDayDate = sourceParts.slice(0, 2).join(', ');
+  const sourceTime = sourceParts[2] || sourceParts[1];
+  const sourceCityInfo = worldCities.find(c => c.value === sourceTz);
+  const sourceLabel = sourceCityInfo ? `${sourceCityInfo.label}, ${sourceCityInfo.country}` : sourceTz.split('/').pop().replace(/_/g, ' ');
+  
+  const yourStatusClass = sourceIsWorking ? 'working' : 'outside';
+  const yourStatusText = sourceIsWorking ? '✓ Working hours' : '○ Outside hours';
+  
+  const yourItem = document.createElement('div');
+  yourItem.className = `tz-result-item your-time ${sourceIsWorking ? 'working-hours' : ''}`;
+  yourItem.innerHTML = `
+    <div class="tz-result-left">
+      <span class="tz-result-zone">${sourceLabel}<span class="tz-you-badge">You</span></span>
+      <span class="tz-result-status ${yourStatusClass}">${yourStatusText}</span>
+    </div>
+    <div class="tz-result-right">
+      <span class="tz-result-time">${sourceTime}</span>
+      <span class="tz-result-date">${sourceDayDate}</span>
+    </div>
+  `;
+  resultsDiv.appendChild(yourItem);
+  
+  // Render collaborators results
   zoneResults.forEach(result => {
-    const statusClass = allInWorkingHours ? 'overlap' : (result.isWorking ? 'working' : 'outside');
-    const statusText = allInWorkingHours ? '✓ Overlap' : (result.isWorking ? '✓ Working hours' : '○ Outside hours');
-    const itemClass = allInWorkingHours ? 'overlap-hours' : (result.isWorking ? 'working-hours' : '');
+    const statusClass = result.isWorking ? 'working' : 'outside';
+    const statusText = result.isWorking ? '✓ Working hours' : '○ Outside hours';
+    const itemClass = result.isWorking ? 'working-hours' : '';
     
     const item = document.createElement('div');
     item.className = `tz-result-item ${itemClass}`;
