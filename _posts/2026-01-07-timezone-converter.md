@@ -26,26 +26,43 @@ A simple tool to convert time across different time zones and find overlapping w
   box-sizing: border-box;
 }
 
+.tz-title-row {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin-bottom: 1.5em;
+}
+
 .tz-title {
-  margin: 0 0 0.5em 0;
+  margin: 0;
   color: #1a3a34;
   font-size: 1.2em;
   font-weight: 600;
 }
 
 .tz-subtitle {
-  margin: 0 0 1.5em 0;
+  margin: 0;
   color: #737373;
   font-size: 0.85em;
 }
 
 .tz-detected {
   display: inline-block;
-  padding: 0.3em 0.6em;
+  padding: 0.2em 0.5em;
   background: #ecfdf5;
   color: #14532d;
   border-radius: 4px;
-  font-size: 0.8em;
+  font-size: 0.75em;
+  margin-left: 0.5em;
+  font-weight: normal;
+}
+
+.tz-section-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5em;
   margin-bottom: 1em;
 }
 
@@ -297,7 +314,6 @@ A simple tool to convert time across different time zones and find overlapping w
 }
 
 .tz-copy-btn {
-  margin-top: 1em;
   padding: 0.6em 1.2em;
   background: #f5f5f4;
   border: 1px solid #d6d3d1;
@@ -316,6 +332,33 @@ A simple tool to convert time across different time zones and find overlapping w
   background: #14532d;
   color: #fff;
   border-color: #14532d;
+}
+
+.tz-action-buttons {
+  display: flex;
+  gap: 0.8em;
+  margin-top: 1em;
+  flex-wrap: wrap;
+}
+
+.tz-ics-btn {
+  padding: 0.6em 1.2em;
+  background: #1a3a34;
+  border: 1px solid #1a3a34;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: all 0.2s;
+}
+
+.tz-ics-btn:hover {
+  background: #14532d;
+}
+
+.tz-ics-btn.downloaded {
+  background: #059669;
+  border-color: #059669;
 }
 
 .tz-suggestion-result {
@@ -739,6 +782,16 @@ A simple tool to convert time across different time zones and find overlapping w
     box-sizing: border-box;
   }
   
+  .tz-action-buttons {
+    flex-direction: column;
+  }
+  
+  .tz-ics-btn {
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  
   .tz-zones-header {
     flex-direction: column;
     gap: 0.5em;
@@ -772,14 +825,17 @@ A simple tool to convert time across different time zones and find overlapping w
 </style>
 
 <div class="tz-container">
-  <h3 class="tz-title">🌍 Time Zone Converter</h3>
-  <p class="tz-subtitle">Find the best meeting time across time zones</p>
-  
-  <div class="tz-detected" id="tz-detected"></div>
+  <div class="tz-title-row">
+    <h3 class="tz-title">🌍 Time Zone Converter</h3>
+    <span class="tz-subtitle">— Find the best meeting time across time zones</span>
+  </div>
   
   <!-- Section 1: Your Settings -->
   <div class="tz-section">
-    <div class="tz-section-title">📍 Your Settings</div>
+    <div class="tz-section-header">
+      <div class="tz-section-title" style="margin-bottom:0;">📍 Your Settings</div>
+      <span class="tz-detected" id="tz-detected"></span>
+    </div>
     <div class="tz-input-group">
       <div class="tz-input-item">
         <label for="tz-source">Your City</label>
@@ -826,7 +882,10 @@ A simple tool to convert time across different time zones and find overlapping w
       </div>
     </div>
     
-    <button class="tz-copy-btn" id="tz-copy-btn" style="display:none;" onclick="copyResults()">📋 Copy All Times</button>
+    <div class="tz-action-buttons" id="tz-action-buttons" style="display:none;">
+      <button class="tz-copy-btn" id="tz-copy-btn" onclick="copyResults()">📋 Copy All Times</button>
+      <button class="tz-ics-btn" id="tz-ics-btn" onclick="downloadICS()">📅 Download .ics</button>
+    </div>
   </div>
   
   <!-- Section 3: Best Time Suggestions (auto-shown when collaborators added) -->
@@ -1010,7 +1069,7 @@ function init() {
   userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const userCity = worldCities.find(c => c.value === userTimezone);
   const detectedDiv = document.getElementById('tz-detected');
-  detectedDiv.textContent = `📍 Detected: ${userCity ? `${userCity.label}, ${userCity.country}` : userTimezone}`;
+  detectedDiv.textContent = `Detected: ${userCity ? `${userCity.label}, ${userCity.country}` : userTimezone}`;
   
   // Populate source select with search
   populateSourceSelect();
@@ -1114,7 +1173,7 @@ function updateResults() {
     resultsDiv.innerHTML = '<div style="color:#737373;font-size:0.9em;padding:1em;text-align:center;background:#f5f5f4;border-radius:6px;">Click "+ Add City" to add collaborator locations.</div>';
     document.getElementById('tz-suggestion-section').style.display = 'none';
     document.getElementById('tz-legend').style.display = 'none';
-    document.getElementById('tz-copy-btn').style.display = 'none';
+    document.getElementById('tz-action-buttons').style.display = 'none';
     document.getElementById('tz-suggestion-result').innerHTML = '';
     return;
   }
@@ -1122,7 +1181,7 @@ function updateResults() {
   // Show sections and update priority selector
   document.getElementById('tz-suggestion-section').style.display = 'block';
   document.getElementById('tz-legend').style.display = 'flex';
-  document.getElementById('tz-copy-btn').style.display = 'block';
+  document.getElementById('tz-action-buttons').style.display = 'flex';
   updatePrioritySelector();
   
   // Create date in source timezone
@@ -1360,6 +1419,111 @@ function copyResults() {
       btn.classList.remove('copied');
     }, 2000);
   });
+}
+
+function downloadICS() {
+  if (targetZones.length === 0) {
+    alert('No collaborators added yet.');
+    return;
+  }
+  
+  const dateStr = document.getElementById('tz-date').value;
+  const timeStr = document.getElementById('tz-time').value;
+  const sourceTz = document.getElementById('tz-source').value;
+  const sourceCity = worldCities.find(c => c.value === sourceTz);
+  const sourceLabel = sourceCity ? sourceCity.label : 'Meeting';
+  
+  // Parse date and time
+  const [year, month, day] = dateStr.split('-').map(Number);
+  const [hour, minute] = timeStr.split(':').map(Number);
+  
+  // Create start date (local time based on source timezone)
+  const startDate = new Date(`${dateStr}T${timeStr}:00`);
+  
+  // Default meeting duration: 1 hour
+  const endDate = new Date(startDate.getTime() + 60 * 60 * 1000);
+  
+  // Format date for ICS (UTC format: YYYYMMDDTHHMMSSZ)
+  const formatICSDate = (date) => {
+    return date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  };
+  
+  // Format date for DTSTART with timezone
+  const formatICSDateLocal = (date) => {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    const h = String(date.getHours()).padStart(2, '0');
+    const min = String(date.getMinutes()).padStart(2, '0');
+    return `${y}${m}${d}T${h}${min}00`;
+  };
+  
+  // Build description with all timezone info
+  let description = 'Meeting times for all participants:\\n\\n';
+  description += `${sourceLabel}: ${dateStr} ${timeStr}\\n`;
+  
+  targetZones.forEach(tz => {
+    const cityInfo = worldCities.find(c => c.value === tz.value && c.label === tz.label);
+    const tzLabel = cityInfo ? cityInfo.label : tz.label;
+    const formatter = new Intl.DateTimeFormat('en-US', {
+      timeZone: tz.value,
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    });
+    description += `${tzLabel}: ${formatter.format(startDate)}\\n`;
+  });
+  
+  // Build attendee list for description
+  const attendeeLocations = targetZones.map(tz => {
+    const cityInfo = worldCities.find(c => c.value === tz.value && c.label === tz.label);
+    return cityInfo ? cityInfo.label : tz.label;
+  }).join(', ');
+  
+  // Generate unique ID
+  const uid = `meeting-${Date.now()}-${Math.random().toString(36).substr(2, 9)}@timezone-converter`;
+  
+  // Create ICS content
+  const icsContent = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Timezone Converter//guhaogao.com//EN',
+    'CALSCALE:GREGORIAN',
+    'METHOD:PUBLISH',
+    'BEGIN:VEVENT',
+    `UID:${uid}`,
+    `DTSTAMP:${formatICSDate(new Date())}`,
+    `DTSTART;TZID=${sourceTz}:${formatICSDateLocal(startDate)}`,
+    `DTEND;TZID=${sourceTz}:${formatICSDateLocal(endDate)}`,
+    `SUMMARY:Meeting (${sourceLabel} + ${attendeeLocations})`,
+    `DESCRIPTION:${description}`,
+    'STATUS:CONFIRMED',
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\r\n');
+  
+  // Create download link
+  const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `meeting-${dateStr}-${timeStr.replace(':', '')}.ics`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+  
+  // Update button state
+  const btn = document.getElementById('tz-ics-btn');
+  btn.textContent = '✓ Downloaded!';
+  btn.classList.add('downloaded');
+  setTimeout(() => {
+    btn.textContent = '📅 Download .ics';
+    btn.classList.remove('downloaded');
+  }, 2000);
 }
 
 // Calculate penalty score for a given hour (0-23)
