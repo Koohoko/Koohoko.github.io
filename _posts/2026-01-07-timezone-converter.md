@@ -451,6 +451,74 @@ A simple tool to convert time across different time zones and find overlapping w
   background: #14532d;
 }
 
+.tz-apply-btn.applied {
+  background: #059669;
+  cursor: default;
+}
+
+.tz-apply-btn.applied:hover {
+  background: #059669;
+}
+
+.tz-more-options {
+  margin-top: 1em;
+  padding-top: 1em;
+  border-top: 1px dashed #d6d3d1;
+}
+
+.tz-more-options-title {
+  font-size: 0.85em;
+  color: #737373;
+  margin-bottom: 0.6em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+}
+
+.tz-more-options-title:hover {
+  color: #525252;
+}
+
+.tz-more-options-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+
+.tz-mini-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.4em 0.7em;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  font-size: 0.8em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tz-mini-option:hover {
+  border-color: #1a3a34;
+  background: #f0fdf4;
+}
+
+.tz-mini-option.applied {
+  background: #059669;
+  border-color: #059669;
+  color: #fff;
+}
+
+.tz-mini-option-time {
+  font-weight: 600;
+  font-family: "SF Mono", Monaco, monospace;
+}
+
+.tz-mini-option-quality {
+  font-size: 0.9em;
+}
+
 .tz-suggestion-score {
   display: inline-block;
   padding: 0.2em 0.6em;
@@ -1133,7 +1201,7 @@ function addTargetZone() {
   
   const searchInput = document.createElement('input');
   searchInput.type = 'text';
-  searchInput.placeholder = 'Search city name...';
+  searchInput.placeholder = 'Search city name... (↑↓ to navigate, Enter to select)';
   searchInput.style.cssText = 'width:100%;padding:0.6em;border:1px solid #d6d3d1;border-radius:4px;font-size:0.95em;box-sizing:border-box;';
   
   const resultsList = document.createElement('div');
@@ -1148,39 +1216,88 @@ function addTargetZone() {
   cancelBtn.onclick = () => container.remove();
   btnContainer.appendChild(cancelBtn);
   
+  let currentMatches = [];
+  let selectedIndex = -1;
+  
+  const updateSelection = () => {
+    const items = resultsList.querySelectorAll('.tz-search-item');
+    items.forEach((item, index) => {
+      if (index === selectedIndex) {
+        item.style.background = '#ecfdf5';
+        item.style.borderLeft = '3px solid #14532d';
+        // Scroll into view if needed
+        item.scrollIntoView({ block: 'nearest' });
+      } else {
+        item.style.background = '#fff';
+        item.style.borderLeft = 'none';
+      }
+    });
+  };
+  
+  const selectCity = (city) => {
+    targetZones.push({ value: city.value, label: city.label });
+    container.remove();
+    updateResults();
+    autoUpdateBestTime();
+  };
+  
+  searchInput.addEventListener('keydown', (e) => {
+    if (currentMatches.length === 0) return;
+    
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      selectedIndex = Math.min(selectedIndex + 1, currentMatches.length - 1);
+      updateSelection();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      selectedIndex = Math.max(selectedIndex - 1, 0);
+      updateSelection();
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (selectedIndex >= 0 && selectedIndex < currentMatches.length) {
+        selectCity(currentMatches[selectedIndex]);
+      } else if (currentMatches.length > 0) {
+        // If nothing selected, select first match
+        selectCity(currentMatches[0]);
+      }
+    } else if (e.key === 'Escape') {
+      container.remove();
+    }
+  });
+  
   searchInput.addEventListener('input', () => {
     const query = searchInput.value.toLowerCase().trim();
     resultsList.innerHTML = '';
+    selectedIndex = -1;
+    currentMatches = [];
     
     if (query.length < 1) {
       resultsList.style.display = 'none';
       return;
     }
     
-    const matches = worldCities.filter(c => {
+    currentMatches = worldCities.filter(c => {
       const searchStr = `${c.label} ${c.country}`.toLowerCase();
       const alreadyAdded = targetZones.some(t => t.value === c.value && t.label === c.label);
       return searchStr.includes(query) && !alreadyAdded;
     }).slice(0, 10);
     
-    if (matches.length === 0) {
+    if (currentMatches.length === 0) {
       resultsList.innerHTML = '<div style="padding:0.8em;color:#737373;font-size:0.9em;">No matching cities found</div>';
       resultsList.style.display = 'block';
       return;
     }
     
-    matches.forEach(city => {
+    currentMatches.forEach((city, index) => {
       const item = document.createElement('div');
-      item.style.cssText = 'padding:0.6em 0.8em;cursor:pointer;border-bottom:1px solid #f5f5f5;font-size:0.9em;';
+      item.className = 'tz-search-item';
+      item.style.cssText = 'padding:0.6em 0.8em;cursor:pointer;border-bottom:1px solid #f5f5f5;font-size:0.9em;transition:background 0.1s;';
       item.innerHTML = `<strong>${city.label}</strong><span style="color:#737373;margin-left:0.5em;">${city.country}</span>`;
-      item.onmouseenter = () => item.style.background = '#f5f5f4';
-      item.onmouseleave = () => item.style.background = '#fff';
-      item.onclick = () => {
-        targetZones.push({ value: city.value, label: city.label });
-        container.remove();
-        updateResults();
-        autoUpdateBestTime();
+      item.onmouseenter = () => {
+        selectedIndex = index;
+        updateSelection();
       };
+      item.onclick = () => selectCity(city);
       resultsList.appendChild(item);
     });
     
@@ -1419,8 +1536,37 @@ function suggestBestTime() {
   // Get focus city label for display
   const focusCityInfo = hasFocusCity ? getFocusCityInfo(focusTz) : null;
   
-  // Display both results
-  displaySuggestions(bestOption1, bestOption2, dateStr, sourceTz, workStart, workEnd, focusCityInfo, forceWorkHours, hasFocusCity);
+  // Collect more alternatives (different from main options, at least 2 hours apart)
+  const moreOptions = [];
+  const usedHours = new Set();
+  usedHours.add(bestOption1.hour);
+  usedHours.add(bestOption2.hour);
+  
+  // Sort all slots by score
+  const sortedSlots = [...allSlots].sort((a, b) => a.score - b.score);
+  
+  for (const slot of sortedSlots) {
+    if (moreOptions.length >= 4) break; // Max 4 more options
+    if (slot.score === Infinity) continue;
+    
+    // Check if this slot is at least 2 hours away from all used hours
+    let tooClose = false;
+    for (const usedHour of usedHours) {
+      const hourDiff = Math.abs((slot.hour + slot.minute/60) - usedHour);
+      if (hourDiff < 2) {
+        tooClose = true;
+        break;
+      }
+    }
+    
+    if (!tooClose) {
+      moreOptions.push(slot);
+      usedHours.add(slot.hour + slot.minute/60);
+    }
+  }
+  
+  // Display both results with more options
+  displaySuggestions(bestOption1, bestOption2, dateStr, sourceTz, workStart, workEnd, focusCityInfo, forceWorkHours, hasFocusCity, moreOptions);
 }
 
 function getFocusCityInfo(focusTz) {
@@ -1483,7 +1629,7 @@ function updateForceWorkVisibility() {
   }
 }
 
-function displaySuggestions(bestAM, bestPM, dateStr, sourceTz, workStart, workEnd, focusCityLabel, forceWorkHours, hasFocusCity) {
+function displaySuggestions(bestAM, bestPM, dateStr, sourceTz, workStart, workEnd, focusCityLabel, forceWorkHours, hasFocusCity, moreOptions = []) {
   const resultDiv = document.getElementById('tz-suggestion-result');
   const sourceCity = worldCities.find(c => c.value === sourceTz);
   const sourceLabel = sourceCity ? sourceCity.label : sourceTz;
@@ -1491,6 +1637,44 @@ function displaySuggestions(bestAM, bestPM, dateStr, sourceTz, workStart, workEn
   const constraintInfo = (hasFocusCity && forceWorkHours)
     ? `<span style="color:#14532d;font-size:0.85em;">✓ ${focusCityLabel} constrained to working hours</span>` 
     : '';
+  
+  // Format quality emoji based on score
+  const getQualityEmoji = (score, breakdownLength) => {
+    const avgScore = score / breakdownLength;
+    if (avgScore < 15) return '🌟';
+    if (avgScore < 30) return '👍';
+    if (avgScore < 50) return '👌';
+    if (avgScore < 80) return '⚠️';
+    return '😓';
+  };
+  
+  // Format more options as compact list
+  const formatMoreOptions = () => {
+    if (moreOptions.length === 0) return '';
+    
+    const optionsHtml = moreOptions.map(opt => {
+      const timeStr = `${opt.hour.toString().padStart(2, '0')}:${(opt.minute || 0).toString().padStart(2, '0')}`;
+      const emoji = getQualityEmoji(opt.score, opt.breakdown.length);
+      // Build tooltip with all times
+      const tooltip = opt.breakdown.map(b => {
+        const h = Math.floor(b.timeInMinutes / 60);
+        const m = b.timeInMinutes % 60;
+        return `${b.label}: ${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+      }).join('\n');
+      
+      return `<div class="tz-mini-option" onclick="applyBestTime(${opt.hour}, ${opt.minute || 0}, this)" title="${tooltip}">
+        <span class="tz-mini-option-quality">${emoji}</span>
+        <span class="tz-mini-option-time">${timeStr}</span>
+      </div>`;
+    }).join('');
+    
+    return `
+      <div class="tz-more-options">
+        <div class="tz-more-options-title">📌 More alternatives for your time (hover for details):</div>
+        <div class="tz-more-options-list">${optionsHtml}</div>
+      </div>
+    `;
+  };
   
   const formatOption = (best, label) => {
     if (best.score === Infinity) {
@@ -1534,7 +1718,7 @@ function displaySuggestions(bestAM, bestPM, dateStr, sourceTz, workStart, workEn
         </div>
         <div class="tz-suggestion-time">${sourceLabel}: ${timeStr}</div>
         <div class="tz-suggestion-breakdown">${breakdownHtml}</div>
-        <button class="tz-apply-btn" onclick="applyBestTime(${best.hour}, ${best.minute || 0})">
+        <button class="tz-apply-btn" onclick="applyBestTime(${best.hour}, ${best.minute || 0}, this)">
           ✓ Apply This Time
         </button>
       </div>
@@ -1553,6 +1737,7 @@ function displaySuggestions(bestAM, bestPM, dateStr, sourceTz, workStart, workEn
           ${formatOption(bestAM, `☀️ Morning in ${focusCityLabel}`)}
           ${formatOption(bestPM, `🌤️ Afternoon in ${focusCityLabel}`)}
         </div>
+        ${formatMoreOptions()}
       </div>
     `;
   } else {
@@ -1567,15 +1752,29 @@ function displaySuggestions(bestAM, bestPM, dateStr, sourceTz, workStart, workEn
           ${formatOption(bestAM, `🥇 Best Option`)}
           ${formatOption(bestPM, `🥈 Alternative`)}
         </div>
+        ${formatMoreOptions()}
       </div>
     `;
   }
 }
 
-function applyBestTime(hour, minute) {
+function applyBestTime(hour, minute, buttonElement) {
   document.getElementById('tz-time').value = `${hour.toString().padStart(2, '0')}:${(minute || 0).toString().padStart(2, '0')}`;
   updateResults();
-  document.getElementById('tz-suggestion-result').innerHTML = '';
+  
+  // Reset all apply buttons to default state
+  document.querySelectorAll('.tz-apply-btn').forEach(btn => {
+    btn.classList.remove('applied');
+    btn.innerHTML = '✓ Apply This Time';
+    btn.disabled = false;
+  });
+  
+  // Mark clicked button as applied
+  if (buttonElement) {
+    buttonElement.classList.add('applied');
+    buttonElement.innerHTML = '✓ Applied';
+  }
+  
   // Scroll to results
   document.getElementById('tz-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
