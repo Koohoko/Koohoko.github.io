@@ -1950,19 +1950,25 @@ if (document.readyState !== 'loading') init();
 
 ## Features
 
-- **Auto-detect timezone**: Automatically detects your local timezone
-- **Searchable city selector**: Search from 100+ major cities worldwide, including university towns
-- **Working hours overlay**: Visually shows which times fall within working hours (default 10:00-17:00)
-- **Overlap detection**: Highlights when all collaborators are in working hours
-- **🎯 Smart Best Time Finder**: One-click to find the optimal meeting time that:
-  - Minimizes inconvenience for all participants
-  - Heavily penalizes midnight-6am times (sleep disruption)
-  - Moderately penalizes early morning (6-8am) and late evening (20-24pm)
-  - Prefers times close to each participant's working hours center
-- **One-click copy**: Copy formatted meeting times to share with your team
+- **Auto-detect timezone**: Automatically detects your local timezone based on browser settings
+- **100+ world cities**: Search from major cities across all continents, including university towns (Cambridge, Stanford, Oxford, etc.)
+- **Keyboard navigation**: Use ↑↓ arrows to navigate search results, Enter to select, Esc to cancel
+- **Working hours indicator**: Visual markers show which times fall within/outside working hours
+- **Overlap detection**: Highlights when all participants are in their working hours simultaneously
+- **🎯 Smart Best Time Finder**:
+  - **Priority mode**: Optimize around a specific participant's schedule (AM/PM options)
+  - **Fair mode**: Find times that minimize inconvenience for everyone equally
+  - **Smart scoring**: Heavily penalizes sleep hours (0-6am), moderately penalizes early/late hours
+  - **Multiple alternatives**: Shows additional backup time options at a glance
+- **📋 Copy all times**: One-click copy of formatted meeting times for easy sharing
+- **📅 ICS download**: Export to calendar file compatible with Google Calendar, Apple Calendar, Outlook, etc.
 
 ## Tips for Scheduling International Meetings
 
-1. **Asia ↔ Europe**: Usually 8:00-10:00 HKT works well (afternoon in Europe)
-2. **Asia ↔ US East Coast**: Very limited overlap - consider 21:00-22:00 HKT (morning in NYC)
-3. **Europe ↔ US**: 14:00-17:00 London time (morning in US East Coast)
+| Route | Recommended Time | Notes |
+|-------|-----------------|-------|
+| **Asia ↔ Europe** | 08:00-10:00 HKT | Afternoon in Europe (15:00-17:00 CET) |
+| **Asia ↔ US East** | 21:00-22:00 HKT | Morning in NYC (08:00-09:00 EST) |
+| **Asia ↔ US West** | 09:00-10:00 HKT | Evening before in SF (17:00-18:00 PST, previous day) |
+| **Europe ↔ US East** | 14:00-17:00 GMT | Morning in US (09:00-12:00 EST) |
+| **Australia ↔ Europe** | 08:00-09:00 AEDT | Evening before in Europe (21:00-22:00 CET) |
