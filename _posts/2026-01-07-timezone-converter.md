@@ -1091,9 +1091,10 @@ function init() {
   // Populate source select with search
   populateSourceSelect();
   
-  // Set default date to today
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('tz-date').value = today;
+  // Set default date to tomorrow
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  document.getElementById('tz-date').value = tomorrow.toISOString().split('T')[0];
   
   // Add event listeners for all inputs - auto update everything
   const autoUpdateHandler = () => {
