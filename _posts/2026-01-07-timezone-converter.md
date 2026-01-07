@@ -124,6 +124,7 @@ A simple tool to convert time across different time zones and find overlapping w
 
 .tz-work-hours input {
   width: 80px;
+  max-width: 100%;
   padding: 0.4em;
   border: 1px solid #d6d3d1;
   border-radius: 4px;
@@ -550,6 +551,17 @@ A simple tool to convert time across different time zones and find overlapping w
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  
+  /* Fix for date/time inputs on mobile */
+  .tz-input-item input[type="date"],
+  .tz-input-item input[type="time"] {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
   }
   
   .tz-work-hours {
@@ -564,7 +576,16 @@ A simple tool to convert time across different time zones and find overlapping w
   
   .tz-work-hours input {
     width: 100%;
+    max-width: 100%;
     box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  
+  .tz-work-hours input[type="time"] {
+    min-width: 0;
+    width: 100%;
   }
   
   .tz-result-item {
