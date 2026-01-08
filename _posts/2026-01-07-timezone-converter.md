@@ -1850,6 +1850,13 @@ function displaySuggestions(bestAM, bestPM, dateStr, sourceTz, workStart, workEn
   const sourceCity = worldCities.find(c => c.value === sourceTz);
   const sourceLabel = sourceCity ? sourceCity.label : sourceTz;
   
+  // Reset all apply buttons to default state when regenerating suggestions
+  document.querySelectorAll('.tz-apply-btn').forEach(btn => {
+    btn.classList.remove('applied');
+    btn.innerHTML = '✓ Apply This Time';
+    btn.disabled = false;
+  });
+  
   const constraintInfo = (hasFocusCity && forceWorkHours)
     ? `<span style="color:#14532d;font-size:0.85em;">✓ ${focusCityLabel} constrained to working hours</span>` 
     : '';
