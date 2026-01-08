@@ -1992,10 +1992,17 @@ function applyBestTime(hour, minute, buttonElement) {
     btn.disabled = false;
   });
   
-  // Mark clicked button as applied
+  // Reset all mini options to default state
+  document.querySelectorAll('.tz-mini-option').forEach(opt => {
+    opt.classList.remove('applied');
+  });
+  
+  // Mark clicked button/option as applied
   if (buttonElement) {
     buttonElement.classList.add('applied');
-    buttonElement.innerHTML = '✓ Applied';
+    if (buttonElement.classList.contains('tz-apply-btn')) {
+      buttonElement.innerHTML = '✓ Applied';
+    }
   }
   
   // Scroll to results
