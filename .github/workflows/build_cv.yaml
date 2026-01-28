@@ -26,7 +26,7 @@ jobs:
       - name: Build PDF
         uses: vinay0410/tectonic-action@v1.1.2
         with:
-          latex_src_file: 'files/CV/CV_haogao.tex'
+          tex_path: 'files/CV/CV_haogao.tex'
 
       - name: Push PDF to Orphan Branch
         run: |
