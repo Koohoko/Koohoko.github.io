@@ -24,9 +24,10 @@ jobs:
           wget https://raw.githubusercontent.com/${{ github.repository }}/google-scholar-stats/scholar_metrics.tex -O files/CV/scholar_metrics.tex
           
       - name: Build PDF
-        uses: vinay0410/tectonic-action@v1.1.2
+        uses: xu-cheng/latex-action@v3
         with:
-          tex_path: 'files/CV/CV_haogao.tex'
+          root_file: CV_haogao.tex
+          working_directory: files/CV
 
       - name: Push PDF to Orphan Branch
         run: |
