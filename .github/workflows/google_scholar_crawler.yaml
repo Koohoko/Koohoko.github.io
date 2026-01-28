@@ -1,7 +1,6 @@
 name: Get Citation Data
 
 on: 
-  page_build: 
   schedule:
     # 每天随机时间运行一次（UTC 时间），避免固定时间被检测
     - cron: '17 9 * * *'
@@ -19,13 +18,16 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
-        cache: 'pip'
-        cache-dependency-path: 'google_scholar_crawler/requirements.txt'
+        
+    - name: Install uv
+      uses: astral-sh/setup-uv@v5
+      with:
+        enable-cache: true
+        cache-dependency-glob: "google_scholar_crawler/requirements.txt"
     
     - name: Install dependencies
       run: |
-        pip install --upgrade pip
-        pip install -r google_scholar_crawler/requirements.txt
+        uv pip install --system -r google_scholar_crawler/requirements.txt
     
     - name: Fetch Google Scholar data
       id: fetch_data
