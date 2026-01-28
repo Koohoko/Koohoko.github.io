@@ -34,7 +34,7 @@ jobs:
       continue-on-error: true
       run: |
         cd ./google_scholar_crawler
-        python3 main.py
+        python3 -u main.py
       env: 
         GOOGLE_SCHOLAR_ID: ${{ secrets.GOOGLE_SCHOLAR_ID }}
         SCRAPERAPI_KEY: ${{ secrets.SCRAPERAPI_KEY }}
