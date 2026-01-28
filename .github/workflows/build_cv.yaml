@@ -1,0 +1,41 @@
+name: Build CV PDF
+
+on:
+  schedule:
+    # Run twice a week (Monday and Thursday at 09:00 UTC)
+    - cron: '0 9 * * 1,4'
+  workflow_dispatch:
+
+jobs:
+  build_cv:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout Source (tex file)
+        uses: actions/checkout@v4
+      
+      - name: Fetch Scholar Metrics
+        run: |
+          # Fetch the scholar_metrics.tex from the google-scholar-stats branch
+          # We use wget to avoid checking out the whole branch
+          mkdir -p files/CV
+          wget https://raw.githubusercontent.com/${{ github.repository }}/google-scholar-stats/results/scholar_metrics.tex -O files/CV/scholar_metrics.tex
+          
+      - name: Build PDF
+        uses: vinay0410/tectonic-action@v1.1.2
+        with:
+          latex_src_file: 'files/CV/CV_haogao.tex'
+
+      - name: Push PDF to Orphan Branch
+        run: |
+          cd files/CV
+          git init
+          git config --local user.name "${GITHUB_ACTOR}"
+          git config --local user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git checkout -b cv-pdf
+          git add CV_haogao.pdf
+          git commit -m "Updated CV $(date +'%Y-%m-%d')"
+          # Push to a dedicated branch 'cv-pdf' to avoid conflicts with the crawler branch
+          git push "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" cv-pdf --force

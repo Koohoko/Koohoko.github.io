@@ -36,7 +36,7 @@ jobs:
       env: 
         GOOGLE_SCHOLAR_ID: ${{ secrets.GOOGLE_SCHOLAR_ID }}
         SCRAPERAPI_KEY: ${{ secrets.SCRAPERAPI_KEY }}
-    
+
     - name: Push results
       if: steps.fetch_data.outcome == 'success'
       run: |
