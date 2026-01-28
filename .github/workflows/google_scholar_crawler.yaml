@@ -1,7 +1,7 @@
 name: Get Citation Data
 
 on: 
-  # 移除 page_build 触发，避免过于频繁
+  page_build: 
   schedule:
     # 每天随机时间运行一次（UTC 时间），避免固定时间被检测
     - cron: '17 9 * * *'
@@ -45,7 +45,7 @@ jobs:
         git config --local user.name "${GITHUB_ACTOR}"
         git config --local user.email "${GITHUB_ACTOR}@users.noreply.github.com"
         export remote_repo="https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
-        git add *.json
+        git add *.json *.tex
         git commit -m "Updated Citation Data $(date +'%Y-%m-%d')"
         git push "${remote_repo}" HEAD:google-scholar-stats --force
     
