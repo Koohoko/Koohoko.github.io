@@ -29,14 +29,17 @@ jobs:
           root_file: CV_haogao.tex
           working_directory: files/CV
 
-      - name: Push PDF to Orphan Branch
+      - name: Commit and Push PDF to Master
         run: |
-          cd files/CV
-          git init
           git config --local user.name "${GITHUB_ACTOR}"
           git config --local user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git checkout -b cv-pdf
-          git add CV_haogao.pdf
-          git commit -m "Updated CV $(date +'%Y-%m-%d')"
-          # Push to a dedicated branch 'cv-pdf' to avoid conflicts with the crawler branch
-          git push "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" cv-pdf --force
+          # Ensure we have the latest changes to avoid conflicts
+          git pull --rebase origin master
+          git add files/CV/CV_haogao.pdf
+          # Only commit if there are changes
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update CV PDF [skip ci]"
+            git push origin master
+          fi

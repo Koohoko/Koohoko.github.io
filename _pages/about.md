@@ -39,7 +39,7 @@ I enjoy solving biological problems with computational methods, I have developed
 - **2023-04-21** I am awarded the [RGC postdoctoral fellowship](https://www.ugc.edu.hk/eng/rgc/funding_opport/pdfs/) (totalling stipend >1.2 million HKD for 36 months) from the University Grant Committee (Hong Kong)!
 - **2021-11-23** As a team member, I got [Outstanding Project Team on COVID-19 Research Awards](https://www.info.gov.hk/gia/general/202111/23/P2021112300465.htm) from the Hong Kong government!
 
-# [CV](https://raw.githubusercontent.com/Koohoko/Koohoko.github.io/cv-pdf/CV_haogao.pdf)
-<iframe src="/web/viewer.html?file=https://raw.githubusercontent.com/Koohoko/Koohoko.github.io/cv-pdf/CV_haogao.pdf#pagemode=none" width="100%" height="860"></iframe>
+# [CV](/files/CV/CV_haogao.pdf)
+<iframe src="/web/viewer.html?file=/files/CV/CV_haogao.pdf#pagemode=none" width="100%" height="860"></iframe>
 
 <hr />
