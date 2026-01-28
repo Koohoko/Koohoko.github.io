@@ -1,0 +1,265 @@
+\documentclass[letterpaper,10pt]{article}
+\usepackage{mathpazo}
+\usepackage{multicol}
+\usepackage{tabularx}
+\setlength{\multicolsep}{0pt}
+\usepackage{enumitem}
+
+\usepackage{contour}
+\usepackage{ulem}
+\renewcommand{\ULdepth}{1.8pt}
+\contourlength{0.8pt}
+\newcommand{\myuline}[1]{%
+  \uline{\phantom{#1}}%
+  \llap{\contour{white}{#1}}%
+}
+
+\pagestyle{empty}
+
+\usepackage{geometry}
+\geometry{left=0.6in, right=0.6in, top=0.6in, bottom=0.6in}
+\setlist{topsep=2pt, itemsep=2pt, parsep=0pt}
+
+\usepackage{titlesec}
+\titlespacing{\subsection}{0pt}{8pt}{4pt}
+\titlespacing{\subsubsection}{0pt}{6pt}{0pt}
+
+\usepackage{ulem}
+\usepackage{hyperref}
+
+% --- PACKAGES FOR AUTOMATION ---
+\usepackage{totcount} % To count total number of publications
+\usepackage[yyyymmdd]{datetime} % To format the date as YYYY-MM-DD
+
+% --- AUTOMATION COMMANDS ---
+\regtotcounter{enumi} % Register the 'enumerate' counter for total counting
+
+% For counting first-author papers
+\newcounter{firstauthorcount}
+\regtotcounter{firstauthorcount}
+\newcommand{\faitem}{\refstepcounter{firstauthorcount}\item}
+
+% --- GOOGLE SCHOLAR METRICS (manually generated) ---
+\input{scholar_metrics.tex}
+
+\begin{document}
+\par{
+\centering{\textbf{\LARGE Haogao \textsc{Gu}}}\bigskip
+
+Room 5-28, Laboratory Block, \hfill E-mail: \texttt{work@guhaogao.com}\\
+21 Sassoon Road, Pokfulam, \hfill Mobile: \texttt{(852)96372964}\\
+Hong Kong \hfill Website: \href{https://guhaogao.com}{guhaogao.com}
+
+\setlength{\parskip}{-8pt}\hrulefill
+}
+
+\subsection*{EDUCATION}
+\begin{itemize}
+\item \textbf{PhD} (\textit{Infectious Disease}), \textbf{The University of Hong Kong} \hfill Sep. 2016 -- Oct. 2020
+\item \textbf{BMed} (\textit{Preventive Medicine}), \textbf{Sun Yat-sen University}  \hfill Sep. 2011 -- Jun. 2016
+\end{itemize}
+
+%% -------------- Research Experience
+\subsection*{EXPERIENCE}
+\begin{itemize}
+  
+  \item \textbf{Research Assistant Professor} (\textit{School of Public Health}), \textbf{The University of Hong Kong} \hfill Jul. 2024 -- Present
+  \item \textbf{Visiting Scholar} (\textit{Evolutionary dynamics of infectious diseases}), \textbf{Institut Pasteur} \hfill Dec. 2024 -- Feb. 2025 \\ \small \textit{Mentor: Sebastian Duchene, Department of computational Biology} \normalsize
+  \item \textbf{Postdoctoral Fellow} (\textit{School of Public Health}), \textbf{The University of Hong Kong} \hfill Jan. 2021 -- Jun. 2024 \\	\small \textit{Mentor: Leo Poon, Department of Laboratory Sciences} \normalsize
+
+\end{itemize}
+
+\subsection*{HONORS AND AWARDS}
+\begin{itemize}
+\item \textbf{\textsl{The HKU-Pasteur Fellowship (4th edition)}}, HKU‐Pasteur Research Pole \hfill Apr. 2024
+\item \textbf{\textsl{Faculty Outstanding Research Output Award}}, The University of Hong Kong \hfill Feb. 2024\\
+\small \textit{awarded twice on two projects} \normalsize
+\item \textbf{\textsl{Outstanding Project Team, on COVID-19 research award}}, Food and Health Bureau (Hong Kong) \hfill Nov. 2021
+\item \textbf{\textsl{Postgraduate Scholarship}}, The University of Hong Kong \hfill 2016–2020
+\item \textbf{\textsl{Best Student Poster}}, International Symposium for One Health Research (Guangzhou) \hfill 2014
+\item \textbf{\textsl{Individual Scholarship}}, Sun Yat-sen University \hfill 2013
+\item \textbf{\textsl{The Third Prize Scholarship}}, Sun Yat-sen University \hfill 2012
+\item \textbf{\textsl{First Prize}}, Chinese National Olympiad in Biology \hfill Sep. 2010\\
+  \small \textit{qualified me for guaranteed admission to Sun Yat-sen University} \normalsize
+\end{itemize}
+
+\subsection*{GRANTS}
+\begin{itemize}
+\item \textbf{RGC Postdoctoral Fellowship Scheme, University Grants Committee, Hong Kong SAR} \hfill 2023-2026
+    \begin{itemize}
+    \item Topic: \small Quantifying attenuation effects caused by dinucleotide biases and codon pair biases for development of safe and scalable live attenuated virus vaccines \normalsize 
+    \item Role: \textbf{PI;} Amount: \textbf{\$1,258,250 (HKD)} 
+    \end{itemize}
+\item \textbf{CEIRR Option (University of Georgia), NIH, United States} \hfill 2023-2025
+    \begin{itemize}
+    \item Topic: \small Investigation of repeated influenza vaccination for epitope focusing \normalsize 
+    \item Role: \textbf{Key personnel} (PI: Sophie Valkenburg); Amount: \textbf{\$454,428 (USD)} 
+    \end{itemize}
+\normalsize
+
+\normalsize  
+\end{itemize}
+
+\subsection*{TEACHING}
+\begin{itemize}
+\item \textbf{Postgraduate Certificate in Bioinformatics for MLT (LMLS6010)} , HKU SPACE \hfill Jan. 2026 \\
+\small \textit{Lecturer for 12 classes on Programming for Biological Data} \normalsize
+
+\item \textbf{Scientific Skills (LMLS6003)}, MSc in Biomedical Science, HKU SPACE \hfill Oct. 2024 \\
+\small \textit{Lecturer for 6 classes on Data Handling in Bioinformatics} \normalsize
+\item \textbf{Applied Medical Microbiology (LMLS6004)}, MSc in Biomedical Science, HKU SPACE \hfill Nov. 2024 \\
+\small \textit{Lecturer for 2 classes on Bioinformatic Tutorial} \normalsize
+\end{itemize}
+
+\subsection*{PUBLICATIONS}
+\subsubsection*{Summary}
+\begin{center}
+\begin{tabular}{ c c }
+% \hline
+Papers in peer-reviewed journals: & \textbf{\total{enumi}} (citations: \textbf{\ScholarCitations}; h-index: \textbf{\ScholarHIndex}) \\
+\textit{- first-/last- authored papers} & \textit{\textbf{\total{firstauthorcount}}} \\
+\end{tabular}
+\end{center}
+
+\subsubsection*{Journal papers \textmd{(in reverse chronological order)}:}
+\begin{enumerate}
+%% Published
+%% 2025
+\item Shanidewuhaxi Tuohetasen, Yanji Qu, Philip K Hopke, Kai Zhang, Yang Liu, Shao Lin, \myuline{\textbf{Haogao Gu}}, Ximeng Wang, Sam SS Lau, Xian Lin, Xiangmin Gao, Yong Wu, Xinli Zhou, Ziqiang Lin, Man Zhang, Yongqing Sun, Xiaoqing Liu, Jimei Chen, Wangjian Zhang. \textit{Potential Impact of Maternal Nighttime Light Exposure and Its Interaction With Sociodemographic Characteristics on the Risk of Various Congenital Heart Diseases.} \textbf{\textsc{Epidemiology}}, 36(5), 625-635. (2025)
+\item Yuqin Zhang, Jing Wei, Shirui Chen, Tarik Benmarhnia, Kai Zhang, Xiaowen Wang, Xinlei Deng, \myuline{\textbf{Haogao Gu}}, Ziqiang Lin, Yanji Qu, Jianpeng Xiao, Jie Jiang, Zhicheng Du, Wangjian Zhang, Yuantao Hao. \textit{Individual and mixed associations between fine particulate matter components and hospital admissions for hypertension: Insights from a large-scale South Chinese cohort study.} \textbf{\textsc{Sustainable Cities and Society}}, 106293. (2025)
+\item Gonghua Wu, Shenghao Wang, Wenjing Wu, Tarik Benmarhnia, Shao Lin, Kai Zhang, Xiaobo Xue Romeiko, \myuline{\textbf{Haogao Gu}}, Yanji Qu, Jianpeng Xiao, Xinlei Deng, Ziqiang Lin, Zhicheng Du, Wangjian Zhang, Yuantao Hao. \textit{Potential causal links of long-term PM2.5 components exposure with diabetes incidence and mortality in the United States.} \textbf{\textsc{Sustainable Cities and Society}}, 106071. (2025) 
+\item Wanying Sun, Ka Tim Choy, Ka Man Cheng, Christopher J Brackman, Samuel MS Cheng, Thomas HC Sit, CN Anne, Leslie D Sims, \myuline{\textbf{Haogao Gu}}, Amy WY Tang, Andrew NC Wong, Andrew TL Tsang, Joe CT Koo, Leo LH Luk, Hui-Ling Yen, Malik Peris, Leo LM Poon. \textit{Detection and characterisation of high pathogenicity avian influenza virus (H5N1/H5N8) clade 2.3. 4.4 b, Hong Kong SAR, China, 2021 to 2024.} \textbf{\textsc{Eurosurveillance}}, 2400839. (2025) 
+\item Yi Cao, Alex WH Chin, \myuline{\textbf{Haogao Gu}}, Mengting Li, Yuner Gu, Sylvia PN Lau, Kenrie PY Hui, Michael CW Chan, Leo LM Poon. \textit{An interferon-stimulated long non-coding RNA USP30-AS1 as an immune modulator in influenza A virus infection.} \textbf{\textsc{PLOS pathogens}}, e1012854. (2025) 
+%% 2024
+\item Xiaowen Wang, Yuqin Zhang, Benmarhnia Tarik, Kai Zhang, Shao Lin, Xinlei Deng, \myuline{\textbf{Haogao Gu}}, Wenjing Wu, Xiao Lin, Zhicheng Du, Ying Wang, Yanji Qu, Ziqiang Lin, Man Zhang, Yongqing Sun, Guang-hui Dong, Yongyue Wei, Wangjian Zhang, Yuantao Hao. \textit{The effect of residential greenness on cardiovascular mortality from a large cohort in South China: An in-depth analysis of effect modification by multiple demographic and lifestyle characteristics.} \textbf{\textsc{Environment International}}, 108894. (2024) 
+\faitem Chase Nelson, Leo L.M. Poon, \myuline{\textbf{Haogao Gu}}. \textit{Reply to: Population genetic considerations regarding the interpretation of within-patient SARS-CoV-2 polymorphism data.} \textbf{\textsc{Nature Communications}}, 15, 3239. (2024) 
+\faitem Janice Jia*, Carolyn Cohen*, \myuline{\textbf{Haogao Gu}}*, Milla McLean, Raghavan Varadarajan, Nisha Bhandari, Malik Peiris, Gabriel Leung, Leo Poon, Amy Chung, Benjamin Cowling , Nancy Leung , Tim Tsang, Sophie Valkenburg. \textit{Influenza antibody breadth and effector functions are immune correlates from acquisition of pandemic infection of children.} \textbf{\textsc{Nature Communications}}, 15, 3210. (2024) 
+\item Samuel M.S. Cheng, Chris K.P. Mok, John K.C. Li, Ken K.P. Chan, Kristine S. Luk, Ben H.W. Lee, \myuline{\textbf{Haogao Gu}}, Karl C.K. Chan, Leo C.H. Tsang, Karen Y.S. Yiu, Ken K.C. Ling, Yun Sang Tang, Leo L.H. Luk, Jennifer K.M. Yu, Andrew Pekosz, Richard J. Webby, Benjamin J. Cowling, David S.C. Hui, Malik Peiris. \textit{Cross-neutralizing antibody against emerging Omicron subvariants of SARS-CoV-2 in infection-naïve individuals with homologous BNT162b2 or BNT162b2 (WT+ BA. 4/5) bivalent booster vaccination.} \textbf{\textsc{Virology Journal}}, 21(1), 1-7. (2024) 
+%% 2023
+\item Xiaoqing Xu, Yu Deng, Jiahui Ding, Xianghui Shi, Xiawan Zheng, Dou Wang, Yu Yang, Lei Liu, Chunxiao Wang, Shuxian Li, \myuline{\textbf{Haogao Gu}}, Leo LM Poon, Tong Zhang. \textit{Refining detection methods for emerging SARS-CoV-2 mutants in wastewater: A case study on the Omicron variants.} \textbf{\textsc{Science of The Total Environment}}, 904, 166215. (2023) 
+\item Xiaoqing Xu, Yu Deng, Jiahui Ding, Xiawan Zheng, Chunxiao Wang, Dou Wang, Lei Liu, \myuline{\textbf{Haogao Gu}}, Malik Peiris, Leo L.M. Poon, Tong Zhang. \textit{Wastewater genomic sequencing for SARS-CoV-2 variants surveillance in wastewater-based epidemiology applications.} \textbf{\textsc{Water Research}}, 244, 120444. (2023) 
+\item Ming Z. M. Zheng, Tiong Kit Tan, Fernando Villalon-Letelier, Hilda Lau, Yi-Mo Deng, Svenja Fritzlar, Sophie A. Valkenburg, \myuline{\textbf{Haogao Gu}}, Leo L. M. Poon, Patrick C. Reading, Alain R. Townsend, Linda M. Wakim. \textit{Single-cycle influenza virus vaccine generates lung CD8+ Trm that cross react against viral variants and subvert virus escape mutants.} \textbf{\textsc{Science Advances}}, 9 (36), eadg3469. (2023) 
+\item Ruopeng Xie, Kimberly M. Edwards, Dillon C. Adam, Kathy S.M. Leung, Tim K. Tsang, Shreya Gurung, Weijia Xiong, Xiaoman Wei, Daisy Y.M. Ng, Gigi Y.Z. Liu, Pavithra Krishnan, Lydia D.J. Chang, Samuel M.S. Cheng, \myuline{\textbf{Haogao Gu}}, Gilman K.H. Siu, Joseph T. Wu, Gabriel M. Leung, Malik Peiris, Benjamin J. Cowling, Leo L.M. Poon, Vijaykrishna Dhanasekaran. \textit{Resurgence of Omicron BA.2 in SARS-CoV-2 infection-naive Hong Kong.} \textbf{\textsc{Nature Communications}}, 14, 2422. (2023) 
+\faitem \myuline{\textbf{Haogao Gu}}, Ahmed Abdul Quadeer, Pavithra Krishnan, Lydia Chang, Gigi Liu, Daisy Ng, Samuel Cheng, Tommy Lam, Malik Peiris, Matthew McKay, Leo Poon. \textit{Within-host genetic diversity of SARS-CoV-2 lineages in unvaccinated and vaccinated individuals.} \textbf{\textsc{Nature Communications}}, 14, 1793. (2023) 
+\item Dillon Adam, Mario Martín-Sánchez, \myuline{\textbf{Haogao Gu}}, Peng Wu, Eric Lau, Gabriel Leung, Leo Poon, Benjamin Cowling. \textit{Risk of within-hotel transmission of SARS-CoV-2 during on-arrival quarantine in Hong Kong: an epidemiological and phylogenomic investigation.} \textbf{\textsc{The Lancet Regional Health - Western Pacific}}, 100678. (2023) 
+%% 2022
+\item Julie TS Chu, \myuline{\textbf{Haogao Gu}}, Wanying Sun, Rebecca LY Fan, John M Nicholls, Sophie A Valkenburg, Leo Poon. \textit{Heterosubtypic immune pressure accelerates emergence of influenza A virus escape phenotypes in mice.} \textbf{\textsc{Virus Research}}, 198991. (2022) 
+\item Nathaniel Leong, \myuline{\textbf{Haogao Gu}}, Yuet Mei Ng, Lydia Chang, Pavithra Krishnan, Samuel Cheng, Malik Peiris, Leo Poon. \textit{Development of multiplex RT-ddPCR assays for detection of SARS-CoV-2 and other common respiratory virus infections.} \textbf{\textsc{Influenza and Other Respiratory Viruses}}, 1 (11), 13084. (2022) 
+\item Janice Jia, Chee Wah Tan, Samuel Cheng, \myuline{\textbf{Haogao Gu}}, Aileen Yeoh, Chris Ka Pun Mok, Yanqun Wang, Jincun Zhao, Nancy Leung, Benjamin Cowling, Leo Poon, David Hui, Lin-Fa Wang, Malik Peiris, Sophie Valkenburg. \textit{Priming conditions shape breadth of neutralizing antibody responses to sarbecoviruses.} \textbf{\textsc{Nature Communications}}, 13, 6285. (2022) 
+\item Kenrie Hui, Ka-Chun Ng, John CW Ho, Hin-Wo Yeung, Rachel HH Ching, \myuline{\textbf{Haogao Gu}}, Joseph CK Chung, Velda LY Chow, Ko-Yung Sit, Michael KY Hsin, Timmy WK Au, Leo Poon, JS Peiris, John Nicholls, Michael Chan. \textit{Replication of SARS-CoV-2 Omicron BA. 2 Variant in Ex Vivo Cultures of the Human Upper and Lower Respiratory Tract.} \textbf{\textsc{eBioMedicine}}, vol. 83: 104232. (2022) 
+\item Wen Su, Ka Tim Choy, \myuline{\textbf{Haogao Gu}}, Sin Fun Sia, Ka Man Cheng, Sarea Islam Nuha Nizami, Pavithra Krishnan, Yuet Mai Ng, Lydia Chang, Yingzhi Liu, Samuel Cheng, Malik Peiris, Leo Poon, John Nicholls, Hui-Ling Yen. \textit{Reduced Pathogenicity and Transmission Potential of Omicron BA.1 and BA.2 Sublineages Compared with the Early Severe Acute Respiratory Syndrome Coronavirus 2 D614G Variant in Syrian Hamsters.} \textbf{\textsc{Journal of Infectious Diseases}}, jiac276. (2022) 
+\item Wanying Sun, Samuel Cheng, Kristy Lam, Tsz Kwan, Ricky Wong, Leo Lau, Gigi Liu, Leo Luk, John Li, \myuline{\textbf{Haogao Gu}}, Malik Peiris, Leo Poon. \textit{Natural Reassortment of Eurasian Avian-Like Swine H1N1 and Avian H9N2 Influenza Viruses in Pigs, China.} \textbf{\textsc{Emerging Infectious Diseases}}, 28.7: 1509. (2022) 
+\item Maireid B Bull, \myuline{\textbf{Haogao Gu}}, Fionn Ma, Liyanage Perera, Leo Poon, Sophie Valkenburg. \textit{Next Generation T cell-activating vaccination increases influenza virus mutation prevalence.} \textbf{\textsc{Science Advances}}, 8(14), eabl5209. (2022) 
+\item Asmaa Hachim, \myuline{\textbf{Haogao Gu}}, Otared Kavian, Masashi Mori, Mike Kwan, Wai Hung Chan, Yat Sun Yau, Susan Chiu, Owen Tsang, David Hui, Chris Mok, Fionn Ma, Eric Lau, Gaya Amarasinghe, Abraham Qavi, Samuel Cheng, Leo Poon, Malik Peiris, Sophie Valkenburg, Niloufar Kavian. \textit{SARS-CoV-2 accessory proteins reveal distinct serological signatures in children.} \textbf{\textsc{Nature Communications}}, 13: 2951. (2022) 
+\item Hui-Ling Yen, Thomas Sit, Christopher Brackman, Shirley Chuk, \myuline{\textbf{Haogao Gu}}, Karina Tam, Pierra Law, Gabriel Leung, Malik Peiris, Leo Poon, Samuel Cheng, Lydia Chang, Pavithra Krishnan, Daisy Ng, Gigi Liu, Mani Hui, Sin Ying Ho, Wen Su, Sin Fun Sia, Ka-Tim Choy, Sammi Cheuk, Sylvia Lau, Amy Tang, Joe Koo, Louise Yung. \textit{Transmission of SARS-CoV-2 delta variant (AY. 127) from pet hamsters to humans, leading to onward human-to-human transmission: a case study.} \textbf{\textsc{The Lancet}}, 399.10329: 1070-1078. (2022) 
+\faitem \myuline{\textbf{Haogao Gu}}*, Ruopeng Xie*, Dillon Adam*, Joseph Tsui*, Daniel Chu*, Lydia Chang, Sammi Cheuk, Shreya Gurung, Pavithra Krishnan, Daisy Ng, Gigi Liu, Carrie Wan, Samuel Cheng, Kimberly Edwards, Kathy Leung, Joseph Wu, Dominic Tsang, Gabriel Leung, Benjamin Cowling, Malik Peiris, Tommy Lam, Vijaykrishna Dhanasekaran, Leo Poon. \textit{Genomic epidemiology of SARS-CoV-2 under an elimination strategy in Hong Kong.} \textbf{\textsc{Nature Communications}}, 13, 736 : 1-10. (2022) 
+\item Kenrie Hui, John Ho, Man-chun Cheung, Ka-chun Ng, Rachel Ching, Ka-ling Lai, Tonia Kam, \myuline{\textbf{Haogao Gu}}, Ko-Yung Sit, Michael Hsin, Timmy Au, Leo Poon, Malik Peiris, John Nicholls, Michael Chan. \textit{SARS-CoV-2 Omicron variant replication in human respiratory tract ex vivo.} \textbf{\textsc{Nature}}, 603: 715–720. (2022) 
+\faitem \myuline{\textbf{Haogao Gu}}, Daisy Ng, Gigi Liu, Samuel Cheng, Pavithra Krishnan, Lydia Chang, Sammi Cheuk, Mani Hui, Tommy Lam, Malik Peiris, Leo Poon. \textit{Recombinant BA. 1/BA. 2 SARS-CoV-2 Virus in Arriving Travelers, Hong Kong, February 2022.} \textbf{\textsc{Emerging infectious diseases}}, 28 (6) : 1276. (2022) 
+\faitem \myuline{\textbf{Haogao Gu}}, Pavithra Krishnan, Daisy Ng, Lydia Chang, Gigi Liu, Samuel Cheng, Mani Hui, Mathew Fan, Jacob Wan, Leo Lau, Benjamin Cowling, Malik Peiris, Leo Poon. \textit{Probable Transmission of SARS-CoV-2 Omicron Variant in Quarantine Hotel, Hong Kong, China, November 2021.} \textbf{\textsc{Emerging infectious diseases}}, 28 (2): 460. (2022) 
+\faitem \myuline{\textbf{Haogao Gu}}, Samuel Cheng, Pavithra Krishnan, Daisy Ng, Lydia Chang, Gigi Liu, Sammi Cheuk, Mani Hui, Mathew Fan, Jacob Wan, Leo Lau, Daniel Chu, Vijaykrishna Dhanasekaran, Malik Peiris, Leo Poon. \textit{Monitoring International Travelers Arriving in Hong Kong for Genomic Surveillance of SARS-CoV-2.} \textbf{\textsc{Emerging infectious diseases}}, 28(1): 247–250. (2022) 
+%% 2021
+\faitem \myuline{\textbf{Haogao Gu}}, Daniel Chu, Lydia Chang, Sammi Cheuk, Shreya Gurung, Pavithra Krishnan, Daisy Ng, Gigi Liu, Carrie Wan, Ruopeng Xie, Samuel Cheng, Benjamin Cowling, Dominic Tsang, Malik Peiris, Vijaykrishna Dhanasekaran, Leo Poon. \textit{Genetic Diversity of SARS-CoV-2 among Travelers Arriving in Hong Kong.} \textbf{\textsc{Emerging infectious diseases}}, 27(10): 2666–2668. (2021) 
+\item Vijaykrishna Dhanasekaran, Kimberly Edwards, Ruopeng Xie, \myuline{\textbf{Haogao Gu}}, Dillon C Adam, Lydia Chang, Sammi Cheuk, Shreya Gurung, Pavithra Krishnan, Daisy Ng, Gigi Liu, Carrie Wan, Samuel Cheng, Dominic Tsang, Benjamin Cowling, Malik Peiris, Leo Poon. \textit{Air travel-related outbreak of multiple SARS-CoV-2 variants.} \textbf{\textsc{Journal of Travel Medicine}}, taab149. (2021) 
+\faitem Daniel Chu*, \myuline{\textbf{Haogao Gu}}*, Lydia Chang, Sammi Cheuk, Shreya Gurung, Pavithra Krishnan, Daisy Ng, Gigi Liu, Carrie Wan, Dominic Tsang, Malik Peiris, Leo Poon. \textit{SARS-CoV-2 superspread in fitness center, Hong Kong, China, March 2021.} \textbf{\textsc{Emerging infectious diseases}}, 27(8): 2230–2232. (2021) 
+\item Daniel Chu*, Kenrie Hui*, \myuline{\textbf{Haogao Gu}}, Ronald LW Ko, Pavithra Krishnan, Daisy Ng, Gigi Liu, Carrie Wan, Man-Chun Cheung, Ka-Chun Ng, John Nicholls, Dominic Tsang, Malik Peiris, Michael Chan, Leo Poon. \textit{Introduction of ORF3a-Q57H SARS-CoV-2 variant causing fourth epidemic wave of COVID-19, Hong Kong, China.} \textbf{\textsc{Emerging infectious diseases}}, 27(5): 1492–1495. (2021) 
+%% 2020
+\faitem \myuline{\textbf{Haogao Gu}}, Daniel Chu, Malik Peiris, Leo Poon. \textit{Multivariate analyses of codon usage of SARS-CoV-2 and other betacoronaviruses.} \textbf{\textsc{Virus Evolution}} 6, no. 1: veaa032. (2020) 
+\item Sah Ranjit, Alfonso J. Rodriguez-Morales, Runa Jha, Daniel Chu, \myuline{\textbf{Haogao Gu}}, Malik Peiris, Anup Bastola, Bibek Kumar Lal, Hemant Chanda Ojha, Ali A Rabaan, Lysien I Zambrano, Anthony Costello, Kouichi Morita, Basu Dev Pandey, Leo Poon. \textit{Complete genome sequence of a 2019 novel coronavirus (SARS-CoV-2) strain isolated in Nepal.} \textbf{\textsc{Microbiology Resource Announcements}} 9, no. 11. (2020) 
+\faitem \myuline{\textbf{Haogao Gu}}, Rebecca Fan, Di Wang, Leo Poon. \textit{Dinucleotide evolutionary dynamics in influenza A virus.} \textbf{\textsc{Virus Evolution}} 5, no. 2: vez038. (2019) 
+\item Al-Ghadeer Hussain, Daniel Chu, Ehab MA Rihan, Ehab M. Abd-Allah, \myuline{\textbf{Haogao Gu}}, Alex Chin, Ibrahim A Qasim, Ali Aldoweriej, Sanad S Alharbi, Marshad A Al-Aqil, Ali Al-Sahaf, Salah S Abdel Rahman, Ali H Aljassem, Ali Abdul-Al, Mohammed R Aljasir, Yousef MO Alhammad, Samy Kasem, Malik Peiris, Ahmed ZSA Zaki, Leo Poon. \textit{Circulation of Influenza A (H5N8) Virus, Saudi Arabia.} \textbf{\textsc{Emerging Infectious Diseases}} 24, no. 10: 1961. (2018) 
+\faitem \myuline{\textbf{Haogao Gu}}, Ross Ka-Kit Leung, Qinlong Jing, Wangjian Zhang, Zhicong Yang, Jiahai Lu, Yuantao Hao, Dingmei Zhang. \textit{Meteorological Factors for Precise Dengue Fever Control and Prevention in South China.} \textbf{\textsc{International Journal of Environmental Research and Public Health}}, 13(9), 867. (2016) 
+\faitem Tianmu Chen*, \myuline{\textbf{Haogao Gu}}*, Ross Ka-Kit Leung, Ruchun Liu, Qiuping Chen, Ying Wu, Yaman Li. \textit{Evidence-Based interventions of Norovirus outbreaks in China.} \textbf{\textsc{BMC Public Health}}, 16(1): 1072. (2016) 
+\faitem \myuline{\textbf{Haogao Gu}}, Wangjian Zhang, Hao Xu, Pengyuan Li, Luolin Wu, Pi Guo, Yuantao Hao, Jiahai Lu, Dingmei Zhang. \textit{Predicating risk area of human infection with avian influenza a (H7N9) virus by using early warning model in China.} \textbf{\textsc{Chinese Journal of Epidemiology}}, 36(5): 470-475. (2015) 
+\item Pengyuan Li, Hao Xu, \myuline{\textbf{Haogao Gu}}, Mengmeng Ma, Jiahai Lu, Yuantao Hao, Dingmei Zhang. \textit{Epidemiological Characteristics of Influenza Virus H7N9 and Evolutionary Analysis of Hemagglutinin and Neuraminidase Genes.} \textbf{\textsc{Journal of Sun Yat-sen University (Medical Sciences)}}, 06. (2014) 
+\end{enumerate}
+
+\subsection*{SUPERVISION}
+\begin{itemize}
+\item Co-Supervision
+    \begin{itemize}
+    \item Ruixuan Wang, PhD student, The University of Hong Kong \hfill Feb. 2025 - Current \\ \small \textit{Topic: Within-host Viral Phylodyanmics} \normalsize
+    \item Mengting Li, PhD student, The University of Hong Kong \hfill Oct. 2025 - Current \\ \small \textit{Topic: Virtual Cell and Viral Infection} \normalsize
+    \end{itemize}
+\end{itemize}
+
+\subsection*{INVITED TALKS}
+\begin{itemize}
+  \item \textbf{Genomic Surveillance and Molecular Epidemiology of SARS-CoV-2 in Hong Kong}.  \hfill Jul. 2025 \\ \small \textit{XLII Annual Meeting of the Willi Hennig Society, 
+  The Chinese University of Hong Kong, HKSAR, China}
+\end{itemize}
+
+\subsection*{TRAININGS}
+\begin{itemize}
+\item \textbf{Workshops}:
+\begin{itemize}
+    \item \textit{Workshop on Molecular Evolution}, Marine Biological Laboratory (MBL), Woods Hole, MA, USA\hfill May. 2025
+    \item  \setlength{\parskip}{-3pt} \textit{Virus Evolution and Epidemiology Summer Course}, Croucher Foundation, Hong Kong \hfill Jul. 2024
+    \item \textit{Models and Inference in Population Genetics IV}, University of Warwick, UK \hfill Apr. 2024
+\end{itemize}
+\item \textbf{Online Specializations}:
+    \begin{itemize}
+        \item \setlength{\parskip}{-3pt} \textsl{Discrete Mathematics for Computer Science}, University of California San Diego \hfill Oct. 2019
+        \item \textsl{Bayesian Statistics and Modelling}, University of California Santa Cruz \hfill Aug. 2019
+        \item \textsl{Python 3 Programming}, University of Michigan \hfill Jun. 2019
+        \item \textsl{Mathematics for Machine Learning}, Imperial College London \hfill Apr. 2019
+    \end{itemize}
+\item \textbf{Teaching Aptitude}: Certificate of Teaching and Learning in Higher Education, CETL, HKU. \hfill Dec. 2024
+\end{itemize}
+
+\subsection*{ACADEMIC SERVICES}
+\subsubsection*{Managing editor:}
+\textbf{\textsc{Virology Journal}}
+
+% \subsubsection*{Review for journals:}
+% \begin{multicols}{2}
+% \begin{itemize}
+%   \item \setlength{\parskip}{-3pt} \textsc{Emerging Infectious Diseases}
+%   \item \textsc{Communications Medicine}
+%   \item \textsc{PLOS Pathogens}
+%   \item \textsc{Virus Evolution}
+%   \item \textsc{npj Viruses}
+%   \item \textsc{Virology Journal}
+%   \item \textsc{Infection, Genetics and Evolution}
+%   \item \textsc{Epidemics}
+%   \item \textsc{Influenza and Other Respiratory Viruses}
+%   \item \textsc{Cellular and Molecular Life Sciences}
+%   \item \textsc{Scientific Reports}
+%   \item \textsc{Frontiers in Immunology}
+%   \item \textsc{BMC Microbiology}
+%   \item \textsc{BMC Medical Research Methodology}
+%   \item \textsc{Journal of Multidisciplinary Healthcare}
+% \end{itemize}
+% \end{multicols}
+
+\subsubsection*{Review for journals:}
+\begin{tabularx}{\linewidth}{X X}
+  \textsc{Emerging Infectious Diseases} & \textsc{Communications Medicine} \\
+  \textsc{PLOS Pathogens} & \textsc{Virus Evolution} \\
+  \textsc{npj Viruses} & \textsc{Virology Journal} \\
+  \textsc{Infection, Genetics and Evolution} & \textsc{Epidemics} \\
+  \textsc{Influenza and Other Respiratory Viruses} & \textsc{Cellular and Molecular Life Sciences} \\
+  \textsc{Scientific Reports} & \textsc{Frontiers in Immunology} \\
+  \textsc{BMC Microbiology} & \textsc{BMC Medical Research Methodology} \\
+  \textsc{Journal of Multidisciplinary Healthcare} & \\
+\end{tabularx}
+
+\subsubsection*{Contribution to the open-source community:}
+\begin{itemize}
+\item \setlength{\parskip}{-3pt} \textbf{Author}, \texttt{SynMut}, \small \textit{Synonymously Mutated Sequences with Different Genomic Signatures (DOI: 10.18129/B9.bioc.SynMut)} \normalsize
+\item \textbf{Author}, \texttt{GEII}, \small \textit{Host Gene Expression under Influenza virus infection or Interferon stimulation (https://github.com/Leo-Poon-Lab/GEII)} \normalsize
+\item \textbf{Author}, \texttt{epitope\_diversity}, \small \textit{Estimating epitope diversity at haplotype level using NGS reads. (https://github.com/Koohoko/epitope\_diversity)} \normalsize
+\item \textbf{Author}, \texttt{fasta\_filter}, \small \textit{Filtering fasta sequences with threshold of specific bases (https://github.com/Koohoko/fasta\_filter)} \normalsize
+\item \textbf{Contributor}, \texttt{spatPomp}, \small \textit{Inference for Spatiotemporal Partially Observed Markov Processes (https://github.com/spatPomp-org/spatPomp)}\normalsize
+\item \textbf{Contributor}, \texttt{data.table} (Chinese translation), \small \textit{High-performance R package (https://github.com/Rdatatable/data.table)}\normalsize
+\end{itemize}
+
+\subsubsection*{Leadership and influence:}
+\begin{itemize}
+\item Organizing and teaching a weekly reading group on Molecular Evolution. \hfill Feb. 2025 - Dec. 2025 \\ \small \textit{The group involve 20 researchers from different regions and disciplines} \normalsize 
+\item \setlength{\parskip}{-3pt} Generating and drafting weekly reports to Hong Kong public health authorities. \hfill 2020 - 2022 \\ \small \textit{On SARS-CoV-2 genomic epidemiology for timely pandemic responses} \normalsize 
+
+\end{itemize}
+
+
+\vfill \texttt{Updated on \today\ (Google Scholar: \ScholarUpdated)}
+\end{document}
