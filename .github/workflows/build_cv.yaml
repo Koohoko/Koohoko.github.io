@@ -21,7 +21,7 @@ jobs:
           # Fetch the scholar_metrics.tex from the google-scholar-stats branch
           # We use wget to avoid checking out the whole branch
           mkdir -p files/CV
-          wget https://raw.githubusercontent.com/${{ github.repository }}/google-scholar-stats/results/scholar_metrics.tex -O files/CV/scholar_metrics.tex
+          wget https://raw.githubusercontent.com/${{ github.repository }}/google-scholar-stats/scholar_metrics.tex -O files/CV/scholar_metrics.tex
           
       - name: Build PDF
         uses: vinay0410/tectonic-action@v1.1.2
