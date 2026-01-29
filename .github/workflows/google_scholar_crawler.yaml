@@ -39,8 +39,27 @@ jobs:
         GOOGLE_SCHOLAR_ID: ${{ secrets.GOOGLE_SCHOLAR_ID }}
         SCRAPERAPI_KEY: ${{ secrets.SCRAPERAPI_KEY }}
 
-    - name: Push results
+    - name: Check for changes
+      id: check_changes
       if: steps.fetch_data.outcome == 'success'
+      run: |
+        git fetch origin google-scholar-stats:google-scholar-stats || true
+        
+        CHANGED="true"
+        if git show-ref --verify --quiet refs/heads/google-scholar-stats; then
+          git show google-scholar-stats:gs_data_shieldsio.json > old_citations.json 2>/dev/null || true
+          git show google-scholar-stats:gs_data_hindex.json > old_hindex.json 2>/dev/null || true
+          
+          if cmp -s google_scholar_crawler/results/gs_data_shieldsio.json old_citations.json && \
+             cmp -s google_scholar_crawler/results/gs_data_hindex.json old_hindex.json; then
+             CHANGED="false"
+             echo "No changes in Citation or H-Index detected."
+          fi
+        fi
+        echo "changed=${CHANGED}" >> $GITHUB_OUTPUT
+
+    - name: Push results
+      if: steps.fetch_data.outcome == 'success' && steps.check_changes.outputs.changed == 'true'
       run: |
         cd ./google_scholar_crawler/results
         git init
