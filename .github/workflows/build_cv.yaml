@@ -36,8 +36,11 @@ jobs:
         run: |
           git config --local user.name "${GITHUB_ACTOR}"
           git config --local user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          # Ensure we have the latest changes to avoid conflicts
+          # Stash any local changes (e.g. the newly built PDF) to allow clean pull
+          git stash --include-untracked
           git pull --rebase origin master
+          # Unstash to bring back the built PDF
+          git stash pop || true
           git add files/CV/CV_haogao.pdf
           # Only commit if there are changes
           if git diff --staged --quiet; then
