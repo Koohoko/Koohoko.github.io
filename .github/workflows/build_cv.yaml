@@ -1,6 +1,9 @@
 name: Build CV PDF
 
 on:
+  push:
+    paths:
+      - 'files/CV/**.tex'
   schedule:
     # Run twice a week (Monday and Thursday at 09:00 UTC)
     - cron: '0 9 * * 1,4'
