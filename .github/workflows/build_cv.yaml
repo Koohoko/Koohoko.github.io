@@ -4,9 +4,10 @@ on:
   push:
     paths:
       - 'files/CV/**.tex'
-  schedule:
-    # Run twice a week (Monday and Thursday at 09:00 UTC)
-    - cron: '0 9 * * 1,4'
+  workflow_run:
+    workflows: ["Get Citation Data"]
+    types:
+      - completed
   workflow_dispatch:
 
 jobs:
@@ -16,10 +17,53 @@ jobs:
       contents: write
     
     steps:
-      - name: Checkout Source (tex file)
+      - name: Checkout Source
         uses: actions/checkout@v4
-      
+        with:
+          fetch-depth: 0 # Need history to check timestamps
+
+      - name: Check Build Necessity
+        id: check_build
+        run: |
+          SHOULD_BUILD="false"
+          
+          if [[ "${{ github.event_name }}" == "push" || "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "Triggered by manual dispatch or push to CV files."
+            SHOULD_BUILD="true"
+            
+          elif [[ "${{ github.event_name }}" == "workflow_run" ]]; then
+             if [[ "${{ github.event.workflow_run.conclusion }}" == "success" ]]; then
+               # fetch the branch
+               git fetch origin google-scholar-stats:google-scholar-stats
+               
+               # Get upstream workflow start time (epoch)
+               # created_at is ISO 8601 (e.g. 2023-01-01T10:00:00Z), readable by date -d
+               RUN_START_TIME=$(date -d "${{ github.event.workflow_run.created_at }}" +%s)
+               
+               # Get last commit time of the metrics branch (epoch)
+               COMMIT_TIME=$(git log -1 --format=%ct google-scholar-stats)
+               
+               echo "Upstream Workflow started at: $RUN_START_TIME"
+               echo "Metrics Branch commit time:   $COMMIT_TIME"
+               
+               # If the commit happened AFTER the workflow started, it was updated by this run.
+               if [[ $COMMIT_TIME -gt $RUN_START_TIME ]]; then
+                 echo "Metrics updated during this run. Proceeding with build."
+                 SHOULD_BUILD="true"
+               else
+                 echo "Metrics commit is older than workflow start. No update occurred. Skipping build."
+                 SHOULD_BUILD="false"
+               fi
+             else
+               echo "Crawler workflow failed. Skipping build."
+               SHOULD_BUILD="false"
+             fi
+          fi
+          
+          echo "should_build=$SHOULD_BUILD" >> $GITHUB_OUTPUT
+
       - name: Fetch Scholar Metrics
+        if: steps.check_build.outputs.should_build == 'true'
         run: |
           # Fetch the scholar_metrics.tex from the google-scholar-stats branch
           # We use wget to avoid checking out the whole branch
@@ -27,18 +71,21 @@ jobs:
           wget https://raw.githubusercontent.com/${{ github.repository }}/google-scholar-stats/scholar_metrics.tex -O files/CV/scholar_metrics.tex
           
       - name: Set Reproducible Build Timestamp
+        if: steps.check_build.outputs.should_build == 'true'
         run: |
           # Set SOURCE_DATE_EPOCH to the last commit timestamp of the Tex file
           # This ensures the PDF binary is identical if the inputs haven't changed
           echo "SOURCE_DATE_EPOCH=$(git log -1 --format=%at files/CV/CV_haogao.tex)" >> $GITHUB_ENV
 
       - name: Build PDF
+        if: steps.check_build.outputs.should_build == 'true'
         uses: xu-cheng/latex-action@v3
         with:
           root_file: CV_haogao.tex
           working_directory: files/CV
 
       - name: Commit and Push PDF to Master
+        if: steps.check_build.outputs.should_build == 'true'
         run: |
           git config --local user.name "${GITHUB_ACTOR}"
           git config --local user.email "${GITHUB_ACTOR}@users.noreply.github.com"
