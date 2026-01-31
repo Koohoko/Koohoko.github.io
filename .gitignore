@@ -23,3 +23,6 @@ Gemfile.lock
 # Generated scholarship metrics
 files/CV/scholar_metrics.tex
 results/
+
+# Ignore local CV PDF build (but allowed in CI via force add)
+files/CV/CV_haogao.pdf

@@ -94,7 +94,8 @@ jobs:
           git pull --rebase origin master
           # Unstash to bring back the built PDF
           git stash pop || true
-          git add files/CV/CV_haogao.pdf
+          # Force add the PDF because it is now in .gitignore
+          git add -f files/CV/CV_haogao.pdf
           # Only commit if there are changes
           if git diff --staged --quiet; then
             echo "No changes to commit"
