@@ -2,3 +2,24 @@
 _site
 Gemfile.lock
 .vscode/
+
+# LaTeX
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.xdv
+*.bbl
+*.blg
+*.tdo
+*.pdfpc
+*.cut
+*.nav
+*.snm
+*.vrb
+
+# Generated scholarship metrics
+files/CV/scholar_metrics.tex
+results/
