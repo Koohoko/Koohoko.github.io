@@ -2,8 +2,8 @@ name: Get Citation Data
 
 on: 
   schedule:
-    # 每天随机时间运行一次（UTC 时间），避免固定时间被检测
-    - cron: '17 9 * * *'
+    # 每隔一天随机时间运行一次（UTC 时间），避免固定时间被检测
+    - cron: '17 9 */2 * *'
   # 允许手动触发
   workflow_dispatch:
 
