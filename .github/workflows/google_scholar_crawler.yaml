@@ -10,7 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
     steps:
     - uses: actions/checkout@v4
     
@@ -37,7 +37,7 @@ jobs:
         python3 -u main.py
       env: 
         GOOGLE_SCHOLAR_ID: ${{ secrets.GOOGLE_SCHOLAR_ID }}
-        SCRAPERAPI_KEY: ${{ secrets.SCRAPERAPI_KEY }}
+        SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
 
     - name: Check for changes
       id: check_changes
