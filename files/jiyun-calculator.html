@@ -35,10 +35,10 @@
       radial-gradient(1200px 600px at 15% -5%, #f7f2e7 0%, transparent 60%),
       radial-gradient(900px 500px at 110% 110%, #efe7d6 0%, transparent 55%),
       var(--paper);
-    min-height:100%;
+    min-height:100vh;
     display:flex;
-    align-items:center;
     justify-content:center;
+    align-items:flex-start;
     padding:28px 16px;
     line-height:1.5;
   }
@@ -80,6 +80,7 @@
 
   .fields{display:flex;flex-direction:column;gap:14px;margin-top:20px}
   .field{position:relative}
+  .input-plain{padding-left:14px}
   label{
     display:block;
     font-size:13px;
@@ -105,6 +106,7 @@
     padding:12px 14px 12px 34px;
     outline:none;
     transition:border-color .15s, box-shadow .15s;
+    appearance:textfield;
     -moz-appearance:textfield;
   }
   input.pad-r{padding-right:42px}
@@ -117,8 +119,105 @@
   }
   .settings .field{flex:1}
   .settings label{font-size:11.5px}
-  .settings input{font-size:15px;padding:9px 12px 9px 12px}
+  .settings input{
+    width:100%;
+    font-family:var(--mono);
+    font-size:15px;
+    color:var(--ink);
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:11px;
+    padding:9px 12px;
+    outline:none;
+    transition:border-color .15s, box-shadow .15s;
+  }
+  .settings input:focus,
+  .ship-type-option input:focus + span{border-color:var(--accent);box-shadow:0 0 0 3px rgba(191,78,48,.13)}
   .settings .input-wrap .unit{display:none}
+  .ship-type-options{display:flex;gap:8px}
+  .ship-type-option{flex:1}
+  .ship-type-option input{
+    position:absolute;
+    opacity:0;
+    pointer-events:none;
+  }
+  .ship-type-option span{
+    display:block;
+    width:100%;
+    font-family:var(--mono);
+    font-size:14px;
+    text-align:center;
+    color:var(--ink-soft);
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:11px;
+    padding:10px 12px;
+    cursor:pointer;
+    transition:border-color .15s, box-shadow .15s, color .15s, background-color .15s;
+  }
+  .ship-type-option input:checked + span{
+    color:var(--accent);
+    border-color:var(--accent);
+    background:#fff4f1;
+  }
+  .volume-box{
+    margin-top:16px;
+    padding-top:16px;
+    border-top:1px dashed var(--line);
+  }
+  .volume-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    cursor:pointer;
+    list-style:none;
+  }
+  .volume-box[open] .volume-head{margin-bottom:10px}
+  .volume-head::-webkit-details-marker{display:none}
+  .volume-head-main{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .volume-arrow{
+    display:inline-block;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--ink-soft);
+    transition:color .18s ease;
+  }
+  details[open] .volume-arrow{color:var(--accent)}
+  .volume-title{
+    font-size:13px;
+    font-weight:600;
+    color:var(--ink);
+  }
+  .volume-note{
+    font-family:var(--mono);
+    font-size:10.5px;
+    color:var(--ink-soft);
+  }
+  .volume-grid{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:10px;
+  }
+  .volume-grid label{
+    font-size:11.5px;
+    margin-bottom:4px;
+  }
+  .volume-summary{
+    margin-top:10px;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    line-height:1.5;
+  }
+  .volume-summary b{
+    color:var(--ink);
+    font-weight:600;
+  }
+  .volume-content{padding-top:10px}
 
   .result{
     margin-top:22px;
@@ -164,38 +263,84 @@
 </head>
 <body>
 <div class="card">
-  <div class="kicker">PDD · 集运 · 中美比价</div>
+  <div class="kicker">集运 · 中美比价</div>
   <h1>值不值，算一下</h1>
-  <div class="sub">值得 ⟺ 汇率 × 美国价 &gt; 拼价 + 运费 × 重量</div>
+  <div class="sub">值得 ⟺ 汇率 × 美国价 &gt; 拼价 + 运费</div>
 
   <div class="fields">
     <div class="field">
-      <label for="pdd">拼多多价</label>
+      <label for="pdd">国内价</label>
       <div class="input-wrap">
         <span class="unit">¥</span>
         <input id="pdd" type="number" inputmode="decimal" value="7" step="0.01" min="0">
       </div>
     </div>
     <div class="field">
-      <label for="us">美国价（Weee / 亚超）</label>
+      <label for="us">美国价</label>
       <div class="input-wrap">
         <span class="unit">$</span>
         <input id="us" type="number" inputmode="decimal" value="2.78" step="0.01" min="0">
       </div>
     </div>
     <div class="field">
-      <label for="w">重量</label>
+      <label for="w">实际重</label>
       <div class="input-wrap">
-        <input id="w" class="pad-r" type="number" inputmode="decimal" value="0.35" step="0.01" min="0" style="padding-left:14px">
+        <input id="w" class="pad-r input-plain" type="number" inputmode="decimal" value="0.35" step="0.01" min="0">
         <span class="unit unit-r">kg</span>
       </div>
     </div>
   </div>
 
+  <details class="volume-box">
+    <summary class="volume-head">
+      <span class="volume-head-main">
+        <span class="volume-arrow" aria-hidden="true">▸</span>
+        <span class="volume-title">体积重（可选）</span>
+      </span>
+      <span class="volume-note">长 × 宽 × 高(cm) ÷ 6000</span>
+    </summary>
+    <div class="volume-content">
+      <div class="volume-grid">
+        <div class="field">
+          <label for="len">长 (cm)</label>
+          <div class="input-wrap">
+            <input id="len" class="input-plain" type="number" inputmode="decimal" step="0.1" min="0">
+          </div>
+        </div>
+        <div class="field">
+          <label for="wid">宽 (cm)</label>
+          <div class="input-wrap">
+            <input id="wid" class="input-plain" type="number" inputmode="decimal" step="0.1" min="0">
+          </div>
+        </div>
+        <div class="field">
+          <label for="hei">高 (cm)</label>
+          <div class="input-wrap">
+            <input id="hei" class="input-plain" type="number" inputmode="decimal" step="0.1" min="0">
+          </div>
+        </div>
+      </div>
+      <div class="volume-summary" id="volumeSummary">留空则不计算体积重；填完整长、宽、高后，自动按 max(实际重, 体积重) 计费。</div>
+    </div>
+  </details>
+
   <div class="settings">
     <div class="field">
       <label for="rate">汇率（¥/$）</label>
       <div class="input-wrap"><input id="rate" type="number" inputmode="decimal" value="6.8" step="0.01" min="0.01"></div>
+    </div>
+    <div class="field">
+      <label for="shipType">运费类型</label>
+      <div class="ship-type-options" role="radiogroup" aria-label="运费类型">
+        <label class="ship-type-option" for="shipTypeStandard">
+          <input id="shipTypeStandard" name="shipType" type="radio" value="25" checked>
+          <span>普货</span>
+        </label>
+        <label class="ship-type-option" for="shipTypeSensitive">
+          <input id="shipTypeSensitive" name="shipType" type="radio" value="41">
+          <span>敏货</span>
+        </label>
+      </div>
     </div>
     <div class="field">
       <label for="ship">运费（¥/kg）</label>
@@ -212,6 +357,8 @@
       </span>
     </div>
     <div class="rows">
+      <div class="row" id="volumetricRow" hidden><span class="k">体积重</span><span class="v" id="volumetric">—</span></div>
+      <div class="row" id="chargeableRow" hidden><span class="k">计费重</span><span class="v" id="chargeable">—</span></div>
       <div class="row"><span class="k">到手成本（货价 + 运费）</span><span class="v" id="landed">—</span></div>
       <div class="row"><span class="k">其中运费</span><span class="v" id="shipcost">—</span></div>
       <div class="row"><span class="k">美国价折合人民币</span><span class="v" id="usrmb">—</span></div>
@@ -225,13 +372,41 @@
 
 <script>
   const $ = id => document.getElementById(id);
-  const ids = ['pdd', 'us', 'w', 'rate', 'ship'];
+  const ids = ['pdd', 'us', 'w', 'rate', 'ship', 'len', 'wid', 'hei'];
+  const dimensionIds = ['len', 'wid', 'hei'];
   const num = value => {
     const number = parseFloat(value);
     return isFinite(number) ? number : NaN;
   };
   const yuan = value => '¥' + value.toFixed(2);
   const usd = value => '$' + value.toFixed(2);
+  const kg = value => value.toFixed(2).replace(/\.00$/, '').replace(/(\.\d)0$/, '$1') + ' kg';
+
+  function selectedShipType() {
+    return document.querySelector('input[name="shipType"]:checked');
+  }
+
+  function applyShipTypeRate() {
+    $('ship').value = selectedShipType().value;
+    compute();
+  }
+
+  function dimensionValues() {
+    return dimensionIds.map(id => ({
+      id,
+      raw: $(id).value.trim(),
+      value: num($(id).value)
+    }));
+  }
+
+  function syncVolumeDisclosure() {
+    const volumeBox = document.querySelector('.volume-box');
+    const volumeArrow = document.querySelector('.volume-arrow');
+    if (!volumeBox || !volumeArrow) {
+      return;
+    }
+    volumeArrow.textContent = volumeBox.open ? '▾' : '▸';
+  }
 
   function compute() {
     const pdd = num($('pdd').value);
@@ -239,6 +414,14 @@
     const weight = num($('w').value);
     const rate = num($('rate').value);
     const ship = num($('ship').value);
+    const dimensions = dimensionValues();
+    const hasVolumeInput = dimensions.some(dimension => dimension.raw !== '');
+    const hasCompleteVolume = dimensions.every(dimension => isFinite(dimension.value) && dimension.value > 0);
+    const volumeWeight = hasCompleteVolume
+      ? (dimensions[0].value * dimensions[1].value * dimensions[2].value) / 6000
+      : NaN;
+    const chargeableWeight = hasCompleteVolume ? Math.max(weight, volumeWeight) : weight;
+    const billedBy = hasCompleteVolume && volumeWeight > weight ? '体积重' : '实际重';
 
     const result = $('result');
     const setTheme = theme => {
@@ -249,19 +432,38 @@
       setTheme('t-none');
       $('verdict').textContent = '输入价格';
       $('kval').textContent = '—';
-      ['landed', 'shipcost', 'usrmb', 'save'].forEach(id => {
+      ['volumetric', 'chargeable', 'landed', 'shipcost', 'usrmb', 'save'].forEach(id => {
         $(id).textContent = '—';
       });
-      $('hint').textContent = '填入拼多多价、美国价、重量，自动判断。';
+      $('volumetricRow').hidden = true;
+      $('chargeableRow').hidden = true;
+      $('volumeSummary').textContent = '留空则不计算体积重；填完整长、宽、高后，自动按 max(实际重, 体积重) 计费。';
+      $('hint').textContent = '填入国内价、美国价、实际重，自动判断。';
       return;
     }
 
-    const shipCost = ship * weight;
+    const shipCost = ship * chargeableWeight;
     const landed = pdd + shipCost;
     const usRmb = rate * us;
     const saveRmb = usRmb - landed;
     const saveUsd = saveRmb / rate;
     const kRatio = saveRmb / usRmb;
+
+    if (hasCompleteVolume) {
+      $('volumetricRow').hidden = false;
+      $('chargeableRow').hidden = false;
+      $('volumetric').textContent = kg(volumeWeight);
+      $('chargeable').textContent = kg(chargeableWeight) + '（按' + billedBy + '）';
+      $('volumeSummary').innerHTML = '体积重 = <b>' + kg(volumeWeight) + '</b>；当前计费重取 <b>' + kg(chargeableWeight) + '</b>。';
+    } else {
+      $('volumetricRow').hidden = true;
+      $('chargeableRow').hidden = true;
+      $('volumetric').textContent = '—';
+      $('chargeable').textContent = '—';
+      $('volumeSummary').textContent = hasVolumeInput
+        ? '补全长、宽、高后，才会计算体积重并自动取 max(实际重, 体积重)。'
+        : '留空则不计算体积重；填完整长、宽、高后，自动按 max(实际重, 体积重) 计费。';
+    }
 
     $('landed').textContent = yuan(landed);
     $('shipcost').textContent = yuan(shipCost);
@@ -275,7 +477,7 @@
     if (kRatio < 0) {
       theme = 't-bad';
       verdict = '倒贴，别买';
-      hint = '运费已经吃掉价差。<b>典型的又便宜又重</b>——主食、瓶装、方便食品多半如此。';
+      hint = '运费已经吃掉价差。<b>典型的又便宜又重</b>';
     } else if (kRatio < 0.20) {
       theme = 't-warn';
       verdict = '薄利，搭车带';
@@ -287,7 +489,7 @@
     } else {
       theme = 't-good';
       verdict = '装箱主力';
-      hint = '高回报，<b>优先装它</b>。这类通常又轻又是美国卖得贵的东西（眼镜、好茶、干货）。';
+      hint = '高回报，<b>优先装它</b>。这类通常又轻又是美国卖得贵的东西。';
     }
     setTheme(theme);
     $('verdict').textContent = verdict;
@@ -295,6 +497,12 @@
   }
 
   ids.forEach(id => $(id).addEventListener('input', compute));
+  document.querySelectorAll('input[name="shipType"]').forEach(input => {
+    input.addEventListener('change', applyShipTypeRate);
+  });
+  document.querySelector('.volume-box').addEventListener('toggle', syncVolumeDisclosure);
+  syncVolumeDisclosure();
+  applyShipTypeRate();
   compute();
 </script>
 </body>
