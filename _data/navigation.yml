@@ -16,7 +16,7 @@ main:
       - title: "Tags"
         url: /tags/
 
-  - title: "Tools"
+  - title: "Utilities"
     url: /posts/2026/01/timezone-converter/
     children:
       - title: "Time Zone Converter"
