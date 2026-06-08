@@ -194,10 +194,34 @@
     color:var(--ink);
   }
   .volume-note{
+    display:flex;
+    align-items:center;
+    gap:4px;
     font-family:var(--mono);
     font-size:10.5px;
     color:var(--ink-soft);
   }
+  .volume-divisor{
+    width:52px;
+    font-family:var(--mono);
+    font-size:10.5px;
+    color:var(--ink-soft);
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:2px 6px;
+    text-align:center;
+    appearance:textfield;
+    -moz-appearance:textfield;
+  }
+  .volume-divisor:focus{
+    outline:none;
+    color:var(--accent);
+    border-color:var(--accent);
+    box-shadow:0 0 0 2px rgba(191,78,48,.1);
+  }
+  .volume-divisor::-webkit-outer-spin-button,
+  .volume-divisor::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
   .volume-grid{
     display:grid;
     grid-template-columns:repeat(3, minmax(0, 1fr));
@@ -320,7 +344,7 @@
         <span class="volume-arrow" aria-hidden="true">▸</span>
         <span class="volume-title">体积重（可选）</span>
       </span>
-      <span class="volume-note">长 × 宽 × 高(cm) ÷ 6000</span>
+      <span class="volume-note">长 × 宽 × 高(cm) ÷ <input id="volDivisor" class="volume-divisor" type="number" inputmode="decimal" value="6000" step="1" min="1" aria-label="体积重换算系数"></span>
     </summary>
     <div class="volume-content">
       <div class="volume-grid">
@@ -344,7 +368,7 @@
         </div>
       </div>
       <div class="volume-meta">
-        <div class="volume-summary" id="volumeSummary">留空则不计算体积重；填完整长、宽、高后，自动按 max(实际重, 体积重) 计费。</div>
+        <div class="volume-summary" id="volumeSummary">按 max(实际重, 体积重) 计费。</div>
         <button class="volume-reset" id="volumeReset" type="button">清零尺寸</button>
       </div>
     </div>
@@ -398,7 +422,7 @@
 
 <script>
   const $ = id => document.getElementById(id);
-  const ids = ['pdd', 'us', 'w', 'rate', 'ship', 'len', 'wid', 'hei'];
+  const ids = ['pdd', 'us', 'w', 'rate', 'ship', 'len', 'wid', 'hei', 'volDivisor'];
   const dimensionIds = ['len', 'wid', 'hei'];
   const num = value => {
     const number = parseFloat(value);
@@ -441,20 +465,37 @@
     compute();
   }
 
+  function bindVolumeDivisorInput() {
+    const volumeHead = document.querySelector('.volume-head');
+    const volumeDivisor = $('volDivisor');
+    ['click', 'mousedown'].forEach(eventName => {
+      volumeDivisor.addEventListener(eventName, event => {
+        event.stopPropagation();
+      });
+    });
+    volumeHead.addEventListener('click', event => {
+      if (event.target === volumeDivisor) {
+        event.preventDefault();
+      }
+    });
+  }
+
   function compute() {
     const pdd = num($('pdd').value);
     const us = num($('us').value);
     const weight = num($('w').value);
     const rate = num($('rate').value);
     const ship = num($('ship').value);
+    const volumeDivisor = num($('volDivisor').value);
     const dimensions = dimensionValues();
     const hasVolumeInput = dimensions.some(dimension => dimension.raw !== '');
     const hasCompleteVolume = dimensions.every(dimension => isFinite(dimension.value) && dimension.value > 0);
-    const volumeWeight = hasCompleteVolume
-      ? (dimensions[0].value * dimensions[1].value * dimensions[2].value) / 6000
+    const hasValidDivisor = isFinite(volumeDivisor) && volumeDivisor > 0;
+    const volumeWeight = hasCompleteVolume && hasValidDivisor
+      ? (dimensions[0].value * dimensions[1].value * dimensions[2].value) / volumeDivisor
       : NaN;
-    const chargeableWeight = hasCompleteVolume ? Math.max(weight, volumeWeight) : weight;
-    const billedBy = hasCompleteVolume && volumeWeight > weight ? '体积重' : '实际重';
+    const chargeableWeight = hasCompleteVolume && hasValidDivisor ? Math.max(weight, volumeWeight) : weight;
+    const billedBy = hasCompleteVolume && hasValidDivisor && volumeWeight > weight ? '体积重' : '实际重';
 
     const result = $('result');
     const setTheme = theme => {
@@ -470,7 +511,7 @@
       });
       $('volumetricRow').hidden = true;
       $('chargeableRow').hidden = true;
-      $('volumeSummary').textContent = '留空则不计算体积重；填完整长、宽、高后，自动按 max(实际重, 体积重) 计费。';
+      $('volumeSummary').textContent = '填完整长、宽、高后，自动按 max(实际重, 体积重) 计费。';
       $('hint').textContent = '填入国内价、美国价、实际重，自动判断。';
       return;
     }
@@ -482,7 +523,7 @@
     const saveUsd = saveRmb / rate;
     const kRatio = saveRmb / usRmb;
 
-    if (hasCompleteVolume) {
+    if (hasCompleteVolume && hasValidDivisor) {
       $('volumetricRow').hidden = false;
       $('chargeableRow').hidden = false;
       $('volumetric').textContent = kg(volumeWeight);
@@ -493,9 +534,11 @@
       $('chargeableRow').hidden = true;
       $('volumetric').textContent = '—';
       $('chargeable').textContent = '—';
-      $('volumeSummary').textContent = hasVolumeInput
-        ? '补全长、宽、高后，才会计算体积重并自动取 max(实际重, 体积重)。'
-        : '留空则不计算体积重；填完整长、宽、高后，自动按 max(实际重, 体积重) 计费。';
+      $('volumeSummary').textContent = !hasValidDivisor
+        ? '请输入大于 0 的换算系数后，再计算体积重。'
+        : hasVolumeInput
+        ? '补全长、宽、高后，才会计算体积重。'
+        : '填完整长、宽、高后，自动按 max(实际重, 体积重) 计费。';
     }
 
     $('landed').textContent = yuan(landed);
@@ -533,6 +576,7 @@
   document.querySelectorAll('input[name="shipType"]').forEach(input => {
     input.addEventListener('change', applyShipTypeRate);
   });
+  bindVolumeDivisorInput();
   $('volumeReset').addEventListener('click', clearVolumeInputs);
   document.querySelector('.volume-box').addEventListener('toggle', syncVolumeDisclosure);
   syncVolumeDisclosure();
