@@ -208,7 +208,6 @@
     margin-bottom:4px;
   }
   .volume-summary{
-    margin-top:10px;
     font-size:11.5px;
     color:var(--ink-soft);
     line-height:1.5;
@@ -218,6 +217,30 @@
     font-weight:600;
   }
   .volume-content{padding-top:10px}
+  .volume-meta{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+    margin-top:10px;
+  }
+  .volume-reset{
+    flex:0 0 auto;
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--ink-soft);
+    background:transparent;
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:6px 10px;
+    cursor:pointer;
+    transition:border-color .15s, color .15s, background-color .15s;
+  }
+  .volume-reset:hover{
+    color:var(--accent);
+    border-color:var(--accent);
+    background:#fff4f1;
+  }
 
   .result{
     margin-top:22px;
@@ -320,7 +343,10 @@
           </div>
         </div>
       </div>
-      <div class="volume-summary" id="volumeSummary">留空则不计算体积重；填完整长、宽、高后，自动按 max(实际重, 体积重) 计费。</div>
+      <div class="volume-meta">
+        <div class="volume-summary" id="volumeSummary">留空则不计算体积重；填完整长、宽、高后，自动按 max(实际重, 体积重) 计费。</div>
+        <button class="volume-reset" id="volumeReset" type="button">清零尺寸</button>
+      </div>
     </div>
   </details>
 
@@ -406,6 +432,13 @@
       return;
     }
     volumeArrow.textContent = volumeBox.open ? '▾' : '▸';
+  }
+
+  function clearVolumeInputs() {
+    dimensionIds.forEach(id => {
+      $(id).value = '';
+    });
+    compute();
   }
 
   function compute() {
@@ -500,6 +533,7 @@
   document.querySelectorAll('input[name="shipType"]').forEach(input => {
     input.addEventListener('change', applyShipTypeRate);
   });
+  $('volumeReset').addEventListener('click', clearVolumeInputs);
   document.querySelector('.volume-box').addEventListener('toggle', syncVolumeDisclosure);
   syncVolumeDisclosure();
   applyShipTypeRate();
