@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>集运回报换算器</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f3eee3;
+    --ink:#211d18;
+    --ink-soft:#6b6357;
+    --line:#d8cfbe;
+    --card:#fbf8f1;
+    --accent:#bf4e30;
+    --good:#2f7a4f;
+    --good-bg:#e4efe6;
+    --ok:#3a8a63;
+    --warn:#9a6a14;
+    --warn-bg:#f5ead2;
+    --bad:#a23a2c;
+    --bad-bg:#f3e0da;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+    --sans:'Noto Sans SC','IBM Plex Sans',system-ui,sans-serif;
+    --serif:'Fraunces',Georgia,serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:var(--sans);
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 600px at 15% -5%, #f7f2e7 0%, transparent 60%),
+      radial-gradient(900px 500px at 110% 110%, #efe7d6 0%, transparent 55%),
+      var(--paper);
+    min-height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:28px 16px;
+    line-height:1.5;
+  }
+  .card{
+    width:100%;
+    max-width:468px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:30px 30px 26px;
+    box-shadow:0 1px 0 #fff inset, 0 24px 48px -28px rgba(40,30,15,.4);
+    animation:rise .5s cubic-bezier(.2,.7,.2,1) both;
+  }
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  .kicker{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:6px;
+  }
+  h1{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:30px;
+    letter-spacing:-.01em;
+    line-height:1.1;
+  }
+  .sub{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:10px;
+    padding-bottom:18px;
+    border-bottom:1px solid var(--line);
+  }
+
+  .fields{display:flex;flex-direction:column;gap:14px;margin-top:20px}
+  .field{position:relative}
+  label{
+    display:block;
+    font-size:13px;
+    font-weight:500;
+    color:var(--ink-soft);
+    margin-bottom:6px;
+  }
+  .input-wrap{position:relative;display:flex;align-items:center}
+  .unit{
+    position:absolute;left:14px;
+    font-family:var(--mono);font-size:15px;color:var(--ink-soft);
+    pointer-events:none;
+  }
+  .unit-r{left:auto;right:14px;font-size:13px}
+  input{
+    width:100%;
+    font-family:var(--mono);
+    font-size:18px;
+    color:var(--ink);
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:11px;
+    padding:12px 14px 12px 34px;
+    outline:none;
+    transition:border-color .15s, box-shadow .15s;
+    -moz-appearance:textfield;
+  }
+  input.pad-r{padding-right:42px}
+  input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(191,78,48,.13)}
+
+  .settings{
+    display:flex;gap:12px;margin-top:16px;
+    padding-top:16px;border-top:1px dashed var(--line);
+  }
+  .settings .field{flex:1}
+  .settings label{font-size:11.5px}
+  .settings input{font-size:15px;padding:9px 12px 9px 12px}
+  .settings .input-wrap .unit{display:none}
+
+  .result{
+    margin-top:22px;
+    border-radius:14px;
+    padding:18px 20px;
+    background:var(--good-bg);
+    border:1px solid transparent;
+    transition:background .35s, border-color .35s;
+  }
+  .verdict-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+  .verdict{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:23px;
+    transition:color .35s;
+  }
+  .kval{
+    font-family:var(--mono);
+    font-size:26px;
+    font-weight:600;
+    transition:color .35s;
+  }
+  .klabel{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-soft);text-align:right;display:block;margin-bottom:-2px}
+
+  .rows{margin-top:16px;display:flex;flex-direction:column;gap:9px}
+  .row{display:flex;justify-content:space-between;align-items:baseline;font-size:13.5px}
+  .row .k{color:var(--ink-soft)}
+  .row .v{font-family:var(--mono);font-weight:500;font-size:14px}
+  .row.save .v{font-weight:600}
+  .hint{
+    font-size:12px;color:var(--ink-soft);margin-top:14px;line-height:1.6;
+    padding-top:12px;border-top:1px solid var(--line);
+  }
+  .hint b{color:var(--ink);font-weight:600}
+  .foot{margin-top:16px;font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);text-align:center;letter-spacing:.04em}
+
+  .t-good{background:var(--good-bg)} .t-good .verdict,.t-good .kval{color:var(--good)}
+  .t-ok{background:var(--good-bg)} .t-ok .verdict,.t-ok .kval{color:var(--ok)}
+  .t-warn{background:var(--warn-bg)} .t-warn .verdict,.t-warn .kval{color:var(--warn)}
+  .t-bad{background:var(--bad-bg)} .t-bad .verdict,.t-bad .kval{color:var(--bad)}
+  .t-none{background:#efe9dc} .t-none .verdict{color:var(--ink-soft)} .t-none .kval{color:var(--ink-soft)}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="kicker">PDD · 集运 · 中美比价</div>
+  <h1>值不值，算一下</h1>
+  <div class="sub">值得 ⟺ 汇率 × 美国价 &gt; 拼价 + 运费 × 重量</div>
+
+  <div class="fields">
+    <div class="field">
+      <label for="pdd">拼多多价</label>
+      <div class="input-wrap">
+        <span class="unit">¥</span>
+        <input id="pdd" type="number" inputmode="decimal" value="7" step="0.01" min="0">
+      </div>
+    </div>
+    <div class="field">
+      <label for="us">美国价（Weee / 亚超）</label>
+      <div class="input-wrap">
+        <span class="unit">$</span>
+        <input id="us" type="number" inputmode="decimal" value="2.78" step="0.01" min="0">
+      </div>
+    </div>
+    <div class="field">
+      <label for="w">重量</label>
+      <div class="input-wrap">
+        <input id="w" class="pad-r" type="number" inputmode="decimal" value="0.35" step="0.01" min="0" style="padding-left:14px">
+        <span class="unit unit-r">kg</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings">
+    <div class="field">
+      <label for="rate">汇率（¥/$）</label>
+      <div class="input-wrap"><input id="rate" type="number" inputmode="decimal" value="6.8" step="0.01" min="0.01"></div>
+    </div>
+    <div class="field">
+      <label for="ship">运费（¥/kg）</label>
+      <div class="input-wrap"><input id="ship" type="number" inputmode="decimal" value="25" step="1" min="0"></div>
+    </div>
+  </div>
+
+  <div class="result t-good" id="result">
+    <div class="verdict-row">
+      <span class="verdict" id="verdict">划算</span>
+      <span>
+        <span class="klabel">省钱率 K</span>
+        <span class="kval" id="kval">—</span>
+      </span>
+    </div>
+    <div class="rows">
+      <div class="row"><span class="k">到手成本（货价 + 运费）</span><span class="v" id="landed">—</span></div>
+      <div class="row"><span class="k">其中运费</span><span class="v" id="shipcost">—</span></div>
+      <div class="row"><span class="k">美国价折合人民币</span><span class="v" id="usrmb">—</span></div>
+      <div class="row save"><span class="k">每件省</span><span class="v" id="save">—</span></div>
+    </div>
+    <div class="hint" id="hint"></div>
+  </div>
+
+  <div class="foot">K&lt;0 倒贴 · 0–20% 薄利搭车 · 20–40% 划算 · ≥40% 装箱主力</div>
+</div>
+
+<script>
+  const $ = id => document.getElementById(id);
+  const ids = ['pdd', 'us', 'w', 'rate', 'ship'];
+  const num = value => {
+    const number = parseFloat(value);
+    return isFinite(number) ? number : NaN;
+  };
+  const yuan = value => '¥' + value.toFixed(2);
+  const usd = value => '$' + value.toFixed(2);
+
+  function compute() {
+    const pdd = num($('pdd').value);
+    const us = num($('us').value);
+    const weight = num($('w').value);
+    const rate = num($('rate').value);
+    const ship = num($('ship').value);
+
+    const result = $('result');
+    const setTheme = theme => {
+      result.className = 'result ' + theme;
+    };
+
+    if (!isFinite(pdd) || !isFinite(us) || !isFinite(weight) || !isFinite(rate) || rate <= 0 || us <= 0) {
+      setTheme('t-none');
+      $('verdict').textContent = '输入价格';
+      $('kval').textContent = '—';
+      ['landed', 'shipcost', 'usrmb', 'save'].forEach(id => {
+        $(id).textContent = '—';
+      });
+      $('hint').textContent = '填入拼多多价、美国价、重量，自动判断。';
+      return;
+    }
+
+    const shipCost = ship * weight;
+    const landed = pdd + shipCost;
+    const usRmb = rate * us;
+    const saveRmb = usRmb - landed;
+    const saveUsd = saveRmb / rate;
+    const kRatio = saveRmb / usRmb;
+
+    $('landed').textContent = yuan(landed);
+    $('shipcost').textContent = yuan(shipCost);
+    $('usrmb').textContent = yuan(usRmb);
+    $('save').textContent = yuan(saveRmb) + '  /  ' + usd(saveUsd);
+    $('kval').textContent = (kRatio * 100).toFixed(1) + '%';
+
+    let theme;
+    let verdict;
+    let hint;
+    if (kRatio < 0) {
+      theme = 't-bad';
+      verdict = '倒贴，别买';
+      hint = '运费已经吃掉价差。<b>典型的又便宜又重</b>——主食、瓶装、方便食品多半如此。';
+    } else if (kRatio < 0.20) {
+      theme = 't-warn';
+      verdict = '薄利，搭车带';
+      hint = '省得不多，且容易被<b>毛重和打包费</b>抹平。本来就发箱子时顺手带，别为它单独凑一箱。';
+    } else if (kRatio < 0.40) {
+      theme = 't-ok';
+      verdict = '划算';
+      hint = '价差稳稳盖过运费，值得放进箱子。';
+    } else {
+      theme = 't-good';
+      verdict = '装箱主力';
+      hint = '高回报，<b>优先装它</b>。这类通常又轻又是美国卖得贵的东西（眼镜、好茶、干货）。';
+    }
+    setTheme(theme);
+    $('verdict').textContent = verdict;
+    $('hint').innerHTML = hint;
+  }
+
+  ids.forEach(id => $(id).addEventListener('input', compute));
+  compute();
+</script>
+</body>
+</html>

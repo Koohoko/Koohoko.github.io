@@ -21,3 +21,5 @@ main:
     children:
       - title: "Time Zone Converter"
         url: /posts/2026/01/timezone-converter/
+      - title: "Jiyun Calculator"
+        url: /files/jiyun-calculator.html
