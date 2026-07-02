@@ -2,7 +2,7 @@
   <div class="masthead__inner-wrap">
     <div class="masthead__menu">
       <nav id="site-nav" class="greedy-nav">
-        <button><div class="navicon"></div></button>
+        <button type="button" aria-label="Toggle menu" aria-controls="hidden-links" aria-expanded="false"><div class="navicon"></div></button>
         <ul class="visible-links">
           {% for link in site.data.navigation.main %}
             {% if link.children %}
@@ -19,7 +19,7 @@
             {% endif %}
           {% endfor %}
         </ul>
-        <ul class="hidden-links hidden"></ul>
+        <ul id="hidden-links" class="hidden-links hidden"></ul>
       </nav>
     </div>
   </div>
