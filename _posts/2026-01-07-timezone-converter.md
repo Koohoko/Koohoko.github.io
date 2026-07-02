@@ -3,8 +3,7 @@ title: "Time Zone Converter for Meeting Scheduling"
 date: 2026-01-07
 permalink: /posts/2026/01/timezone-converter/
 tags:
-  - tools
-  - productivity
+  - Productivity
 ---
 
 A simple tool to convert time across different time zones and find overlapping working hours with collaborators around the world.

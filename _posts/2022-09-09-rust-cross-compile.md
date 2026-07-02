@@ -5,7 +5,7 @@ permalink: /posts/2022-09-09/rust-cross-compile
 categories:
   - Programming
 tags:
-  - Rust
+  - Programming
 # last_modified_at: 2022-09-01
 ---
 

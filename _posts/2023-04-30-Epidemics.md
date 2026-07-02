@@ -5,7 +5,7 @@ permalink: /posts/2023-04-30/epidemics
 categories:
   - Book notes
 tags:
-  - Infectious Disease Modelling
+  - Infectious disease modelling
 toc: true
 last_modified_at: 2023-10-21
 ---

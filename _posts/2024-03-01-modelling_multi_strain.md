@@ -5,7 +5,7 @@ permalink: /posts/2024-03-01/modelling_multi_strain
 categories:
   - Paper digest
 tags:
-  - Infectious Disease Modelling
+  - Infectious disease modelling
 toc: true
 last_modified_at: 2024-03-05
 ---

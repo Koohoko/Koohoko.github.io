@@ -5,8 +5,7 @@ permalink: /posts/2022-09-01/comments
 categories:
   - Misc
 tags:
-  - Front-end
-  - Github pages
+  - Web development
 # last_modified_at: 2022-09-01
 ---
 

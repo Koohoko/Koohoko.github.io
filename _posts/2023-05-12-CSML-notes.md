@@ -5,8 +5,8 @@ permalink: /posts/2023-05-12/csml-notes
 categories:
   - Course notes
 tags:
-  - Infectious Disease Modelling
-  - Mathematics
+  - Infectious disease modelling
+  - Statistics
 toc: true
 last_modified_at: 2023-05-18
 ---

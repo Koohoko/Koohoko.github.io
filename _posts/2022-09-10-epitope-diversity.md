@@ -5,10 +5,8 @@ permalink: /posts/2022-09-10/epitope-diversity
 categories:
   - My tools
 tags:
-  - Rust
-  - Sequence analysis
-  - Nucleotide diversity
-  - Shannon entropy
+  - Programming
+  - Molecular evolution
 last_modified_at: 2022-09-12
 toc: true
 ---

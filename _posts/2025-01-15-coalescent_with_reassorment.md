@@ -6,8 +6,6 @@ categories:
   - Paper digest
 tags:
   - Coalescent theory
-  - Structured coalescent
-  - Reassortment
 toc: true
 # last_modified_at: 2025-01-05
 ---

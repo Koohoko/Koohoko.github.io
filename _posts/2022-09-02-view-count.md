@@ -5,8 +5,7 @@ permalink: /posts/2022-09-02/view-count
 categories:
   - Misc
 tags:
-  - Front-end
-  - Github pages
+  - Web development
 last_modified_at: 2022-03-10
 ---
 

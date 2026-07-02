@@ -5,7 +5,6 @@ permalink: /posts/2022-09-20/usher-paper
 categories:
   - Paper digest
 tags:
-  - Usher
   - Phylogenetics
   - Bioinformatics
 toc: true

@@ -5,8 +5,8 @@ permalink: /posts/2024-11-14/coder_copilot
 categories:
   - Misc
 tags:
-  - code-server
-  - Github copilot
+  - Programming
+  - LLM tools
 toc: true
 # last_modified_at: 2024-09-01
 ---

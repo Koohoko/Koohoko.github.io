@@ -6,7 +6,7 @@ categories:
   - Book notes
 tags:
   - Molecular evolution
-  - Statistical methods
+  - Statistics
 toc: true
 last_modified_at: 2025-03-12
 ---

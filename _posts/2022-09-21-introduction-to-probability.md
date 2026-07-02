@@ -5,8 +5,7 @@ permalink: /posts/2022-09-21/introduction-to-probability
 categories:
   - Book notes
 tags:
-  - Mathematics
-  - Probability
+  - Statistics
 toc: true
 last_modified_at: 2023-03-30
 ---

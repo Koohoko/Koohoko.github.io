@@ -5,7 +5,7 @@ permalink: /posts/2023-08-11/2023-08-11-modelling_cholera_haiti
 categories:
   - Paper digest
 tags:
-  - Infectious Disease Modelling
+  - Infectious disease modelling
 toc: true
 last_modified_at: 2023-10-10
 ---

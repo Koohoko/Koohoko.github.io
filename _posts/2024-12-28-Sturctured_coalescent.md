@@ -6,7 +6,6 @@ categories:
   - Course notes
 tags:
   - Coalescent theory
-  - Structured coalescent
   - Phylogenetics
 toc: true
 last_modified_at: 2025-01-02

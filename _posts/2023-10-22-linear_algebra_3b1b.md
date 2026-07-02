@@ -5,7 +5,7 @@ permalink: /posts/2022-10-22/2023-10-22-linear_algebra_3b1b
 categories:
   - Course notes
 tags:
-  - Mathematics
+  - Statistics
 toc: true
 # last_modified_at: 2023-09-01
 ---

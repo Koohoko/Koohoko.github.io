@@ -5,7 +5,6 @@ permalink: /posts/2024-12-16/Bayesian-phylogenetics-basics
 categories:
   - Course notes
 tags:
-  - MCMC
   - Phylogenetics
 toc: true
 # last_modified_at: 2024-09-01

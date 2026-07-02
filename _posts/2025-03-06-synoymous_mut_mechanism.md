@@ -5,9 +5,7 @@ permalink: /posts/2025-03-06/synoymous_mut_mechanism
 categories:
   - Paper digest
 tags:
-  - Codon usage
-  - CpG
-  - GC content
+  - Molecular evolution
 toc: true
 # last_modified_at: 2025-09-01
 ---
