@@ -14,6 +14,11 @@ repository               : "Koohoko/Koohoko.github.io"
 google_scholar_stats_use_cdn : false
 read_more: "enable"
 
+# Social / SEO sharing (OpenGraph + Twitter/X cards)
+og_image: "/images/android-chrome-512x512.webp"
+twitter:
+  username: "GuHaogao"
+
 # comments
 comments:
   provider               : "giscus"
@@ -162,7 +167,7 @@ sass:
 
 # Outputting
 permalink: /:categories/:title/
-timezone: Asia/Shanghai # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone: America/New_York # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 # Plugins
 plugins:
