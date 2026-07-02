@@ -1,19 +1,19 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "Haogao Gu",
+    "short_name": "Haogao Gu",
     "icons": [
        {
-          "src": "/android-chrome-192x192.webp",
+          "src": "/images/android-chrome-192x192.webp",
           "sizes": "192x192",
           "type": "image/webp"
        },
        {
-        "src": "/android-chrome-512x512.webp",
+        "src": "/images/android-chrome-512x512.webp",
         "sizes": "512x512",
         "type": "image/webp"
         }
     ],
-    "theme_color": "#FFFFFF",
+    "theme_color": "#1a3a34",
     "background_color": "#FFFFFF",
     "display": "standalone"
  }

@@ -3,6 +3,8 @@
 <meta charset="utf-8">
 
 {% include seo.html %}
+{% feed_meta %}
+{% include schema.html %}
 
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
@@ -14,9 +16,4 @@
 
 <!-- For all browsers -->
 <link rel="stylesheet" href="{{ base_path }}/assets/css/main.css">
-
-<meta http-equiv="cleartype" content="on">
-<head>
-  <base target="_blank">
-</head>
 

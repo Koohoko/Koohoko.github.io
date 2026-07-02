@@ -1,0 +1,45 @@
+{%- assign a = site.author -%}
+{%- if page.url == "/" -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": {{ a.name | jsonify }},
+  "url": {{ site.url | jsonify }},
+  "image": {{ a.avatar | prepend: site.url | jsonify }},
+  "email": {{ a.email | prepend: "mailto:" | jsonify }},
+  "jobTitle": "Associate Research Scientist",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Mailman School of Public Health, Columbia University"
+  },
+  "sameAs": [
+    {{ a.orcid | jsonify }},
+    {{ a.googlescholar | jsonify }},
+    {{ a.github | prepend: "https://github.com/" | jsonify }},
+    {{ a.linkedin | prepend: "https://www.linkedin.com/in/" | jsonify }},
+    {{ a.twitter | prepend: "https://twitter.com/" | jsonify }}
+  ]
+}
+</script>
+{%- elsif page.date -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ page.title | jsonify }},
+  "datePublished": "{{ page.date | date_to_xmlschema }}",
+  {% if page.last_modified_at %}"dateModified": "{{ page.last_modified_at | date_to_xmlschema }}",{% endif %}
+  "author": {
+    "@type": "Person",
+    "name": {{ a.name | jsonify }},
+    "url": {{ site.url | jsonify }}
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": {{ a.name | jsonify }}
+  },
+  "mainEntityOfPage": {{ page.url | prepend: site.url | jsonify }}
+}
+</script>
+{%- endif -%}
