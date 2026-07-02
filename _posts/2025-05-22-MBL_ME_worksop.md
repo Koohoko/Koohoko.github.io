@@ -1,7 +1,9 @@
 ---
 title: "Course notes: Molecular Evolution workshop in Marine Biological Laboratory, US"
 date: 2025-05-22
-permalink: /posts/2025-05-22-MBL_ME_worksop
+permalink: /posts/2025-05-22-MBL_ME_workshop
+redirect_from:
+  - /posts/2025-05-22-MBL_ME_worksop/
 categories:
   - Course notes
 tags:

@@ -1,7 +1,9 @@
 ---
 title: "Paper digest: Selection on synonymous sites: the unwanted transcript hypothesis (Nat Rev Genet, 2024)"
 date: 2025-03-06
-permalink: /posts/2025-03-06/synoymous_mut_mechanism
+permalink: /posts/2025-03-06/synonymous_mut_mechanism
+redirect_from:
+  - /posts/2025-03-06/synoymous_mut_mechanism/
 categories:
   - Paper digest
 tags:

@@ -10,7 +10,7 @@ tags:
 # last_modified_at: 2022-09-01
 ---
 
-The paper titled [Contributions of adaptation and purifying selection to SARS-CoV-2 evolution](https://www.biorxiv.org/content/10.1101/2022.08.22.504731v1) analysed the evolutionary patterns of SARS-CoV-2 using a large dataset of genomic sequences. The author estimated rates of evolution (synoymous and non-synonymous mutations) using consensus sequences within clades. The results suggest that: 
+The paper titled [Contributions of adaptation and purifying selection to SARS-CoV-2 evolution](https://www.biorxiv.org/content/10.1101/2022.08.22.504731v1) analysed the evolutionary patterns of SARS-CoV-2 using a large dataset of genomic sequences. The author estimated rates of evolution (synonymous and non-synonymous mutations) using consensus sequences within clades. The results suggest that: 
 1. synonymous mutation rates are similar between variants; 
 2. non-synonymous rates slowed down in 2021 and 2022; 
 3. the *overall* non-synonymous rate is higher than the within-clade non-synonymous rate, indicating adaptive evolution (in addition to typical transmission chinas); 

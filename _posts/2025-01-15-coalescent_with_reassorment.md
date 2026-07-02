@@ -1,7 +1,9 @@
 ---
 title: "Paper digest: Coalescent with reassortment"
 date: 2025-01-15
-permalink: /posts/2025-01-15-coalescent_with_reassorment
+permalink: /posts/2025-01-15-coalescent_with_reassortment
+redirect_from:
+  - /posts/2025-01-15-coalescent_with_reassorment/
 categories:
   - Paper digest
 tags:
