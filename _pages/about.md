@@ -29,7 +29,7 @@ I enjoy solving biological problems with computational methods; I have also been
 - **2024-12-02** I got the The HKU-Pasteur Fellowship for visiting *Institut Pasteur, Paris* for three months, my mentor is [Sebastian Duchene](https://scholar.google.com.au/citations?user=K7q8WywAAAAJ&hl=en).
 - **2023-04-21** I am awarded the [RGC postdoctoral fellowship](https://www.ugc.edu.hk/eng/rgc/funding_opport/pdfs/) (totalling stipend >1.2 million HKD for 36 months) from the University Grant Committee (Hong Kong)!
 - **2021-11-23** As a team member, I got [Outstanding Project Team on COVID-19 Research Awards](https://www.info.gov.hk/gia/general/202111/23/P2021112300465.htm) from the Hong Kong government!
-- **2020-10-28** I completed my PhD in Infectious Disease at the [School of Public Health, The University of Hong Kong](https://sph.hku.hk/), under the supervision of my PhD advisor, Professor [Leo Poon](https://hub.hku.hk/rp/rp00484).
+- **2020-10-28** I completed my PhD in Infectious Disease at the [School of Public Health, The University of Hong Kong](https://sph.hku.hk/), under the supervision of my PhD advisor, Professor [Leo Poon](https://sph.hku.hk/en/Biography/Poon-Lit-Man-Leo).
 
 ## [CV](/files/CV/CV_haogao.pdf)
 <iframe src="/web/viewer.html?file=/files/CV/CV_haogao.pdf#pagemode=none" width="100%" height="860" title="Curriculum Vitae (PDF viewer)"></iframe>
