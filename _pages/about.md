@@ -25,10 +25,11 @@ I study virus evolution, the epidemiology of viral infections, viral sequence fe
 I enjoy solving biological problems with computational methods; I have also been developing some tools (check my [Github](https://github.com/Koohoko)) for studying virus evolution. I like playing basketball and hiking during my leisure time. 
 
 ## News
-- **2026-05-16** I am joining the Mailman School of Public Health, Columbia University as an Associate Research Scientist, my mentor is [Sen Pei](https://www.publichealth.columbia.edu/profile/sen-pei).
+- **2026-05-16** I am joining the Mailman School of Public Health, Columbia University as an Associate Research Scientist, my mentor is [Sen Pei](https://senpei-cu.github.io/).
 - **2024-12-02** I got the The HKU-Pasteur Fellowship for visiting *Institut Pasteur, Paris* for three months, my mentor is [Sebastian Duchene](https://scholar.google.com.au/citations?user=K7q8WywAAAAJ&hl=en).
 - **2023-04-21** I am awarded the [RGC postdoctoral fellowship](https://www.ugc.edu.hk/eng/rgc/funding_opport/pdfs/) (totalling stipend >1.2 million HKD for 36 months) from the University Grant Committee (Hong Kong)!
 - **2021-11-23** As a team member, I got [Outstanding Project Team on COVID-19 Research Awards](https://www.info.gov.hk/gia/general/202111/23/P2021112300465.htm) from the Hong Kong government!
+- **2020-10-01** I completed my PhD in Infectious Disease at the [School of Public Health, The University of Hong Kong](https://sph.hku.hk/), under the supervision of my PhD advisor, Professor [Leo Poon](https://hub.hku.hk/rp/rp00484).
 
 ## [CV](/files/CV/CV_haogao.pdf)
 <iframe src="/web/viewer.html?file=/files/CV/CV_haogao.pdf#pagemode=none" width="100%" height="860" title="Curriculum Vitae (PDF viewer)"></iframe>
