@@ -1,6 +1,7 @@
 \documentclass[letterpaper,10pt]{article}
 \usepackage[T1]{fontenc}
 \usepackage{mathpazo}
+\usepackage{microtype} % better line-breaking, fewer overfull boxes / short lines
 \usepackage{multicol}
 \usepackage{tabularx}
 \setlength{\multicolsep}{0pt}
@@ -23,11 +24,21 @@
 \setlist{topsep=1pt, itemsep=1pt, parsep=1pt, partopsep=0pt}
 
 \usepackage{titlesec}
+% Section headers: bold caps + a thin rule underneath for scanability
+\titleformat{\subsection}{\normalfont\large\bfseries}{}{0em}{}[{\vspace{1pt}\titlerule[0.6pt]}]
 \titlespacing{\subsection}{0pt}{8pt}{4pt}
 \titlespacing{\subsubsection}{0pt}{6pt}{0pt}
 
-\usepackage{ulem}
-\usepackage{hyperref}
+% House-style annotation sub-line (used under an entry's title line everywhere)
+\newcommand{\subnote}[1]{{\small\itshape #1}}
+
+% Last-resort stretch to absorb long unbreakable strings (URLs) and kill overfull boxes
+\setlength{\emergencystretch}{2em}
+
+% Ragged (non-justified) X column for the reviewer table, prevents overfull cells
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\usepackage[hidelinks]{hyperref}
 
 % --- PACKAGES FOR AUTOMATION ---
 \usepackage{totcount} % To count total number of publications
@@ -74,51 +85,41 @@
 
 \subsection*{HONORS AND AWARDS}
 \begin{itemize}
-      \item \textbf{\textsl{Gold Medal}}, 51st International Exhibition of Inventions at Geneva \hfill Mar. 2026\\
-            \small \textit{Core member. Project: A broad-spectrum live-attenuated mucosal vaccine against beta-coronaviruses} \normalsize
-      \item \textbf{\textsl{The HKU-Pasteur Fellowship (4th edition)}}, HKU-Pasteur Research Pole \hfill Apr. 2024
-      \item \textbf{\textsl{Faculty Outstanding Research Output Award}}, The University of Hong Kong \hfill Feb. 2024\\
-            \small \textit{awarded twice, for two separate projects} \normalsize
-      \item \textbf{\textsl{Outstanding Project Team, on COVID-19 research award}}, Food and Health Bureau (Hong Kong) \hfill Nov. 2021
-      \item \textbf{\textsl{Postgraduate Scholarship}}, The University of Hong Kong \hfill 2016--2020
-      \item \textbf{\textsl{Best Student Poster}}, International Symposium for One Health Research (Guangzhou) \hfill 2014
-      \item \textbf{\textsl{Individual Scholarship}}, Sun Yat-sen University \hfill 2013
-      \item \textbf{\textsl{The Third Prize Scholarship}}, Sun Yat-sen University \hfill 2012
-      \item \textbf{\textsl{First Prize}}, Chinese National Olympiad in Biology \hfill Sep. 2010\\
-            \small \textit{qualified for guaranteed admission to Sun Yat-sen University} \normalsize
+      \item \textbf{Gold Medal}, 51st International Exhibition of Inventions at Geneva \hfill Mar. 2026\\
+            \subnote{Core member. Project: A broad-spectrum live-attenuated mucosal vaccine against beta-coronaviruses}
+      \item \textbf{The HKU-Pasteur Fellowship (4th edition)}, HKU-Pasteur Research Pole \hfill Apr. 2024
+      \item \textbf{Faculty Outstanding Research Output Award}, The University of Hong Kong \hfill Feb. 2024\\
+            \subnote{awarded twice, for two separate projects}
+      \item \textbf{Outstanding Project Team, on COVID-19 research award}, Food and Health Bureau (Hong Kong) \hfill Nov. 2021
+      \item \textbf{Postgraduate Scholarship}, The University of Hong Kong \hfill 2016--2020
+      \item \textbf{Best Student Poster}, International Symposium for One Health Research (Guangzhou) \hfill 2014
+      \item \textbf{Individual Scholarship}, Sun Yat-sen University \hfill 2013
+      \item \textbf{The Third Prize Scholarship}, Sun Yat-sen University \hfill 2012
+      \item \textbf{First Prize}, Chinese National Olympiad in Biology \hfill Sep. 2010\\
+            \subnote{qualified for guaranteed admission to Sun Yat-sen University}
 \end{itemize}
 
 \subsection*{GRANTS}
 \begin{itemize}
-      \item \textbf{General Research Fund (GRF), Research Grants Council, Hong Kong SAR} \hfill 2026/27
-            \begin{itemize}
-                  \item Topic: \small Early Prediction of SARS-CoV-2 Variant Dynamics: Modelling Virus Interactions with Antibodies and ACE2 Receptor \normalsize
-                  \item Role: \textbf{Co-I} (PI: Hsiang-Yu Yuan, City University of Hong Kong); Amount: \textbf{\$840,217 (HKD)}
-            \end{itemize}
-      \item \textbf{RGC Postdoctoral Fellowship Scheme, University Grants Committee, Hong Kong SAR} \hfill 2023--2026
-            \begin{itemize}
-                  \item Topic: \small Quantifying attenuation effects caused by dinucleotide biases and codon pair biases for development of safe and scalable live attenuated virus vaccines \normalsize
-                  \item Role: \textbf{PI;} Amount: \textbf{\$1,258,250 (HKD)}
-            \end{itemize}
-      \item \textbf{CEIRR Option (University of Georgia), NIH, United States} \hfill 2023--2025
-            \begin{itemize}
-                  \item Topic: \small Investigation of repeated influenza vaccination for epitope focusing \normalsize
-                  \item Role: \textbf{Key personnel} (PI: Sophie Valkenburg); Amount: \textbf{\$454,428 (USD)}
-            \end{itemize}
-            \normalsize
-
-            \normalsize
+      \item \textbf{General Research Fund (GRF)}, Research Grants Council, Hong Kong SAR \hfill 2026--2027 \\
+            \subnote{Early Prediction of SARS-CoV-2 Variant Dynamics: Modelling Virus Interactions with Antibodies and ACE2 Receptor.} \\
+            {\small Role: \textbf{Co-I} (PI: Hsiang-Yu Yuan, City University of Hong Kong) \hfill \$840,217 (HKD)}
+      \item \textbf{RGC Postdoctoral Fellowship Scheme}, University Grants Committee, Hong Kong SAR \hfill 2023--2026 \\
+            \subnote{Quantifying attenuation effects caused by dinucleotide biases and codon pair biases for development of safe and scalable live attenuated virus vaccines.} \\
+            {\small Role: \textbf{PI} \hfill \$1,258,250 (HKD)}
+      \item \textbf{CEIRR Option (University of Georgia)}, NIH, United States \hfill 2023--2025 \\
+            \subnote{Investigation of repeated influenza vaccination for epitope focusing.} \\
+            {\small Role: \textbf{Key personnel} (PI: Sophie Valkenburg) \hfill \$454,428 (USD)}
 \end{itemize}
 
 \subsection*{TEACHING}
 \begin{itemize}
-      \item \textbf{Postgraduate Certificate in Bioinformatics for MLT (LMLS6010)} , HKU SPACE \hfill Jan. 2026 \\
-            \small \textit{Lecturer for 12 classes on Programming for Biological Data} \normalsize
-
+      \item \textbf{Postgraduate Certificate in Bioinformatics for MLT (LMLS6010)}, HKU SPACE \hfill Jan. 2026 \\
+            \subnote{Lecturer for 12 classes on Programming for Biological Data}
       \item \textbf{Scientific Skills (LMLS6003)}, MSc in Biomedical Science, HKU SPACE \hfill Oct. 2024 \\
-            \small \textit{Lecturer for 6 classes on Data Handling in Bioinformatics} \normalsize
+            \subnote{Lecturer for 6 classes on Data Handling in Bioinformatics}
       \item \textbf{Applied Medical Microbiology (LMLS6004)}, MSc in Biomedical Science, HKU SPACE \hfill Nov. 2024 \\
-            \small \textit{Lecturer for 2 classes on Bioinformatic Tutorial} \normalsize
+            \subnote{Lecturer for 2 classes on Bioinformatic Tutorial}
 \end{itemize}
 
 \subsection*{PUBLICATIONS}
@@ -189,12 +190,10 @@
 \end{enumerate}
 
 \subsection*{SUPERVISION}
+\subsubsection*{Co-supervision:}
 \begin{itemize}
-      \item Co-Supervision
-            \begin{itemize}
-                  \item Ruixuan Wang, PhD student, The University of Hong Kong \hfill Feb. 2025 -- May 2026 \\ \small \textit{Topic: Within-host Viral Phylodynamics} \normalsize
-                  \item Mengting Li, PhD student, The University of Hong Kong \hfill Oct. 2025 -- May 2026 \\ \small \textit{Topic: Virtual Cell and Viral Infection} \normalsize
-            \end{itemize}
+      \item Ruixuan Wang, PhD student, The University of Hong Kong \hfill Feb. 2025 -- May 2026 \\ \subnote{Within-host Viral Phylodynamics}
+      \item Mengting Li, PhD student, The University of Hong Kong \hfill Oct. 2025 -- May 2026 \\ \subnote{Virtual Cell and Viral Infection}
 \end{itemize}
 
 \subsection*{INVITED TALKS}
@@ -204,25 +203,23 @@
 \end{itemize}
 
 \subsection*{PROFESSIONAL DEVELOPMENT}
+\subsubsection*{Workshops:}
 \begin{itemize}
-      \item \textbf{Workshops}:
-            \begin{itemize}
-                  \item \textit{Workshop on Molecular Evolution}, Marine Biological Laboratory (MBL), Woods Hole, MA, USA\hfill May 2025
-                  \item  \textit{Virus Evolution and Epidemiology Summer Course}, Croucher Foundation, Hong Kong \hfill Jul. 2024
-                  \item \textit{Models and Inference in Population Genetics IV}, University of Warwick, UK \hfill Apr. 2024
-            \end{itemize}
-      \item \textbf{Online Specializations}:
-            \begin{itemize}
-                  \item \textsl{Discrete Mathematics for Computer Science}, University of California San Diego \hfill Oct. 2019
-                  \item \textsl{Bayesian Statistics and Modelling}, University of California Santa Cruz \hfill Aug. 2019
-                  \item \textsl{Python 3 Programming}, University of Michigan \hfill Jun. 2019
-                  \item \textsl{Mathematics for Machine Learning}, Imperial College London \hfill Apr. 2019
-            \end{itemize}
-      \item \textbf{Teaching Aptitude}:
-            \begin{itemize}
-                  \item Certificate of Teaching and Learning in Higher Education, CETL, HKU \hfill Dec. 2024
-                  \item PBL Tutor Training Certificate, LKS Faculty of Medicine, The University of Hong Kong \hfill Oct. 2025
-            \end{itemize}
+      \item \textit{Workshop on Molecular Evolution}, Marine Biological Laboratory (MBL), Woods Hole, MA, USA \hfill May 2025
+      \item \textit{Virus Evolution and Epidemiology Summer Course}, Croucher Foundation, Hong Kong \hfill Jul. 2024
+      \item \textit{Models and Inference in Population Genetics IV}, University of Warwick, UK \hfill Apr. 2024
+\end{itemize}
+\subsubsection*{Online specializations:}
+\begin{itemize}
+      \item \textit{Discrete Mathematics for Computer Science}, University of California San Diego \hfill Oct. 2019
+      \item \textit{Bayesian Statistics and Modelling}, University of California Santa Cruz \hfill Aug. 2019
+      \item \textit{Python 3 Programming}, University of Michigan \hfill Jun. 2019
+      \item \textit{Mathematics for Machine Learning}, Imperial College London \hfill Apr. 2019
+\end{itemize}
+\subsubsection*{Teaching aptitude:}
+\begin{itemize}
+      \item Certificate of Teaching and Learning in Higher Education, CETL, HKU \hfill Dec. 2024
+      \item PBL Tutor Training Certificate, LKS Faculty of Medicine, The University of Hong Kong \hfill Oct. 2025
 \end{itemize}
 
 \subsection*{ACADEMIC SERVICES}
@@ -251,7 +248,8 @@
 % \end{multicols}
 
 \subsubsection*{Ad hoc peer reviewer:}
-\begin{tabularx}{\linewidth}{X X}
+{\small
+\begin{tabularx}{\linewidth}{Y Y}
       \textsc{Science}                                 & \textsc{The Lancet Microbe}                      \\
       \textsc{Communications Medicine}                 & \textsc{Emerging Infectious Diseases}            \\
       \textsc{PLOS Pathogens}                          & \textsc{Cellular and Molecular Life Sciences}    \\
@@ -262,15 +260,16 @@
       \textsc{BMC Medical Research Methodology}        & \textsc{Infection, Genetics and Evolution}       \\
       \textsc{Journal of Multidisciplinary Healthcare} &                                                  \\
 \end{tabularx}
+}
 
 \subsubsection*{Open-source software:}
 \begin{itemize}
-      \item \textbf{Author}, \texttt{SynMut}, \small \textit{Synonymously Mutated Sequences with Different Genomic Signatures (DOI: 10.18129/B9.bioc.SynMut)} \normalsize
-      \item \textbf{Author}, \texttt{GEII}, \small \textit{Host Gene Expression under Influenza virus infection or Interferon stimulation (https://github.com/Leo-Poon-Lab/GEII)} \normalsize
-      \item \textbf{Author}, \texttt{epitope\_diversity}, \small \textit{Estimating epitope diversity at haplotype level using NGS reads. (https://github.com/Koohoko/epitope\_diversity)} \normalsize
-      \item \textbf{Author}, \texttt{fasta\_filter}, \small \textit{Filtering fasta sequences with threshold of specific bases (https://github.com/Koohoko/fasta\_filter)} \normalsize
-      \item \textbf{Contributor}, \texttt{spatPomp}, \small \textit{Inference for Spatiotemporal Partially Observed Markov Processes (https://github.com/spatPomp-org/spatPomp)}\normalsize
-      \item \textbf{Contributor}, \texttt{data.table} (Chinese translation), \small \textit{High-performance R package (https://github.com/Rdatatable/data.table)}\normalsize
+      \item \textbf{Author}, \href{https://doi.org/10.18129/B9.bioc.SynMut}{\texttt{SynMut}}, \subnote{Synonymously Mutated Sequences with Different Genomic Signatures}
+      \item \textbf{Author}, \href{https://github.com/Leo-Poon-Lab/GEII}{\texttt{GEII}}, \subnote{Host Gene Expression under Influenza virus infection or Interferon stimulation}
+      \item \textbf{Author}, \href{https://github.com/Koohoko/epitope_diversity}{\texttt{epitope\_diversity}}, \subnote{Estimating epitope diversity at haplotype level using NGS reads}
+      \item \textbf{Author}, \href{https://github.com/Koohoko/fasta_filter}{\texttt{fasta\_filter}}, \subnote{Filtering fasta sequences with threshold of specific bases}
+      \item \textbf{Contributor}, \href{https://github.com/spatPomp-org/spatPomp}{\texttt{spatPomp}}, \subnote{Inference for Spatiotemporal Partially Observed Markov Processes}
+      \item \textbf{Contributor}, \href{https://github.com/Rdatatable/data.table}{\texttt{data.table}} (Chinese translation), \subnote{High-performance R package}
 \end{itemize}
 
 \subsubsection*{Professional leadership:}
@@ -281,5 +280,5 @@
 \end{itemize}
 
 
-\vfill \texttt{CV Updated: \CVDate{} | Citation Metrics Updated: \ScholarUpdated}
+\vfill {\footnotesize\itshape CV updated: \CVDate{} \textbullet{} Citation metrics updated: \ScholarUpdated}
 \end{document}
