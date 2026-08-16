@@ -23,12 +23,12 @@
 \newcommand{\subnote}[1]{{\small\itshape #1}}
 
 % Structured entries keep substantive information on the left and reserve the
-% right rail for dates and locations. Education emphasizes institution;
+% right rail for dates and locations. Education emphasizes qualification;
 % appointments emphasize academic role.
-\newcommand{\educationentry}[4]{%
+\newcommand{\educationentry}[5]{%
   \noindent\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X r@{}}
-    \textbf{#1} & #3 \\
-    {\small #2} & {\small #4}
+    \textbf{#1}, \textit{#2} & #4 \\
+    {\small #3} & {\small #5}
   \end{tabularx}\par\vspace{2pt}%
 }
 
@@ -41,6 +41,41 @@
     \vspace{-1pt}\noindent\subnote{#6}\par
   \fi
   \vspace{2pt}%
+}
+
+% Section-specific entries share a common visual grammar: substantive content
+% stays on the left, while compact, comparable metadata forms a right rail.
+\newcommand{\grantentry}[6]{%
+  \Needspace{4\baselineskip}%
+  \noindent\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X r@{}}
+    \textbf{#1}, #2 & #3 \\
+    \subnote{#4} & {\small #6} \\
+    {\small Role: #5} &
+  \end{tabularx}\par
+}
+
+\newcommand{\supervisionentry}[5]{%
+  \Needspace{3\baselineskip}%
+  \noindent\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X r@{}}
+    \textbf{#1}, #2 & #4 \\
+    \subnote{#3} & {\small #5}
+  \end{tabularx}\par\vspace{3pt}%
+}
+
+\newcommand{\teachingentry}[5]{%
+  \Needspace{3\baselineskip}%
+  \noindent\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X r@{}}
+    \textbf{#1}\if\relax\detokenize{#2}\relax\else, #2\fi & #3 \\
+    \subnote{#5} & {\small #4}
+  \end{tabularx}\par\vspace{3pt}%
+}
+
+\newcommand{\talkentry}[4]{%
+  \Needspace{3\baselineskip}%
+  \noindent\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X r@{}}
+    \textbf{#1} & #3 \\
+    \subnote{#2} & {\small #4}
+  \end{tabularx}\par\vspace{3pt}%
 }
 
 % Right-margin year marker for the first entry of each year in the publication list.
@@ -88,36 +123,35 @@
       \centering{\textbf{\LARGE Haogao Gu}}\medskip
 
       \centering{\small New York, NY \textbullet{}
-      \href{mailto:work@guhaogao.com}{\texttt{work@guhaogao.com}} \textbullet{}
-      \href{https://guhaogao.com}{\texttt{guhaogao.com}} \textbullet{}
+      Email: \href{mailto:work@guhaogao.com}{\texttt{work@guhaogao.com}} \textbullet{}
+      Website: \href{https://guhaogao.com}{\texttt{guhaogao.com}} \textbullet{}
       \href{https://orcid.org/0000-0002-7541-4262}{ORCID: 0000-0002-7541-4262}}
 
       \setlength{\parskip}{-8pt}\hrulefill
 }
 
 \subsection*{EDUCATION}
-\educationentry{The University of Hong Kong}{PhD, \textit{Infectious Disease}}{Sep. 2016 -- Oct. 2020}{Hong Kong}
-\educationentry{Sun Yat-sen University}{BMed, \textit{Preventive Medicine}}{Sep. 2011 -- Jun. 2016}{Guangzhou, China}
+\educationentry{PhD}{Infectious Disease}{The University of Hong Kong}{Sep. 2016 -- Oct. 2020}{Hong Kong SAR}
+\educationentry{BMed}{Preventive Medicine}{Sun Yat-sen University}{Sep. 2011 -- Jun. 2016}{Guangzhou, China}
 
 %% -------------- Research Experience
 \subsection*{ACADEMIC APPOINTMENTS}
 \appointmententry{Associate Research Scientist}{Columbia University}{Mailman School of Public Health}{Jun. 2026 -- Present}{New York, NY}{PI: Sen Pei, Department of Environmental Health Sciences}
-\appointmententry{Research Assistant Professor}{The University of Hong Kong}{School of Public Health}{Jul. 2024 -- Jun. 2026}{Hong Kong}{}
+\appointmententry{Research Assistant Professor}{The University of Hong Kong}{School of Public Health}{Jul. 2024 -- Jun. 2026}{Hong Kong SAR}{}
 \appointmententry{Visiting Scholar}{Institut Pasteur}{Evolutionary dynamics of infectious diseases}{Dec. 2024 -- Feb. 2025}{Paris, France}{Host: Sebastian Duchene, Department of Computational Biology}
-\appointmententry{Postdoctoral Fellow}{The University of Hong Kong}{School of Public Health}{Jan. 2021 -- Jun. 2024}{Hong Kong}{Mentor: Leo Poon, Department of Laboratory Sciences}
+\appointmententry{Postdoctoral Fellow}{The University of Hong Kong}{School of Public Health}{Jan. 2021 -- Jun. 2024}{Hong Kong SAR}{Mentor: Leo Poon, Department of Laboratory Sciences}
 
 \subsection*{GRANTS}
-\begin{itemize}
-      \item \textbf{General Research Fund (GRF)}, Research Grants Council, Hong Kong SAR \hfill 2026--2027 \\
-            \subnote{Early Prediction of SARS-CoV-2 Variant Dynamics: Modelling Virus Interactions with Antibodies and ACE2 Receptor.} \\
-            {\small Role: \textbf{Co-I} (PI: Hsiang-Yu Yuan, City University of Hong Kong) \hfill \$840,217 (HKD)}
-      \item \textbf{RGC Postdoctoral Fellowship Scheme}, University Grants Committee, Hong Kong SAR \hfill 2023--2026 \\
-            \subnote{Quantifying attenuation effects caused by dinucleotide biases and codon pair biases for development of safe and scalable live attenuated virus vaccines.} \\
-            {\small Role: \textbf{PI} \hfill \$1,258,250 (HKD)}
-      \item \textbf{CEIRR Option (University of Georgia)}, NIH, United States \hfill 2023--2025 \\
-            \subnote{Investigation of repeated influenza vaccination for epitope focusing.} \\
-            {\small Role: \textbf{Key personnel} (PI: Sophie Valkenburg) \hfill \$454,428 (USD)}
-\end{itemize}
+\grantentry{General Research Fund (GRF)}{Research Grants Council}{2026--2027}
+{Early Prediction of SARS-CoV-2 Variant Dynamics: Modelling Virus Interactions with Antibodies and ACE2 Receptor.}
+{\textbf{Co-I} (PI: Hsiang-Yu Yuan, City University of Hong Kong)}{HKD 840,217}
+\grantentry{RGC Postdoctoral Fellowship Scheme}{University Grants Committee}{2023--2026}
+{Quantifying attenuation effects caused by dinucleotide biases and codon pair biases\newline
+for development of safe and scalable live attenuated virus vaccines.}
+{\textbf{PI}}{HKD 1,258,250}
+\grantentry{CEIRR Option (University of Georgia)}{NIH}{2023--2025}
+{Investigation of repeated influenza vaccination for epitope focusing.}
+{\textbf{Key personnel} (PI: Sophie Valkenburg)}{USD 454,428}
 
 \subsection*{HONORS AND AWARDS}
 \begin{itemize}
@@ -216,27 +250,22 @@
 
 \subsection*{SUPERVISION}
 \subsubsection*{Co-supervision:}
-\begin{itemize}
-      \item Mengting Li, PhD student, The University of Hong Kong \hfill Oct. 2025 -- May 2026 \\ \subnote{Virtual Cell and Viral Infection}
-      \item Ruixuan Wang, PhD student, The University of Hong Kong \hfill Feb. 2025 -- May 2026 \\ \subnote{Within-host Viral Phylodynamics}
-\end{itemize}
+\supervisionentry{Mengting Li}{PhD student}{Virtual Cell and Viral Infection}{Oct. 2025 -- May 2026}{The University of Hong Kong}
+\supervisionentry{Ruixuan Wang}{PhD student}{Within-host Viral Phylodynamics}{Feb. 2025 -- May 2026}{The University of Hong Kong}
 
 \Needspace{10\baselineskip}
 \subsection*{TEACHING}
-\begin{itemize}
-      \Needspace{3\baselineskip}\item \textbf{Postgraduate Certificate in Bioinformatics for MLT (LMLS6010)}, HKU SPACE \hfill Jan. 2026 \\
-            \subnote{Lecturer for 12 classes on Programming for Biological Data}
-      \Needspace{3\baselineskip}\item \textbf{Applied Medical Microbiology (LMLS6004)}, MSc in Biomedical Science, HKU SPACE \hfill Nov. 2024 \\
-            \subnote{Lecturer for 2 classes on Bioinformatic Tutorial}
-      \Needspace{3\baselineskip}\item \textbf{Scientific Skills (LMLS6003)}, MSc in Biomedical Science, HKU SPACE \hfill Oct. 2024 \\
-            \subnote{Lecturer for 6 classes on Data Handling in Bioinformatics}
-\end{itemize}
+\teachingentry{Postgraduate Certificate in Bioinformatics for MLT (LMLS6010)}{}{Jan. 2026}{HKU SPACE}
+{Lecturer for 12 classes on Programming for Biological Data}
+\teachingentry{Applied Medical Microbiology (LMLS6004)}{MSc in Biomedical Science}{Nov. 2024}{HKU SPACE}
+{Lecturer for 2 classes on Bioinformatic Tutorial}
+\teachingentry{Scientific Skills (LMLS6003)}{MSc in Biomedical Science}{Oct. 2024}{HKU SPACE}
+{Lecturer for 6 classes on Data Handling in Bioinformatics}
 
 \subsection*{INVITED TALKS}
-\begin{itemize}
-      \item \textbf{Genomic Surveillance and Molecular Epidemiology of SARS-CoV-2 in Hong Kong}.  \hfill Jul. 2025 \\ \small \textit{XLII Annual Meeting of the Willi Hennig Society,
-                  The Chinese University of Hong Kong, HKSAR, China}
-\end{itemize}
+\talkentry{Genomic Surveillance and Molecular Epidemiology of SARS-CoV-2 in Hong Kong}
+{XLII Annual Meeting of the Willi Hennig Society, The Chinese University of Hong Kong}
+{Jul. 2025}{Hong Kong SAR}
 
 \subsection*{PROFESSIONAL DEVELOPMENT}
 \subsubsection*{Workshops:}
