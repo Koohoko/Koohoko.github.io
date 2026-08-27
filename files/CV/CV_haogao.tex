@@ -21,6 +21,33 @@
 
 % House-style annotation sub-line (used under an entry's title line everywhere)
 \newcommand{\subnote}[1]{{\small\itshape #1}}
+\newlength{\entrysep}
+\setlength{\entrysep}{1pt}
+\newlength{\categoryindent}
+\setlength{\categoryindent}{1.2em}
+\newlength{\detailindent}
+\setlength{\detailindent}{0.7em}
+
+% Spatial hierarchy complements typography: category labels stay flush left,
+% their child entries move right, and supporting details receive a lighter
+% secondary inset. The right-hand metadata rail remains globally aligned.
+% A narrow inner box preserves the inset on wrapped lines without ending an
+% additional paragraph inside the table cell (which would inflate row height).
+\newcommand{\detailcell}[1]{%
+  \hspace*{\detailindent}\parbox[t]{\dimexpr\linewidth-\detailindent\relax}{\raggedright\small\itshape #1}%
+}
+\newcommand{\smallsecondarycell}[1]{%
+  \hspace*{\detailindent}\parbox[t]{\dimexpr\linewidth-\detailindent\relax}{\raggedright\small #1}%
+}
+\newcommand{\detailline}[1]{%
+  {\leftskip=\detailindent\relax\noindent\subnote{#1}\par}%
+}
+\newcommand{\categoryline}[1]{%
+  {\leftskip=\categoryindent\relax\noindent #1\par}%
+}
+\newcommand{\categorydetailline}[1]{%
+  {\leftskip=\dimexpr\categoryindent+\detailindent\relax\noindent\subnote{#1}\par}%
+}
 
 % Structured entries keep substantive information on the left and reserve the
 % right rail for dates and locations. Education emphasizes qualification;
@@ -28,19 +55,19 @@
 \newcommand{\educationentry}[5]{%
   \noindent\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X r@{}}
     \textbf{#1}, \textit{#2} & #4 \\
-    {\small #3} & {\small #5}
-  \end{tabularx}\par\vspace{2pt}%
+    \smallsecondarycell{#3} & {\small #5}
+  \end{tabularx}\par\vspace{\entrysep}%
 }
 
 \newcommand{\appointmententry}[6]{%
   \noindent\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X r@{}}
     \textbf{#1}, #2 & #4 \\
-    {\small #3} & {\small #5}
+    \smallsecondarycell{#3} & {\small #5}
   \end{tabularx}\par%
   \if\relax\detokenize{#6}\relax\else
-    \vspace{-1pt}\noindent\subnote{#6}\par
+    \vspace{-1pt}\detailline{#6}
   \fi
-  \vspace{2pt}%
+  \vspace{\entrysep}%
 }
 
 % Section-specific entries share a common visual grammar: substantive content
@@ -49,33 +76,68 @@
   \Needspace{4\baselineskip}%
   \noindent\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X r@{}}
     \textbf{#1}, #2 & #3 \\
-    \subnote{#4} & {\small #6} \\
-    {\small Role: #5} &
-  \end{tabularx}\par
+    \detailcell{#4} & {\small #6} \\
+    \smallsecondarycell{Role: #5} &
+  \end{tabularx}\par\vspace{\entrysep}%
 }
 
 \newcommand{\supervisionentry}[5]{%
   \Needspace{3\baselineskip}%
-  \noindent\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X r@{}}
+  \noindent\begin{tabularx}{\linewidth}{@{\hspace{\categoryindent}}>{\raggedright\arraybackslash}X r@{}}
     \textbf{#1}, #2 & #4 \\
-    \subnote{#3} & {\small #5}
-  \end{tabularx}\par\vspace{3pt}%
+    \detailcell{#3} & {\small #5}
+  \end{tabularx}\par\vspace{\entrysep}%
 }
 
 \newcommand{\teachingentry}[5]{%
   \Needspace{3\baselineskip}%
   \noindent\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X r@{}}
     \textbf{#1}\if\relax\detokenize{#2}\relax\else, #2\fi & #3 \\
-    \subnote{#5} & {\small #4}
-  \end{tabularx}\par\vspace{3pt}%
+    \detailcell{#5} & {\small #4}
+  \end{tabularx}\par\vspace{\entrysep}%
 }
 
 \newcommand{\talkentry}[4]{%
   \Needspace{3\baselineskip}%
   \noindent\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X r@{}}
     \textbf{#1} & #3 \\
-    \subnote{#2} & {\small #4}
-  \end{tabularx}\par\vspace{3pt}%
+    \detailcell{#2} & {\small #4}
+  \end{tabularx}\par\vspace{\entrysep}%
+}
+
+\newcommand{\honorentry}[4]{%
+  \Needspace{2\baselineskip}%
+  \noindent\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X r@{}}
+    \textbf{#1}, #2 & #3
+  \end{tabularx}\par%
+  \if\relax\detokenize{#4}\relax\else
+    \vspace{-1pt}\detailline{#4}
+  \fi
+  \vspace{\entrysep}%
+}
+
+\newcommand{\developmententry}[3]{%
+  \Needspace{2\baselineskip}%
+  \noindent\begin{tabularx}{\linewidth}{@{\hspace{\categoryindent}}>{\raggedright\arraybackslash}X r@{}}
+    \textbf{#1}, #2 & #3
+  \end{tabularx}\par\vspace{\entrysep}%
+}
+
+\newcommand{\softwareentry}[3]{%
+  \Needspace{2\baselineskip}%
+  \categoryline{\href{#1}{\textbf{\texttt{#2}}}, \subnote{#3}}%
+  \vspace{\entrysep}%
+}
+
+\newcommand{\leadershipentry}[4]{%
+  \Needspace{3\baselineskip}%
+  \noindent\begin{tabularx}{\linewidth}{@{\hspace{\categoryindent}}>{\raggedright\arraybackslash}X r@{}}
+    \textbf{#1} #2 & #3
+  \end{tabularx}\par%
+  \if\relax\detokenize{#4}\relax\else
+    \vspace{-1pt}\categorydetailline{#4}
+  \fi
+  \vspace{\entrysep}%
 }
 
 % Right-margin year marker for the first entry of each year in the publication list.
@@ -131,15 +193,15 @@
 }
 
 \subsection*{EDUCATION}
-\educationentry{PhD}{Infectious Disease}{The University of Hong Kong}{Sep. 2016 -- Oct. 2020}{Hong Kong SAR}
-\educationentry{BMed}{Preventive Medicine}{Sun Yat-sen University}{Sep. 2011 -- Jun. 2016}{Guangzhou, China}
+\educationentry{PhD}{Infectious Disease}{The University of Hong Kong}{Sep. 2016--Oct. 2020}{Hong Kong SAR}
+\educationentry{BMed}{Preventive Medicine}{Sun Yat-sen University}{Sep. 2011--Jun. 2016}{Guangzhou, China}
 
 %% -------------- Research Experience
 \subsection*{ACADEMIC APPOINTMENTS}
-\appointmententry{Associate Research Scientist}{Columbia University}{Mailman School of Public Health}{Jun. 2026 -- Present}{New York, NY}{PI: Sen Pei, Department of Environmental Health Sciences}
-\appointmententry{Research Assistant Professor}{The University of Hong Kong}{School of Public Health}{Jul. 2024 -- Jun. 2026}{Hong Kong SAR}{}
-\appointmententry{Visiting Scholar}{Institut Pasteur}{Evolutionary dynamics of infectious diseases}{Dec. 2024 -- Feb. 2025}{Paris, France}{Host: Sebastian Duchene, Department of Computational Biology}
-\appointmententry{Postdoctoral Fellow}{The University of Hong Kong}{School of Public Health}{Jan. 2021 -- Jun. 2024}{Hong Kong SAR}{Mentor: Leo Poon, Department of Laboratory Sciences}
+\appointmententry{Associate Research Scientist}{Columbia University}{Mailman School of Public Health}{Jun. 2026--Present}{New York, NY}{PI: Sen Pei, Department of Environmental Health Sciences}
+\appointmententry{Research Assistant Professor}{The University of Hong Kong}{School of Public Health}{Jul. 2024--Jun. 2026}{Hong Kong SAR}{}
+\appointmententry{Visiting Scholar}{Institut Pasteur}{Evolutionary dynamics of infectious diseases}{Dec. 2024--Feb. 2025}{Paris, France}{Host: Sebastian Duchene, Department of Computational Biology}
+\appointmententry{Postdoctoral Fellow}{The University of Hong Kong}{School of Public Health}{Jan. 2021--Jun. 2024}{Hong Kong SAR}{Mentor: Leo Poon, Department of Laboratory Sciences}
 
 \subsection*{GRANTS}
 \grantentry{General Research Fund (GRF)}{Research Grants Council}{2026--2027}
@@ -154,16 +216,14 @@ for development of safe and scalable live attenuated virus vaccines.}
 {\textbf{Key personnel} (PI: Sophie Valkenburg)}{USD 454,428}
 
 \subsection*{HONORS AND AWARDS}
-\begin{itemize}
-      \item \textbf{Gold Medal}, 51st International Exhibition of Inventions at Geneva \hfill Mar. 2026\\
-            \subnote{Core member. Project: A broad-spectrum live-attenuated mucosal vaccine against beta-coronaviruses}
-      \item \textbf{The HKU-Pasteur Fellowship (4th edition)}, HKU-Pasteur Research Pole \hfill Apr. 2024
-      \item \textbf{Faculty Outstanding Research Output Award}, The University of Hong Kong \hfill Feb. 2024\\
-            \subnote{awarded twice, for two separate projects}
-      \item \textbf{Outstanding Project Team, on COVID-19 research award}, Food and Health Bureau (Hong Kong) \hfill Nov. 2021
-      \item \textbf{First Prize}, Chinese National Olympiad in Biology \hfill Sep. 2010\\
-            \subnote{qualified for guaranteed admission to Sun Yat-sen University}
-\end{itemize}
+\honorentry{Gold Medal}{51st International Exhibition of Inventions at Geneva}{Mar. 2026}
+{Core member. Project: A broad-spectrum live-attenuated mucosal vaccine against beta-coronaviruses.}
+\honorentry{The HKU-Pasteur Fellowship (4th edition)}{HKU-Pasteur Research Pole}{Apr. 2024}{}
+\honorentry{Faculty Outstanding Research Output Award}{The University of Hong Kong}{Feb. 2024}
+{Awarded twice for two separate projects.}
+\honorentry{Outstanding Project Team, on COVID-19 research award}{Food and Health Bureau (Hong Kong)}{Nov. 2021}{}
+\honorentry{First Prize}{Chinese National Olympiad in Biology}{Sep. 2010}
+{Qualified for guaranteed admission to Sun Yat-sen University.}
 
 \subsection*{PUBLICATIONS}
 \subsubsection*{Summary}
@@ -180,6 +240,10 @@ for development of safe and scalable live attenuated virus vaccines.}
       %% Published
       %% 2026
       \item \yr{2026}Te N, Li J, Chin AWH, \textbf{Gu H}, Huang Y, Ho MTM, Shuen TCY, Cheng SMS, Lei Y, Ng DYM, Tan CW, Wang L, Hui KPY, Chan MCW, Feng B, Peiris M \& Poon LLM. \textit{A single-dose amber codon carrying live attenuated vaccine elicits pan-sarbecovirus immunity and blocks SARS-CoV-2 transmission.} \journal{npj Vaccines}. (2026)
+      % The first entry uses the remaining first-page space. Later entries start only
+      % when at least four baselines remain, preventing one-line citation carryovers.
+      \let\cvpublicationitem\item
+      \renewcommand{\item}{\Needspace{4\baselineskip}\cvpublicationitem}
       \faitem \textbf{Gu H}, Li J, Sun W, Li M, Leung K, Wu JT, Yuan HY, Wang MH, Yang B, McKay MR, Ning N \& Poon LLM. \textit{Optimizing global genomic surveillance for early detection of emerging SARS-CoV-2 variants.} \journal{Nature Communications}. (2026)
       \item Song ZY, Zhang J, Shum MHH, \textbf{Gu H}, Shi W, Siu GKH, Poon LLM, Wu JT, Leung KSM \& Lam TTY. \textit{Geographical dispersion and transmission of multiple SARS-CoV-2 variants in Hong Kong.} \journal{Urban Informatics}, 5(1), 20. (2026)
       \faitem \textbf{Gu H}, Li M, Wang R, Lee LK, Tam WY, Ho AYM, Yau MCY, Yip KT, Wong RCW, Wong BKC, Luk KS, Lam JYW, Que TL, Chow VCY, Chau SKY, Duchene S, Siu GKH \& Poon LLM. \textit{Genomic Epidemiology of Hospital-Associated SARS-CoV-2 Clusters in Hong Kong During a Period of Relaxed Visitation (May--August 2022).} \journal{Influenza and Other Respiratory Viruses}, 20(3), e70249. (2026)
@@ -250,8 +314,8 @@ for development of safe and scalable live attenuated virus vaccines.}
 
 \subsection*{SUPERVISION}
 \subsubsection*{Co-supervision:}
-\supervisionentry{Mengting Li}{PhD student}{Virtual Cell and Viral Infection}{Oct. 2025 -- May 2026}{The University of Hong Kong}
-\supervisionentry{Ruixuan Wang}{PhD student}{Within-host Viral Phylodynamics}{Feb. 2025 -- May 2026}{The University of Hong Kong}
+\supervisionentry{Mengting Li}{PhD student}{Virtual Cell and Viral Infection}{Oct. 2025--May 2026}{The University of Hong Kong}
+\supervisionentry{Ruixuan Wang}{PhD student}{Within-host Viral Phylodynamics}{Feb. 2025--May 2026}{The University of Hong Kong}
 
 \Needspace{10\baselineskip}
 \subsection*{TEACHING}
@@ -269,34 +333,32 @@ for development of safe and scalable live attenuated virus vaccines.}
 
 \subsection*{PROFESSIONAL DEVELOPMENT}
 \subsubsection*{Workshops:}
-\begin{itemize}
-      \item \textit{Workshop on Molecular Evolution}, Marine Biological Laboratory (MBL), Woods Hole, MA, USA \hfill May 2025
-      \item \textit{Virus Evolution and Epidemiology Summer Course}, Croucher Foundation, Hong Kong \hfill Jul. 2024
-      \item \textit{Models and Inference in Population Genetics IV}, University of Warwick, UK \hfill Apr. 2024
-\end{itemize}
+\developmententry{Workshop on Molecular Evolution}{Marine Biological Laboratory (MBL), Woods Hole, MA, USA}{May 2025}
+\developmententry{Virus Evolution and Epidemiology Summer Course}{Croucher Foundation, Hong Kong}{Jul. 2024}
+\developmententry{Models and Inference in Population Genetics IV}{University of Warwick, UK}{Apr. 2024}
 \subsubsection*{Pedagogical training:}
-\begin{itemize}
-      \item PBL Tutor Training Certificate, LKS Faculty of Medicine, The University of Hong Kong \hfill Oct. 2025
-      \item Certificate of Teaching and Learning in Higher Education, CETL, HKU \hfill Dec. 2024
-\end{itemize}
+\developmententry{PBL Tutor Training Certificate}{LKS Faculty of Medicine, The University of Hong Kong}{Oct. 2025}
+\developmententry{Certificate of Teaching and Learning in Higher Education}{CETL, HKU}{Dec. 2024}
 
 \subsection*{OPEN-SOURCE SOFTWARE}
-\begin{itemize}
-      \item Author, \href{https://doi.org/10.18129/B9.bioc.SynMut}{\textbf{\texttt{SynMut}}}, \subnote{Synonymously Mutated Sequences with Different Genomic Signatures}
-      \item Author, \href{https://github.com/Leo-Poon-Lab/GEII}{\textbf{\texttt{GEII}}}, \subnote{Host Gene Expression under Influenza virus infection or Interferon stimulation}
-      \item Author, \href{https://github.com/Koohoko/epitope_diversity}{\textbf{\texttt{epitope\_diversity}}}, \subnote{Estimating epitope diversity at haplotype level using NGS reads}
-      \item Author, \href{https://github.com/Koohoko/fasta_filter}{\textbf{\texttt{fasta\_filter}}}, \subnote{Filtering fasta sequences with threshold of specific bases}
-      \item Contributor, \href{https://github.com/spatPomp-org/spatPomp}{\textbf{\texttt{spatPomp}}}, \subnote{Inference for Spatiotemporal Partially Observed Markov Processes}
-      \item Contributor, \href{https://github.com/Rdatatable/data.table}{\textbf{\texttt{data.table}}} (Chinese translation), \subnote{High-performance R package}
-\end{itemize}
+\subsubsection*{Author:}
+\softwareentry{https://doi.org/10.18129/B9.bioc.SynMut}{SynMut}{Synonymously mutated sequences with different genomic signatures.}
+\softwareentry{https://github.com/Leo-Poon-Lab/GEII}{GEII}{Host gene expression under influenza virus infection or interferon stimulation.}
+\softwareentry{https://github.com/Koohoko/epitope_diversity}{epitope\_diversity}{Estimating epitope diversity at haplotype level using NGS reads.}
+\softwareentry{https://github.com/Koohoko/fasta_filter}{fasta\_filter}{Filtering FASTA sequences using thresholds for specified bases.}
+\subsubsection*{Contributor:}
+\softwareentry{https://github.com/spatPomp-org/spatPomp}{spatPomp}{Inference for spatiotemporal partially observed Markov processes.}
+\softwareentry{https://github.com/Rdatatable/data.table}{data.table}{Chinese translation of a high-performance R package.}
 
 \subsection*{ACADEMIC SERVICE AND LEADERSHIP}
 \subsubsection*{Managing editor:}
-\journal{Virology Journal}
+\categoryline{\journal{Virology Journal}}
 
 \subsubsection*{Ad hoc peer reviewer:}
 {\small
-\noindent\begin{minipage}[t]{0.47\linewidth}\raggedright
+\noindent\hspace*{\categoryindent}%
+\begin{minipage}[t]{\dimexpr\linewidth-\categoryindent\relax}
+\begin{minipage}[t]{0.47\linewidth}\raggedright
       Science\\
       Communications Medicine\\
       PLOS Pathogens\\
@@ -317,15 +379,16 @@ for development of safe and scalable live attenuated virus vaccines.}
       BMC Microbiology\\
       Infection, Genetics and Evolution
 \end{minipage}
+\end{minipage}\par
 }
 
 \subsubsection*{Professional leadership:}
-\begin{itemize}
-      \item Founder and sole lecturer of a weekly reading group on Molecular Evolution. \hfill Feb. 2025 -- Dec. 2025 \\ \small \textit{Personally delivered every session, teaching Ziheng Yang's ``Molecular Evolution: The Statistical Approach'' to 20 researchers from different regions and disciplines} \normalsize
-      \item Generating and drafting weekly reports to Hong Kong public health authorities. \hfill 2020 -- 2022 \\ \small \textit{On SARS-CoV-2 genomic epidemiology for timely pandemic responses} \normalsize
+\leadershipentry{Founder and sole lecturer}{of a weekly reading group on Molecular Evolution.}{Feb. 2025--Dec. 2025}
+{Personally delivered every session, teaching Ziheng Yang's ``Molecular Evolution: The Statistical Approach'' to 20 researchers from different regions and disciplines.}
+\leadershipentry{Generating and drafting weekly reports}{to Hong Kong public health authorities.}{2020--2022}
+{Supported timely pandemic responses through SARS-CoV-2 genomic epidemiology.}
 
-\end{itemize}
 
-
-\vfill {\footnotesize\itshape CV updated: \CVDate{} \textbullet{} Citation metrics updated: \ScholarUpdated}
+\vfill
+\noindent\makebox[\linewidth][c]{\footnotesize\itshape CV updated: \CVDate{} \textbullet{} Citation metrics updated: \ScholarUpdated}
 \end{document}
