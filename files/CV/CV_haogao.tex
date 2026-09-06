@@ -169,12 +169,14 @@
 
 % --- AUTOMATION COMMANDS ---
 \regtotcounter{enumi} % Register the 'enumerate' counter for total counting
-\newcommand{\CVDate}{2026-08-09}
+\newcommand{\CVDate}{2026-09-06}
 
-% For counting first-author papers
+% Shared first authors count once per paper.
 \newcounter{firstauthorcount}
 \regtotcounter{firstauthorcount}
 \newcommand{\faitem}{\refstepcounter{firstauthorcount}\item}
+\newcounter{correspondingauthorcount}
+\regtotcounter{correspondingauthorcount}
 
 % --- GOOGLE SCHOLAR METRICS (manually generated) ---
 \input{scholar_metrics.tex}
@@ -192,10 +194,6 @@
       \setlength{\parskip}{-8pt}\hrulefill
 }
 
-\subsection*{EDUCATION}
-\educationentry{PhD}{Infectious Disease}{The University of Hong Kong}{Sep. 2016--Oct. 2020}{Hong Kong SAR}
-\educationentry{BMed}{Preventive Medicine}{Sun Yat-sen University}{Sep. 2011--Jun. 2016}{Guangzhou, China}
-
 %% -------------- Research Experience
 \subsection*{ACADEMIC APPOINTMENTS}
 \appointmententry{Associate Research Scientist}{Columbia University}{Mailman School of Public Health}{Jun. 2026--Present}{New York, NY}{PI: Sen Pei, Department of Environmental Health Sciences}
@@ -203,17 +201,23 @@
 \appointmententry{Visiting Scholar}{Institut Pasteur}{Evolutionary dynamics of infectious diseases}{Dec. 2024--Feb. 2025}{Paris, France}{Host: Sebastian Duchene, Department of Computational Biology}
 \appointmententry{Postdoctoral Fellow}{The University of Hong Kong}{School of Public Health}{Jan. 2021--Jun. 2024}{Hong Kong SAR}{Mentor: Leo Poon, Department of Laboratory Sciences}
 
-\subsection*{GRANTS}
+\subsection*{EDUCATION}
+\educationentry{PhD}{Infectious Disease}{The University of Hong Kong}{Sep. 2016--Oct. 2020}{Hong Kong SAR}
+\educationentry{BMed}{Preventive Medicine}{Sun Yat-sen University}{Sep. 2011--Jun. 2016}{Guangzhou, China}
+
+\subsection*{RESEARCH FUNDING AND FELLOWSHIPS}
+% Amounts are retained from the existing CV. The scope of the two collaborative
+% project awards (whole project versus attributable share) awaits confirmation.
 \grantentry{General Research Fund (GRF)}{Research Grants Council}{2026--2027}
 {Early Prediction of SARS-CoV-2 Variant Dynamics: Modelling Virus Interactions with Antibodies and ACE2 Receptor.}
-{\textbf{Co-I} (PI: Hsiang-Yu Yuan, City University of Hong Kong)}{HKD 840,217}
+{\textbf{Co-Investigator} (PI: Hsiang-Yu Yuan, City University of Hong Kong)}{Award: HKD 840,217}
 \grantentry{RGC Postdoctoral Fellowship Scheme}{University Grants Committee}{2023--2026}
 {Quantifying attenuation effects caused by dinucleotide biases and codon pair biases\newline
 for development of safe and scalable live attenuated virus vaccines.}
-{\textbf{PI}}{HKD 1,258,250}
+{\textbf{Fellowship recipient}}{Award: HKD 1,258,250}
 \grantentry{CEIRR Option (University of Georgia)}{NIH}{2023--2025}
 {Investigation of repeated influenza vaccination for epitope focusing.}
-{\textbf{Key personnel} (PI: Sophie Valkenburg)}{USD 454,428}
+{\textbf{Key personnel} (PI: Sophie Valkenburg)}{Award: USD 454,428}
 
 \subsection*{HONORS AND AWARDS}
 \honorentry{Gold Medal}{51st International Exhibition of Inventions at Geneva}{Mar. 2026}
@@ -226,76 +230,67 @@ for development of safe and scalable live attenuated virus vaccines.}
 {Qualified for guaranteed admission to Sun Yat-sen University.}
 
 \subsection*{PUBLICATIONS}
-\subsubsection*{Summary}
-\begin{center}
+{\centering
       \begin{tabular}{ c c }
-            % \hline
-            Papers in peer-reviewed journals:       & \textbf{\total{enumi}} (citations: \textbf{\ScholarCitations}; h-index: \textbf{\ScholarHIndex}) \\
-            \textit{- first-/last- authored papers} & \textit{\textbf{\total{firstauthorcount}}}                                                       \\
+            Journal publications: & \textbf{\total{enumi}} (citations: \textbf{\ScholarCitations}; h-index: \textbf{\ScholarHIndex}) \\
+            Authorship: & \textbf{\total{firstauthorcount}} first/co-first; \textbf{\total{correspondingauthorcount}} corresponding \\
       \end{tabular}
-\end{center}
+\par}\smallskip
+\noindent{\small\textsuperscript{$*$}Co-first authors; \textsuperscript{$\dagger$}Corresponding author (Haogao Gu).}
 
 \subsubsection*{Journal papers \textmd{(in reverse chronological order)}:}
-\begin{enumerate}
-      %% Published
-      %% 2026
-      \item \yr{2026}Te N, Li J, Chin AWH, \textbf{Gu H}, Huang Y, Ho MTM, Shuen TCY, Cheng SMS, Lei Y, Ng DYM, Tan CW, Wang L, Hui KPY, Chan MCW, Feng B, Peiris M \& Poon LLM. \textit{A single-dose amber codon carrying live attenuated vaccine elicits pan-sarbecovirus immunity and blocks SARS-CoV-2 transmission.} \journal{npj Vaccines}. (2026)
-      % The first entry uses the remaining first-page space. Later entries start only
-      % when at least four baselines remain, preventing one-line citation carryovers.
+\begin{enumerate}[itemsep=0.5pt, parsep=0pt]
+      % Formal publication years; titles link to DOI or the publisher/index record.
+      \item \yr{2026}Te N, Li J, Chin AWH, \textbf{Gu H}, Huang Y, Ho MTM, Shuen TCY, Cheng SMS, Lei Y, Ng DYM, Tan CW, Wang L, Hui KPY, Chan MCW, Feng B, Peiris M \& Poon LLM. \href{https://doi.org/10.1038/s41541-026-01540-7}{\textit{A single-dose amber codon carrying live attenuated vaccine elicits pan-sarbecovirus immunity and blocks SARS-CoV-2 transmission.}} \journal{npj Vaccines} (2026).
+      % Let the first entry use the remaining space; keep later entries together.
       \let\cvpublicationitem\item
       \renewcommand{\item}{\Needspace{4\baselineskip}\cvpublicationitem}
-      \faitem \textbf{Gu H}, Li J, Sun W, Li M, Leung K, Wu JT, Yuan HY, Wang MH, Yang B, McKay MR, Ning N \& Poon LLM. \textit{Optimizing global genomic surveillance for early detection of emerging SARS-CoV-2 variants.} \journal{Nature Communications}. (2026)
-      \item Song ZY, Zhang J, Shum MHH, \textbf{Gu H}, Shi W, Siu GKH, Poon LLM, Wu JT, Leung KSM \& Lam TTY. \textit{Geographical dispersion and transmission of multiple SARS-CoV-2 variants in Hong Kong.} \journal{Urban Informatics}, 5(1), 20. (2026)
-      \faitem \textbf{Gu H}, Li M, Wang R, Lee LK, Tam WY, Ho AYM, Yau MCY, Yip KT, Wong RCW, Wong BKC, Luk KS, Lam JYW, Que TL, Chow VCY, Chau SKY, Duchene S, Siu GKH \& Poon LLM. \textit{Genomic Epidemiology of Hospital-Associated SARS-CoV-2 Clusters in Hong Kong During a Period of Relaxed Visitation (May--August 2022).} \journal{Influenza and Other Respiratory Viruses}, 20(3), e70249. (2026)
-      \item Ye Y, Shuai H, Song Y, Shum MHH, Smith DK, \textbf{Gu H}, Zhu H, Wu JT, Lewis NS, Bonfante F, Holmes EC, Peiris M, Poon LLM, Guan Y \& Lam TTY. \textit{Genomic features associated with sustained mammalian transmission of avian influenza A viruses.} \journal{Nature Microbiology}, s41564-025-02257-4. (2026)
-      \item Te N, Chin AWH, \textbf{Gu H}, Jia JZ, Huang Y, Cheng SMS, Tan CW, Zhao J, Hui KPY, Chan MCW, Feng B, Quadeer AA, McKay MR, Wang L, Valkenburg SA, Peiris M \& Poon LLM. \textit{Broad beta-CoV immunity and transmission blockade by a single-dose live-attenuated vaccine with atypical codon usage.} \journal{Proceedings of the National Academy of Sciences}, 123(4), e2518645123. (2026)
-            %% 2025
-      \item \yr{2025}Tuohetasen S, Qu Y, Hopke PK, Zhang K, Liu Y, Lin S, \textbf{Gu H}, Wang X, Lau SSS, Lin X, Gao X, Wu Y, Zhou X, Lin Z, Zhang M, Sun Y, Liu X, Chen J \& Zhang W. \textit{Potential impact of maternal nighttime light exposure and its interaction with sociodemographic characteristics on the risk of various congenital heart diseases.} \journal{Epidemiology}, 36(5), 625--635. (2025)
-      \item Zhang Y, Wei J, Chen S, Benmarhnia T, Zhang K, Wang X, Deng X, \textbf{Gu H}, Lin Z, Qu Y, Xiao J, Jiang J, Du Z, Zhang W \& Hao Y. \textit{Individual and mixed associations between fine particulate matter components and hospital admissions for hypertension: Insights from a large-scale South Chinese cohort study.} \journal{Sustainable Cities and Society}, 106293. (2025)
-      \item Wu G, Wang S, Wu W, Benmarhnia T, Lin S, Zhang K, Xue Romeiko X, \textbf{Gu H}, Qu Y, Xiao J, Deng X, Lin Z, Du Z, Zhang W \& Hao Y. \textit{Potential causal links of long-term PM2.5 components exposure with diabetes incidence and mortality in the United States.} \journal{Sustainable Cities and Society}, 106071. (2025)
-      \item Sun W, Choy KT, Cheng KM, Brackman CJ, Cheng SMS, Sit THC, Tse ACN, Sims LD, \textbf{Gu H}, Tang AWY, Wong ANC, Tsang ATL, Koo JCT, Luk LLH, Yen HL, Peiris M \& Poon LLM. \textit{Detection and characterisation of high pathogenicity avian influenza virus (H5N1/H5N8) clade 2.3. 4.4 b, Hong Kong SAR, China, 2021 to 2024.} \journal{Eurosurveillance}, 2400839. (2025)
-      \item Cao Y, Chin AWH, \textbf{Gu H}, Li M, Gu Y, Lau SPN, Hui KPY, Chan MCW \& Poon LLM. \textit{An interferon-stimulated long non-coding RNA USP30-AS1 as an immune modulator in influenza A virus infection.} \journal{PLOS pathogens}, e1012854. (2025)
-            %% 2024
-      \item \yr{2024}Wang X, Zhang Y, Benmarhnia T, Zhang K, Lin S, Deng X, \textbf{Gu H}, Wu W, Lin X, Du Z, Wang Y, Qu Y, Lin Z, Zhang M, Sun Y, Dong GH, Wei Y, Zhang W \& Hao Y. \textit{The effect of residential greenness on cardiovascular mortality from a large cohort in South China: An in-depth analysis of effect modification by multiple demographic and lifestyle characteristics.} \journal{Environment International}, 108894. (2024)
-            \faitem Nelson C, Poon LLM \& \textbf{Gu H}. \textit{Reply to: Population genetic considerations regarding the interpretation of within-patient SARS-CoV-2 polymorphism data.} \journal{Nature Communications}, 15, 3239. (2024)
-            \faitem Jia J*, Cohen C*, \textbf{Gu H}*, McLean M, Varadarajan R, Bhandari N, Peiris M, Leung G, Poon L, Chung A, Cowling B, Leung N, Tsang T \& Valkenburg S. \textit{Influenza antibody breadth and effector functions are immune correlates from acquisition of pandemic infection of children.} \journal{Nature Communications}, 15, 3210. (2024)
-      \item Cheng SMS, Mok CKP, Li JKC, Chan KKP, Luk KS, Lee BHW, \textbf{Gu H}, Chan KCK, Tsang LCH, Yiu KYS, Ling KKC, Tang YS, Luk LLH, Yu JKM, Pekosz A, Webby RJ, Cowling BJ, Hui DSC \& Peiris M. \textit{Cross-neutralizing antibody against emerging Omicron subvariants of SARS-CoV-2 in infection-naïve individuals with homologous BNT162b2 or BNT162b2 (WT+ BA. 4/5) bivalent booster vaccination.} \journal{Virology Journal}, 21(1), 1--7. (2024)
-            %% 2023
-      \item \yr{2023}Xu X, Deng Y, Ding J, Shi X, Zheng X, Wang D, Yang Y, Liu L, Wang C, Li S, \textbf{Gu H}, Poon LLM \& Zhang T. \textit{Refining detection methods for emerging SARS-CoV-2 mutants in wastewater: A case study on the Omicron variants.} \journal{Science of The Total Environment}, 904, 166215. (2023)
-      \item Xu X, Deng Y, Ding J, Zheng X, Wang C, Wang D, Liu L, \textbf{Gu H}, Peiris M, Poon LLM \& Zhang T. \textit{Wastewater genomic sequencing for SARS-CoV-2 variants surveillance in wastewater-based epidemiology applications.} \journal{Water Research}, 244, 120444. (2023)
-      \item Zheng MZM, Tan TK, Villalon-Letelier F, Lau H, Deng YM, Fritzlar S, Valkenburg SA, \textbf{Gu H}, Poon LLM, Reading PC, Townsend AR \& Wakim LM. \textit{Single-cycle influenza virus vaccine generates lung CD8+ Trm that cross react against viral variants and subvert virus escape mutants.} \journal{Science Advances}, 9 (36), eadg3469. (2023)
-      \item Xie R, Edwards KM, Adam DC, Leung KSM, Tsang TK, Gurung S, Xiong W, Wei X, Ng DYM, Liu GYZ, Krishnan P, Chang LDJ, Cheng SMS, \textbf{Gu H}, Siu GKH, Wu JT, Leung GM, Peiris M, Cowling BJ, Poon LLM \& Dhanasekaran V. \textit{Resurgence of Omicron BA.2 in SARS-CoV-2 infection-naive Hong Kong.} \journal{Nature Communications}, 14, 2422. (2023)
-            \faitem \textbf{Gu H}, Quadeer AA, Krishnan P, Chang L, Liu G, Ng D, Cheng S, Lam T, Peiris M, McKay M \& Poon L. \textit{Within-host genetic diversity of SARS-CoV-2 lineages in unvaccinated and vaccinated individuals.} \journal{Nature Communications}, 14, 1793. (2023)
-      \item Adam D, Martín-Sánchez M, \textbf{Gu H}, Wu P, Lau E, Leung G, Poon L \& Cowling B. \textit{Risk of within-hotel transmission of SARS-CoV-2 during on-arrival quarantine in Hong Kong: an epidemiological and phylogenomic investigation.} \journal{The Lancet Regional Health - Western Pacific}, 100678. (2023)
-            %% 2022
-      \item \yr{2022}Chu JTS, \textbf{Gu H}, Sun W, Fan RLY, Nicholls JM, Valkenburg SA \& Poon L. \textit{Heterosubtypic immune pressure accelerates emergence of influenza A virus escape phenotypes in mice.} \journal{Virus Research}, 198991. (2022)
-      \item Leong N, \textbf{Gu H}, Ng YM, Chang L, Krishnan P, Cheng S, Peiris M \& Poon L. \textit{Development of multiplex RT-ddPCR assays for detection of SARS-CoV-2 and other common respiratory virus infections.} \journal{Influenza and Other Respiratory Viruses}, 1 (11), 13084. (2022)
-      \item Jia J, Tan CW, Cheng S, \textbf{Gu H}, Yeoh A, Mok CKP, Wang Y, Zhao J, Leung N, Cowling B, Poon L, Hui D, Wang LF, Peiris M \& Valkenburg S. \textit{Priming conditions shape breadth of neutralizing antibody responses to sarbecoviruses.} \journal{Nature Communications}, 13, 6285. (2022)
-      \item Hui K, Ng KC, Ho JCW, Yeung HW, Ching RHH, \textbf{Gu H}, Chung JCK, Chow VLY, Sit KY, Hsin MKY, Au TWK, Poon L, Peiris JS, Nicholls J \& Chan M. \textit{Replication of SARS-CoV-2 Omicron BA. 2 Variant in Ex Vivo Cultures of the Human Upper and Lower Respiratory Tract.} \journal{eBioMedicine}, vol. 83: 104232. (2022)
-      \item Su W, Choy KT, \textbf{Gu H}, Sia SF, Cheng KM, Nizami SIN, Krishnan P, Ng YM, Chang L, Liu Y, Cheng S, Peiris M, Poon L, Nicholls J \& Yen HL. \textit{Reduced Pathogenicity and Transmission Potential of Omicron BA.1 and BA.2 Sublineages Compared with the Early Severe Acute Respiratory Syndrome Coronavirus 2 D614G Variant in Syrian Hamsters.} \journal{Journal of Infectious Diseases}, jiac276. (2022)
-      \item Sun W, Cheng S, Lam K, Kwan T, Wong R, Lau L, Liu G, Luk L, Li J, \textbf{Gu H}, Peiris M \& Poon L. \textit{Natural Reassortment of Eurasian Avian-Like Swine H1N1 and Avian H9N2 Influenza Viruses in Pigs, China.} \journal{Emerging Infectious Diseases}, 28.7: 1509. (2022)
-      \item Bull MB, \textbf{Gu H}, Ma F, Perera L, Poon L \& Valkenburg S. \textit{Next Generation T cell-activating vaccination increases influenza virus mutation prevalence.} \journal{Science Advances}, 8(14), eabl5209. (2022)
-      \item Hachim A, \textbf{Gu H}, Kavian O, Mori M, Kwan M, Chan WH, Yau YS, Chiu S, Tsang O, Hui D, Mok C, Ma F, Lau E, Amarasinghe G, Qavi A, Cheng S, Poon L, Peiris M, Valkenburg S \& Kavian N. \textit{SARS-CoV-2 accessory proteins reveal distinct serological signatures in children.} \journal{Nature Communications}, 13: 2951. (2022)
-      \item Yen HL, Sit T, Brackman C, Chuk S, \textbf{Gu H}, Tam K, Law P, Leung G, Peiris M, Poon L, Cheng S, Chang L, Krishnan P, Ng D, Liu G, Hui M, Ho SY, Su W, Sia SF, Choy KT, Cheuk S, Lau S, Tang A, Koo J \& Yung L. \textit{Transmission of SARS-CoV-2 delta variant (AY. 127) from pet hamsters to humans, leading to onward human-to-human transmission: a case study.} \journal{The Lancet}, 399.10329: 1070--1078. (2022)
-            \faitem \textbf{Gu H}*, Xie R*, Adam D*, Tsui J*, Chu D*, Chang L, Cheuk S, Gurung S, Krishnan P, Ng D, Liu G, Wan C, Cheng S, Edwards K, Leung K, Wu J, Tsang D, Leung G, Cowling B, Peiris M, Lam T, Dhanasekaran V \& Poon L. \textit{Genomic epidemiology of SARS-CoV-2 under an elimination strategy in Hong Kong.} \journal{Nature Communications}, 13, 736 : 1--10. (2022)
-      \item Hui K, Ho J, Cheung MC, Ng KC, Ching R, Lai KL, Kam T, \textbf{Gu H}, Sit KY, Hsin M, Au T, Poon L, Peiris M, Nicholls J \& Chan M. \textit{SARS-CoV-2 Omicron variant replication in human respiratory tract ex vivo.} \journal{Nature}, 603: 715--720. (2022)
-            \faitem \textbf{Gu H}, Ng D, Liu G, Cheng S, Krishnan P, Chang L, Cheuk S, Hui M, Lam T, Peiris M \& Poon L. \textit{Recombinant BA. 1/BA. 2 SARS-CoV-2 Virus in Arriving Travelers, Hong Kong, February 2022.} \journal{Emerging infectious diseases}, 28 (6) : 1276. (2022)
-            \faitem \textbf{Gu H}, Krishnan P, Ng D, Chang L, Liu G, Cheng S, Hui M, Fan M, Wan J, Lau L, Cowling B, Peiris M \& Poon L. \textit{Probable Transmission of SARS-CoV-2 Omicron Variant in Quarantine Hotel, Hong Kong, China, November 2021.} \journal{Emerging infectious diseases}, 28 (2): 460. (2022)
-            \faitem \textbf{Gu H}, Cheng S, Krishnan P, Ng D, Chang L, Liu G, Cheuk S, Hui M, Fan M, Wan J, Lau L, Chu D, Dhanasekaran V, Peiris M \& Poon L. \textit{Monitoring International Travelers Arriving in Hong Kong for Genomic Surveillance of SARS-CoV-2.} \journal{Emerging infectious diseases}, 28(1): 247--250. (2022)
-            %% 2021
-            \faitem \yr{2021}\textbf{Gu H}, Chu D, Chang L, Cheuk S, Gurung S, Krishnan P, Ng D, Liu G, Wan C, Xie R, Cheng S, Cowling B, Tsang D, Peiris M, Dhanasekaran V \& Poon L. \textit{Genetic Diversity of SARS-CoV-2 among Travelers Arriving in Hong Kong.} \journal{Emerging infectious diseases}, 27(10): 2666--2668. (2021)
-      \item Dhanasekaran V, Edwards K, Xie R, \textbf{Gu H}, Adam DC, Chang L, Cheuk S, Gurung S, Krishnan P, Ng D, Liu G, Wan C, Cheng S, Tsang D, Cowling B, Peiris M \& Poon L. \textit{Air travel-related outbreak of multiple SARS-CoV-2 variants.} \journal{Journal of Travel Medicine}, taab149. (2021)
-            \faitem Chu D*, \textbf{Gu H}*, Chang L, Cheuk S, Gurung S, Krishnan P, Ng D, Liu G, Wan C, Tsang D, Peiris M \& Poon L. \textit{SARS-CoV-2 superspread in fitness center, Hong Kong, China, March 2021.} \journal{Emerging infectious diseases}, 27(8): 2230--2232. (2021)
-      \item Chu D*, Hui K*, \textbf{Gu H}, Ko RLW, Krishnan P, Ng D, Liu G, Wan C, Cheung MC, Ng KC, Nicholls J, Tsang D, Peiris M, Chan M \& Poon L. \textit{Introduction of ORF3a-Q57H SARS-CoV-2 variant causing fourth epidemic wave of COVID-19, Hong Kong, China.} \journal{Emerging infectious diseases}, 27(5): 1492--1495. (2021)
-            %% 2020
-            \faitem \yr{2020}\textbf{Gu H}, Chu D, Peiris M \& Poon L. \textit{Multivariate analyses of codon usage of SARS-CoV-2 and other betacoronaviruses.} \journal{Virus Evolution} 6, no. 1: veaa032. (2020)
-      \item Sah R, Rodriguez-Morales AJ, Jha R, Chu D, \textbf{Gu H}, Peiris M, Bastola A, Lal BK, Ojha HC, Rabaan AA, Zambrano LI, Costello A, Morita K, Pandey BD \& Poon L. \textit{Complete genome sequence of a 2019 novel coronavirus (SARS-CoV-2) strain isolated in Nepal.} \journal{Microbiology Resource Announcements} 9, no. 11. (2020)
-            \faitem \yr{2019}\textbf{Gu H}, Fan R, Wang D \& Poon L. \textit{Dinucleotide evolutionary dynamics in influenza A virus.} \journal{Virus Evolution} 5, no. 2: vez038. (2019)
-      \item \yr{2018}Al-Ghadeer H, Chu D, Rihan EMA, Abd-Allah EM, \textbf{Gu H}, Chin A, Qasim IA, Aldoweriej A, Alharbi SS, Al-Aqil MA, Al-Sahaf A, Abdel Rahman SS, Aljassem AH, Abdul-Al A, Aljasir MR, Alhammad YMO, Kasem S, Peiris M, Zaki AZSA \& Poon L. \textit{Circulation of Influenza A (H5N8) Virus, Saudi Arabia.} \journal{Emerging Infectious Diseases} 24, no. 10: 1961. (2018)
-            \faitem \yr{2016}\textbf{Gu H}, Leung RKK, Jing Q, Zhang W, Yang Z, Lu J, Hao Y \& Zhang D. \textit{Meteorological Factors for Precise Dengue Fever Control and Prevention in South China.} \journal{International Journal of Environmental Research and Public Health}, 13(9), 867. (2016)
-            \faitem Chen T*, \textbf{Gu H}*, Leung RKK, Liu R, Chen Q, Wu Y \& Li Y. \textit{Evidence-Based interventions of Norovirus outbreaks in China.} \journal{BMC Public Health}, 16(1): 1072. (2016)
-            \faitem \yr{2015}\textbf{Gu H}, Zhang W, Xu H, Li P, Wu L, Guo P, Hao Y, Lu J \& Zhang D. \textit{Predicating risk area of human infection with avian influenza a (H7N9) virus by using early warning model in China.} \journal{Chinese Journal of Epidemiology}, 36(5): 470--475. (2015)
-      \item \yr{2014}Li P, Xu H, \textbf{Gu H}, Ma M, Lu J, Hao Y \& Zhang D. \textit{Epidemiological Characteristics of Influenza Virus H7N9 and Evolutionary Analysis of Hemagglutinin and Neuraminidase Genes.} \journal{Journal of Sun Yat-sen University (Medical Sciences)}, 06. (2014)
+      \item Song ZY, Zhang J, Shum MHH, \textbf{Gu H}, Shi W, Siu GKH, Poon LLM, Wu JT, Leung KSM \& Lam TTY. \href{https://doi.org/10.1007/s44212-026-00108-z}{\textit{Geographical dispersion and transmission of multiple SARS-CoV-2 variants in Hong Kong.}} \journal{Urban Informatics}, 5(1), 20 (2026).
+      \faitem \stepcounter{correspondingauthorcount}\textbf{Gu H}\textsuperscript{$*,\dagger$}, Li J\textsuperscript{$*$}, Sun W, Li M, Leung K, Wu JT, Yuan HY, Wang MH, Yang B, McKay MR, Ning N \& Poon LLM. \href{https://doi.org/10.1038/s41467-026-70664-0}{\textit{Optimizing global genomic surveillance for early detection of emerging SARS-CoV-2 variants.}} \journal{Nature Communications}, 17(1), 4322 (2026).
+      \faitem \textbf{Gu H}, Li M, Wang R, Lee LK, Tam WY, Ho AYM, Yau MCY, Yip KT, Wong RCW, Wong BKC, Luk KS, Lam JYW, Que TL, Chow VCY, Chau SKY, Duchene S, Siu GKH \& Poon LLM. \href{https://doi.org/10.1111/irv.70249}{\textit{Genomic Epidemiology of Hospital-Associated SARS-CoV-2 Clusters in Hong Kong During a Period of Relaxed Visitation (May--August 2022).}} \journal{Influenza and Other Respiratory Viruses}, 20(3), e70249 (2026).
+      \item Ye Y, Shuai H, Song Y, Shum MHH, Smith DK, \textbf{Gu H}, Zhu H, Wu JT, Lewis NS, Bonfante F, Holmes EC, Peiris M, Poon LLM, Guan Y \& Lam TTY. \href{https://doi.org/10.1038/s41564-025-02257-4}{\textit{Genomic features associated with sustained mammalian transmission of avian influenza A viruses.}} \journal{Nature Microbiology}, 11(3), 802--814 (2026).
+      \item Te N, Chin AWH, \textbf{Gu H}, Jia JZ, Huang Y, Cheng SMS, Tan CW, Zhao J, Hui KPY, Chan MCW, Feng B, Quadeer AA, McKay MR, Wang L, Valkenburg SA, Peiris M \& Poon LLM. \href{https://doi.org/10.1073/pnas.2518645123}{\textit{Broad beta-CoV immunity and transmission blockade by a single-dose live-attenuated vaccine with atypical codon usage.}} \journal{Proceedings of the National Academy of Sciences}, 123(4), e2518645123 (2026).
+      \item \yr{2025}Tuohetasen S, Qu Y, Hopke PK, Zhang K, Liu Y, Lin S, \textbf{Gu H}, Wang X, Lau SSS, Lin X, Gao X, Wu Y, Zhou X, Lin Z, Zhang M, Sun Y, Liu X, Chen J \& Zhang W. \href{https://doi.org/10.1097/ede.0000000000001883}{\textit{Potential Impact of Maternal Nighttime Light Exposure and Its Interaction With Sociodemographic Characteristics on the Risk of Various Congenital Heart Diseases.}} \journal{Epidemiology}, 36(5), 625--635 (2025).
+      \item Zhang Y, Wei J, Chen S, Benmarhnia T, Zhang K, Wang X, Deng X, \textbf{Gu H}, Lin Z, Qu Y, Xiao J, Jiang J, Du Z, Zhang W \& Hao Y. \href{https://doi.org/10.1016/j.scs.2025.106293}{\textit{Individual and mixed associations between fine particulate matter components and hospital admissions for hypertension: Insights from a large-scale South Chinese cohort study.}} \journal{Sustainable Cities and Society}, 124, 106293 (2025).
+      \item Wu G, Wang S, Wu W, Benmarhnia T, Lin S, Zhang K, Xue Romeiko X, \textbf{Gu H}, Qu Y, Xiao J, Deng X, Lin Z, Du Z, Zhang W \& Hao Y. \href{https://doi.org/10.1016/j.scs.2024.106071}{\textit{Potential causal links of long-term PM2.5 components exposure with diabetes incidence and mortality in the United States.}} \journal{Sustainable Cities and Society}, 119, 106071 (2025).
+      \item Sun W\textsuperscript{$*$}, Choy KT\textsuperscript{$*$}, Cheng KM\textsuperscript{$*$}, Brackman CJ, Cheng SMS, Sit THC, Tse ACN, Sims LD, \textbf{Gu H}, Tang AWY, Wong ANC, Tsang ATL, Koo JCT, Luk LLH, Yen HL, Peiris M \& Poon LLM. \href{https://doi.org/10.2807/1560-7917.ES.2025.30.1.2400839}{\textit{Detection and characterisation of high pathogenicity avian influenza virus (H5N1/H5N8) clade 2.3.4.4b, Hong Kong SAR, China, 2021 to 2024.}} \journal{Eurosurveillance}, 30(1), 2400839 (2025).
+      \item Cao Y, Chin AWH, \textbf{Gu H}, Li M, Gu Y, Lau SPN, Hui KPY, Chan MCW \& Poon LLM. \href{https://doi.org/10.1371/journal.ppat.1012854}{\textit{An interferon-stimulated long non-coding RNA USP30-AS1 as an immune modulator in influenza A virus infection.}} \journal{PLOS Pathogens}, 21(1), e1012854 (2025).
+      \item \yr{2024}Wang X, Zhang Y, Benmarhnia T, Zhang K, Lin S, Deng X, \textbf{Gu H}, Wu W, Lin X, Du Z, Wang Y, Qu Y, Lin Z, Zhang M, Sun Y, Dong GH, Wei Y, Zhang W \& Hao Y. \href{https://doi.org/10.1016/j.envint.2024.108894}{\textit{The effect of residential greenness on cardiovascular mortality from a large cohort in South China: An in-depth analysis of effect modification by multiple demographic and lifestyle characteristics.}} \journal{Environment International}, 190, 108894 (2024).
+      \item Nelson CW, Poon LLM \& \textbf{Gu H}. \href{https://doi.org/10.1038/s41467-024-46262-3}{\textit{Reply to: Population genetic considerations regarding the interpretation of within-patient SARS-CoV-2 polymorphism data.}} \journal{Nature Communications}, 15(1), 3239 (2024).
+      \faitem Jia JZ\textsuperscript{$*$}, Cohen CA\textsuperscript{$*$}, \textbf{Gu H}\textsuperscript{$*$}, McLean MR, Varadarajan R, Bhandari N, Peiris M, Leung GM, Poon LLM, Tsang T, Chung AW, Cowling BJ, Leung NHL \& Valkenburg SA. \href{https://doi.org/10.1038/s41467-024-47590-0}{\textit{Influenza antibody breadth and effector functions are immune correlates from acquisition of pandemic infection of children.}} \journal{Nature Communications}, 15(1), 3210 (2024).
+      \item Cheng SMS, Mok CKP, Li JKC, Chan KKP, Luk KS, Lee BHW, \textbf{Gu H}, Chan KCK, Tsang LCH, Yiu KYS, Ling KKC, Tang YS, Luk LLH, Yu JKM, Pekosz A, Webby RJ, Cowling BJ, Hui DSC \& Peiris M. \href{https://doi.org/10.1186/s12985-024-02335-9}{\textit{Cross-neutralizing antibody against emerging Omicron subvariants of SARS-CoV-2 in infection-naïve individuals with homologous BNT162b2 or BNT162b2(WT + BA.4/5) bivalent booster vaccination.}} \journal{Virology Journal}, 21(1), 70 (2024).
+      \item \yr{2023}Xu X, Deng Y, Ding J, Shi X, Zheng X, Wang D, Yang Y, Liu L, Wang C, Li S, \textbf{Gu H}, Poon LLM \& Zhang T. \href{https://doi.org/10.1016/j.scitotenv.2023.166215}{\textit{Refining detection methods for emerging SARS-CoV-2 mutants in wastewater: A case study on the Omicron variants.}} \journal{Science of the Total Environment}, 904, 166215 (2023).
+      \item Xu X, Deng Y, Ding J, Zheng X, Wang C, Wang D, Liu L, \textbf{Gu H}, Peiris M, Poon LLM \& Zhang T. \href{https://doi.org/10.1016/j.watres.2023.120444}{\textit{Wastewater genomic sequencing for SARS-CoV-2 variants surveillance in wastewater-based epidemiology applications.}} \journal{Water Research}, 244, 120444 (2023).
+      \item Zheng MZM, Tan TK, Villalon-Letelier F, Lau H, Deng YM, Fritzlar S, Valkenburg SA, \textbf{Gu H}, Poon LLM, Reading PC, Townsend AR \& Wakim LM. \href{https://doi.org/10.1126/sciadv.adg3469}{\textit{Single-cycle influenza virus vaccine generates lung CD8+ Trm that cross-react against viral variants and subvert virus escape mutants.}} \journal{Science Advances}, 9(36), eadg3469 (2023).
+      \item Su W\textsuperscript{$*$}, Choy KT\textsuperscript{$*$}, \textbf{Gu H}, Sia SF, Cheng KM, Nizami SIN, Krishnan P, Ng YM, Chang LDJ, Liu Y, Cheng SMS, Peiris M, Poon LLM, Nicholls JM \& Yen HL. \href{https://doi.org/10.1093/infdis/jiac276}{\textit{Reduced Pathogenicity and Transmission Potential of Omicron BA.1 and BA.2 Sublineages Compared with the Early Severe Acute Respiratory Syndrome Coronavirus 2 D614G Variant in Syrian Hamsters.}} \journal{Journal of Infectious Diseases}, 227(10), 1143--1152 (2023).
+      \item Xie R\textsuperscript{$*$}, Edwards KM\textsuperscript{$*$}, Adam DC, Leung KSM, Tsang TK, Gurung S, Xiong W, Wei X, Ng DYM, Liu GYZ, Krishnan P, Chang LDJ, Cheng SMS, \textbf{Gu H}, Siu GKH, Wu JT, Leung GM, Peiris M, Cowling BJ, Poon LLM \& Dhanasekaran V. \href{https://doi.org/10.1038/s41467-023-38201-5}{\textit{Resurgence of Omicron BA.2 in SARS-CoV-2 infection-naive Hong Kong.}} \journal{Nature Communications}, 14(1), 2422 (2023).
+      \item Adam DC, Martín-Sánchez M, \textbf{Gu H}, Yang B, Lin Y, Wu P, Lau EHY, Leung GM, Poon LLM \& Cowling BJ. \href{https://doi.org/10.1016/j.lanwpc.2022.100678}{\textit{Risk of within-hotel transmission of SARS-CoV-2 during on-arrival quarantine in Hong Kong: an epidemiological and phylogenomic investigation.}} \journal{The Lancet Regional Health - Western Pacific}, 33, 100678 (2023).
+      \faitem \textbf{Gu H}, Quadeer AA, Krishnan P, Ng DYM, Chang LDJ, Liu GYZ, Cheng SMS, Lam TTY, Peiris M, McKay MR \& Poon LLM. \href{https://doi.org/10.1038/s41467-023-37468-y}{\textit{Within-host genetic diversity of SARS-CoV-2 lineages in unvaccinated and vaccinated individuals.}} \journal{Nature Communications}, 14(1), 1793 (2023).
+      \item Chu JTS, \textbf{Gu H}, Sun W, Fan RLY, Nicholls JM, Valkenburg SA \& Poon LLM. \href{https://doi.org/10.1016/j.virusres.2022.198991}{\textit{Heterosubtypic immune pressure accelerates emergence of influenza A virus escape phenotypes in mice.}} \journal{Virus Research}, 323, 198991 (2023).
+      \item Leong NKC, \textbf{Gu H}, Ng DYM, Chang LDJ, Krishnan P, Cheng SSM, Peiris M \& Poon LLM. \href{https://doi.org/10.1111/irv.13084}{\textit{Development of multiplex RT-ddPCR assays for detection of SARS-CoV-2 and other common respiratory virus infections.}} \journal{Influenza and Other Respiratory Viruses}, 17(1), e13084 (2023).
+      \item \yr{2022}Jia JZ\textsuperscript{$*$}, Tan CW\textsuperscript{$*$}, Cheng SMS, \textbf{Gu H}, Yeoh AYY, Mok CKP, Wang Y, Zhao J, Leung NHL, Cowling BJ, Poon LLM, Hui DSC, Wang L, Peiris M \& Valkenburg SA. \href{https://doi.org/10.1038/s41467-022-34038-6}{\textit{Priming conditions shape breadth of neutralizing antibody responses to sarbecoviruses.}} \journal{Nature Communications}, 13(1), 6285 (2022).
+      \item Hui KPY, Ng KC, Ho JCW, Yeung HW, Ching RHH, \textbf{Gu H}, Chung JCK, Chow VLY, Sit KY, Hsin MKY, Au TWK, Poon LLM, Peiris M, Nicholls JM \& Chan MCW. \href{https://doi.org/10.1016/j.ebiom.2022.104232}{\textit{Replication of SARS-CoV-2 Omicron BA.2 variant in ex vivo cultures of the human upper and lower respiratory tract.}} \journal{eBioMedicine}, 83, 104232 (2022).
+      \item Sun W\textsuperscript{$*$}, Cheng SSM\textsuperscript{$*$}, Lam KNT, Kwan TC, Wong RWK, Lau LHK, Liu GYZ, Luk LLH, Li JKC, \textbf{Gu H}, Peiris M \& Poon LLM. \href{https://doi.org/10.3201/eid2807.220642}{\textit{Natural Reassortment of Eurasian Avian-Like Swine H1N1 and Avian H9N2 Influenza Viruses in Pigs, China.}} \journal{Emerging Infectious Diseases}, 28(7), 1509--1512 (2022).
+      \faitem \textbf{Gu H}, Ng DYM, Liu GYZ, Cheng SSM, Krishnan P, Chang LDJ, Cheuk SSY, Hui MMY, Lam TTY, Peiris M \& Poon LLM. \href{https://doi.org/10.3201/eid2806.220523}{\textit{Recombinant BA.1/BA.2 SARS-CoV-2 Virus in Arriving Travelers, Hong Kong, February 2022.}} \journal{Emerging Infectious Diseases}, 28(6), 1276--1278 (2022).
+      \item Hachim A, \textbf{Gu H}, Kavian O, Mori M, Kwan MYW, Chan WH, Yau YS, Chiu SS, Tsang OTY, Hui DSC, Mok CKP, Ma FNL, Lau EHY, Amarasinghe GK, Qavi AJ, Cheng SMS, Poon LLM, Peiris JSM, Valkenburg SA \& Kavian N. \href{https://doi.org/10.1038/s41467-022-30699-5}{\textit{SARS-CoV-2 accessory proteins reveal distinct serological signatures in children.}} \journal{Nature Communications}, 13(1), 2951 (2022).
+      \item Bull MB, \textbf{Gu H}, Ma FNL, Perera LP, Poon LLM \& Valkenburg SA. \href{https://doi.org/10.1126/sciadv.abl5209}{\textit{Next-generation T cell--activating vaccination increases influenza virus mutation prevalence.}} \journal{Science Advances}, 8(14), eabl5209 (2022).
+      \item Yen HL\textsuperscript{$*$}, Sit THC\textsuperscript{$*$}, Brackman CJ, Chuk SSY, \textbf{Gu H}, Tam KWS, Law PYT, Leung GM, Peiris M, Poon LLM \& HKU-SPH study team. \href{https://doi.org/10.1016/S0140-6736(22)00326-9}{\textit{Transmission of SARS-CoV-2 delta variant (AY.127) from pet hamsters to humans, leading to onward human-to-human transmission: a case study.}} \journal{The Lancet}, 399(10329), 1070--1078 (2022).
+      \item Hui KPY, Ho JCW, Cheung MC, Ng KC, Ching RHH, Lai KL, Kam TT, \textbf{Gu H}, Sit KY, Hsin MKY, Au TWK, Poon LLM, Peiris M, Nicholls JM \& Chan MCW. \href{https://doi.org/10.1038/s41586-022-04479-6}{\textit{SARS-CoV-2 Omicron variant replication in human bronchus and lung ex vivo.}} \journal{Nature}, 603(7902), 715--720 (2022).
+      \faitem \textbf{Gu H}\textsuperscript{$*$}, Xie R\textsuperscript{$*$}, Adam DC\textsuperscript{$*$}, Tsui JLH\textsuperscript{$*$}, Chu DK\textsuperscript{$*$}, Chang LDJ, Cheuk SSY, Gurung S, Krishnan P, Ng DYM, Liu GYZ, Wan CKC, Cheng SSM, Edwards KM, Leung KSM, Wu JT, Tsang DNC, Leung GM, Cowling BJ, Peiris M, Lam TTY, Dhanasekaran V \& Poon LLM. \href{https://doi.org/10.1038/s41467-022-28420-7}{\textit{Genomic epidemiology of SARS-CoV-2 under an elimination strategy in Hong Kong.}} \journal{Nature Communications}, 13(1), 736 (2022).
+      \faitem \textbf{Gu H}, Krishnan P, Ng DYM, Chang LDJ, Liu GYZ, Cheng SSM, Hui MMY, Fan MCY, Wan JHL, Lau LHK, Cowling BJ, Peiris M \& Poon LLM. \href{https://doi.org/10.3201/eid2802.212422}{\textit{Probable Transmission of SARS-CoV-2 Omicron Variant in Quarantine Hotel, Hong Kong, China, November 2021.}} \journal{Emerging Infectious Diseases}, 28(2), 460--462 (2022).
+      \faitem \textbf{Gu H}, Cheng SSM, Krishnan P, Ng DYM, Chang LDJ, Liu GYZ, Cheuk SSY, Hui MMY, Fan MCY, Wan JHL, Lau LHK, Chu DKW, Dhanasekaran V, Peiris M \& Poon LLM. \href{https://doi.org/10.3201/eid2801.211804}{\textit{Monitoring International Travelers Arriving in Hong Kong for Genomic Surveillance of SARS-CoV-2.}} \journal{Emerging Infectious Diseases}, 28(1), 247--250 (2022).
+      \item \yr{2021}Dhanasekaran V, Edwards KM, Xie R, \textbf{Gu H}, Adam DC, Chang LDJ, Cheuk SSY, Gurung S, Krishnan P, Ng DYM, Liu GYZ, Wan CKC, Cheng SSM, Tsang DNC, Cowling BJ, Peiris M \& Poon LLM. \href{https://doi.org/10.1093/jtm/taab149}{\textit{Air travel-related outbreak of multiple SARS-CoV-2 variants.}} \journal{Journal of Travel Medicine}, 28(8), taab149 (2021).
+      \faitem \textbf{Gu H}, Chu DKW, Chang LDJ, Cheuk SSY, Gurung S, Krishnan P, Ng DYM, Liu GYZ, Wan CKC, Xie R, Cheng SSM, Cowling BJ, Tsang DNC, Peiris M, Dhanasekaran V \& Poon LLM. \href{https://doi.org/10.3201/eid2710.211028}{\textit{Genetic Diversity of SARS-CoV-2 among Travelers Arriving in Hong Kong.}} \journal{Emerging Infectious Diseases}, 27(10), 2666--2668 (2021).
+      \faitem Chu DKW\textsuperscript{$*$}, \textbf{Gu H}\textsuperscript{$*$}, Chang LDJ, Cheuk SSY, Gurung S, Krishnan P, Ng DYM, Liu GYZ, Wan CKC, Tsang DNC, Peiris M \& Poon LLM. \href{https://doi.org/10.3201/eid2708.210833}{\textit{SARS-CoV-2 Superspread in Fitness Center, Hong Kong, China, March 2021.}} \journal{Emerging Infectious Diseases}, 27(8), 2230--2232 (2021).
+      \item Chu DKW\textsuperscript{$*$}, Hui KPY\textsuperscript{$*$}, \textbf{Gu H}, Ko RLW, Krishnan P, Ng DYM, Liu GYZ, Wan CKC, Cheung MC, Ng KC, Nicholls JM, Tsang DNC, Peiris M, Chan MCW \& Poon LLM. \href{https://doi.org/10.3201/eid2705.210015}{\textit{Introduction of ORF3a-Q57H SARS-CoV-2 Variant Causing Fourth Epidemic Wave of COVID-19, Hong Kong, China.}} \journal{Emerging Infectious Diseases}, 27(5), 1492--1495 (2021).
+      \faitem \yr{2020}\textbf{Gu H}, Chu DKW, Peiris M \& Poon LLM. \href{https://doi.org/10.1093/ve/veaa032}{\textit{Multivariate analyses of codon usage of SARS-CoV-2 and other betacoronaviruses.}} \journal{Virus Evolution}, 6(1), veaa032 (2020).
+      \item Sah R\textsuperscript{$*$}, Rodriguez-Morales AJ\textsuperscript{$*$}, Jha R, Chu DKW, \textbf{Gu H}, Peiris M, Bastola A, Lal BK, Ojha HC, Rabaan AA, Zambrano LI, Costello A, Morita K, Pandey BD \& Poon LLM. \href{https://doi.org/10.1128/MRA.00169-20}{\textit{Complete Genome Sequence of a 2019 Novel Coronavirus (SARS-CoV-2) Strain Isolated in Nepal.}} \journal{Microbiology Resource Announcements}, 9(11), e00169-20 (2020).
+      \faitem \yr{2019}\textbf{Gu H}, Fan RLY, Wang D \& Poon LLM. \href{https://doi.org/10.1093/ve/vez038}{\textit{Dinucleotide evolutionary dynamics in influenza A virus.}} \journal{Virus Evolution}, 5(2), vez038 (2019).
+      \item \yr{2018}Al-Ghadeer H, Chu DKW, Rihan EMA, Abd-Allah EM, \textbf{Gu H}, Chin AWH, Qasim IA, Aldoweriej A, Alharbi SS, Al-Aqil MA, Al-Sahaf A, Abdel Rahman SS, Aljassem AH, Abdul-Al A, Aljasir MR, Alhammad YMO, Kasem S, Peiris M, Zaki AZSA \& Poon LLM. \href{https://doi.org/10.3201/eid2410.180846}{\textit{Circulation of Influenza A(H5N8) Virus, Saudi Arabia.}} \journal{Emerging Infectious Diseases}, 24(10), 1961--1964 (2018).
+      \faitem \yr{2016}Chen T\textsuperscript{$*$}, \textbf{Gu H}\textsuperscript{$*$}, Leung RKK\textsuperscript{$*$}, Liu R, Chen Q, Wu Y \& Li Y. \href{https://doi.org/10.1186/s12889-016-3716-3}{\textit{Evidence-Based interventions of Norovirus outbreaks in China.}} \journal{BMC Public Health}, 16(1), 1072 (2016).
+      \faitem \textbf{Gu H}\textsuperscript{$*$}, Leung RKK\textsuperscript{$*$}, Jing Q\textsuperscript{$*$}, Zhang W, Yang Z, Lu J, Hao Y \& Zhang D. \href{https://doi.org/10.3390/ijerph13090867}{\textit{Meteorological Factors for Dengue Fever Control and Prevention in South China.}} \journal{International Journal of Environmental Research and Public Health}, 13(9), 867 (2016).
+      \faitem \yr{2015}\textbf{Gu H}, Zhang W, Xu H, Li P, Wu L, Guo P, Hao Y, Lu J \& Zhang D. \href{https://pubmed.ncbi.nlm.nih.gov/26080636/}{\textit{Predicating risk area of human infection with avian influenza A (H7N9) virus by using early warning model in China.}} \journal{Chinese Journal of Epidemiology}, 36(5), 470--475 (2015). [In Chinese.]
+      \item \yr{2014}Li P, Xu H, \textbf{Gu H}, Ma M, Lu J, Hao Y \& Zhang D. \href{https://xuebaoyx.sysu.edu.cn/zh/article/43573152/}{\textit{Epidemiological Characteristics of Influenza Virus H7N9 and Evolutionary Analysis of Hemagglutinin and Neuraminidase Genes.}} \journal{Journal of Sun Yat-sen University (Medical Sciences)}, 35(6) (2014). [In Chinese.]
 \end{enumerate}
 
 %% ============================================================================
@@ -312,6 +307,7 @@ for development of safe and scalable live attenuated virus vaccines.}
 %             \subnote{Produced at Built with Claude: Life Sciences (Anthropic $\times$ Gladstone Institutes), Research track; selected 1 of 500 from 6,000+ applicants.}
 % \end{itemize}
 
+\Needspace{8\baselineskip}
 \subsection*{SUPERVISION}
 \subsubsection*{Co-supervision:}
 \supervisionentry{Mengting Li}{PhD student}{Virtual Cell and Viral Infection}{Oct. 2025--May 2026}{The University of Hong Kong}
@@ -382,6 +378,7 @@ for development of safe and scalable live attenuated virus vaccines.}
 \end{minipage}\par
 }
 
+\Needspace{5\baselineskip}
 \subsubsection*{Professional leadership:}
 \leadershipentry{Founder and sole lecturer}{of a weekly reading group on Molecular Evolution.}{Feb. 2025--Dec. 2025}
 {Personally delivered every session, teaching Ziheng Yang's ``Molecular Evolution: The Statistical Approach'' to 20 researchers from different regions and disciplines.}
