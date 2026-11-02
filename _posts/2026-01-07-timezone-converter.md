@@ -1135,7 +1135,7 @@ function autoUpdateBestTime() {
 
 function populateSourceSelect() {
   const sourceSelect = document.getElementById('tz-source');
-  const uniqueTimezones = [...new Map(worldCities.map(c => [c.value, c])).values()];
+  const uniqueTimezones = worldCities.filter((c, i) => worldCities.findIndex(d => d.value === c.value) === i);
   
   uniqueTimezones.forEach(tz => {
     const option = document.createElement('option');
