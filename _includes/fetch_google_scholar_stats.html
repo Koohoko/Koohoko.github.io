@@ -8,11 +8,18 @@
         $.getJSON(gsDataBaseUrl + "google-scholar-stats/gs_data.json", function (data) {
             // var totalCitation = data['citedby']
             // document.getElementById('total_cit').innerHTML = totalCitation;
+            var publications = (data && data['publications']) ? data['publications'] : {};
             var citationEles = document.getElementsByClassName('show_paper_citations')
             Array.prototype.forEach.call(citationEles, element => {
                 var paperId = element.getAttribute('data')
-                var numCitations = data['publications'][paperId]['num_citations']
-                element.innerHTML = '| Citations: ' + numCitations;
+                var pub = publications[paperId]
+                var rawCitations = pub ? pub['num_citations'] : null
+                var numCitations = Number(rawCitations)
+                if (rawCitations !== null && rawCitations !== undefined && typeof rawCitations !== 'boolean' && !isNaN(numCitations) && numCitations > 0) {
+                    element.innerHTML = '| Citations: ' + numCitations;
+                } else {
+                    element.innerHTML = '';
+                }
             });
         });
     })
