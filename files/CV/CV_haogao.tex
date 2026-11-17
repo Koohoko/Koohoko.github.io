@@ -76,8 +76,8 @@
   \Needspace{4\baselineskip}%
   \noindent\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X r@{}}
     \textbf{#1}, #2 & #3 \\
-    \detailcell{#4} & {\small #6} \\
-    \smallsecondarycell{Role: #5} & {\small #7}
+    \detailcell{#4} & {\small\begin{tabular}[t]{@{}r@{}}#6\ifx\relax#7\relax\else\\ #7\fi\end{tabular}} \\
+    \smallsecondarycell{Role: #5} &
   \end{tabularx}\par\vspace{\entrysep}%
 }
 
