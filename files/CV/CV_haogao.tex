@@ -169,7 +169,7 @@
 
 % --- AUTOMATION COMMANDS ---
 \regtotcounter{enumi} % Register the 'enumerate' counter for total counting
-\newcommand{\CVDate}{2026-11-06}
+\newcommand{\CVDate}{2026-11-22}
 
 % Shared first authors count once per paper.
 \newcounter{firstauthorcount}
@@ -355,30 +355,44 @@ for development of safe and scalable live attenuated virus vaccines.}
 \categoryline{\journal{Virology Journal}}
 
 \subsubsection*{Ad hoc peer reviewer:}
+% Ordering convention (reuse when adding a journal):
+% - Rank by standing among domain experts in virus evolution, infectious-disease
+%   epidemiology, and statistical methods, not by impact factor (e.g. Virus
+%   Evolution, Epidemics, and Methods in Ecology and Evolution rank above their IF).
+% - Readers scan row by row (left, right, next row), so rank 1 is row 1 left,
+%   rank 2 is row 1 right, rank 3 is row 2 left: the left column holds odd ranks,
+%   the right column holds even ranks. Insert a new journal at its rank, then
+%   reflow both columns; the left column has at most one more entry.
+% - Rows stay aligned only if every name fits on one line; check the PDF.
+% Current ranking: 1 Science, 2 Lancet Microbe, 3 PLOS Pathogens, 4 Commun Med,
+%   5 EID, 6 JID, 7 Virus Evol, 8 MEE, 9 Epidemics, 10 npj Viruses, 11 CMLS,
+%   12 Front Immunol, 13 IRV, 14 IGE, 15 Sci Rep, 16 Virol J, 17 BMC Microbiol,
+%   18 BMC Med Res Methodol, 19 J Multidiscip Healthc.
 {\small
 \noindent\hspace*{\categoryindent}%
 \begin{minipage}[t]{\dimexpr\linewidth-\categoryindent\relax}
 \begin{minipage}[t]{0.47\linewidth}\raggedright
       Science\\
-      Communications Medicine\\
       PLOS Pathogens\\
-      Frontiers in Immunology\\
+      Emerging Infectious Diseases\\
       Virus Evolution\\
-      npj Viruses\\
-      Virology Journal\\
-      BMC Medical Research Methodology\\
+      Epidemics\\
+      Cellular and Molecular Life Sciences\\
+      Influenza and Other Respiratory Viruses\\
+      Scientific Reports\\
+      BMC Microbiology\\
       Journal of Multidisciplinary Healthcare
 \end{minipage}\hfill
 \begin{minipage}[t]{0.49\linewidth}\raggedright
       The Lancet Microbe\\
-      Emerging Infectious Diseases\\
+      Communications Medicine\\
       The Journal of Infectious Diseases\\
-      Cellular and Molecular Life Sciences\\
-      Influenza and Other Respiratory Viruses\\
-      Scientific Reports\\
-      Epidemics\\
-      BMC Microbiology\\
-      Infection, Genetics and Evolution
+      Methods in Ecology and Evolution\\
+      npj Viruses\\
+      Frontiers in Immunology\\
+      Infection, Genetics and Evolution\\
+      Virology Journal\\
+      BMC Medical Research Methodology
 \end{minipage}
 \end{minipage}\par
 }
